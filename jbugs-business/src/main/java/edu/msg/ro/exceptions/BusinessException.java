@@ -7,6 +7,7 @@ public class BusinessException extends Exception {
     public BusinessException() {
     }
     public BusinessException(ExceptionCode exceptionCode) {
+        this.exceptionCode = exceptionCode;
     }
     public BusinessException(String message,ExceptionCode exceptionCode ) {
         super(message);
@@ -28,5 +29,11 @@ public class BusinessException extends Exception {
         this.exceptionCode = exceptionCode;
     }
 
+    public ExceptionCode getExceptionCode() {
+        return exceptionCode;
+    }
 
+    public void setExceptionCode(ExceptionCode exceptionCode) {
+        this.exceptionCode = exceptionCode;
+    }
 }

@@ -1,6 +1,8 @@
 package edu.msg.ro.service;
 
 import edu.msg.ro.boundary.UserManagement;
+import edu.msg.ro.exceptions.BusinessException;
+import edu.msg.ro.exceptions.ExceptionCode;
 import edu.msg.ro.persistence.user.dao.UserPersistenceManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,7 +58,7 @@ public class UserPersistenceManagerBeanTest {
 
         when(userPersistenceManager.findUsersNameStartingWith(any(String.class))).thenReturn(new ArrayList<>());
         String suffix = userManagementBean.createSuffix("dorel0");
-        assertEquals(suffix, "");
+        assertEquals( "",suffix);
 
     }
 
@@ -74,7 +76,7 @@ public class UserPersistenceManagerBeanTest {
                         }}
                 );
         String suffix = userManagementBean.createSuffix("dorel0");
-        assertEquals(suffix, "4");
+        assertEquals( "4",suffix);
 
     }
 
@@ -90,10 +92,35 @@ public class UserPersistenceManagerBeanTest {
                         }}
                 );
         String suffix = userManagementBean.createSuffix("dorel0");
-        assertEquals(suffix, "7");
+        assertEquals("7",suffix);
 
     }
 
+    @Test
+    public void createSuffix_expected1(){
+
+
+        when(userPersistenceManager.findUsersNameStartingWith(any(String.class)))
+                .thenReturn(
+                        new ArrayList<String>(){{
+                            add("marini");
+                        }}
+                );
+        String suffix = userManagementBean.createSuffix("marini");
+        assertEquals( "1",suffix);
+    }
+
+    @Test
+    public void testLogin_wrongUsername() {
+        when(userPersistenceManager.getUserForUsername(any(String.class)))
+                .thenReturn(null);
+        try {
+            userManagementBean.login("a", "s");
+            fail("Shouldn't reach this point");
+        } catch (BusinessException e){
+            assertEquals(ExceptionCode.USERNAME_NOT_VALID,e.getExceptionCode());
+        }
+    }
 
 
 }

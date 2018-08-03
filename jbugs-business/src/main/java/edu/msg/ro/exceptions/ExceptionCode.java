@@ -31,4 +31,6 @@ public enum ExceptionCode {
     public void setMessage(String message) {
         this.message = message;
     }
+
+
 }

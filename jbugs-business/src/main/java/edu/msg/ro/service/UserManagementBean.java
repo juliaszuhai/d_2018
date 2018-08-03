@@ -65,12 +65,11 @@ public class UserManagementBean implements UserManagement {
      * @return
      */
     protected String createSuffix(String username) {
-        List<String> usernameLike = userPersistenceManager.findUsersNameStartingWith(username);
-        Optional<Integer> max = usernameLike
+
+        Optional<Integer> max = userPersistenceManager.findUsersNameStartingWith(username)
                 .stream()
                 .map(x -> x.substring(MIN_USERNAME_LENGTH, x.length()))
-                .filter(x -> !x.equals(""))
-                .map(Integer::parseInt)
+                .map(x -> x.equals("")? 0 : Integer.parseInt(x))
                 .max(Comparator.naturalOrder())
                 .map(x -> x + 1);
         return max.map(Object::toString).orElse("");
