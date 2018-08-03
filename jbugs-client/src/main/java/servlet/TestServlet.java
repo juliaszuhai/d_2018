@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.msg.ro.service.UserManagement;
-import edu.msg.ro.exceptions.BusinessException;
-import edu.msg.ro.transfer.UserDTO;
+import ro.msg.edu.jbugs.userManagement.business.control.UserManagement;
+import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 
 @WebServlet(urlPatterns = {"/TestServlet"})
 public class TestServlet extends HttpServlet {
