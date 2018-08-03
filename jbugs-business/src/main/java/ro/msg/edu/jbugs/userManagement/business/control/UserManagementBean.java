@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 public class UserManagementBean implements UserManagement {
-
+    //TODO rename;
     private final static int MAX_LAST_NAME_LENGTH = 5;
     private final static int MIN_USERNAME_LENGTH = 6;
     private static final Logger logger = LogManager.getLogger(UserManagementBean.class);
@@ -42,7 +42,7 @@ public class UserManagementBean implements UserManagement {
         user.setUsername(generateFullUsername(userDTO.getFirstName(),userDTO.getLastName()));
         user.setIsActive(true);
         user.setPassword(Encryptor.encrypt(userDTO.getPassword()));
-        userPersistenceManager.addUser(user);
+        userPersistenceManager.createUser(user);
 
         return UserDTOHelper.fromEntity(user);
     }
@@ -57,6 +57,12 @@ public class UserManagementBean implements UserManagement {
         if (!isValidForCreation(userDTO)) {
             throw new BusinessException(ExceptionCode.USER_VALIDATION_EXCEPTION);
         }
+
+        userPersistenceManager.getUserByEmail2("").
+
+
+
+
         //validate if email already exists
         if (!userPersistenceManager.getUserByEmail(userDTO.getEmail()).isEmpty()) {
             throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
@@ -82,7 +88,7 @@ public class UserManagementBean implements UserManagement {
      */
     protected String createSuffix(String username) {
 
-        Optional<Integer> max = userPersistenceManager.findUsersNameStartingWith(username)
+        Optional<Integer> max = userPersistenceManager.getUsernamesLike(username)
                 .stream()
                 .map(x -> x.substring(MIN_USERNAME_LENGTH, x.length()))
                 .map(x -> x.equals("") ? 0 : Integer.parseInt(x))
@@ -143,14 +149,14 @@ public class UserManagementBean implements UserManagement {
 
     @Override
     public void deactivateUser(String username) {
-        User user = userPersistenceManager.getUserForUsername(username);
+        User user = userPersistenceManager.getUserByUsername(username);
         user.setIsActive(false);
         userPersistenceManager.updateUser(user);
     }
 
     @Override
     public void activateUser(String username) {
-        User user = userPersistenceManager.getUserForUsername(username);
+        User user = userPersistenceManager.getUserByUsername(username);
         user.setIsActive(true);
         userPersistenceManager.updateUser(user);
     }
@@ -165,7 +171,7 @@ public class UserManagementBean implements UserManagement {
 
     @Override
     public UserDTO login(String username, String password) throws BusinessException {
-        User user = userPersistenceManager.getUserForUsername(username);
+        User user = userPersistenceManager.getUserByUsername(username);
         if (user == null) {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }

@@ -7,6 +7,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
+@NamedQueries(
+        {@NamedQuery(name="get_All_Users",query = "SELECT u FROM User u")}
+)
 public class User extends BaseEntity<Long> {
 
     @Transient

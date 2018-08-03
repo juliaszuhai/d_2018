@@ -1,6 +1,5 @@
 package ro.msg.edu.jbugs.userManagement.business.control;
 
-import ro.msg.edu.jbugs.userManagement.business.control.UserManagementBean;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.userManagement.persistence.dao.UserPersistenceManager;
@@ -57,7 +56,7 @@ public class UserPersistenceManagerBeanTest {
     @Test
     public void createSuffix_expectedEmpty(){
 
-        when(userPersistenceManager.findUsersNameStartingWith(any(String.class))).thenReturn(new ArrayList<>());
+        when(userPersistenceManager.getUsernamesLike(any(String.class))).thenReturn(new ArrayList<>());
         String suffix = userManagementBean.createSuffix("dorel0");
         assertEquals( "",suffix);
 
@@ -67,7 +66,7 @@ public class UserPersistenceManagerBeanTest {
     public void createSuffix_expected4(){
 
 
-        when(userPersistenceManager.findUsersNameStartingWith(any(String.class)))
+        when(userPersistenceManager.getUsernamesLike(any(String.class)))
                 .thenReturn(
                         new ArrayList<String>(){{
                             add("dorel0");
@@ -85,7 +84,7 @@ public class UserPersistenceManagerBeanTest {
     public void createSuffix_expected7(){
 
 
-        when(userPersistenceManager.findUsersNameStartingWith(any(String.class)))
+        when(userPersistenceManager.getUsernamesLike(any(String.class)))
                 .thenReturn(
                         new ArrayList<String>(){{
                             add("dorel0");
@@ -101,7 +100,7 @@ public class UserPersistenceManagerBeanTest {
     public void createSuffix_expected1(){
 
 
-        when(userPersistenceManager.findUsersNameStartingWith(any(String.class)))
+        when(userPersistenceManager.getUsernamesLike(any(String.class)))
                 .thenReturn(
                         new ArrayList<String>(){{
                             add("marini");
@@ -113,7 +112,7 @@ public class UserPersistenceManagerBeanTest {
 
     @Test
     public void testLogin_wrongUsername() {
-        when(userPersistenceManager.getUserForUsername(any(String.class)))
+        when(userPersistenceManager.getUserByUsername(any(String.class)))
                 .thenReturn(null);
         try {
             userManagementBean.login("a", "s");
@@ -129,7 +128,7 @@ public class UserPersistenceManagerBeanTest {
         when(user.getUsername()).thenReturn("salut");
         when(user.getPassword()).thenReturn(Encryptor.encrypt("secret"));
 
-        when(userPersistenceManager.getUserForUsername(any(String.class)))
+        when(userPersistenceManager.getUserByUsername(any(String.class)))
                 .thenReturn(user);
 
         try{
