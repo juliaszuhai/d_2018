@@ -14,8 +14,6 @@ public class UserDTOHelper {
 
         userDTO.setEmail(user.getEmail());
 
-        userDTO.setPassword(user.getPassword());
-
         userDTO.setUsername(user.getUsername());
 
         userDTO.setPhoneNumber(user.getPhoneNumber());
@@ -29,6 +27,7 @@ public class UserDTOHelper {
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
         user.setUsername(userDTO.getUsername());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         return user;

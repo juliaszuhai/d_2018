@@ -36,8 +36,8 @@ public class User extends BaseEntity<Long> {
     private Boolean isActive;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "uid"),
-            inverseJoinColumns = { @JoinColumn(name = "rid")})
+//    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "uid"),
+//            inverseJoinColumns = { @JoinColumn(name = "rid")})
     private List<Role> roles;
 
     public User() {}

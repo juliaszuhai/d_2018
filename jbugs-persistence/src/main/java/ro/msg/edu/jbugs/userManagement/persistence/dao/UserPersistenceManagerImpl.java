@@ -78,18 +78,7 @@ public class UserPersistenceManagerImpl implements UserPersistenceManager {
         return q.getResultList();
     }
 
-//    @Override
-//    public String findFirstUserNameStartingWith(String username) {
-//        Query q = em.createQuery("select u.username from User u where u.username like '" + username + "%' " +
-//                "Order by u.username DESC").setMaxResults(1);
-//        try {
-//            Object result = q.getSingleResult();
-//        } catch (NoResultException e){
-//            return null;
-//        }
-//
-//            return (String) q.getSingleResult();
-//    }
+
 @Override
 public List<String> findUsersNameStartingWith(String username) {
     Query q = em.createQuery("select u.username from User u where u.username like '" + username + "%'");

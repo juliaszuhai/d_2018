@@ -17,25 +17,16 @@ public class Permission extends BaseEntity<Long>{
     @Column(name = "description")
     private String description;
 
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "pid"),
-            inverseJoinColumns = { @JoinColumn(name = "rid")})
-    private List<Role> roles;
+//
+//    @ManyToMany(cascade = CascadeType.ALL)
+////    @JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "pid"),
+////            inverseJoinColumns = { @JoinColumn(name = "rid")})
+//    private List<Role> roles;
 
     public Permission() {
     }
 
-    public Permission(String type, String description) {
-        this.type = type;
-        this.description = description;
-    }
 
-    public Permission(String type, String description, List<Role> roles) {
-        this.type = type;
-        this.description = description;
-        this.roles = roles;
-    }
 
     public String getType() {
         return type;
@@ -53,13 +44,7 @@ public class Permission extends BaseEntity<Long>{
         this.description = description;
     }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
 
     @Override
     public boolean equals(Object o) {

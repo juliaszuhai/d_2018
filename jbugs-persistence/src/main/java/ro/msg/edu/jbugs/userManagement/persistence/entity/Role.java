@@ -15,27 +15,21 @@ public class Role extends BaseEntity<Long> {
     private String type;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "rid"),
-            inverseJoinColumns = { @JoinColumn(name = "pid")})
+//    @JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "rid"),
+//            inverseJoinColumns = { @JoinColumn(name = "pid")})
     private List<Permission> permissions;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "rid"),
-            inverseJoinColumns = { @JoinColumn(name = "uid")})
-    private List<User> users;
+//    @ManyToMany(cascade = CascadeType.PERSIST)
+//    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "rid"),
+//            inverseJoinColumns = { @JoinColumn(name = "uid")})
+//    private List<User> users;
 
     public Role() {
     }
 
-    public Role(String type) {
-        this.type = type;
-    }
 
-    public Role(String type, List<Permission> permissions, List<User> users) {
-        this.type = type;
-        this.permissions = permissions;
-        this.users = users;
-    }
+
+
 
     public String getType() {
         return type;
