@@ -4,6 +4,9 @@ import edu.msg.ro.boundary.UserManagement;
 import edu.msg.ro.exceptions.BusinessException;
 import edu.msg.ro.exceptions.ExceptionCode;
 import edu.msg.ro.persistence.user.dao.UserPersistenceManager;
+import edu.msg.ro.persistence.user.entity.User;
+import edu.msg.ro.transfer.UserDTO;
+import edu.msg.ro.utils.Encryptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -122,5 +126,21 @@ public class UserPersistenceManagerBeanTest {
         }
     }
 
+    @Test
+    public void testLogin_Success() {
+        User user = mock(User.class);
+        when(user.getUsername()).thenReturn("salut");
+        when(user.getPassword()).thenReturn(Encryptor.encrypt("secret"));
+
+        when(userPersistenceManager.getUserForUsername(any(String.class)))
+                .thenReturn(user);
+
+        try{
+            UserDTO userDTO = userManagementBean.login("salut","secret");
+            assertEquals(userDTO.getUsername(),user.getUsername());
+        } catch(BusinessException e){
+            fail("Shouldn't reach this point");
+        }
+    }
 
 }
