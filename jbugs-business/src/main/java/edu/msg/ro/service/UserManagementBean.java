@@ -58,7 +58,8 @@ public class UserManagementBean implements UserManagement {
 
 
     /**
-     * Creates a suffix for the username, if the username already exists.
+     * Creates a suffix for the username, if the username already exists. The suffix consists
+     * of a number. 
      *
      * @param username
      * @return
@@ -93,11 +94,15 @@ public class UserManagementBean implements UserManagement {
 
 
     /**
-     * TODO : comentariu
+     * Generates a username, taking the first 5 letters of the last name and the first
+     * letter of the first name.
+     * If the user's last name is not long enough it will try
+     * to add the first name's letters to the username until it has 6 characters.
+     * If the username already exists it will append a number to the username.
      *
      * @param firstName
      * @param lastName
-     * @return
+     * @return generated username
      */
     protected String generateUsername(@NotNull final String firstName, @NotNull final String lastName) {
         StringBuilder username = new StringBuilder();
