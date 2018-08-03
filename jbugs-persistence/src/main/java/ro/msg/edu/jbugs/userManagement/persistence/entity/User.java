@@ -8,12 +8,19 @@ import java.util.Objects;
 @Entity
 @Table(name = "users")
 @NamedQueries(
-        {@NamedQuery(name="get_All_Users",query = "SELECT u FROM User u")}
+        {
+                @NamedQuery(name = User.GET_ALL_USERS, query = "SELECT u FROM User u"),
+                @NamedQuery(name = User.GET_USER_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username=:username"),
+                @NamedQuery(name= User.GET_USER_BY_EMAIL, query = "SELECT u from User u where u.email = :email "),
+        }
 )
 public class User extends BaseEntity<Long> {
 
     @Transient
     private final static int MAX_STRING_LENGTH = 40;
+    public static final String GET_ALL_USERS = "get_All_Users";
+    public static final String GET_USER_BY_USERNAME = "get_User_By_Username";
+    public static final String GET_USER_BY_EMAIL = "get_User_By_Email";
 
     @Column(name = "firstName", length = MAX_STRING_LENGTH, nullable = false)
     private String firstName;
@@ -39,12 +46,10 @@ public class User extends BaseEntity<Long> {
     private Boolean isActive;
 
     @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "uid"),
-//            inverseJoinColumns = { @JoinColumn(name = "rid")})
     private List<Role> roles;
 
-    public User() {}
-
+    public User() {
+    }
 
 
     public String getFirstName() {

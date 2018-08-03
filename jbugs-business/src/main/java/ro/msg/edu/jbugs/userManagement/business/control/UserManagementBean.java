@@ -58,8 +58,6 @@ public class UserManagementBean implements UserManagement {
             throw new BusinessException(ExceptionCode.USER_VALIDATION_EXCEPTION);
         }
 
-        userPersistenceManager.getUserByEmail2("").
-
 
 
 
