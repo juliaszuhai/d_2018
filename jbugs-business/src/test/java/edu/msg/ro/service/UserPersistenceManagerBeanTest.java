@@ -143,4 +143,22 @@ public class UserPersistenceManagerBeanTest {
         }
     }
 
+    @Test
+    public void testCreateUser_Success(){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName("Cristi");
+        userDTO.setLastName("Borcea");
+        userDTO.setEmail("dinamo@msggroup.com");
+        userDTO.setPhoneNumber("1234456667");
+        userDTO.setPassword("IloveSteaua");
+        try{
+        UserDTO createdUser = userManagementBean.createUser(userDTO);
+        assertEquals(userDTO.getFirstName(),createdUser.getFirstName());
+        assertEquals(userDTO.getLastName(),createdUser.getLastName());
+        assertEquals(userDTO.getEmail(),createdUser.getEmail());
+        assertEquals("borcec",createdUser.getUsername());
+        } catch (BusinessException e){
+            fail("Should not reach this point");
+        }
+    }
 }
