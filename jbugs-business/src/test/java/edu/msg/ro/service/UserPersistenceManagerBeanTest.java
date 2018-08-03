@@ -1,6 +1,5 @@
 package edu.msg.ro.service;
 
-import edu.msg.ro.boundary.UserManagement;
 import edu.msg.ro.exceptions.BusinessException;
 import edu.msg.ro.exceptions.ExceptionCode;
 import edu.msg.ro.persistence.user.dao.UserPersistenceManager;
@@ -12,9 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.ejb.EJB;
-import javax.inject.Inject;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,5 @@
 package edu.msg.ro.service;
 
-import edu.msg.ro.boundary.UserManagement;
 import edu.msg.ro.exceptions.BusinessException;
 import edu.msg.ro.exceptions.ExceptionCode;
 import edu.msg.ro.persistence.user.dao.UserPersistenceManager;

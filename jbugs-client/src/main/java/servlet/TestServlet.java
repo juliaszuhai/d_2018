@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.msg.ro.boundary.UserManagement;
+import edu.msg.ro.service.UserManagement;
 import edu.msg.ro.exceptions.BusinessException;
-import edu.msg.ro.persistence.user.entity.User;
 import edu.msg.ro.transfer.UserDTO;
 
 @WebServlet(urlPatterns = {"/TestServlet"})
@@ -106,22 +105,3 @@ public class TestServlet extends HttpServlet {
     }// </editor-fold>
 }
 
-
-/*
-@Singleton
-@Startup
-class TestingClass{
-
-	@PostConstruct
-	public void printBeforeTime(){
-		System.out.println("BEFORE:: " + java.time.LocalTime.now());
-	}
-
-	@PreDestroy
-	public void printAfterTime(){
-		System.out.println("AFTER:: " + java.time.LocalTime.now());
-	}
-
-
-}
-*/

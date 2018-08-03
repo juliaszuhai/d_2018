@@ -1,7 +1,6 @@
-package edu.msg.ro.boundary;
+package edu.msg.ro.service;
 
 import edu.msg.ro.exceptions.BusinessException;
-import edu.msg.ro.persistence.user.entity.User;
 import edu.msg.ro.transfer.UserDTO;
 
 import java.util.List;
