@@ -30,7 +30,7 @@ public class UserManagementBean implements UserManagement {
     private static final Logger logger = LogManager.getLogger(UserManagementBean.class);
 
     @EJB
-    private UserPersistenceManager userPersistanceManager;
+    private UserPersistenceManager userPersistenceManager;
 
     @Override
     public UserDTO createUser(UserDTO userDTO) throws BusinessException {
@@ -41,7 +41,7 @@ public class UserManagementBean implements UserManagement {
             throw new BusinessException(ExceptionCode.USER_VALIDATION_EXCEPTION);
         }
 
-        if (!userPersistanceManager.getUserByEmail(userDTO.getEmail()).isEmpty()) {
+        if (!userPersistenceManager.getUserByEmail(userDTO.getEmail()).isEmpty()) {
             throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
         }
 
@@ -51,7 +51,7 @@ public class UserManagementBean implements UserManagement {
         user.setUsername(userName + createSuffix(userName));
         user.setIsActive(true);
         user.setPassword(Encryptor.encrypt(userDTO.getPassword()));
-        userPersistanceManager.addUser(user);
+        userPersistenceManager.addUser(user);
 
         return UserDTOHelper.fromEntity(user);
     }
@@ -59,13 +59,13 @@ public class UserManagementBean implements UserManagement {
 
     /**
      * Creates a suffix for the username, if the username already exists. The suffix consists
-     * of a number. 
+     * of a number.
      *
      * @param username
      * @return
      */
     protected String createSuffix(String username) {
-        List<String> usernameLike = userPersistanceManager.findUsersNameStartingWith(username);
+        List<String> usernameLike = userPersistenceManager.findUsersNameStartingWith(username);
         Optional<Integer> max = usernameLike
                 .stream()
                 .map(x -> x.substring(MIN_USERNAME_LENGTH, x.length()))
@@ -128,21 +128,21 @@ public class UserManagementBean implements UserManagement {
 
     @Override
     public void deactivateUser(String username) {
-        User user = userPersistanceManager.getUserForUsername(username);
+        User user = userPersistenceManager.getUserForUsername(username);
         user.setIsActive(false);
-        userPersistanceManager.updateUser(user);
+        userPersistenceManager.updateUser(user);
     }
 
     @Override
     public void activateUser(String username) {
-        User user = userPersistanceManager.getUserForUsername(username);
+        User user = userPersistenceManager.getUserForUsername(username);
         user.setIsActive(true);
-        userPersistanceManager.updateUser(user);
+        userPersistenceManager.updateUser(user);
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return userPersistanceManager.getAllUsers()
+        return userPersistenceManager.getAllUsers()
                 .stream()
                 .map(UserDTOHelper::fromEntity)
                 .collect(Collectors.toList());
@@ -150,7 +150,7 @@ public class UserManagementBean implements UserManagement {
 
     @Override
     public UserDTO login(String username, String password) throws BusinessException {
-        User user = userPersistanceManager.getUserForUsername(username);
+        User user = userPersistenceManager.getUserForUsername(username);
         if (user == null) {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }
