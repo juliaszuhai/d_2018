@@ -57,14 +57,12 @@ public class UserManagementBean implements UserManagement {
         if (!isValidForCreation(userDTO)) {
             throw new BusinessException(ExceptionCode.USER_VALIDATION_EXCEPTION);
         }
-
-
-
-
         //validate if email already exists
-        if (!userPersistenceManager.getUserByEmail(userDTO.getEmail()).isEmpty()) {
+        if (!userPersistenceManager.getUserByEmail(userDTO.getEmail()).isPresent()) {
             throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
         }
+
+
     }
 
     /**
@@ -147,14 +145,14 @@ public class UserManagementBean implements UserManagement {
 
     @Override
     public void deactivateUser(String username) {
-        User user = userPersistenceManager.getUserByUsername(username);
+        User user = userPersistenceManager.getUserByUsername(username).get();
         user.setIsActive(false);
         userPersistenceManager.updateUser(user);
     }
 
     @Override
     public void activateUser(String username) {
-        User user = userPersistenceManager.getUserByUsername(username);
+        User user = userPersistenceManager.getUserByUsername(username).get();
         user.setIsActive(true);
         userPersistenceManager.updateUser(user);
     }
@@ -169,15 +167,15 @@ public class UserManagementBean implements UserManagement {
 
     @Override
     public UserDTO login(String username, String password) throws BusinessException {
-        User user = userPersistenceManager.getUserByUsername(username);
-        if (user == null) {
+        Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
+        if (!userOptional.isPresent()) {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }
-        if (!Encryptor.encrypt(password).equals(user.getPassword())) {
+        if (!Encryptor.encrypt(password).equals(userOptional.get().getPassword())) {
             throw new BusinessException(ExceptionCode.PASSWORD_NOT_VALID);
         }
 
-        return UserDTOHelper.fromEntity(user);
+        return UserDTOHelper.fromEntity(userOptional.get());
     }
 
     private String generateFullUsername(String firstName, String lastName){

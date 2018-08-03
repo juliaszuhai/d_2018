@@ -46,10 +46,8 @@ public class UserPersistenceManager {
      * @return : ResultList, empty if there are no users in the database.
      */
     public List<User> getAllUsers() {
-        TypedQuery<User> q =
-                em.createNamedQuery(User.GET_ALL_USERS, User.class);
-        return q.getResultList();
-
+        return em.createNamedQuery(User.GET_ALL_USERS, User.class)
+                .getResultList();
     }
 
 
@@ -60,8 +58,8 @@ public class UserPersistenceManager {
      * @return : Optional, containing a user entity.
      */
     public Optional<User> getUserByUsername(@NotNull String username) {
-        TypedQuery<User> q = em.createQuery(User.GET_USER_BY_USERNAME,User.class);
-        q.setParameter("username",username);
+        TypedQuery<User> q = em.createQuery(User.GET_USER_BY_USERNAME,User.class)
+                .setParameter("username",username);
         try {
             return Optional.of(q.getSingleResult());
         } catch (NoResultException ex) {
