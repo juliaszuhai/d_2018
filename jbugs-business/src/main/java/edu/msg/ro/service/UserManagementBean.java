@@ -36,19 +36,11 @@ public class UserManagementBean implements UserManagement {
     public UserDTO createUser(UserDTO userDTO) throws BusinessException {
 
         logger.log(Level.INFO, "In createUser method");
-        //TODO : Trim first name and last name
-        if (!isValidForCreation(userDTO)) {
-            throw new BusinessException(ExceptionCode.USER_VALIDATION_EXCEPTION);
-        }
 
-        if (!userPersistenceManager.getUserByEmail(userDTO.getEmail()).isEmpty()) {
-            throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
-        }
-
+        normalizeUserDTO(userDTO);
+        validateUserForCreation(userDTO);
         User user = UserDTOHelper.toEntity(userDTO);
-
-        String userName = generateUsername(userDTO.getFirstName(), userDTO.getLastName());
-        user.setUsername(userName + createSuffix(userName));
+        user.setUsername(generateFullUsername(userDTO.getFirstName(),userDTO.getLastName()));
         user.setIsActive(true);
         user.setPassword(Encryptor.encrypt(userDTO.getPassword()));
         userPersistenceManager.addUser(user);
@@ -56,6 +48,31 @@ public class UserManagementBean implements UserManagement {
         return UserDTOHelper.fromEntity(user);
     }
 
+
+    /**
+     * Validates the DTO. To use before sending it further.
+     * @param userDTO
+     * @throws BusinessException
+     */
+    private void validateUserForCreation(UserDTO userDTO) throws BusinessException {
+        if (!isValidForCreation(userDTO)) {
+            throw new BusinessException(ExceptionCode.USER_VALIDATION_EXCEPTION);
+        }
+        //validate if email already exists
+        if (!userPersistenceManager.getUserByEmail(userDTO.getEmail()).isEmpty()) {
+            throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
+        }
+    }
+
+    /**
+     * Trims stuff (first and last name)
+     *
+     * @param userDTO
+     */
+    private void normalizeUserDTO(UserDTO userDTO) {
+        userDTO.setFirstName(userDTO.getFirstName().trim());
+        userDTO.setLastName(userDTO.getLastName().trim());
+    }
 
     /**
      * Creates a suffix for the username, if the username already exists. The suffix consists
@@ -69,7 +86,7 @@ public class UserManagementBean implements UserManagement {
         Optional<Integer> max = userPersistenceManager.findUsersNameStartingWith(username)
                 .stream()
                 .map(x -> x.substring(MIN_USERNAME_LENGTH, x.length()))
-                .map(x -> x.equals("")? 0 : Integer.parseInt(x))
+                .map(x -> x.equals("") ? 0 : Integer.parseInt(x))
                 .max(Comparator.naturalOrder())
                 .map(x -> x + 1);
         return max.map(Object::toString).orElse("");
@@ -158,5 +175,11 @@ public class UserManagementBean implements UserManagement {
         }
 
         return UserDTOHelper.fromEntity(user);
+    }
+
+    private String generateFullUsername(String firstName, String lastName){
+        String prefix = generateUsername(firstName,lastName);
+        String suffix = createSuffix(prefix);
+        return prefix+suffix;
     }
 }
