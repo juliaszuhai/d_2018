@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 import static org.junit.Assert.*;
 
-public class UserPersistanceManagerBeanTest {
+public class UserPersistenceManagerBeanTest {
 
 
     UserManagementBean bean = new UserManagementBean();
@@ -34,6 +34,11 @@ public class UserPersistanceManagerBeanTest {
     public void generateUsername_expectedba0000() {
         String username = bean.generateUsername("a", "b");
         assertEquals("ba0000", username);
+    }
+
+    @Test
+    public void createSuffix_expectedEmpty(){
+
     }
 
 

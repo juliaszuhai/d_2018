@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Remote
-public interface UserPersistanceManager extends Serializable {
+public interface UserPersistenceManager extends Serializable {
 
     void addUser(User user);
 

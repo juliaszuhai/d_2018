@@ -16,12 +16,32 @@ public interface UserManagement {
      */
     UserDTO createUser(UserDTO userDTO) throws BusinessException;
 
+    /**
+     * Deactivates a user, restricting the access of said user to the app.
+     * @param username
+     */
     void deactivateUser(String username);
 
+    /**
+     * Activates a deactivated user.
+     * @param username
+     */
     void activateUser(String username);
 
+
+    /**
+     * @return a list of DTOs containing information about users.
+     */
     List<UserDTO> getAllUsers();
 
+
+    /**
+     * Tries to log in a user.
+     * @param username
+     * @param password
+     * @return UserDTO of said user
+     * @throws BusinessException in case the user is not found or the password is wrong.
+     */
     UserDTO login(String username, String password) throws BusinessException;
 
 

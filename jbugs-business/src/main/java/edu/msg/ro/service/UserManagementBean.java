@@ -3,7 +3,7 @@ package edu.msg.ro.service;
 import edu.msg.ro.boundary.UserManagement;
 import edu.msg.ro.exceptions.BusinessException;
 import edu.msg.ro.exceptions.ExceptionCode;
-import edu.msg.ro.persistence.user.dao.UserPersistanceManager;
+import edu.msg.ro.persistence.user.dao.UserPersistenceManager;
 import edu.msg.ro.persistence.user.entity.User;
 import edu.msg.ro.transfer.UserDTO;
 import edu.msg.ro.transfer.UserDTOHelper;
@@ -30,7 +30,7 @@ public class UserManagementBean implements UserManagement {
     private static final Logger logger = LogManager.getLogger(UserManagementBean.class);
 
     @EJB
-    UserPersistanceManager userPersistanceManager;
+    private UserPersistenceManager userPersistanceManager;
 
     @Override
     public UserDTO createUser(UserDTO userDTO) throws BusinessException {
@@ -50,23 +50,19 @@ public class UserManagementBean implements UserManagement {
         String userName = generateUsername(userDTO.getFirstName(), userDTO.getLastName());
         user.setUsername(userName + createSuffix(userName));
         user.setIsActive(true);
+        user.setPassword(Encryptor.encrypt(userDTO.getPassword()));
         userPersistanceManager.addUser(user);
 
         return UserDTOHelper.fromEntity(user);
     }
 
-    //    private String createSuffix(String username){
-//
-//        String topUser = userPersistanceManager.findFirstUserNameStartingWith(username);
-//        if(topUser!=null){
-//        return String.valueOf(Integer.parseInt(
-//                topUser.substring(6,topUser.length())
-//        )+1); }
-//        else{
-//            return "";
-//        }
-//
-//    }
+
+    /**
+     * Creates a suffix for the username, if the username already exists.
+     *
+     * @param username
+     * @return
+     */
     protected String createSuffix(String username) {
         List<String> usernameLike = userPersistanceManager.findUsersNameStartingWith(username);
         Optional<Integer> max = usernameLike
@@ -131,8 +127,9 @@ public class UserManagementBean implements UserManagement {
         user.setIsActive(false);
         userPersistanceManager.updateUser(user);
     }
+
     @Override
-    public void activateUser(String username){
+    public void activateUser(String username) {
         User user = userPersistanceManager.getUserForUsername(username);
         user.setIsActive(true);
         userPersistanceManager.updateUser(user);
@@ -149,10 +146,10 @@ public class UserManagementBean implements UserManagement {
     @Override
     public UserDTO login(String username, String password) throws BusinessException {
         User user = userPersistanceManager.getUserForUsername(username);
-        if(user == null){
+        if (user == null) {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }
-        if(!Encryptor.encrypt(password).equals(user.getPassword())){
+        if (!Encryptor.encrypt(password).equals(user.getPassword())) {
             throw new BusinessException(ExceptionCode.PASSWORD_NOT_VALID);
         }
 

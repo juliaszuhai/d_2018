@@ -5,13 +5,12 @@ import edu.msg.ro.persistence.user.entity.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
-@Stateless(name = "UserManagementImpl", mappedName = "UserPersistanceManagerImpl")
-public class UserPersistanceManagerImpl implements UserPersistanceManager {
+@Stateless(name = "UserManagementImpl", mappedName = "UserPersistenceManagerImpl")
+public class UserPersistenceManagerImpl implements UserPersistenceManager {
 
     private static final long serialVersionUID = 1L;
 
