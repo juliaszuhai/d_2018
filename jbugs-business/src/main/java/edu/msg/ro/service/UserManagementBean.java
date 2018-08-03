@@ -182,4 +182,13 @@ public class UserManagementBean implements UserManagement {
         String suffix = createSuffix(prefix);
         return prefix+suffix;
     }
+
+    private boolean isValidPhoneNumber(String phonenumber){
+        //TODO Nu merge
+        final Pattern VALID_PHONE_ADDRESS_REGEX =
+                Pattern.compile("(^\\+49)|(^01[5-7][1-9])", Pattern.CASE_INSENSITIVE);
+
+        Matcher matcher = VALID_PHONE_ADDRESS_REGEX.matcher(phonenumber);
+        return matcher.find();
+    }
 }
