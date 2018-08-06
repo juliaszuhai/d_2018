@@ -123,8 +123,9 @@ public class UserPersistenceManager {
      * @param email : String containing the email.
      * @return : Optional, containing a user entity.
      */
-    public Optional<User> getUserByEmail(String email) {
-        TypedQuery<User> q = em.createQuery(User.GET_USER_BY_EMAIL, User.class);
+    public Optional<User> getUserByEmail(@NotNull String email) {
+        TypedQuery<User> q = em.createQuery(User.GET_USER_BY_EMAIL, User.class)
+                .setParameter("email",email);
         try {
             return Optional.of(q.getSingleResult());
         } catch (NoResultException ex) {

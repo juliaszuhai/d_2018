@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -25,31 +26,31 @@ public class UserPersistenceManagerBeanTest {
 
 
     @InjectMocks
-    UserManagementBean userManagementBean;
+    private UserManagementController userManagementController;
 
     @Mock
-    UserPersistenceManager userPersistenceManager;
+    private UserPersistenceManager userPersistenceManager;
 
     @Test
     public void generateUsername_expectedMarini() {
-        String username = userManagementBean.generateUsername("Ion", "Marin");
+        String username = userManagementController.generateUsername("Ion", "Marin");
         assertEquals("marini", username);
     }
 
     @Test
     public void generateUsername_expectedIonion() {
-        String username = userManagementBean.generateUsername("Ion", "Ion");
+        String username = userManagementController.generateUsername("Ion", "Ion");
         assertEquals("ionion", username);
     }
     @Test
     public void generateUsername_expectedPetric() {
-        String username = userManagementBean.generateUsername("Calin", "Petrindean");
+        String username = userManagementController.generateUsername("Calin", "Petrindean");
         assertEquals("petric", username);
     }
 
     @Test
     public void generateUsername_expectedba0000() {
-        String username = userManagementBean.generateUsername("a", "b");
+        String username = userManagementController.generateUsername("a", "b");
         assertEquals("ba0000", username);
     }
 
@@ -57,7 +58,7 @@ public class UserPersistenceManagerBeanTest {
     public void createSuffix_expectedEmpty(){
 
         when(userPersistenceManager.getUsernamesLike(any(String.class))).thenReturn(new ArrayList<>());
-        String suffix = userManagementBean.createSuffix("dorel0");
+        String suffix = userManagementController.createSuffix("dorel0");
         assertEquals( "",suffix);
 
     }
@@ -75,7 +76,7 @@ public class UserPersistenceManagerBeanTest {
                             add("dorel03");
                         }}
                 );
-        String suffix = userManagementBean.createSuffix("dorel0");
+        String suffix = userManagementController.createSuffix("dorel0");
         assertEquals( "4",suffix);
 
     }
@@ -91,7 +92,7 @@ public class UserPersistenceManagerBeanTest {
                             add("dorel06");
                         }}
                 );
-        String suffix = userManagementBean.createSuffix("dorel0");
+        String suffix = userManagementController.createSuffix("dorel0");
         assertEquals("7",suffix);
 
     }
@@ -106,16 +107,16 @@ public class UserPersistenceManagerBeanTest {
                             add("marini");
                         }}
                 );
-        String suffix = userManagementBean.createSuffix("marini");
+        String suffix = userManagementController.createSuffix("marini");
         assertEquals( "1",suffix);
     }
 
     @Test
     public void testLogin_wrongUsername() {
         when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(null);
+                .thenReturn(Optional.empty());
         try {
-            userManagementBean.login("a", "s");
+            userManagementController.login("a", "s");
             fail("Shouldn't reach this point");
         } catch (BusinessException e){
             assertEquals(ExceptionCode.USERNAME_NOT_VALID,e.getExceptionCode());
@@ -129,10 +130,10 @@ public class UserPersistenceManagerBeanTest {
         when(user.getPassword()).thenReturn(Encryptor.encrypt("secret"));
 
         when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(user);
+                .thenReturn(Optional.of(user));
 
         try{
-            UserDTO userDTO = userManagementBean.login("salut","secret");
+            UserDTO userDTO = userManagementController.login("salut","secret");
             assertEquals(userDTO.getUsername(),user.getUsername());
         } catch(BusinessException e){
             fail("Shouldn't reach this point");
@@ -141,6 +142,10 @@ public class UserPersistenceManagerBeanTest {
 
     @Test
     public void testCreateUser_Success(){
+        when(userPersistenceManager.getUserByEmail(any(String.class)))
+                .thenReturn(Optional.empty());
+
+
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("Cristi");
         userDTO.setLastName("Borcea");
@@ -148,7 +153,7 @@ public class UserPersistenceManagerBeanTest {
         userDTO.setPhoneNumber("1234456667");
         userDTO.setPassword("IloveSteaua");
         try{
-        UserDTO createdUser = userManagementBean.createUser(userDTO);
+        UserDTO createdUser = userManagementController.createUser(userDTO);
         assertEquals(userDTO.getFirstName(),createdUser.getFirstName());
         assertEquals(userDTO.getLastName(),createdUser.getLastName());
         assertEquals(userDTO.getEmail(),createdUser.getEmail());
