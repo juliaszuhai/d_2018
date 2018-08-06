@@ -31,6 +31,12 @@ public class UserManagementController implements UserManagement {
     @EJB
     private UserPersistenceManager userPersistenceManager;
 
+    /**
+     * Creates a user entity using a user DTO.
+     * @param userDTO user information
+     * @return : the user DTO of the created entity
+     * @throws BusinessException
+     */
     @Override
     public UserDTO createUser(UserDTO userDTO) throws BusinessException {
 
@@ -78,7 +84,7 @@ public class UserManagementController implements UserManagement {
     /**
      * Creates a suffix for the username, if the username already exists. The suffix consists
      * of a number.
-     *
+     * TODO : Change this. Probably won't be needed.
      * @param username
      * @return
      */
@@ -117,6 +123,8 @@ public class UserManagementController implements UserManagement {
      * to add the first name's letters to the username until it has 6 characters.
      * If the username already exists it will append a number to the username.
      *
+     * TODO : Change the algorithm.
+     *
      * @param firstName
      * @param lastName
      * @return generated username
@@ -143,6 +151,10 @@ public class UserManagementController implements UserManagement {
 
     }
 
+    /**
+     * Deactivates a user, removing them the ability to login, but keeping their bugs, comments, etc.
+     * @param username
+     */
     @Override
     public void deactivateUser(String username) {
         User user = userPersistenceManager.getUserByUsername(username).get();
@@ -150,6 +162,10 @@ public class UserManagementController implements UserManagement {
         userPersistenceManager.updateUser(user);
     }
 
+    /**
+     * Activates a user, granting them the ability to login.
+     * @param username
+     */
     @Override
     public void activateUser(String username) {
         User user = userPersistenceManager.getUserByUsername(username).get();
@@ -157,6 +173,10 @@ public class UserManagementController implements UserManagement {
         userPersistenceManager.updateUser(user);
     }
 
+    /**
+     * Get a list of all Users that are registered.
+     * @return
+     */
     @Override
     public List<UserDTO> getAllUsers() {
         return userPersistenceManager.getAllUsers()
@@ -165,6 +185,14 @@ public class UserManagementController implements UserManagement {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Takes the username and password of a user and if they are correct, it returns the
+     * corresponding DTO. Otherwise it will throw an exception.
+     * @param username
+     * @param password
+     * @return a user DTO if it succeeds.
+     * @throws BusinessException
+     */
     @Override
     public UserDTO login(String username, String password) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
