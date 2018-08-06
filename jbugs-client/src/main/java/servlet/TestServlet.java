@@ -48,14 +48,14 @@ public class TestServlet extends HttpServlet {
         userDTO2.setEmail("dordorel@msggroup.com");
         userDTO2.setPassword("Password");
         userDTO2.setPhoneNumber("1234567890");
-        try {
-            persistentUserDTO = userManagement.createUser(userDTO);
-            persistentUserDTO = userManagement.createUser(userDTO2);
+//        try {
+            //persistentUserDTO = userManagement.createUser(userDTO);
+            //persistentUserDTO = userManagement.createUser(userDTO2);
             userManagement.deactivateUser("doreld2");
 
-        } catch (BusinessException e) {
-            e.printStackTrace();
-        }
+//        } catch (BusinessException e) {
+//            e.printStackTrace();
+//        }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println(persistentUserDTO.toString());

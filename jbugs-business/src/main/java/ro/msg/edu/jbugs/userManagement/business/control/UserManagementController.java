@@ -22,15 +22,21 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Stateless
-public class UserManagementBean implements UserManagement {
+public class UserManagementController implements UserManagement {
     //TODO rename;
     private final static int MAX_LAST_NAME_LENGTH = 5;
     private final static int MIN_USERNAME_LENGTH = 6;
-    private static final Logger logger = LogManager.getLogger(UserManagementBean.class);
+    private static final Logger logger = LogManager.getLogger(UserManagementController.class);
 
     @EJB
     private UserPersistenceManager userPersistenceManager;
 
+    /**
+     * Creates a user entity using a user DTO.
+     * @param userDTO user information
+     * @return : the user DTO of the created entity
+     * @throws BusinessException
+     */
     @Override
     public UserDTO createUser(UserDTO userDTO) throws BusinessException {
 
@@ -57,16 +63,12 @@ public class UserManagementBean implements UserManagement {
         if (!isValidForCreation(userDTO)) {
             throw new BusinessException(ExceptionCode.USER_VALIDATION_EXCEPTION);
         }
-
-        userPersistenceManager.getUserByEmail2("").
-
-
-
-
         //validate if email already exists
-        if (!userPersistenceManager.getUserByEmail(userDTO.getEmail()).isEmpty()) {
+        if (userPersistenceManager.getUserByEmail(userDTO.getEmail()).isPresent()) {
             throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
         }
+
+
     }
 
     /**
@@ -82,7 +84,7 @@ public class UserManagementBean implements UserManagement {
     /**
      * Creates a suffix for the username, if the username already exists. The suffix consists
      * of a number.
-     *
+     * TODO : Change this. Probably won't be needed.
      * @param username
      * @return
      */
@@ -121,6 +123,8 @@ public class UserManagementBean implements UserManagement {
      * to add the first name's letters to the username until it has 6 characters.
      * If the username already exists it will append a number to the username.
      *
+     * TODO : Change the algorithm.
+     *
      * @param firstName
      * @param lastName
      * @return generated username
@@ -147,20 +151,32 @@ public class UserManagementBean implements UserManagement {
 
     }
 
+    /**
+     * Deactivates a user, removing them the ability to login, but keeping their bugs, comments, etc.
+     * @param username
+     */
     @Override
     public void deactivateUser(String username) {
-        User user = userPersistenceManager.getUserByUsername(username);
+        User user = userPersistenceManager.getUserByUsername(username).get();
         user.setIsActive(false);
         userPersistenceManager.updateUser(user);
     }
 
+    /**
+     * Activates a user, granting them the ability to login.
+     * @param username
+     */
     @Override
     public void activateUser(String username) {
-        User user = userPersistenceManager.getUserByUsername(username);
+        User user = userPersistenceManager.getUserByUsername(username).get();
         user.setIsActive(true);
         userPersistenceManager.updateUser(user);
     }
 
+    /**
+     * Get a list of all Users that are registered.
+     * @return
+     */
     @Override
     public List<UserDTO> getAllUsers() {
         return userPersistenceManager.getAllUsers()
@@ -169,17 +185,25 @@ public class UserManagementBean implements UserManagement {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Takes the username and password of a user and if they are correct, it returns the
+     * corresponding DTO. Otherwise it will throw an exception.
+     * @param username
+     * @param password
+     * @return a user DTO if it succeeds.
+     * @throws BusinessException
+     */
     @Override
     public UserDTO login(String username, String password) throws BusinessException {
-        User user = userPersistenceManager.getUserByUsername(username);
-        if (user == null) {
+        Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
+        if (!userOptional.isPresent()) {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }
-        if (!Encryptor.encrypt(password).equals(user.getPassword())) {
+        if (!Encryptor.encrypt(password).equals(userOptional.get().getPassword())) {
             throw new BusinessException(ExceptionCode.PASSWORD_NOT_VALID);
         }
 
-        return UserDTOHelper.fromEntity(user);
+        return UserDTOHelper.fromEntity(userOptional.get());
     }
 
     private String generateFullUsername(String firstName, String lastName){

@@ -3,86 +3,143 @@ package ro.msg.edu.jbugs.userManagement.persistence.dao;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
+import javax.ejb.Stateless;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * Provides functions for working with users in the persistence layer.
  */
-public interface UserPersistenceManager extends Serializable {
+@Stateless
+public class UserPersistenceManager {
+
+    private static final long serialVersionUID = 1L;
+
+    @PersistenceContext(unitName = "jbugs-persistence")
+    private EntityManager em;
+
 
     /**
      * Persists a user in the database.
-     * @param user not null
-     * @return user - the user from the db
+     * @param user : user entity to be created, should not be null
+     * @return : inserted user entity from database
      */
-    User createUser(@NotNull User user);
+    public User createUser(@NotNull User user) {
+        em.persist(user);
+        em.flush();
+        return user;
+    }
 
     /**
-     * Updates a user from the database
-     * @param user
-     * @return updated user from the db
+     * Updates a user from the database.
+     * @param user : user entity to be updated, should not be null
+     * @return : updated user entity from database
      */
-    User updateUser(@NotNull User user);
-
-    List<User> getAllUsers();
+    public User updateUser(@NotNull User user) {
+        return em.merge(user);
+    }
 
     /**
-     *  Returns the user entity matching the username if it exists.
-     *  TODO vedem
-     * @param username
-     * @return
+     * Get a list of all users from the database.
+     * @return : ResultList, empty if there are no users in the database.
      */
-    User getUserByUsername(@NotNull String username);
+    public List<User> getAllUsers() {
+        return em.createNamedQuery(User.GET_ALL_USERS, User.class)
+                .getResultList();
+    }
 
 
     /**
-     * Persists a role in the database.
-     * @param role
+     * Returns a user entity with the matching username wrapped in an optional.
+     * If none exist, returns an empty Optional Object
+     * @param username : String containing the username.
+     * @return : Optional, containing a user entity.
      */
-    void createRole(Role role);
+    public Optional<User> getUserByUsername(@NotNull String username) {
+        TypedQuery<User> q = em.createQuery(User.GET_USER_BY_USERNAME,User.class)
+                .setParameter("username",username);
+        try {
+            return Optional.of(q.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
+
+    }
+
+
+    /**
+     * Persists a user in the database.
+     * @param role : role entity to be created, should not be null
+     */
+    public void createRole(@NotNull Role role) {
+        em.persist(role);
+    }
 
     /**
      * Removes a role from the database.
-     * @param role
+     * @param role : role entity to be removed, should not be null
      */
-    void removeRole(Role role);
+    public void removeRole(Role role) {
+        em.remove(role);
+
+    }
 
     /**
-     * Updates a role in the database.
-     * @param role
-     * @return
+     * Updates a role in the database using the given Role entity.
+     * @param role : role entity to be updated, should not be null
+     * @return : returns the updated role entity
      */
-    Role updateRole(Role role);
+    public Role updateRole(Role role) {
+        em.merge(role);
+        return role;
+    }
 
     /**
-     * TODO de scris
-     * @param id
-     * @return
+     * TODO: nu cred ca avem nevoie de metoda asta - nu am mai facut-o frumoasa
+     * Returns the role with the given id
+     * @param id : id
+     * @return : Role entity
      */
-    Role getRoleForId(long id);
+    public Role getRoleForId(long id) {
+        Query q = em.createQuery("SELECT r FROM Role r WHERE r.id=" + id);
+        return (Role) q.getSingleResult();
+    }
 
     /**
-     * TODO de scris
-     * @return
+     * Get a list of all roles stored in the database.
+     * @return : List of Roles, empty if there are no roles in the database.
      */
-    List<Role> getAllRoles();
+    public List<Role> getAllRoles() {
+        TypedQuery<Role> q = em.createQuery(Role.GET_ALL_ROLES,Role.class);
+        return q.getResultList();
+    }
+
 
     /**
-     * TODO: de renovat
-     * @param email
-     * @return
+     * Returns a user entity with the matching email wrapped in an optional.
+     * If none exist, returns an empty Optional Object
+     * @param email : String containing the email.
+     * @return : Optional, containing a user entity.
      */
-    List<User> getUserByEmail(@NotNull String email);
-
-    Optional<User> getUserByEmail2(@NotNull String email);
+    public Optional<User> getUserByEmail(@NotNull String email) {
+        TypedQuery<User> q = em.createQuery(User.GET_USER_BY_EMAIL, User.class)
+                .setParameter("email",email);
+        try {
+            return Optional.of(q.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
+    }
 
     /**
-     * TODO : change everything = should not be here.
+     * TODO: de vazut alternative. Posibil sa nu mai trebuiasca.
      * @param username
-     * @return list of usernames that start with username.
+     * @return
      */
-    List<String> getUsernamesLike(@NotNull String username);
+    public List<String> getUsernamesLike(String username) {
+        Query q = em.createQuery("select u.username from User u where u.username like '" + username + "%'");
+        return q.getResultList();
+    }
 }
