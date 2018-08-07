@@ -19,13 +19,13 @@ public interface UserManagement {
      * Deactivates a user, restricting the access of said user to the app.
      * @param username
      */
-    void deactivateUser(String username);
+    void deactivateUser(String username) throws BusinessException;
 
     /**
      * Activates a deactivated user.
      * @param username
      */
-    void activateUser(String username);
+    void activateUser(String username) throws BusinessException;
 
 
     /**

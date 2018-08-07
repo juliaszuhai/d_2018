@@ -156,10 +156,17 @@ public class UserManagementController implements UserManagement {
      * @param username
      */
     @Override
-    public void deactivateUser(String username) {
-        User user = userPersistenceManager.getUserByUsername(username).get();
-        user.setIsActive(false);
-        userPersistenceManager.updateUser(user);
+    public void deactivateUser(String username) throws BusinessException {
+        Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
+        if(userOptional.isPresent()) {
+            User user = userPersistenceManager.getUserByUsername(username).get();
+            user.setIsActive(false);
+            userPersistenceManager.updateUser(user);
+        }
+        else{
+            throw (new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
+        }
+
     }
 
     /**
@@ -167,10 +174,15 @@ public class UserManagementController implements UserManagement {
      * @param username
      */
     @Override
-    public void activateUser(String username) {
-        User user = userPersistenceManager.getUserByUsername(username).get();
-        user.setIsActive(true);
-        userPersistenceManager.updateUser(user);
+    public void activateUser(String username) throws BusinessException {
+        Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            user.setIsActive(true);
+            userPersistenceManager.updateUser(user);
+        } else{
+            throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
+        }
     }
 
     /**
