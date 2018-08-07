@@ -51,7 +51,11 @@ public class TestServlet extends HttpServlet {
 //        try {
             //persistentUserDTO = userManagement.createUser(userDTO);
             //persistentUserDTO = userManagement.createUser(userDTO2);
+        try {
             userManagement.deactivateUser("doreld2");
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        }
 
 //        } catch (BusinessException e) {
 //            e.printStackTrace();

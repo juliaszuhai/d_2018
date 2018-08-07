@@ -170,7 +170,7 @@ public class UserManagementController implements UserManagement {
     }
 
     /**
-     * Activates a user, granting them the ability to login.
+     * Activates a user, granting them the ability to login. asdf
      * @param username
      */
     @Override
