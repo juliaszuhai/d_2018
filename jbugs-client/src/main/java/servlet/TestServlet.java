@@ -61,9 +61,6 @@ public class TestServlet extends HttpServlet {
 //            e.printStackTrace();
 //        }
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println(persistentUserDTO.toString());
-        }
 
     }
 

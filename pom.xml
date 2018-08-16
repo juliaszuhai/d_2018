@@ -15,10 +15,14 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<payara.versio>4.1.1.171</payara.versio>
+		<jackson.jaxrs.json.version>2.9.4</jackson.jaxrs.json.version>
+		<jackson.jaxrs.json.glassfish.version>2.27</jackson.jaxrs.json.glassfish.version>
 	</properties>
 
 	<dependencyManagement>
+
 		<dependencies>
+
 			<dependency>
 				<groupId>javax</groupId>
 				<artifactId>javaee-api</artifactId>
@@ -85,8 +89,24 @@
 			<version>2.7</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<version>${jackson.jaxrs.json.version}</version>
+		</dependency>
 
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<scope>runtime</scope>
+			<version>${jackson.jaxrs.json.glassfish.version}</version>
+		</dependency>
 
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.4.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -58,7 +58,7 @@ public class UserPersistenceManager {
      * @return : Optional, containing a user entity.
      */
     public Optional<User> getUserByUsername(@NotNull String username) {
-        TypedQuery<User> q = em.createQuery(User.GET_USER_BY_USERNAME,User.class)
+        TypedQuery<User> q = em.createNamedQuery(User.GET_USER_BY_USERNAME,User.class)
                 .setParameter("username",username);
         try {
             return Optional.of(q.getSingleResult());
@@ -112,7 +112,7 @@ public class UserPersistenceManager {
      * @return : List of Roles, empty if there are no roles in the database.
      */
     public List<Role> getAllRoles() {
-        TypedQuery<Role> q = em.createQuery(Role.GET_ALL_ROLES,Role.class);
+        TypedQuery<Role> q = em.createNamedQuery(Role.GET_ALL_ROLES,Role.class);
         return q.getResultList();
     }
 
@@ -124,7 +124,7 @@ public class UserPersistenceManager {
      * @return : Optional, containing a user entity.
      */
     public Optional<User> getUserByEmail(@NotNull String email) {
-        TypedQuery<User> q = em.createQuery(User.GET_USER_BY_EMAIL, User.class)
+        TypedQuery<User> q = em.createNamedQuery(User.GET_USER_BY_EMAIL, User.class)
                 .setParameter("email",email);
         try {
             return Optional.of(q.getSingleResult());

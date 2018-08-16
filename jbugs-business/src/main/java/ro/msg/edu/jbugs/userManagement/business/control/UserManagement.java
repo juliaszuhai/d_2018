@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface UserManagement {
 
+
+
     /**
      * Method is used for persisting an user from an userDTO.
      * It generates the username and does the validations.
@@ -14,6 +16,7 @@ public interface UserManagement {
      * @return the newly created entity as a userDTO
      */
     UserDTO createUser(UserDTO userDTO) throws BusinessException;
+
 
     /**
      * Deactivates a user, restricting the access of said user to the app.
@@ -32,6 +35,7 @@ public interface UserManagement {
      * @return a list of DTOs containing information about users.
      */
     List<UserDTO> getAllUsers();
+
 
 
     /**

@@ -26,7 +26,7 @@ public class UserManagementController implements UserManagement {
     //TODO rename;
     private final static int MAX_LAST_NAME_LENGTH = 5;
     private final static int MIN_USERNAME_LENGTH = 6;
-    private static final Logger logger = LogManager.getLogger(UserManagementController.class);
+//    private static final Logger logger = LogManager.getLogger(UserManagementController.class);
 
     @EJB
     private UserPersistenceManager userPersistenceManager;
@@ -40,7 +40,7 @@ public class UserManagementController implements UserManagement {
     @Override
     public UserDTO createUser(UserDTO userDTO) throws BusinessException {
 
-        logger.log(Level.INFO, "In createUser method");
+     //   logger.log(Level.INFO, "In createUser method");
 
         normalizeUserDTO(userDTO);
         validateUserForCreation(userDTO);
