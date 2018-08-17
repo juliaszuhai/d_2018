@@ -24,7 +24,8 @@
             ],
             "styles": [
               "src/styles.css",
-              "../clientApp/node_modules/bootstrap/dist/css/bootstrap.css"
+              "../clientApp/node_modules/bootstrap/dist/css/bootstrap.css",
+              "../clientApp/node_modules/bootstrap/dist/css/bootstrap-theme.css"
 
             ],
             "scripts": [

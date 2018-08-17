@@ -1,24 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import {AppComponent} from './app.component';
+import {LoginComponent} from './login/login.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
-import { NavComponent } from './nav/nav.component';
-import { ContentComponent } from './content/content.component';
+import {NavComponent} from './nav/nav.component';
+import {ContentComponent} from './content/content.component';
 import {RouterModule, Routes} from '@angular/router';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 
 const appRoutes: Routes = [
   {
     path: '', pathMatch: 'full', redirectTo: '/content'
   },
   {
-    path: 'login',  component: LoginComponent
+    path: 'login', component: LoginComponent
   },
   {
-    path: 'content',  component: ContentComponent
+    path: 'content', component: ContentComponent
   },
 
 ];
@@ -35,9 +37,21 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
     JwtModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatMenuModule,
+    MatToolbarModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    MatButtonModule,
+    MatCheckboxModule,
+    MatMenuModule,
+    MatToolbarModule
+  ]
 })
-export class AppModule { }
+export class AppModule {
+}
