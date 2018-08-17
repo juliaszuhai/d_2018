@@ -11,6 +11,11 @@ import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Path("/authenticate")
 public class Authentication {
@@ -34,10 +39,10 @@ public class Authentication {
             UserDTO authUser = userManagement.login(username, password);
 
             // Issue a token for the user
-            String token = issueToken(username);
+            String token = issueToken(authUser);
 
             // Return the token on the response
-            return Response.ok(token).build();
+            return Response.ok("{\"token\": \""+token+"\"}").build();
         } catch(BusinessException e){
             System.out.println("-----------------------------\n\n\n EXCEPTION"+e.getExceptionCode()+" \n\n\n ------------");
             System.out.println();
@@ -48,11 +53,22 @@ public class Authentication {
         }
     }
 
-    private String issueToken(String username) {
+    private String issueToken(UserDTO userDTO) {
+        LocalTime midnight = LocalTime.MIDNIGHT;
+        LocalDate today = LocalDate.now(ZoneId.of("Europe/Berlin"));
+        LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
+        LocalDateTime tomorrowMidnight = todayMidnight.plusDays(1);
+        Date out = Date.from(tomorrowMidnight.atZone(ZoneId.systemDefault()).toInstant());
+
         try {
             Algorithm algorithm = Algorithm.HMAC256("secret");
             String token = JWT.create()
-                    .withIssuer("auth0")
+                    .withIssuer(userDTO.getUsername())
+                    .withExpiresAt(out)
+                    .withClaim("firstName", userDTO.getFirstName())
+                    .withClaim("lastName", userDTO.getLastName())
+                    .withClaim("email", userDTO.getEmail())
+                    .withClaim("phone", userDTO.getPhoneNumber())
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception){

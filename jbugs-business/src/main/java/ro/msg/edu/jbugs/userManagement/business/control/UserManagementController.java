@@ -7,10 +7,6 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.userManagement.business.utils.Encryptor;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
@@ -33,6 +29,7 @@ public class UserManagementController implements UserManagement {
 
     /**
      * Creates a user entity using a user DTO.
+     *
      * @param userDTO user information
      * @return : the user DTO of the created entity
      * @throws BusinessException
@@ -40,12 +37,12 @@ public class UserManagementController implements UserManagement {
     @Override
     public UserDTO createUser(UserDTO userDTO) throws BusinessException {
 
-     //   logger.log(Level.INFO, "In createUser method");
+        //   logger.log(Level.INFO, "In createUser method");
 
         normalizeUserDTO(userDTO);
         validateUserForCreation(userDTO);
         User user = UserDTOHelper.toEntity(userDTO);
-        user.setUsername(generateFullUsername(userDTO.getFirstName(),userDTO.getLastName()));
+        user.setUsername(generateFullUsername(userDTO.getFirstName(), userDTO.getLastName()));
         user.setIsActive(true);
         user.setPassword(Encryptor.encrypt(userDTO.getPassword()));
         userPersistenceManager.createUser(user);
@@ -56,6 +53,7 @@ public class UserManagementController implements UserManagement {
 
     /**
      * Validates the DTO. To use before sending it further.
+     *
      * @param userDTO
      * @throws BusinessException
      */
@@ -85,6 +83,7 @@ public class UserManagementController implements UserManagement {
      * Creates a suffix for the username, if the username already exists. The suffix consists
      * of a number.
      * TODO : Change this. Probably won't be needed.
+     *
      * @param username
      * @return
      */
@@ -122,7 +121,7 @@ public class UserManagementController implements UserManagement {
      * If the user's last name is not long enough it will try
      * to add the first name's letters to the username until it has 6 characters.
      * If the username already exists it will append a number to the username.
-     *
+     * <p>
      * TODO : Change the algorithm.
      *
      * @param firstName
@@ -153,17 +152,17 @@ public class UserManagementController implements UserManagement {
 
     /**
      * Deactivates a user, removing them the ability to login, but keeping their bugs, comments, etc.
+     *
      * @param username
      */
     @Override
     public void deactivateUser(String username) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
-        if(userOptional.isPresent()) {
+        if (userOptional.isPresent()) {
             User user = userPersistenceManager.getUserByUsername(username).get();
             user.setIsActive(false);
             userPersistenceManager.updateUser(user);
-        }
-        else{
+        } else {
             throw (new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
         }
 
@@ -171,22 +170,24 @@ public class UserManagementController implements UserManagement {
 
     /**
      * Activates a user, granting them the ability to login. asdf
+     *
      * @param username
      */
     @Override
     public void activateUser(String username) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
-        if(userOptional.isPresent()){
+        if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setIsActive(true);
             userPersistenceManager.updateUser(user);
-        } else{
+        } else {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }
     }
 
     /**
      * Get a list of all Users that are registered.
+     *
      * @return
      */
     @Override
@@ -200,6 +201,7 @@ public class UserManagementController implements UserManagement {
     /**
      * Takes the username and password of a user and if they are correct, it returns the
      * corresponding DTO. Otherwise it will throw an exception.
+     *
      * @param username
      * @param password
      * @return a user DTO if it succeeds.
@@ -218,13 +220,13 @@ public class UserManagementController implements UserManagement {
         return UserDTOHelper.fromEntity(userOptional.get());
     }
 
-    private String generateFullUsername(String firstName, String lastName){
-        String prefix = generateUsername(firstName,lastName);
+    private String generateFullUsername(String firstName, String lastName) {
+        String prefix = generateUsername(firstName, lastName);
         String suffix = createSuffix(prefix);
-        return prefix+suffix;
+        return prefix + suffix;
     }
 
-    private boolean isValidPhoneNumber(String phonenumber){
+    private boolean isValidPhoneNumber(String phonenumber) {
         //TODO Nu merge
         final Pattern VALID_PHONE_ADDRESS_REGEX =
                 Pattern.compile("(^\\+49)|(^01[5-7][1-9])", Pattern.CASE_INSENSITIVE);

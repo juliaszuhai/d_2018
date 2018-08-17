@@ -1,6 +1,5 @@
 package ro.msg.edu.jbugs.userManagement.business.boundary;
 
-import ro.msg.edu.jbugs.userManagement.business.control.UserManagement;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
