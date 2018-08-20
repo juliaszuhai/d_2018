@@ -13,6 +13,8 @@ import java.util.Objects;
         {
                 @NamedQuery(name = Bug.GET_ALL_BUGS, query = "SELECT b FROM Bug b"),
                 @NamedQuery(name = Bug.GET_BUG_BY_TITLE, query="SELECT b FROM Bug b WHERE b.title=:title")
+                @NamedQuery(name = Bug.GET_BUG_BY_ID, query = "SELECT u from Bug u where u.id=:id")
+
         }
 )
 public class Bug extends BaseEntity<Long> {
@@ -21,6 +23,7 @@ public class Bug extends BaseEntity<Long> {
     private final static int MAX_STRING_LENGTH = 40;
     public static final String GET_ALL_BUGS = "get_All_Bugs";
     public static final String GET_BUG_BY_TITLE = "get_Bug_By_Title";
+    public static final String GET_BUG_BY_ID="get_Bug_By_Id";
 
     @Column(name = "title", length = MAX_STRING_LENGTH, nullable = false)
     private String title;
