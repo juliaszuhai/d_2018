@@ -1,8 +1,22 @@
 <mat-toolbar color="primary">
   <span>Application Title</span>
+  <button mat-button="asdf" *ngIf="isLoggedIn()" routerLinkActive="active" routerLink="content">Content</button>
+  <span class="fill-space"></span>
+  <button  mat-button [matMenuTriggerFor]="menu" *ngIf="isLoggedIn()">
+    {{getFirstName()}}
+  </button>
+  <mat-menu #menu="matMenu" >
+    <button mat-menu-item>
+      <i class="material-icons">account_circle</i> Profile
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <i class="material-icons" >logout</i> Logout
+    </button>
+  </mat-menu>
 
 
+  <button  mat-button *ngIf="!isLoggedIn()" routerLinkActive="active" routerLink="login">
+    Login
+  </button>
 
-  <button mat-button="asdf" routerLinkActive="active" routerLink="login">Login</button>
-  <button mat-button="asdf" routerLinkActive="active" routerLink="content">Content</button>
 </mat-toolbar>
