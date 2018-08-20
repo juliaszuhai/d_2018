@@ -68,6 +68,12 @@ public class UserPersistenceManager {
 
     }
 
+    public User getUserById(@NotNull Long id){
+        TypedQuery<User> q=em.createNamedQuery(User.GET_USER_BY_ID,User.class)
+                .setParameter("id",id);
+        return q.getSingleResult();
+    }
+
 
     /**
      * Persists a user in the database.
