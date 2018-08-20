@@ -67,7 +67,7 @@ export class AuthenticationService {
     localStorage.setItem('lastName', decodedToken.lastName);
     localStorage.setItem('email', decodedToken.email);
     localStorage.setItem('phone', decodedToken.phone);
-    localStorage.setItem('expires_at', decodedToken.exp);
+    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
   }
 
   public isLoggedIn() {
