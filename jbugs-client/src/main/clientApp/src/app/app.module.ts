@@ -46,7 +46,7 @@ const appRoutes: Routes = [
     UserModule
   ],
   providers: [{provide: LoginguardGuard, useClass: LoginguardGuard}],
-  ,
+
   bootstrap: [AppComponent],
   exports: [
     MatButtonModule,
