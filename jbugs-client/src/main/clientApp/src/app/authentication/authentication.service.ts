@@ -68,7 +68,8 @@ export class AuthenticationService {
   }
 
   public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
+
+    return localStorage['id_token'] !== undefined;
   }
 
   isLoggedOut() {
@@ -80,6 +81,7 @@ export class AuthenticationService {
     localStorage.removeItem('expires_at');
     localStorage.removeItem('username');
     localStorage.removeItem('firstName');
+    localStorage.removeItem('lastName');
     localStorage.removeItem('email');
     localStorage.removeItem('phone');
   }
