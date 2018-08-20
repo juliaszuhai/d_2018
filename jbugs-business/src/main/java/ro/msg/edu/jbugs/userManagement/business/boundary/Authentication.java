@@ -53,10 +53,11 @@ public class Authentication {
 
     private String issueToken(UserDTO userDTO) {
         LocalTime midnight = LocalTime.MIDNIGHT;
-        LocalDate today = LocalDate.now(ZoneId.of("Europe/Berlin"));
+        LocalDate today = LocalDate.now(ZoneId.of("Europe/Bucharest"));
         LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
         LocalDateTime tomorrowMidnight = todayMidnight.plusDays(1);
         Date out = Date.from(tomorrowMidnight.atZone(ZoneId.systemDefault()).toInstant());
+
 
         try {
             Algorithm algorithm = Algorithm.HMAC256("secret");

@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import {catchError, tap} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Router} from '@angular/router';
+import {now} from 'moment';
 
 export interface UserLoginData {
   username: string;
@@ -53,23 +54,30 @@ export class AuthenticationService {
 
   private setSession(authResult) {
 
-    const expiresAt = moment().add(authResult.exp, 'second');
     const helper = new JwtHelperService();
+
 
     const decodedToken = helper.decodeToken(authResult.token);
 
+
+    const expiresAt = new Date(decodedToken.exp * 1000);
+    
+    localStorage.setItem('token', authResult.token);
     localStorage.setItem('username', decodedToken.iss);
     localStorage.setItem('id_token', decodedToken.iss);
     localStorage.setItem('firstName', decodedToken.firstName);
     localStorage.setItem('lastName', decodedToken.lastName);
     localStorage.setItem('email', decodedToken.email);
     localStorage.setItem('phone', decodedToken.phone);
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+    localStorage.setItem('expires_at', JSON.stringify(expiresAt));
   }
 
   public isLoggedIn() {
 
-    return localStorage['id_token'] !== undefined;
+    if (!localStorage['expires_at']) {
+      return false;
+    }
+    return this.getExpiration().isAfter(now());
   }
 
   isLoggedOut() {
@@ -88,7 +96,9 @@ export class AuthenticationService {
 
   getExpiration() {
     const expiration = localStorage.getItem('expires_at');
-    const expiresAt = JSON.parse(expiration);
+    const expiresAt = expiration;
+
+
     return moment(expiresAt);
   }
 
