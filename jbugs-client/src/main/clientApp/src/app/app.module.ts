@@ -6,19 +6,14 @@ import {LoginComponent} from './authentication/login/login.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
+import {NavComponent} from './nav/nav.component';
 import {ContentComponent} from './content/content.component';
 import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {AuthenticationModule} from './authentication/authentication.module';
-import {TranslatorComponent} from "./translator/translator.component";
-import {TranslatorModule} from "./translator/translator.module";
-import {UserModule} from './user/user.module';
-import {LoginguardGuard} from './authentication/loginguard.guard';
-import {NavigationModule} from './navigation/navigation.module';
-
-
-
+import { ListBugsComponent } from './bugs/list-bugs/list-bugs.component';
+import {BugsModule} from "./bugs/bugs.module";
 
 const appRoutes: Routes = [
   {
@@ -27,7 +22,9 @@ const appRoutes: Routes = [
   {
     path: 'content', component: ContentComponent
   },
-
+  {
+    path: 'listBugs', component: ListBugsComponent
+  },
 
 ];
 
