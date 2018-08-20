@@ -12,8 +12,10 @@ export class Language {
       this.Name = lngName;
   }
 
-
-
+  allLanguages = [
+    new Language(1, 'English'),
+    new Language(2, 'Romana')
+  ]
 
 }
 @Component({
