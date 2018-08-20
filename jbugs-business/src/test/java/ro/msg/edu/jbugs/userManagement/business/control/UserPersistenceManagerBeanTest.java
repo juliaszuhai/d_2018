@@ -32,37 +32,41 @@ public class UserPersistenceManagerBeanTest {
     private UserPersistenceManager userPersistenceManager;
 
     @Test
-    public void testGenerateUsername_ExpectedOK(){
+    public void generateUsername_expectedMarini() {
         when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(Optional.empty());
+                .thenReturn(
+                        Optional.empty()
+                );
+        String username = userManagementController.generateUsername("Ion", "Marin");
 
+        assertEquals("marini", username);
+    }
+
+
+    @Test
+    public void generateUsername_expectediftind(){
+        when(userPersistenceManager.getUserByUsername(any(String.class)))
+                .thenReturn(
+                        Optional.empty()
+                );
         assertEquals("iftind",userManagementController.generateUsername("Dan","Iftinca"));
     }
 
     @Test
-    public void testGenerateUsername_Expectedmarini(){
+    public void generateUsername_expectedionion(){
         when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(Optional.empty());
-
-        assertEquals("marini",userManagementController.generateUsername("Ion","Marin"));
-    }
-
-    @Test
-    public void testGenerateUsername_Expectedionion(){
-        when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(Optional.empty());
-
+                .thenReturn(
+                        Optional.empty()
+                );
         assertEquals("ionion",userManagementController.generateUsername("Ion","Ion"));
     }
-
     @Test
-    public void testGenerateUsername_Expectedba0000(){
+    public void generateUsername(){
         when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(Optional.empty());
-
+                .thenReturn(
+                        Optional.empty()
+                );
         assertEquals("ba0000",userManagementController.generateUsername("a","b"));
-    }
-    @Test
     public void testGenerateUsername_Expected(){
         User mockUser = new User();
         mockUser.setUsername("marini");

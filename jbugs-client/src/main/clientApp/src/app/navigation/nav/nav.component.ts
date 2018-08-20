@@ -1,7 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatToolbar, MatButton} from '@angular/material';
-import {AuthenticationService} from '../../authentication/authentication.service';
-import {Router} from '@angular/router';
+import { MatToolbar, MatButton} from '@angular/material';
 
 @Component({
   selector: 'app-nav',
@@ -10,20 +8,7 @@ import {Router} from '@angular/router';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private authService: AuthenticationService, private router: Router) {
-  }
-
-  getFirstName() {
-    return localStorage['firstName'];
-  }
-
-  isLoggedIn() {
-    return this.authService.isLoggedIn();
-  }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+  constructor() {
   }
 
   ngOnInit() {

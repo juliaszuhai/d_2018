@@ -171,6 +171,7 @@ public class UserManagementController {
      * @return a user DTO if it succeeds.
      * @throws BusinessException
      */
+    @Override
     public UserDTO login(String username, String password) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (!userOptional.isPresent()) {

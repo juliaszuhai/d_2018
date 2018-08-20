@@ -51,6 +51,7 @@ public class Authentication {
         }
     }
 
+
     private String issueToken(UserDTO userDTO) {
         LocalTime midnight = LocalTime.MIDNIGHT;
         LocalDate today = LocalDate.now(ZoneId.of("Europe/Bucharest"));
