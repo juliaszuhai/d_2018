@@ -12,6 +12,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {AuthenticationModule} from './authentication/authentication.module';
+import {NavigationModule} from './navigation/navigation.module';
+import {ProfileComponent} from './user/profile/profile.component';
+import {UserModule} from './user/user.module';
+import {LoginguardGuard} from './authentication/loginguard.guard';
 
 const appRoutes: Routes = [
   {
@@ -26,7 +30,6 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent,
     ContentComponent
   ],
   imports: [
@@ -36,13 +39,11 @@ const appRoutes: Routes = [
     JwtModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatMenuModule,
-    MatToolbarModule,
-    AuthenticationModule
+    AuthenticationModule,
+    NavigationModule,
+    UserModule
   ],
-  providers: [],
+  providers: [{provide: LoginguardGuard, useClass: LoginguardGuard}],
   bootstrap: [AppComponent],
   exports: [
     MatButtonModule,

@@ -6,6 +6,8 @@ import {LoginComponent} from './login/login.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthenticationService} from './authentication.service';
 import {TokenInterceptorService} from './token-interceptor.service';
+import {MatButtonModule} from '@angular/material';
+import {UserModule} from '../user/user.module';
 
 const loginRoutes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -15,10 +17,13 @@ const loginRoutes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule.forChild(loginRoutes)
+    RouterModule.forChild(loginRoutes),
+    MatButtonModule,
+    UserModule
   ],
   declarations: [LoginComponent],
-  exports: [LoginComponent, RouterModule],
+  exports: [LoginComponent, RouterModule, MatButtonModule
+  ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
