@@ -60,8 +60,6 @@ export class AuthenticationService {
     const decodedToken = helper.decodeToken(authResult.token);
 
 
-    const expiresAt = new Date(decodedToken.exp * 1000);
-    
     localStorage.setItem('token', authResult.token);
     localStorage.setItem('username', decodedToken.iss);
     localStorage.setItem('id_token', decodedToken.iss);
@@ -69,7 +67,7 @@ export class AuthenticationService {
     localStorage.setItem('lastName', decodedToken.lastName);
     localStorage.setItem('email', decodedToken.email);
     localStorage.setItem('phone', decodedToken.phone);
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt));
+    localStorage.setItem('expires_at', decodedToken.exp);
   }
 
   public isLoggedIn() {
@@ -95,9 +93,13 @@ export class AuthenticationService {
   }
 
   getExpiration() {
-    const expiration = localStorage.getItem('expires_at');
-    const expiresAt = expiration;
+    const time = localStorage['expires_at'];
 
+    const correctSec = time * 1000;
+    var expiresAt = new Date(correctSec);
+
+    console.log(correctSec);
+    console.log(expiresAt);
 
     return moment(expiresAt);
   }

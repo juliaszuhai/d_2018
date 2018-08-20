@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {NavComponent} from './nav/nav.component';
 import {MatButtonModule, MatCheckboxModule, MatIconModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {AuthenticationModule} from '../authentication/authentication.module';
+import {UserModule} from '../user/user.module';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import {AuthenticationModule} from '../authentication/authentication.module';
     MatMenuModule,
     MatToolbarModule,
     MatIconModule,
-    AuthenticationModule
+    AuthenticationModule,
+    UserModule
   ],
   declarations: [NavComponent],
   exports: [NavComponent,

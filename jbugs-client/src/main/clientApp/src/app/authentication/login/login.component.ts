@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           this.error = false;
-          this.router.navigate([`/content`]);
+          this.router.navigate([`/profile`]);
         },
         err => {
           this.error = true;
