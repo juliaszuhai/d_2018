@@ -1,0 +1,17 @@
+<div>
+  <button mat-button [matMenuTriggerFor]="menu">
+    <!--<mat-icon> more_vert</mat-icon>-->
+    Language asdf
+  </button>
+  <mat-menu #menu="matMenu" *ngFor="let language of allLanguages">
+
+        <button mat-menu-item >
+          {{language.Name}}
+        </button>
+
+    <!--<button mat-menu-item>English</button>
+    <button mat-menu-item>Romana</button>-->
+
+  </mat-menu>
+
+</div>
