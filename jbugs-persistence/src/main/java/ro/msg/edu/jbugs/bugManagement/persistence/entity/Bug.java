@@ -12,7 +12,7 @@ import java.util.Objects;
 @NamedQueries(
         {
                 @NamedQuery(name = Bug.GET_ALL_BUGS, query = "SELECT b FROM Bug b"),
-                @NamedQuery(name = Bug.GET_BUG_BY_ID, query = "SELECT u from Bug u where u.id=:id")
+                @NamedQuery(name = Bug.GET_BUG_BY_TITLE, query="SELECT b FROM Bug b WHERE b.title=:title")
 
         }
 )
@@ -21,7 +21,7 @@ public class Bug extends BaseEntity<Long> {
     @Transient
     private final static int MAX_STRING_LENGTH = 40;
     public static final String GET_ALL_BUGS = "get_All_Bugs";
-    public static final String GET_BUG_BY_ID="get_Bug_By_Id";
+    public static final String GET_BUG_BY_TITLE = "get_Bug_By_Title";
 
     @Column(name = "title", length = MAX_STRING_LENGTH, nullable = false)
     private String title;
@@ -36,12 +36,14 @@ public class Bug extends BaseEntity<Long> {
     private Date targetDate;
 
     @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Column(name = "fixedVersion", length = MAX_STRING_LENGTH, nullable = false)
     private String fixedVersion;
 
     @Column(name = "severity", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Severity severity;
 
     @ManyToOne

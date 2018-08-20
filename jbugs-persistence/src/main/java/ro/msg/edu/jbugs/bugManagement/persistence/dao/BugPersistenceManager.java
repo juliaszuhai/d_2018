@@ -5,10 +5,12 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 
 @Stateless
@@ -29,10 +31,21 @@ public class BugPersistenceManager {
         return q.getResultList();
     }
 
-    public Bug getBugById(@NotNull Long id){
-        TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_ID,Bug.class)
-                .setParameter("id",id);
-        return q.getSingleResult();
+    public Optional<Bug> getBugByTitle(@NotNull String title) {
+        TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_BUG_BY_TITLE,Bug.class)
+                .setParameter("title",title);
+        try {
+            return Optional.of(q.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
+
     }
+
+//    public Bug getBugById(@NotNull Long id){
+//        TypedQuery<Bug> q=em.createNamedQuery(Bug.,Bug.class)
+//                .setParameter("id",id);
+//        return q.getSingleResult();
+//    }
 
 }
