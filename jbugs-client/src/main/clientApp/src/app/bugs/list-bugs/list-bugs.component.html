@@ -12,12 +12,27 @@
       <th>#</th>
       <th>Title</th>
       <th>Description</th>
+      <th>Version</th>
+      <th>Target Date</th>
+      <th>Status</th>
+      <th>Fixed Version</th>
+      <th>Severity</th>
+      <th>Created By User</th>
+      <th>Assigned To</th>
 
     </tr>
     <tr *ngFor="let bug of bugList; let i = index">
       <td>{{i + 1}}</td>
       <td>{{bug.title}}</td>
       <td>{{bug.description}}</td>
+      <td>{{bug.version}}</td>
+      <td>{{bug.targetDate}}</td>
+      <td>{{bug.status}}</td>
+      <td>{{bug.fixedVersion}}</td>
+      <td>{{bug.severity}}</td>
+      <td>{{bug.createdByUser.username}}</td>
+      <td>{{bug.assignedTo.id}}</td>
+
     </tr>
   </table>`
 
