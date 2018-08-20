@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 import * as moment from 'moment';
 import {tap} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {Router} from '@angular/router';
+import {now} from 'moment';
 
 export interface UserLoginData {
   username: string;
@@ -59,6 +61,7 @@ export class AuthenticationService {
     const decodedToken = helper.decodeToken(authResult.token);
 
 
+    const expiresAt = new Date(decodedToken.exp * 1000);
 
     localStorage.setItem('token', authResult.token);
     localStorage.setItem('username', decodedToken.iss);
@@ -67,7 +70,7 @@ export class AuthenticationService {
     localStorage.setItem('lastName', decodedToken.lastName);
     localStorage.setItem('email', decodedToken.email);
     localStorage.setItem('phone', decodedToken.phone);
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+    localStorage.setItem('expires_at', JSON.stringify(expiresAt));
   }
 
   public isLoggedIn() {
