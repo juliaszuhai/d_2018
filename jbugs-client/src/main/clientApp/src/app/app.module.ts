@@ -15,6 +15,7 @@ import {AuthenticationModule} from './authentication/authentication.module';
 import { ListBugsComponent } from './bugs/list-bugs/list-bugs.component';
 import {BugsModule} from "./bugs/bugs.module";
 
+
 const appRoutes: Routes = [
   {
     path: '', pathMatch: 'full', redirectTo: '/content'
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
   {
     path: 'listBugs', component: ListBugsComponent
   },
+
 
 ];
 
