@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
+import ro.msg.edu.jbugs.userManagement.business.control.UserManagement;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 
@@ -18,7 +19,7 @@ public class TestServlet extends HttpServlet {
 
 
     @EJB
-    private UserManagementController userManagement;
+    private UserManagement userManagement;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

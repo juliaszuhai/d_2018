@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   submitForm() {
     this.authenticationService.validateUser(this.userLoginData.username, this.userLoginData.password)
       .subscribe((response) => {
-        console.log('replace this');
+        console.log(response);
       });
   }
 

@@ -18,11 +18,10 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Stateless
-public class UserManagementController {
+public class UserManagementController implements UserManagement {
     //TODO rename;
     private final static int MAX_LAST_NAME_LENGTH = 5;
     private final static int MIN_USERNAME_LENGTH = 6;
-    public static final int MIN_LAST_NAME_LENGTH = 5;
 //    private static final Logger logger = LogManager.getLogger(UserManagementController.class);
 
     @EJB
@@ -35,6 +34,7 @@ public class UserManagementController {
      * @return : the user DTO of the created entity
      * @throws BusinessException
      */
+    @Override
     public UserDTO createUser(UserDTO userDTO) throws BusinessException {
 
         //   logger.log(Level.INFO, "In createUser method");
@@ -42,7 +42,7 @@ public class UserManagementController {
         normalizeUserDTO(userDTO);
         validateUserForCreation(userDTO);
         User user = UserDTOHelper.toEntity(userDTO);
-        user.setUsername(generateUsername(userDTO.getFirstName(), userDTO.getLastName()));
+        user.setUsername(generateFullUsername(userDTO.getFirstName(), userDTO.getLastName()));
         user.setIsActive(true);
         user.setPassword(Encryptor.encrypt(userDTO.getPassword()));
         userPersistenceManager.createUser(user);
@@ -115,13 +115,47 @@ public class UserManagementController {
     }
 
 
+    /**
+     * Generates a username, taking the first 5 letters of the last name and the first
+     * letter of the first name.
+     * If the user's last name is not long enough it will try
+     * to add the first name's letters to the username until it has 6 characters.
+     * If the username already exists it will append a number to the username.
+     * <p>
+     * TODO : Change the algorithm.
+     *
+     * @param firstName
+     * @param lastName
+     * @return generated username
+     */
+    protected String generateUsername(@NotNull final String firstName, @NotNull final String lastName) {
+        StringBuilder username = new StringBuilder();
 
+
+        if (lastName.length() >= MAX_LAST_NAME_LENGTH) {
+            username.append(lastName.substring(0, MAX_LAST_NAME_LENGTH) + firstName.charAt(0));
+
+        } else if (lastName.length() + firstName.length() >= MIN_USERNAME_LENGTH) {
+            username.append(lastName + firstName.substring(0, MIN_USERNAME_LENGTH - lastName.length()));
+        } else {
+            username.append(lastName + firstName);
+            int usernameLength = username.length();
+            for (int i = 0; i < MIN_USERNAME_LENGTH - usernameLength; i++) {
+                username.append("0");
+            }
+        }
+
+
+        return username.toString().toLowerCase();
+
+    }
 
     /**
      * Deactivates a user, removing them the ability to login, but keeping their bugs, comments, etc.
      *
      * @param username
      */
+    @Override
     public void deactivateUser(String username) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (userOptional.isPresent()) {
@@ -139,6 +173,7 @@ public class UserManagementController {
      *
      * @param username
      */
+    @Override
     public void activateUser(String username) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (userOptional.isPresent()) {
@@ -155,6 +190,7 @@ public class UserManagementController {
      *
      * @return
      */
+    @Override
     public List<UserDTO> getAllUsers() {
         return userPersistenceManager.getAllUsers()
                 .stream()
@@ -171,6 +207,7 @@ public class UserManagementController {
      * @return a user DTO if it succeeds.
      * @throws BusinessException
      */
+    @Override
     public UserDTO login(String username, String password) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (!userOptional.isPresent()) {
@@ -183,38 +220,10 @@ public class UserManagementController {
         return UserDTOHelper.fromEntity(userOptional.get());
     }
 
-
-
-    /**
-     * TODO cazul in care nume + prenume < 6 si deja exista cineva cu acelasi nume.
-     * @param firstName
-     * @param lastName
-     * @return
-     */
-    protected String generateUsername(@NotNull String firstName,@NotNull String lastName){
-
-        String username;
-
-        if(lastName.length()>= MIN_LAST_NAME_LENGTH){
-            username =  lastName.substring(0,MIN_LAST_NAME_LENGTH)+firstName.substring(0,1);
-        } else if(firstName.length()>=5)  {
-            username = lastName+firstName.substring(0,MIN_LAST_NAME_LENGTH-lastName.length()+1);
-        } else{
-            username = lastName+firstName;
-            while(username.length()<6){
-                username+='0';
-            }
-        }
-        Optional<User> exists = userPersistenceManager.getUserByUsername(username);
-
-        while(exists.isPresent()){
-            int stringCutter = 0;
-            lastName = lastName.substring(0,MIN_LAST_NAME_LENGTH-++stringCutter);
-            username = lastName+firstName.substring(0,MIN_LAST_NAME_LENGTH-lastName.length());
-            exists = userPersistenceManager.getUserByUsername(username);
-        }
-
-        return username.toLowerCase();
+    private String generateFullUsername(String firstName, String lastName) {
+        String prefix = generateUsername(firstName, lastName);
+        String suffix = createSuffix(prefix);
+        return prefix + suffix;
     }
 
     private boolean isValidPhoneNumber(String phonenumber) {
