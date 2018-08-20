@@ -6,12 +6,13 @@ import {LoginComponent} from './authentication/login/login.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
-import {NavComponent} from './nav/nav.component';
 import {ContentComponent} from './content/content.component';
 import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {AuthenticationModule} from './authentication/authentication.module';
+import {TranslatorComponent} from "./translator/translator.component";
+import {TranslatorModule} from "./translator/translator.module";
 import {UserModule} from './user/user.module';
 import {LoginguardGuard} from './authentication/loginguard.guard';
 import {NavigationModule} from './navigation/navigation.module';
@@ -33,6 +34,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     ContentComponent
+
   ],
   imports: [
     BrowserModule,
@@ -45,14 +47,17 @@ const appRoutes: Routes = [
     NavigationModule,
     UserModule
   ],
-  providers: [{provide: LoginguardGuard, useClass: LoginguardGuard}],
+  providers: [{
+    provide: LoginguardGuard, useClass: LoginguardGuard
+  }],
 
   bootstrap: [AppComponent],
   exports: [
     MatButtonModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatIconModule
   ]
 })
 export class AppModule {
