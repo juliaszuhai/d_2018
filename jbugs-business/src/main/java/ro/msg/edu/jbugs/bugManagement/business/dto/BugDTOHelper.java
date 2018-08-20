@@ -1,0 +1,71 @@
+package ro.msg.edu.jbugs.bugManagement.business.dto;
+
+
+import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
+import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
+import ro.msg.edu.jbugs.userManagement.persistence.dao.UserPersistenceManager;
+import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
+
+import javax.ejb.EJB;
+import javax.inject.Inject;
+import java.util.Optional;
+
+public class BugDTOHelper {
+
+    @EJB
+    private static UserPersistenceManager userPersistenceManager;
+
+    public static BugDTO fromEntity(Bug bug){
+
+        BugDTO bugDTO=new BugDTO();
+
+        bugDTO.setTitle(bug.getTitle());
+        bugDTO.setDescription(bug.getDescription());
+        bugDTO.setVersion(bug.getVersion());
+        bugDTO.setTargetDate(bug.getTargetDate());
+        bugDTO.setStatus(bug.getStatus());
+        bugDTO.setFixedVersion(bug.getFixedVersion());
+        bugDTO.setSeverity(bug.getSeverity());
+
+        NameIdDTO createdBy=new NameIdDTO();
+
+        createdBy.setId(bug.getCreatedByUser().getId());
+        createdBy.setUsername(bug.getCreatedByUser().getUsername());
+        bugDTO.setCreatedByUser(createdBy);
+
+        NameIdDTO assignedTo=new NameIdDTO();
+
+        assignedTo.setId(bug.getAssignedTo().getId());
+        assignedTo.setUsername(bug.getAssignedTo().getUsername());
+        bugDTO.setAssignedTo(assignedTo);
+
+        return bugDTO;
+
+    }
+
+    public static Bug toEntity(BugDTO bugDTO){
+        Bug bug = new Bug();
+
+        bug.setTitle(bugDTO.getTitle());
+        bug.setDescription(bugDTO.getDescription());
+        bug.setTargetDate(bugDTO.getTargetDate());
+        bug.setStatus(bugDTO.getStatus());
+        bug.setFixedVersion(bugDTO.getFixedVersion());
+        bug.setSeverity(bugDTO.getSeverity());
+
+        User createdByUser=new User();
+
+        Long createByUserId=bugDTO.getCreatedByUser().getId();
+        createdByUser=userPersistenceManager.getUserById(createByUserId);
+        bug.setCreatedByUser(createdByUser);
+
+        User assignedTo=new User();
+
+        Long assignedToId=bugDTO.getAssignedTo().getId();
+        assignedTo=userPersistenceManager.getUserById(assignedToId);
+        bug.setAssignedTo(assignedTo);
+
+        return bug;
+    }
+
+}
