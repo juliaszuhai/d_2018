@@ -15,6 +15,7 @@ import java.util.Objects;
                 @NamedQuery(name = Bug.GET_BUG_BY_ID, query = "SELECT u from Bug u where u.id=:id")
                 @NamedQuery(name = Bug.GET_BUG_BY_TITLE, query="SELECT b FROM Bug b WHERE b.title=:title")
                 @NamedQuery(name = Bug.GET_BUG_BY_ID, query = "SELECT u from Bug u where u.id=:id")
+                @NamedQuery(name = Bug.GET_BUG_BY_TITLE, query="SELECT b FROM Bug b WHERE b.title=:title")
 
         }
 )
@@ -27,7 +28,6 @@ public class Bug extends BaseEntity<Long>  implements Serializable {
     public static final String GET_ALL_BUGS = "get_All_Bugs";
     public static final String GET_BUG_BY_ID="get_Bug_By_Id";
     public static final String GET_BUG_BY_TITLE = "get_Bug_By_Title";
-    public static final String GET_BUG_BY_ID="get_Bug_By_Id";
 
     @Column(name = "title", length = MAX_STRING_LENGTH, nullable = false)
     private String title;

@@ -42,4 +42,10 @@ public class BugPersistenceManager {
 
     }
 
+//    public Bug getBugById(@NotNull Long id){
+//        TypedQuery<Bug> q=em.createNamedQuery(Bug.,Bug.class)
+//                .setParameter("id",id);
+//        return q.getSingleResult();
+//    }
+
 }
