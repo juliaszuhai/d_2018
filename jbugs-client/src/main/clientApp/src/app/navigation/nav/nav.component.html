@@ -6,7 +6,7 @@
     {{getFirstName()}}
   </button>
   <mat-menu #menu="matMenu" >
-    <button mat-menu-item>
+    <button mat-menu-item routerLinkActive="active" routerLink="profile">
       <i class="material-icons">account_circle</i> Profile
     </button>
     <button mat-menu-item (click)="logout()">
