@@ -17,6 +17,7 @@ import {LoginguardGuard} from './authentication/loginguard.guard';
 import {NavigationModule} from './navigation/navigation.module';
 
 
+
 const appRoutes: Routes = [
   {
     path: '', pathMatch: 'full', redirectTo: '/content'
@@ -24,6 +25,7 @@ const appRoutes: Routes = [
   {
     path: 'content', component: ContentComponent
   },
+
 
 ];
 
