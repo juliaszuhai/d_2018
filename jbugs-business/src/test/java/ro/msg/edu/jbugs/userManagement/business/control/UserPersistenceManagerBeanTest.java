@@ -32,42 +32,38 @@ public class UserPersistenceManagerBeanTest {
     private UserPersistenceManager userPersistenceManager;
 
     @Test
-    public void generateUsername_expectedMarini() {
+    public void testGenerateUsername_ExpectedOK(){
         when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(
-                        Optional.empty()
-                );
-        String username = userManagementController.generateUsername("Ion", "Marin");
+                .thenReturn(Optional.empty());
 
-        assertEquals("marini", username);
-    }
-
-
-    @Test
-    public void generateUsername_expectediftind(){
-        when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(
-                        Optional.empty()
-                );
         assertEquals("iftind",userManagementController.generateUsername("Dan","Iftinca"));
     }
 
     @Test
-    public void generateUsername_expectedionion(){
+    public void testGenerateUsername_Expectedmarini(){
         when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(
-                        Optional.empty()
-                );
+                .thenReturn(Optional.empty());
+
+        assertEquals("marini",userManagementController.generateUsername("Ion","Marin"));
+    }
+
+    @Test
+    public void testGenerateUsername_Expectedionion(){
+        when(userPersistenceManager.getUserByUsername(any(String.class)))
+                .thenReturn(Optional.empty());
+
         assertEquals("ionion",userManagementController.generateUsername("Ion","Ion"));
     }
 
     @Test
-    public void generateUsername(){
+    public void testGenerateUsername_Expectedba0000(){
         when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(
-                        Optional.empty()
-                );
+                .thenReturn(Optional.empty());
+
         assertEquals("ba0000",userManagementController.generateUsername("a","b"));
+    }
+
+    @Test
     public void testGenerateUsername_Expected(){
         User mockUser = new User();
         mockUser.setUsername("marini");
@@ -80,6 +76,9 @@ public class UserPersistenceManagerBeanTest {
 //                .thenReturn(Optional.empty());
         assertEquals("mariio",userManagementController.generateUsername("Ion","Marin"));
     }
+
+
+
 
     @Test
     public void testLogin_wrongUsername() {
@@ -115,8 +114,7 @@ public class UserPersistenceManagerBeanTest {
         when(userPersistenceManager.getUserByEmail(any(String.class)))
                 .thenReturn(Optional.empty());
 
-        when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(Optional.empty());
+
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("Cristi");
         userDTO.setLastName("Borcea");

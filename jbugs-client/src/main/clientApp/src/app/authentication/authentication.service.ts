@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpRequest} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import * as moment from 'moment';
-import {catchError, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {Router} from '@angular/router';
-import {now} from 'moment';
 
 export interface UserLoginData {
   username: string;
@@ -54,10 +52,12 @@ export class AuthenticationService {
 
   private setSession(authResult) {
 
+    const expiresAt = moment().add(authResult.exp, 'second');
     const helper = new JwtHelperService();
 
 
     const decodedToken = helper.decodeToken(authResult.token);
+
 
 
     localStorage.setItem('token', authResult.token);
@@ -98,8 +98,6 @@ export class AuthenticationService {
     const correctSec = time * 1000;
     var expiresAt = new Date(correctSec);
 
-    console.log(correctSec);
-    console.log(expiresAt);
 
     return moment(expiresAt);
   }

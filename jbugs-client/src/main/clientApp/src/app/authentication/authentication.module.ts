@@ -30,5 +30,4 @@ const loginRoutes: Routes = [
     multi: true,
   }]
 })
-export class AuthenticationModule {
-}
+export class AuthenticationModule { }

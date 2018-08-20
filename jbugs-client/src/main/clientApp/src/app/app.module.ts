@@ -34,8 +34,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ContentComponent
-
+    ContentComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +45,8 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     AuthenticationModule,
     NavigationModule,
-    UserModule
+    UserModule,
+    BugsModule
   ],
   providers: [{
     provide: LoginguardGuard, useClass: LoginguardGuard
