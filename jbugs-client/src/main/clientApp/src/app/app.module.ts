@@ -20,9 +20,6 @@ const appRoutes: Routes = [
     path: '', pathMatch: 'full', redirectTo: '/content'
   },
   {
-    path: 'login', component: LoginComponent
-  },
-  {
     path: 'content', component: ContentComponent
   },
   {
@@ -34,7 +31,6 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     NavComponent,
     ContentComponent,
     ListBugsComponent,
