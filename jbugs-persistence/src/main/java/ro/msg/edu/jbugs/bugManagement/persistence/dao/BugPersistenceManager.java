@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
@@ -26,6 +27,12 @@ public class BugPersistenceManager {
     public List<Bug> getAllBugs() {
         TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_ALL_BUGS,Bug.class);
         return q.getResultList();
+    }
+
+    public Bug getBugById(@NotNull Long id){
+        TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_ID,Bug.class)
+                .setParameter("id",id);
+        return q.getSingleResult();
     }
 
 }

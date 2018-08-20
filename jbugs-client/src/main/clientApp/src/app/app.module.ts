@@ -13,6 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {AuthenticationModule} from './authentication/authentication.module';
 
+
 const appRoutes: Routes = [
   {
     path: '', pathMatch: 'full', redirectTo: '/content'
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
   {
     path: 'content', component: ContentComponent
   },
+
 
 ];
 
