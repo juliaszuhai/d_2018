@@ -115,7 +115,40 @@ public class UserManagementController {
     }
 
 
+    /**
+     * Generates a username, taking the first 5 letters of the last name and the first
+     * letter of the first name.
+     * If the user's last name is not long enough it will try
+     * to add the first name's letters to the username until it has 6 characters.
+     * If the username already exists it will append a number to the username.
+     * <p>
+     * TODO : Change the algorithm.
+     *
+     * @param firstName
+     * @param lastName
+     * @return generated username
+     */
+    protected String generateUsername(@NotNull final String firstName, @NotNull final String lastName) {
+        StringBuilder username = new StringBuilder();
 
+
+        if (lastName.length() >= MAX_LAST_NAME_LENGTH) {
+            username.append(lastName.substring(0, MAX_LAST_NAME_LENGTH) + firstName.charAt(0));
+
+        } else if (lastName.length() + firstName.length() >= MIN_USERNAME_LENGTH) {
+            username.append(lastName + firstName.substring(0, MIN_USERNAME_LENGTH - lastName.length()));
+        } else {
+            username.append(lastName + firstName);
+            int usernameLength = username.length();
+            for (int i = 0; i < MIN_USERNAME_LENGTH - usernameLength; i++) {
+                username.append("0");
+            }
+        }
+
+
+        return username.toString().toLowerCase();
+
+    }
 
     /**
      * Deactivates a user, removing them the ability to login, but keeping their bugs, comments, etc.
@@ -171,7 +204,6 @@ public class UserManagementController {
      * @return a user DTO if it succeeds.
      * @throws BusinessException
      */
-    @Override
     public UserDTO login(String username, String password) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (!userOptional.isPresent()) {

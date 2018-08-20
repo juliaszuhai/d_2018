@@ -60,6 +60,7 @@ public class UserPersistenceManagerBeanTest {
                 );
         assertEquals("ionion",userManagementController.generateUsername("Ion","Ion"));
     }
+
     @Test
     public void generateUsername(){
         when(userPersistenceManager.getUserByUsername(any(String.class)))
@@ -79,9 +80,6 @@ public class UserPersistenceManagerBeanTest {
 //                .thenReturn(Optional.empty());
         assertEquals("mariio",userManagementController.generateUsername("Ion","Marin"));
     }
-
-
-
 
     @Test
     public void testLogin_wrongUsername() {
