@@ -6,13 +6,12 @@ import {LoginComponent} from './authentication/login/login.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
-import {NavComponent} from './navigation/nav/nav.component';
+import {NavComponent} from './nav/nav.component';
 import {ContentComponent} from './content/content.component';
 import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {AuthenticationModule} from './authentication/authentication.module';
-import {NavigationModule} from './navigation/navigation.module';
 
 const appRoutes: Routes = [
   {
@@ -45,8 +44,7 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     MatMenuModule,
     MatToolbarModule,
-    AuthenticationModule,
-    NavigationModule
+    AuthenticationModule
   ],
   providers: [],
   bootstrap: [AppComponent],

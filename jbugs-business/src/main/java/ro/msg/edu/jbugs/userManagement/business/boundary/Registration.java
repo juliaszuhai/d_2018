@@ -1,6 +1,6 @@
 package ro.msg.edu.jbugs.userManagement.business.boundary;
 
-import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
+import ro.msg.edu.jbugs.userManagement.business.control.UserManagement;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 
@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 public class Registration {
 
     @EJB
-    private UserManagementController userManagement;
+    private UserManagement userManagement;
 
     @GET
     public String getUsers() {

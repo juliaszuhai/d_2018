@@ -33,41 +33,82 @@ public class UserPersistenceManagerBeanTest {
 
     @Test
     public void generateUsername_expectedMarini() {
-        when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(
-                        Optional.empty()
-                );
         String username = userManagementController.generateUsername("Ion", "Marin");
-
         assertEquals("marini", username);
     }
 
-
     @Test
-    public void generateUsername_expectediftind(){
-        when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(
-                        Optional.empty()
-                );
-        assertEquals("iftind",userManagementController.generateUsername("Dan","Iftinca"));
+    public void generateUsername_expectedIonion() {
+        String username = userManagementController.generateUsername("Ion", "Ion");
+        assertEquals("ionion", username);
+    }
+    @Test
+    public void generateUsername_expectedPetric() {
+        String username = userManagementController.generateUsername("Calin", "Petrindean");
+        assertEquals("petric", username);
     }
 
     @Test
-    public void generateUsername_expectedionion(){
-        when(userPersistenceManager.getUserByUsername(any(String.class)))
-                .thenReturn(
-                        Optional.empty()
-                );
-        assertEquals("ionion",userManagementController.generateUsername("Ion","Ion"));
+    public void generateUsername_expectedba0000() {
+        String username = userManagementController.generateUsername("a", "b");
+        assertEquals("ba0000", username);
     }
 
     @Test
-    public void generateUsername(){
-        when(userPersistenceManager.getUserByUsername(any(String.class)))
+    public void createSuffix_expectedEmpty(){
+
+        when(userPersistenceManager.getUsernamesLike(any(String.class))).thenReturn(new ArrayList<>());
+        String suffix = userManagementController.createSuffix("dorel0");
+        assertEquals( "",suffix);
+
+    }
+
+    @Test
+    public void createSuffix_expected4(){
+
+
+        when(userPersistenceManager.getUsernamesLike(any(String.class)))
                 .thenReturn(
-                        Optional.empty()
+                        new ArrayList<String>(){{
+                            add("dorel0");
+                            add("dorel01");
+                            add("dorel02");
+                            add("dorel03");
+                        }}
                 );
-        assertEquals("ba0000",userManagementController.generateUsername("a","b"));
+        String suffix = userManagementController.createSuffix("dorel0");
+        assertEquals( "4",suffix);
+
+    }
+
+    @Test
+    public void createSuffix_expected7(){
+
+
+        when(userPersistenceManager.getUsernamesLike(any(String.class)))
+                .thenReturn(
+                        new ArrayList<String>(){{
+                            add("dorel0");
+                            add("dorel06");
+                        }}
+                );
+        String suffix = userManagementController.createSuffix("dorel0");
+        assertEquals("7",suffix);
+
+    }
+
+    @Test
+    public void createSuffix_expected1(){
+
+
+        when(userPersistenceManager.getUsernamesLike(any(String.class)))
+                .thenReturn(
+                        new ArrayList<String>(){{
+                            add("marini");
+                        }}
+                );
+        String suffix = userManagementController.createSuffix("marini");
+        assertEquals( "1",suffix);
     }
 
     @Test

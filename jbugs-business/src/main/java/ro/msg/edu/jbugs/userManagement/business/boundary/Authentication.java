@@ -4,7 +4,7 @@ package ro.msg.edu.jbugs.userManagement.business.boundary;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
+import ro.msg.edu.jbugs.userManagement.business.control.UserManagement;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 
@@ -21,7 +21,7 @@ import java.util.Date;
 public class Authentication {
 
     @EJB
-    private UserManagementController userManagement;
+    private UserManagement userManagement;
 
     @GET
     public String getUsers() {
@@ -52,7 +52,6 @@ public class Authentication {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
-
 
     private String issueToken(UserDTO userDTO) {
         LocalTime midnight = LocalTime.MIDNIGHT;

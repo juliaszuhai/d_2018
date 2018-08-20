@@ -30,14 +30,14 @@
       </div>
       <button type="submit"
               [disabled]="formControl.invalid"
-              mat-button="asdf">Submit!
+              class="btn btn-primary">Submit!
       </button>
       <!--<p>form classes:{{formElement?.className}}</p>-->
       <!--<p *ngIf="wrongCredentials ">Wrong credentials</p>-->
     </form>
     <form *ngIf="isLoggedIn()">
       <h2>You are logged in as: {{userData.userName}}</h2>
-      <button mat-button="asdf"
+      <button class="btn btn-danger form-control"
               (click)="logout()">Logout</button>
     </form>
   </div>
