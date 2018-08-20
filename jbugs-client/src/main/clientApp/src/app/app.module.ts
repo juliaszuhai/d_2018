@@ -10,8 +10,11 @@ import {NavComponent} from './nav/nav.component';
 import {ContentComponent} from './content/content.component';
 import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule, MatIconModule} from '@angular/material';
 import {AuthenticationModule} from './authentication/authentication.module';
+import {TranslatorComponent} from "./translator/translator.component";
+import {TranslatorModule} from "./translator/translator.module";
+
 
 const appRoutes: Routes = [
   {
@@ -32,6 +35,7 @@ const appRoutes: Routes = [
     LoginComponent,
     NavComponent,
     ContentComponent
+
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,9 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     MatMenuModule,
     MatToolbarModule,
-    AuthenticationModule
+    AuthenticationModule,
+    TranslatorModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent],
@@ -52,7 +58,8 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatIconModule
   ]
 })
 export class AppModule {
