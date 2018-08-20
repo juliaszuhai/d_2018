@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpRequest} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
 import * as moment from 'moment';
-import {tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {Router} from '@angular/router';
 
 export interface UserLoginData {
   username: string;
@@ -25,7 +26,11 @@ export class AuthenticationService {
 
   baseURL = 'http://localhost:8080/jbugs/rest/';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private  router: Router) {
+  }
+
+  public getToken(): string {
+    return localStorage.getItem('token');
   }
 
   validateUser(username: string, password: string) {
@@ -45,13 +50,14 @@ export class AuthenticationService {
     );
   }
 
+
   private setSession(authResult) {
-    console.log(authResult);
+
     const expiresAt = moment().add(authResult.exp, 'second');
     const helper = new JwtHelperService();
 
     const decodedToken = helper.decodeToken(authResult.token);
-    console.log(decodedToken);
+
     localStorage.setItem('username', decodedToken.iss);
     localStorage.setItem('id_token', decodedToken.iss);
     localStorage.setItem('firstName', decodedToken.firstName);
