@@ -1,17 +1,12 @@
-<div>
-  <button mat-button [matMenuTriggerFor]="menu">
-    <!--<mat-icon> more_vert</mat-icon>-->
-    Language asdf
-  </button>
-  <mat-menu #menu="matMenu" *ngFor="let language of allLanguages">
-
-        <button mat-menu-item >
-          {{language.Name}}
-        </button>
-
-    <!--<button mat-menu-item>English</button>
-    <button mat-menu-item>Romana</button>-->
-
+<div xmlns="http://java.sun.com/jsf/html" class="col-md-4">
+  <mat-menu #lngMenu="matMenu">
+    <p *ngFor="let languages of allLanguages">
+      <button mat-menu-item>
+        {{languages.Name}}
+      </button>
+    </p>
   </mat-menu>
-
+  <button mat-button [matMenuTriggerFor]="lngMenu">
+    Language
+  </button>
 </div>
