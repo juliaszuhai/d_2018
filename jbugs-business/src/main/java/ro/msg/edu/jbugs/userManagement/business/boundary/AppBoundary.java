@@ -1,6 +1,8 @@
 package ro.msg.edu.jbugs.userManagement.business.boundary;
 
 
+import ro.msg.edu.jbugs.bugManagement.business.boundary.ViewBug;
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
@@ -13,6 +15,7 @@ public class AppBoundary extends Application {
         final Set<Class<?>> classes = new HashSet<>();
         classes.add(Authentication.class);
         classes.add(Registration.class);
+        classes.add(ViewBug.class);
         return classes;
     }
 }
