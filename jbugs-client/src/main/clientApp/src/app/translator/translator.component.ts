@@ -3,8 +3,8 @@ import {Component, Input, OnInit} from '@angular/core';
 
 export class Language {
 
-  Id: number
-  Name: string
+  Id: number;
+  Name: string;
 
 
   constructor(lngId: number, lngName: string){
@@ -38,7 +38,10 @@ export class TranslatorComponent implements OnInit {
       new Language(1, 'English'),
       new Language(2, 'Romana')
     ]
-    console.log(this.allLanguages);
+  }
+
+  public open(event, id){
+      console.log("Selected language index", id);
   }
 
 
