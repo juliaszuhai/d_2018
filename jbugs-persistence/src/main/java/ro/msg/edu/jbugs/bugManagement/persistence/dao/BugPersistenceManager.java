@@ -24,27 +24,25 @@ public class BugPersistenceManager {
 
     /**
      * Get a list of all bugs stored in the database.
+     *
      * @return : List of Bugs, empty if there are no bugs in the database.
      */
     public List<Bug> getAllBugs() {
-        TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_ALL_BUGS,Bug.class);
+        TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_ALL_BUGS, Bug.class);
         return q.getResultList();
     }
 
 
-    public Optional<Bug> getBugByTitle(@NotNull String title) {
-        TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_BUG_BY_TITLE, Bug.class)
-                .setParameter("title", title);
-        try {
-            return Optional.of(q.getSingleResult());
-        } catch (NoResultException ex) {
-            return Optional.empty();
-        }
-    }
-
-    public Optional<Bug> getBugById(@NotNull Long id){
-        TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_ID,Bug.class)
-                .setParameter("id",id);
+    /**
+     * Returns a bug entity with the matching id wrapped in an optional.
+     * If none exist, returns an empty Optional Object
+     *
+     * @param id : Long containing the id.
+     * @return : Optional, containing a bug entity.
+     */
+    public Optional<Bug> getBugById(@NotNull Long id) {
+        TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_BUG_BY_ID, Bug.class)
+                .setParameter("id", id);
         try {
             return Optional.of(q.getSingleResult());
         } catch (NoResultException ex) {
