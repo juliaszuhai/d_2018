@@ -19,6 +19,7 @@ import {LoginguardGuard} from './authentication/loginguard.guard';
 import { ListBugsComponent } from './bugs/list-bugs/list-bugs.component';
 import {BugsModule} from "./bugs/bugs.module";
 
+
 const appRoutes: Routes = [
   {
     path: '', pathMatch: 'full', redirectTo: '/content'
@@ -26,6 +27,7 @@ const appRoutes: Routes = [
   {
     path: 'content', component: ContentComponent
   }
+
 
 ];
 

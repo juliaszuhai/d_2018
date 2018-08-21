@@ -31,14 +31,21 @@ public class BugPersistenceManager {
         return q.getResultList();
     }
 
+
     public Optional<Bug> getBugByTitle(@NotNull String title) {
-        TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_BUG_BY_TITLE,Bug.class)
-                .setParameter("title",title);
+        TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_BUG_BY_TITLE, Bug.class)
+                .setParameter("title", title);
         try {
             return Optional.of(q.getSingleResult());
         } catch (NoResultException ex) {
             return Optional.empty();
         }
+    }
+
+    public Bug getBugById(@NotNull Long id){
+        TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_ID,Bug.class)
+                .setParameter("id",id);
+        return q.getSingleResult();
 
     }
 
