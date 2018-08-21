@@ -15,6 +15,8 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 
 
 @Path("/viewBug")
@@ -48,16 +50,15 @@ public class ViewBug {
             PdfWriter.getInstance(document, fileOutputStream);
             exportBugPdf.createPdf(bugDTO, document);
 
+            fileOutputStream.close();
 
             Response.ResponseBuilder response = Response.ok((Object) file);
             response.header("Content-Disposition",
                     "attachment; filename=new-android-book.pdf");
+            file.deleteOnExit();
             return response.build();
-        } catch (FileNotFoundException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        } catch (DocumentException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        } catch (BusinessException e) {
+
+        } catch ( DocumentException | BusinessException | IOException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
