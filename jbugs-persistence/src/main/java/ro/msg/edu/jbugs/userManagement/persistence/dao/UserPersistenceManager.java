@@ -148,4 +148,6 @@ public class UserPersistenceManager {
         Query q = em.createQuery("select u.username from User u where u.username like '" + username + "%'");
         return q.getResultList();
     }
+
+
 }

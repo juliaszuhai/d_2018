@@ -12,7 +12,7 @@ import java.util.Objects;
                 @NamedQuery(name = User.GET_ALL_USERS, query = "SELECT u FROM User u"),
                 @NamedQuery(name = User.GET_USER_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username=:username"),
                 @NamedQuery(name= User.GET_USER_BY_EMAIL, query = "SELECT u from User u where u.email = :email "),
-                @NamedQuery(name = User.GET_USER_BY_ID, query = "SELECT u from User u where u.id=:id")
+                @NamedQuery(name = User.GET_USER_BY_ID, query = "SELECT u from User u where u.id=:id"),
         }
 )
 public class User extends BaseEntity<Long> {
@@ -47,12 +47,31 @@ public class User extends BaseEntity<Long> {
     @Column(name = "isActive", length = MAX_STRING_LENGTH, nullable = false)
     private Boolean isActive;
 
+    @Column
+    private Integer failedAttempts;
+
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Role> roles;
 
     public User() {
     }
 
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Integer getFailedAttempts() {
+        return failedAttempts;
+    }
+
+    public void setFailedAttempts(Integer failedAttempts) {
+        this.failedAttempts = failedAttempts;
+    }
 
     public String getFirstName() {
         return firstName;

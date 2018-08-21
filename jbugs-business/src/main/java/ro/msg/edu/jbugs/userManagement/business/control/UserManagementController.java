@@ -23,6 +23,7 @@ public class UserManagementController {
     private final static int MAX_LAST_NAME_LENGTH = 5;
     private final static int MIN_USERNAME_LENGTH = 6;
     public static final int MIN_LAST_NAME_LENGTH = 5;
+    public static final int MAX_FAILED_LOGN_ATTEMPTS = 5;
 //    private static final Logger logger = LogManager.getLogger(UserManagementController.class);
 
     @EJB
@@ -165,6 +166,7 @@ public class UserManagementController {
     /**
      * Takes the username and password of a user and if they are correct, it returns the
      * corresponding DTO. Otherwise it will throw an exception.
+     * If there were more than 5 failed login attempts for the user, it will deactivate the user.
      *
      * @param username
      * @param password
@@ -177,9 +179,16 @@ public class UserManagementController {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }
         if (!Encryptor.encrypt(password).equals(userOptional.get().getPassword())) {
+            if(userOptional.get().getFailedAttempts() > MAX_FAILED_LOGN_ATTEMPTS){
+                deactivateUser(username);
+            }
             throw new BusinessException(ExceptionCode.PASSWORD_NOT_VALID);
+        } if(!userOptional.get().getActive()){
+            throw new BusinessException(ExceptionCode.USER_DEACTIVATED);
         }
 
+        User user = userOptional.get();
+        user.setFailedAttempts(0);
         return UserDTOHelper.fromEntity(userOptional.get());
     }
 
@@ -225,5 +234,15 @@ public class UserManagementController {
 
         Matcher matcher = VALID_PHONE_ADDRESS_REGEX.matcher(phonenumber);
         return matcher.find();
+    }
+
+    private Integer getFailedAttempts(String username) throws BusinessException{
+        Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.getFailedAttempts();
+        } else {
+            throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
+        }
     }
 }

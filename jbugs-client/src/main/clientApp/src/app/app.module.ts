@@ -23,10 +23,10 @@ import {BugsModule} from "./bugs/bugs.module";
 
 const appRoutes: Routes = [
   {
-    path: '', pathMatch: 'full', redirectTo: '/content'
+    path: '', pathMatch: 'full', redirectTo: '/login'
   },
   {
-    path: 'content', component: ContentComponent
+    path: 'content', component: ContentComponent,
   },
 
 ];
