@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.internationalization.business.internationalisation;
+package ro.msg.edu.jbugs.internationalization.business.internationalisation.control;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
