@@ -28,9 +28,9 @@ public class GenerateExcel {
      * @param titles - list of selected titles
      * @return a map containing the bugs corresponding to the selected titles
      */
-    private Map< String, Object[] > putInMap(List<String> titles)
+    private Map< String, Object[] > putInMap(List<Integer> titles)
     {
-        List<BugDTO> selectedBugs=bugManagement.getBugsWithTitle(titles);
+        List<BugDTO> selectedBugs=bugManagement.getBugsWithId(titles);
         Map< String, Object[] > empinfo =
                 new TreeMap< String, Object[] >();
 
@@ -51,7 +51,7 @@ public class GenerateExcel {
     @GET
     @Path("{titles}")
     @Produces("application/vnd.ms-excel")
-    public Response generate(@PathParam("titles") List<String> titles) {
+    public Response generate(@PathParam("titles") List<Integer> titles) {
         try {
             File file = new File(FILE_PATH);
             FileInputStream fis = null;

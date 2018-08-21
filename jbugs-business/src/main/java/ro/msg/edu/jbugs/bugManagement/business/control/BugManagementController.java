@@ -29,21 +29,8 @@ public class BugManagementController implements BugManagement {
                 .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());    }
 
-
-
     @Override
-    public BugDTO getBugById(Long id) throws BusinessException {
-        Optional<Bug> bug=bugPersistenceManager.getBugById(id);
-        if(bug.isPresent()){
-            return BugDTOHelper.fromEntity(bug.get());
-        }else{
-            throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
-        }
-
-    }
-
-    @Override
-    public List<BugDTO> getBugsWithTitle(List<String> titles) {
+    public List<BugDTO> getBugsWithId(List<Integer> titles) {
         List<BugDTO> bugs=bugPersistenceManager.getAllBugs().stream()
                 .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());
@@ -52,7 +39,7 @@ public class BugManagementController implements BugManagement {
         {
             for(int l=0;l<bugs.size();l++)
             {
-                if(titles.get(k).equals(bugs.get(l).getTitle()))
+                if(titles.get(k).equals(bugs.get(l).getId()))
                 {
                     selectedBugs.add(bugs.get(l));
                 }
@@ -97,6 +84,19 @@ public class BugManagementController implements BugManagement {
                 .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());
     }
+
+
+    @Override
+    public BugDTO getBugById(Long id) throws BusinessException {
+        Optional<Bug> bug=bugPersistenceManager.getBugById(id);
+        if(bug.isPresent()){
+            return BugDTOHelper.fromEntity(bug.get());
+        }else{
+            throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
+        }
+
+    }
+
 
 
 }
