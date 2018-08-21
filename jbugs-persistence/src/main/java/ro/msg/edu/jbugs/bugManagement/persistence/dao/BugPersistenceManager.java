@@ -42,17 +42,16 @@ public class BugPersistenceManager {
         }
     }
 
-    public Bug getBugById(@NotNull Long id){
+    public Optional<Bug> getBugById(@NotNull Long id){
         TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_ID,Bug.class)
                 .setParameter("id",id);
-        return q.getSingleResult();
+        try {
+            return Optional.of(q.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
 
     }
 
-//    public Bug getBugById(@NotNull Long id){
-//        TypedQuery<Bug> q=em.createNamedQuery(Bug.,Bug.class)
-//                .setParameter("id",id);
-//        return q.getSingleResult();
-//    }
 
 }
