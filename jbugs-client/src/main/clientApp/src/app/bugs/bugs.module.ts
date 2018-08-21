@@ -5,14 +5,14 @@ import {RouterModule, Routes} from "@angular/router";
 import {ListBugsComponent} from "./list-bugs/list-bugs.component";
 
 
-const loginRoutes: Routes = [
+const bugRoutes: Routes = [
   {path: 'listBugs', component: ListBugsComponent},
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(loginRoutes),
+    RouterModule.forChild(bugRoutes),
   ],
   declarations: [ListBugsComponent],
   exports: [ListBugsComponent,RouterModule]

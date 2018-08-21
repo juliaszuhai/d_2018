@@ -15,8 +15,6 @@ import java.util.Objects;
                 @NamedQuery(name = Bug.GET_ALL_BUGS, query = "SELECT b FROM Bug b"),
                 @NamedQuery(name = Bug.GET_BUG_BY_ID, query = "SELECT u from Bug u where u.id=:id"),
                 @NamedQuery(name = Bug.GET_BUG_BY_TITLE, query="SELECT b FROM Bug b WHERE b.title=:title"),
-                @NamedQuery(name = Bug.GET_BUG_BY_ID, query = "SELECT u from Bug u where u.id=:id"),
-                @NamedQuery(name = Bug.GET_BUG_BY_TITLE, query="SELECT b FROM Bug b WHERE b.title=:title")
 
         }
 )
@@ -42,15 +40,14 @@ public class Bug extends BaseEntity<Long>  implements Serializable {
     @Column(name = "targetDate", nullable = false)
     private Date targetDate;
 
-   // @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @Column(name = "fixedVersion", length = MAX_STRING_LENGTH, nullable = false)
     private String fixedVersion;
 
-
-   // @Column(name = "severity", nullable = false)
+    @Column(name = "severity", nullable = false)
     @Enumerated(EnumType.STRING)
     private Severity severity;
 
