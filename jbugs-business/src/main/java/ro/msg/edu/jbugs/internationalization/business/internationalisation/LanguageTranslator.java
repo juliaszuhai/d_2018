@@ -1,6 +1,5 @@
-package ro.msg.edu.jbugs.userManagement.business.internationalisation;
+package ro.msg.edu.jbugs.internationalization.business.internationalisation;
 
-import javax.ws.rs.GET;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
