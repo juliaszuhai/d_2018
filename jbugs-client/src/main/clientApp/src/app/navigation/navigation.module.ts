@@ -4,6 +4,7 @@ import {NavComponent} from './nav/nav.component';
 import {MatButtonModule, MatCheckboxModule, MatIconModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {AuthenticationModule} from '../authentication/authentication.module';
 import {UserModule} from '../user/user.module';
+import {TranslatorModule} from "../translator/translator.module";
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {UserModule} from '../user/user.module';
     MatToolbarModule,
     MatIconModule,
     AuthenticationModule,
-    UserModule
+    UserModule,
+    TranslatorModule
   ],
   declarations: [NavComponent],
   exports: [NavComponent,

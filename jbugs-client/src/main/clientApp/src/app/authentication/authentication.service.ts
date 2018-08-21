@@ -54,7 +54,7 @@ export class AuthenticationService {
 
   private setSession(authResult) {
 
-    const expiresAt = moment().add(authResult.exp, 'second');
+
     const helper = new JwtHelperService();
 
 

@@ -13,9 +13,9 @@ import java.util.Objects;
 @NamedQueries(
         {
                 @NamedQuery(name = Bug.GET_ALL_BUGS, query = "SELECT b FROM Bug b"),
-                @NamedQuery(name = Bug.GET_BUG_BY_ID, query = "SELECT u from Bug u where u.id=:id")
-                @NamedQuery(name = Bug.GET_BUG_BY_TITLE, query="SELECT b FROM Bug b WHERE b.title=:title")
-                @NamedQuery(name = Bug.GET_BUG_BY_ID, query = "SELECT u from Bug u where u.id=:id")
+                @NamedQuery(name = Bug.GET_BUG_BY_ID, query = "SELECT u from Bug u where u.id=:id"),
+                @NamedQuery(name = Bug.GET_BUG_BY_TITLE, query="SELECT b FROM Bug b WHERE b.title=:title"),
+                @NamedQuery(name = Bug.GET_BUG_BY_ID, query = "SELECT u from Bug u where u.id=:id"),
                 @NamedQuery(name = Bug.GET_BUG_BY_TITLE, query="SELECT b FROM Bug b WHERE b.title=:title")
 
         }

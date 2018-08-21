@@ -9,14 +9,14 @@ import {JwtModule} from '@auth0/angular-jwt';
 import {ContentComponent} from './content/content.component';
 import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatIconModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {AuthenticationModule} from './authentication/authentication.module';
-import {NavigationModule} from './navigation/navigation.module';
-import {ProfileComponent} from './user/profile/profile.component';
 import {UserModule} from './user/user.module';
 import {LoginguardGuard} from './authentication/loginguard.guard';
-import {BugsModule} from "./bugs/bugs.module";
+import {NavigationModule} from './navigation/navigation.module';
 import {TranslatorModule} from "./translator/translator.module";
+
+import {BugsModule} from "./bugs/bugs.module";
 
 
 const appRoutes: Routes = [
@@ -34,8 +34,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ContentComponent,
-    ListBugsComponent,
+    ContentComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +46,8 @@ const appRoutes: Routes = [
     AuthenticationModule,
     NavigationModule,
     UserModule,
-    BugsModule
+    BugsModule,
+    TranslatorModule
   ],
   providers: [{
     provide: LoginguardGuard, useClass: LoginguardGuard
