@@ -6,13 +6,15 @@ import {LoginComponent} from './authentication/login/login.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
-import {NavComponent} from './navigation/nav/nav.component';
 import {ContentComponent} from './content/content.component';
 import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {AuthenticationModule} from './authentication/authentication.module';
-import { ListBugsComponent } from './bugs/list-bugs/list-bugs.component';
+import {NavigationModule} from './navigation/navigation.module';
+import {ProfileComponent} from './user/profile/profile.component';
+import {UserModule} from './user/user.module';
+import {LoginguardGuard} from './authentication/loginguard.guard';
 import {BugsModule} from "./bugs/bugs.module";
 import {TranslatorModule} from "./translator/translator.module";
 
@@ -24,9 +26,7 @@ const appRoutes: Routes = [
   {
     path: 'content', component: ContentComponent
   },
-  {
-    path: 'listBugs', component: ListBugsComponent
-  },
+
 
 
 ];
@@ -35,6 +35,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     ContentComponent,
+    ListBugsComponent,
   ],
   imports: [
     BrowserModule,
