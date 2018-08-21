@@ -34,14 +34,14 @@ public class ViewBug {
      * @return Response
      */
     @GET
-    @Path("{title}")
+    @Path("{id}")
     @Produces("application/pdf")
-    public Response getFile(@PathParam("title") String title) {
+    public Response getFile(@PathParam("id") Long id) {
         File file = null;
         FileOutputStream fileOutputStream = null;
 
         try {
-            BugDTO bugDTO = bugManagement.getBugByTitle(title);
+            BugDTO bugDTO = bugManagement.getBugById(id);
             file = new File(FILE_PATH);
             Document document = new Document();
             fileOutputStream = new FileOutputStream(file);

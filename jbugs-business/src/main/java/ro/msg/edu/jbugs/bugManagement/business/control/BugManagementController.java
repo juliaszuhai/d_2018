@@ -39,5 +39,14 @@ public class BugManagementController implements BugManagement {
 
     }
 
+    @Override
+    public BugDTO getBugById(Long id) throws BusinessException {
+        Optional<Bug> bug=bugPersistenceManager.getBugById(id);
+        if(bug.isPresent()){
+            return BugDTOHelper.fromEntity(bug.get());
+        }else{
+            throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
+        }
 
+    }
 }
