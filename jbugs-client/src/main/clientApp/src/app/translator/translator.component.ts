@@ -35,8 +35,8 @@ export class TranslatorComponent implements OnInit {
   ngOnInit(): void {
 
     this.allLanguages = [
-      new Language(1, 'English'),
-      new Language(2, 'Romana')
+      new Language(0, 'English'),
+      new Language(1, 'Romana')
     ]
   }
 

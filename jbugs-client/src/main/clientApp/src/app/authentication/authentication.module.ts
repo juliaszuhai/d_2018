@@ -10,7 +10,7 @@ import {MatButtonModule} from '@angular/material';
 import {UserModule} from '../user/user.module';
 
 const loginRoutes: Routes = [
-  {path: 'login', component: LoginComponent},
+  {path: 'login', component: LoginComponent, },
 ];
 
 @NgModule({
