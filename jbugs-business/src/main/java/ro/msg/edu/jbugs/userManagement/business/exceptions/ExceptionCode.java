@@ -25,6 +25,7 @@ public enum ExceptionCode {
         this.id = id;
     }
 
+
     public String getMessage() {
         return message;
     }

@@ -179,6 +179,12 @@ public class UserManagementController {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }
         if (!Encryptor.encrypt(password).equals(userOptional.get().getPassword())) {
+            User user = userOptional.get();
+            if(user.getFailedAttempts()==null){
+                user.setFailedAttempts(1);
+            } else{
+                user.setFailedAttempts(user.getFailedAttempts()+1);
+            }
             if(userOptional.get().getFailedAttempts() > MAX_FAILED_LOGN_ATTEMPTS){
                 deactivateUser(username);
             }
