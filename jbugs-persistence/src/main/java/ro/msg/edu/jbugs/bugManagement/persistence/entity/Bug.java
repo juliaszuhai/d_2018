@@ -4,6 +4,7 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.BaseEntity;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
