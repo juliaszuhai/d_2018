@@ -9,6 +9,7 @@ import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,4 +39,25 @@ public class BugManagementController implements BugManagement {
         }
 
     }
+
+    @Override
+    public List<BugDTO> getBugsWithTitle(List<String> titles) {
+        List<BugDTO> bugs=bugPersistenceManager.getAllBugs().stream()
+                .map(BugDTOHelper::fromEntity)
+                .collect(Collectors.toList());
+        List<BugDTO> selectedBugs=new ArrayList<BugDTO>();
+        for(int k=0;k<titles.size();k++)
+        {
+            for(int l=0;l<bugs.size();l++)
+            {
+                if(titles.get(k).equals(bugs.get(l).getTitle()))
+                {
+                    selectedBugs.add(bugs.get(l));
+                }
+            }
+        }
+        return selectedBugs;
+    }
+
+
 }
