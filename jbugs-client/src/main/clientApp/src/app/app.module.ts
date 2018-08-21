@@ -16,6 +16,8 @@ import {NavigationModule} from './navigation/navigation.module';
 import {ProfileComponent} from './user/profile/profile.component';
 import {UserModule} from './user/user.module';
 import {LoginguardGuard} from './authentication/loginguard.guard';
+import { ListBugsComponent } from './bugs/list-bugs/list-bugs.component';
+import {BugsModule} from "./bugs/bugs.module";
 
 const appRoutes: Routes = [
   {
@@ -23,14 +25,14 @@ const appRoutes: Routes = [
   },
   {
     path: 'content', component: ContentComponent
-  },
+  }
 
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContentComponent
+    ContentComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,15 +43,12 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     AuthenticationModule,
     NavigationModule,
-    UserModule
+    UserModule,
+    BugsModule
   ],
   providers: [{provide: LoginguardGuard, useClass: LoginguardGuard}],
   bootstrap: [AppComponent],
   exports: [
-    MatButtonModule,
-    MatCheckboxModule,
-    MatMenuModule,
-    MatToolbarModule
   ]
 })
 export class AppModule {
