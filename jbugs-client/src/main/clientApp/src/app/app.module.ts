@@ -14,6 +14,7 @@ import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} fro
 import {AuthenticationModule} from './authentication/authentication.module';
 import { ListBugsComponent } from './bugs/list-bugs/list-bugs.component';
 import {BugsModule} from "./bugs/bugs.module";
+import {TranslatorModule} from "./translator/translator.module";
 
 
 const appRoutes: Routes = [
@@ -50,7 +51,8 @@ const appRoutes: Routes = [
     MatMenuModule,
     MatToolbarModule,
     AuthenticationModule,
-    BugsModule
+    BugsModule,
+    TranslatorModule
   ],
   providers: [],
   bootstrap: [AppComponent],
