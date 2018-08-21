@@ -21,26 +21,21 @@ import java.text.SimpleDateFormat;
 @Stateless
 public class ExportBugPdf {
 
-    private static String FILE = "t:/BugPdf.pdf";
+
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
-    private static Font fFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
-            Font.NORMAL);
 
+    /**
+     * Add all the fields of a bug in a document
+     * @param bugDTO
+     * @param document
+     * @throws BusinessException
+     */
+    public void createPdf(BugDTO bugDTO, Document document) throws BusinessException {
 
-    public void createPdf(BugDTO bugDTO) throws BusinessException {
-        try {
-            Document document = new Document();
-            PdfWriter pdfWriter =PdfWriter.getInstance(document, new FileOutputStream(FILE));
-            document.open();
-            addContent(document, bugDTO);
-            document.close();
-
-        } catch (FileNotFoundException e) {
-            throw new BusinessException(ExceptionCode.BUG_NOT_EXPORTED);
-        } catch (DocumentException e) {
-            throw new BusinessException(ExceptionCode.BUG_NOT_EXPORTED);
-        }
+        document.open();
+        addContent(document, bugDTO);
+        document.close();
 
     }
 
