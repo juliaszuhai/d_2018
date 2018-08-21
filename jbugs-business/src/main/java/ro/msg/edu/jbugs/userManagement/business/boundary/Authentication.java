@@ -44,7 +44,7 @@ public class Authentication {
             // Return the token on the response
             return Response.ok("{\"token\": \""+token+"\"}").build();
         } catch(BusinessException e){
-            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode()).build();
+            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
         }
          catch (Exception e) {
             return Response.status(Response.Status.FORBIDDEN).entity(e.getMessage()).build();
