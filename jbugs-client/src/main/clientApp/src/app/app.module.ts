@@ -6,7 +6,7 @@ import {LoginComponent} from './authentication/login/login.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
-import {NavComponent} from './nav/nav.component';
+import {NavComponent} from './navigation/nav/nav.component';
 import {ContentComponent} from './content/content.component';
 import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -14,6 +14,7 @@ import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule} fro
 import {AuthenticationModule} from './authentication/authentication.module';
 import { ListBugsComponent } from './bugs/list-bugs/list-bugs.component';
 import {BugsModule} from "./bugs/bugs.module";
+import {TranslatorModule} from "./translator/translator.module";
 
 
 const appRoutes: Routes = [
