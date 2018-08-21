@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.internationalization.business.internationalisation.control;
+package ro.msg.edu.jbugs.internationalization.business.control;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -6,10 +6,10 @@ import java.util.ResourceBundle;
 public class LanguageTranslator {
 
 	public Locale getCurrentLocale(int languageIndexSelected){
-		if(languageIndexSelected == 1){
+		if(languageIndexSelected == 0){
 			return new Locale("en","EN");
 		}else{
-			if(languageIndexSelected == 2){
+			if(languageIndexSelected == 1){
 				return new Locale("ro", "RO");
 			}
 		}
