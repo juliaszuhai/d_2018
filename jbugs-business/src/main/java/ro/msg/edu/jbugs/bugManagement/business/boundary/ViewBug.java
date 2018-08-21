@@ -30,9 +30,11 @@ public class ViewBug {
 
     private static final String FILE_PATH = "t:/BugPdf.pdf";
 
+
     /**
      * Export the bug which have the specify title in a pdf
-     * @param title
+     *
+     * @param id
      * @return Response
      */
     @GET
@@ -58,14 +60,13 @@ public class ViewBug {
             file.deleteOnExit();
             return response.build();
 
-        } catch ( DocumentException | BusinessException | IOException e) {
+        } catch (DocumentException | BusinessException | IOException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-
-
     }
-
-
 }
+
 
 
