@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   userLoginData: UserLoginData;
   userData: UserData;
   error: boolean;
+  errorMessage: string;
 
   constructor(private authenticationService: AuthenticationService, private router: Router) {
     this.userLoginData = {
@@ -28,10 +29,15 @@ export class LoginComponent implements OnInit {
 
     };
     this.error = false;
+    this.errorMessage = '';
   }
 
   displayError() {
     return this.error;
+  }
+
+  getMessage(){
+    return this.errorMessage;
   }
 
   validatePassword() {
@@ -52,7 +58,11 @@ export class LoginComponent implements OnInit {
         },
         err => {
           this.error = true;
-          console.log('Here i am');
+          if(err.valueOf().error.value=='USER_DEACTIVATED') {
+            this.errorMessage = "This user was deactivated";
+          } else{
+            this.errorMessage = "Username or password are incorrect."
+          }
         }
       );
   }
