@@ -4,6 +4,7 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.BaseEntity;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -15,7 +16,9 @@ import java.util.Objects;
 
         }
 )
-public class Bug extends BaseEntity<Long> {
+
+public class Bug extends BaseEntity<Long>  implements Serializable {
+
 
     @Transient
     private final static int MAX_STRING_LENGTH = 40;
@@ -33,13 +36,16 @@ public class Bug extends BaseEntity<Long> {
     @Column(name = "targetDate", nullable = false)
     private Date targetDate;
 
-    @Column(name = "status", nullable = false)
+   // @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Column(name = "fixedVersion", length = MAX_STRING_LENGTH, nullable = false)
     private String fixedVersion;
 
-    @Column(name = "severity", nullable = false)
+
+   // @Column(name = "severity", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Severity severity;
 
     @ManyToOne
