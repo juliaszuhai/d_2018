@@ -38,28 +38,8 @@ public class GenerateExcel {
     @Consumes("application/json")
     public Response generate(ListWrapper titles) {
         try {
+            List<BugDTO> selectedBugs=bugManagement.getBugsWithTitle(titles);
 
-            for(int i=0;i<titles.getTitles().size();i++)
-                {System.out.println(titles.getTitles().get(i));}
-            // Authenticate the user using the credentials provided
-            List<BugDTO> bugs= bugManagement.getAllBugs();
-
-            List<BugDTO> selectedBugs=new ArrayList<BugDTO>();
-
-            for(int k=0;k<titles.getTitles().size();k++)
-            {
-                for(int l=0;l<bugs.size();l++)
-                {
-                    if(titles.getTitles().get(k).equals(bugs.get(l).getTitle()))
-                    {
-                        selectedBugs.add(bugs.get(l));
-                    }
-                }
-            }
-            for(int i=0;i<selectedBugs.size();i++)
-            {
-                System.out.println(selectedBugs.get(i).getDescription());
-            }
             FileInputStream fis = null;
             fis = new FileInputStream(FILE_PATH);
             Workbook workbook = new XSSFWorkbook(fis);
@@ -70,15 +50,12 @@ public class GenerateExcel {
 
             empinfo.put( "1", new Object[] { "Title", "Description", "Version" ,"TargetDate","Status","FixedVersion","Severity","CreatedBy","AssignedTo"});
             for(int i=0;i<selectedBugs.size();i++)
-            {
-
-                int j=i+2;
-                empinfo.put(String.valueOf(j) , new Object[] { selectedBugs.get(i).getTitle(), selectedBugs.get(i).getDescription(),selectedBugs.get(i).getVersion() ,selectedBugs.get(i).getTargetDate().toString()
+            { int j=i+2;
+                empinfo.put(Integer.toString(j) , new Object[] { selectedBugs.get(i).getTitle(), selectedBugs.get(i).getDescription(),selectedBugs.get(i).getVersion() ,selectedBugs.get(i).getTargetDate().toString()
                         , selectedBugs.get(i).getStatus(), selectedBugs.get(i).getFixedVersion(), selectedBugs.get(i).getSeverity(), selectedBugs.get(i).getCreatedByUser().getUsername(), selectedBugs.get(i).getAssignedTo().getUsername()});
 
                 System.out.println(selectedBugs.get(i).toString());
             }
-            System.out.println("intra3");
             Set< String > keyid = empinfo.keySet();
             int rowid = 0;
 
