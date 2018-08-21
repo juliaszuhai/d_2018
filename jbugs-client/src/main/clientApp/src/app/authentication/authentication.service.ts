@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpRequest} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
 import * as moment from 'moment';
-import {tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {Router} from '@angular/router';
+import {now} from 'moment';
 
 export interface UserLoginData {
   username: string;
@@ -25,7 +27,11 @@ export class AuthenticationService {
 
   baseURL = 'http://localhost:8080/jbugs/rest/';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private  router: Router) {
+  }
+
+  public getToken(): string {
+    return localStorage.getItem('token');
   }
 
   validateUser(username: string, password: string) {
@@ -45,24 +51,31 @@ export class AuthenticationService {
     );
   }
 
+
   private setSession(authResult) {
-    console.log(authResult);
-    const expiresAt = moment().add(authResult.exp, 'second');
+
     const helper = new JwtHelperService();
 
+
     const decodedToken = helper.decodeToken(authResult.token);
-    console.log(decodedToken);
+
+
+    localStorage.setItem('token', authResult.token);
     localStorage.setItem('username', decodedToken.iss);
     localStorage.setItem('id_token', decodedToken.iss);
     localStorage.setItem('firstName', decodedToken.firstName);
     localStorage.setItem('lastName', decodedToken.lastName);
     localStorage.setItem('email', decodedToken.email);
     localStorage.setItem('phone', decodedToken.phone);
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+    localStorage.setItem('expires_at', decodedToken.exp);
   }
 
   public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
+
+    if (!localStorage['expires_at']) {
+      return false;
+    }
+    return this.getExpiration().isAfter(now());
   }
 
   isLoggedOut() {
@@ -74,13 +87,20 @@ export class AuthenticationService {
     localStorage.removeItem('expires_at');
     localStorage.removeItem('username');
     localStorage.removeItem('firstName');
+    localStorage.removeItem('lastName');
     localStorage.removeItem('email');
     localStorage.removeItem('phone');
   }
 
   getExpiration() {
-    const expiration = localStorage.getItem('expires_at');
-    const expiresAt = JSON.parse(expiration);
+    const time = localStorage['expires_at'];
+
+    const correctSec = time * 1000;
+    var expiresAt = new Date(correctSec);
+
+    console.log(correctSec);
+    console.log(expiresAt);
+
     return moment(expiresAt);
   }
 

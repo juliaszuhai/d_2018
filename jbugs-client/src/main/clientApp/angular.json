@@ -26,6 +26,7 @@
               "src/styles.css",
               "../clientApp/node_modules/bootstrap/dist/css/bootstrap.css",
               "../clientApp/node_modules/bootstrap/dist/css/bootstrap-theme.css"
+              //"../clientApp/assets/fonts/material-icons/material-icons.css"
 
             ],
             "scripts": [

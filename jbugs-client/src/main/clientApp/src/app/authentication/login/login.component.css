@@ -1,8 +1,22 @@
 .login-component .login-form{
   margin: 0 auto;
-  width:30%;
-  min-width: 400px;
+  width:25%;
+  min-width: 300px;
   float: none;
   margin-top:10%;
+}
+
+.form_invalid{
+  box-shadow: 0 0 0 0.2rem rgba(255, 74, 43, 0.25);
+}
+
+.form_valid{
+  box-shadow: 0 0 0 0.2rem rgba(39, 255, 90, 0.25)
+}
+.errorMessage{
+  background: rgba(255, 155, 158, 0.54);
+  padding:10px 10px;
+  border-radius:10px;
+  margin:10px 0;
 }
 

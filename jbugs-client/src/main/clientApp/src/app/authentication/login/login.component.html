@@ -1,45 +1,63 @@
 <div class="row login-component">
   <div class="login-form">
     <form (ngSubmit)="submitForm()"
-          *ngIf="!loggedIn"
+          *ngIf="!isLoggedIn()"
           #formControl="ngForm"
-          #formElement>
-      <div class="form-group">
-        <label for="usernameInput">Username</label>
-        <input type="text"
-               #usernameElement
-               #usernameControl="ngModel"
-               name="username"
-               minlength="3"
-               pattern="[a-z]+"
-               id="usernameInput"
-               class="form-control"
-               [(ngModel)]="userLoginData.username"
-               required>
+          #formElement
+    >
+      <div class="errorMessage server-error" *ngIf="displayError()">
+        Username or password incorrect.
       </div>
-      <div class="form-group">
-        <label for="passwordInput">password</label>
-        <input type="password"
-               #passwordElement
-               #passwordControl="ngModel"
-               name="password"
-               id="passwordInput"
-               class="form-control"
-               [(ngModel)]="userLoginData.password"
-               required>
-      </div>
-      <button type="submit"
-              [disabled]="formControl.invalid"
-              class="btn btn-primary">Submit!
-      </button>
-      <!--<p>form classes:{{formElement?.className}}</p>-->
-      <!--<p *ngIf="wrongCredentials ">Wrong credentials</p>-->
-    </form>
-    <form *ngIf="isLoggedIn()">
-      <h2>You are logged in as: {{userData.userName}}</h2>
-      <button class="btn btn-danger form-control"
-              (click)="logout()">Logout</button>
-    </form>
-  </div>
+      <fieldset >
+        <div class="form-group">
+          <div class="form-group">
+            <label for="usernameInput">Username</label>
+            <input type="text"
+                   #usernameElement
+                   #usernameControl="ngModel"
+                   placeholder="Input your username here..."
+                   name="username"
+                   id="usernameInput"
+                   class="form-control"
+                   [ngClass]="{form_invalid: !validateUsername(), form_valid:validateUsername()}"
+                   [(ngModel)]="userLoginData.username"
+                   required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Password</label>
+          <input type="password"
+                 #passwordElement
+                 #passwordControl="ngModel"
+                 placeholder="Input your password here..."
+                 name="password"
+                 id="passwordInput"
+                 class="form-control"
+                 [(ngModel)]="userLoginData.password"
+                 [ngClass]="{form_invalid: !validatePassword(), form_valid:validatePassword()}"
+                 required>
+        </div>
+        <button type="submit"
+                [disabled]="formControl.invalid"
+                color="primary"
+                style="margin-left: 40%;"
+                mat-stroked-button="login">Submit!
+        </button>
+      </fieldset>
 
+      <div class="errorMessage" *ngIf="!validateUsername()&&usernameControl.touched">Username must be at least 6
+        characters
+      </div>
+      <div class="errorMessage" *ngIf="!validatePassword()&&passwordControl.touched">Password must be:
+        <ul>
+          <li>At least one upper case English letter,</li>
+          <li>At least one lower case English letter,</li>
+          <li>At least one digit,</li>
+          <li>At least one special character,</li>
+          <li>Minimum six characters in length</li>
+        </ul>
+      </div>
+    </form>
+
+  </div>
 </div>

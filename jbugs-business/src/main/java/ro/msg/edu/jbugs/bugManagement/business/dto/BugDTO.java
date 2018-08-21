@@ -11,7 +11,7 @@ public class BugDTO {
     private String title;
     private String description;
     private String version;
-    private Date taretDate;
+    private Date targetDate;
     private Status status;
     private String fixedVersion;
     private Severity severity;
@@ -43,11 +43,11 @@ public class BugDTO {
     }
 
     public Date getTargetDate() {
-        return taretDate;
+        return targetDate;
     }
 
-    public void setTargetDate(Date taretDate) {
-        this.taretDate = taretDate;
+    public void setTargetDate(Date targetDate) {
+        this.targetDate = targetDate;
     }
 
     public Status getStatus() {
