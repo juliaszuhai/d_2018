@@ -12,7 +12,12 @@ public interface BugManagement {
      */
     List<BugDTO> getAllBugs();
 
-    BugDTO getBugByTitle(String title) throws BusinessException;
-
+    /**
+     * Returns a bug entity with the matching id wrapped in an optional.
+     * If none exist, returns an empty Optional Object
+     *
+     * @param id : Long containing the id.
+     * @return : Optional, containing a bug entity.
+     */
     BugDTO getBugById(Long id) throws BusinessException;
 }

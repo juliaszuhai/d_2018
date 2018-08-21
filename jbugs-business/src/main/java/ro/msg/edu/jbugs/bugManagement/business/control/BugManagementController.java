@@ -26,18 +26,7 @@ public class BugManagementController implements BugManagement {
                 .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());    }
 
-    @Override
-    public BugDTO getBugByTitle(String title) throws BusinessException {
-        Optional<Bug>  bug=bugPersistenceManager.getBugByTitle(title);
-        if(bug.isPresent()){
-            return BugDTOHelper.fromEntity(bug.get());
-        }
-        else{
-            throw new BusinessException(ExceptionCode.BUG_NOT_EXPORTED);
 
-        }
-
-    }
 
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {
