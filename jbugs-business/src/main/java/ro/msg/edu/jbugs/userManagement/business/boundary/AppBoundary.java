@@ -2,6 +2,7 @@ package ro.msg.edu.jbugs.userManagement.business.boundary;
 
 
 import ro.msg.edu.jbugs.bugManagement.business.boundary.ListBugs;
+import ro.msg.edu.jbugs.bugManagement.business.boundary.ViewBug;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -16,6 +17,7 @@ public class AppBoundary extends Application {
         classes.add(Authentication.class);
         classes.add(Registration.class);
         classes.add(ListBugs.class);
+//        classes.add(ViewBug.class);
         return classes;
     }
 }
