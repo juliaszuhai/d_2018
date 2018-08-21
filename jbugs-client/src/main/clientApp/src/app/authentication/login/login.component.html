@@ -6,7 +6,7 @@
           #formElement
     >
       <div class="errorMessage server-error" *ngIf="displayError()">
-        Username or password incorrect.
+        {{getMessage()}}
       </div>
       <fieldset >
         <div class="form-group">
