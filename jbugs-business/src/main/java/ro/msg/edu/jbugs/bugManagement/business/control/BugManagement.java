@@ -1,7 +1,7 @@
 package ro.msg.edu.jbugs.bugManagement.business.control;
 
-import ro.msg.edu.jbugs.bugManagement.business.boundary.ListWrapper;
 import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTO;
+import ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.userManagement.business.dto.*;
 
 import java.util.List;
@@ -13,5 +13,7 @@ public interface BugManagement {
      */
     List<BugDTO> getAllBugs();
 
-    List<BugDTO> getBugsWithTitle(ListWrapper titles);
+    BugDTO getBugByTitle(String title) throws BusinessException;
+
+    List<BugDTO> getBugsWithTitle(List<String> titles);
 }

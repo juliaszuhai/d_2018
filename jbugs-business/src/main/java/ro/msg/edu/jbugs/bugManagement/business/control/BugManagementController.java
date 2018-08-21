@@ -1,13 +1,16 @@
 package ro.msg.edu.jbugs.bugManagement.business.control;
 
-import ro.msg.edu.jbugs.bugManagement.business.boundary.ListWrapper;
 import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTOHelper;
+import ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.bugManagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.bugManagement.persistence.dao.BugPersistenceManager;
+import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Stateless
@@ -24,19 +27,37 @@ public class BugManagementController implements BugManagement {
                 .collect(Collectors.toList());    }
 
     @Override
-    public List<BugDTO> getBugsWithTitle(ListWrapper titles) {
-        List<BugDTO> bugs=this.getAllBugs();
-        List<BugDTO> selectedBugs=new ArrayList<BugDTO>();
-        for(int k=0;k<titles.getTitles().size();k++)
-        {
-            for(int l=0;l<bugs.size();l++)
+    public BugDTO getBugByTitle(String title) throws BusinessException {
+        Optional<Bug>  bug=bugPersistenceManager.getBugByTitle(title);
+        if(bug.isPresent()){
+            return BugDTOHelper.fromEntity(bug.get());
+        }
+        else{
+            throw new BusinessException(ExceptionCode.BUG_NOT_EXPORTED);
+
+        }
+
+    }
+
+    @Override
+    public List<BugDTO> getBugsWithTitle(List<String> titles) {
+        List<BugDTO> bugs=bugPersistenceManager.getAllBugs().stream()
+                    .map(BugDTOHelper::fromEntity)
+                    .collect(Collectors.toList());
+            List<BugDTO> selectedBugs=new ArrayList<BugDTO>();
+            for(int k=0;k<titles.size();k++)
             {
-                if(titles.getTitles().get(k).equals(bugs.get(l).getTitle()))
+                for(int l=0;l<bugs.size();l++)
                 {
-                    selectedBugs.add(bugs.get(l));
+                    if(titles.get(k).equals(bugs.get(l).getTitle()))
+                    {
+                        selectedBugs.add(bugs.get(l));
+                    }
                 }
             }
-        }
-        return selectedBugs;
+            return selectedBugs;
     }
+
+
+
 }
