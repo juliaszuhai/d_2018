@@ -11,6 +11,7 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Stateless
