@@ -5,36 +5,40 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
 import javax.ejb.*;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@Stateless(name = "PermissionManagementImpl", mappedName = "PermissionManagementImpl")
-public class PermissionManagementImpl implements PermissionManagement {
+@Stateless
+public class PermissionPersistenceManager {
 
-    private static final Logger logger = LogManager.getLogger(PermissionManagementImpl.class);
+    private static final Logger logger = LogManager.getLogger(PermissionPersistenceManager.class);
 
     @PersistenceContext(unitName = "jbugs-persistence")
     private EntityManager em;
 
-    @Override
-    public Permission addPermission(Permission permission) {
-        logger.log(Level.ERROR,"aaaaaaaaaaa");
+
+
+
+
+
+    public Permission createPermission(Permission permission) {
+
         em.persist(permission);
         return permission;
     }
 
-    @Override
+
     public Permission updatePermission(Permission permission) {
         em.merge(permission);
         return permission;
     }
 
-    @Override
+
     public boolean removePermissionById(long id) {
         Permission permission = getPermissionForId(id);
         if(permission == null)
@@ -43,7 +47,9 @@ public class PermissionManagementImpl implements PermissionManagement {
         return true;
     }
 
-    @Override
+
+
+
     public boolean removePermissionForRole(Role role, Permission permission) {
         em.persist(role);
         List<Permission> permissions = getPermissionsForRole(role);
@@ -51,7 +57,7 @@ public class PermissionManagementImpl implements PermissionManagement {
 
     }
 
-    @Override
+
     public boolean removeAllPermissionsForRole(Role role) {
         em.persist(role);
         List<Permission> permissions = getPermissionsForRole(role);
@@ -59,14 +65,14 @@ public class PermissionManagementImpl implements PermissionManagement {
         return true;
     }
 
-    @Override
+
     public Permission getPermissionForId(long id) {
         Query query = em.createQuery("SELECT p FROM Permission p WHERE p.id=:id");
         query.setParameter("id",id);
         return (Permission) query.getSingleResult();
     }
 
-    @Override
+
     public List<Permission> getPermissionsForRole(Role role) {
         Query query = em.createQuery("SELECT r.permissions FROM Role r WHERE r=:role");
         query.setParameter("role",role);
@@ -74,13 +80,13 @@ public class PermissionManagementImpl implements PermissionManagement {
 
     }
 
-    @Override
+
     public List<Permission> getAllPermissions() {
         Query query = em.createQuery("SELECT p FROM Permission p");
         return query.getResultList();
     }
 
-    @Override
+
     public Permission createPermissionForRole(Role role, Permission permission) {
         List<Permission> permissions = new ArrayList<>();
         permissions.add(permission);
@@ -88,4 +94,33 @@ public class PermissionManagementImpl implements PermissionManagement {
         em.merge(role);
         return permission;
     }
+
+    public Role createRole(Role role){
+        em.persist(role);
+        return role;
+    }
+
+    public Optional<Role> getRoleByType(String type){
+        TypedQuery<Role> query = em.createNamedQuery(Role.GET_ROLE_BY_TYPE,Role.class)
+                .setParameter("type", type);
+
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Permission> getPermissionByType(String type){
+        TypedQuery<Permission> query = em.createNamedQuery(Permission.GET_PERMISSION_BY_TYPE,Permission.class)
+                .setParameter("type", type);
+
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
+    }
+
+
 }

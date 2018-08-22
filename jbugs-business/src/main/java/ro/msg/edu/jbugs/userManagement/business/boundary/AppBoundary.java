@@ -29,6 +29,7 @@ public class AppBoundary extends Application {
 //        classes.add(ViewBug.class);
         classes.add(ActivateUser.class);
         classes.add(Language.class);
+        classes.add(AddRole.class);
         return classes;
     }
 }

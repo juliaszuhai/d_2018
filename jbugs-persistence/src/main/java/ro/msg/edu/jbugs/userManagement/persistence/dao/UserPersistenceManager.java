@@ -6,6 +6,7 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 
@@ -148,6 +149,12 @@ public class UserPersistenceManager {
         Query q = em.createQuery("select u.username from User u where u.username like '" + username + "%'");
         return q.getResultList();
     }
+
+//    public List<Role> getUserRoles(User user){
+//        TypedQuery<Role> q = em.createNamedQuery(User.GET_USER_ROLES, User.class)
+//                .setParameter("username",user.getUsername());
+//    }
+
 
 
 }

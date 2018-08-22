@@ -1,15 +1,21 @@
 package ro.msg.edu.jbugs.userManagement.persistence.entity;
 
+
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "permissions")
-public class Permission extends BaseEntity<Long>{
+@NamedQueries(
+        {
+                @NamedQuery(name = Permission.GET_PERMISSION_BY_TYPE, query = "SELECT p FROM Permission p where p.type = :type")
+        }
+)
+public class Permission extends BaseEntity<Long> {
 
     @Transient
     private final static int MAX_STRING_LENGTH = 20;
+    public static final String GET_PERMISSION_BY_TYPE = "get_permission_by_type";
 
     @Column(name = "type", nullable = false, length = MAX_STRING_LENGTH, unique = true)
     private String type;
@@ -18,10 +24,8 @@ public class Permission extends BaseEntity<Long>{
     private String description;
 
 
-
     public Permission() {
     }
-
 
 
     public String getType() {
@@ -41,7 +45,6 @@ public class Permission extends BaseEntity<Long>{
     }
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,7 +53,7 @@ public class Permission extends BaseEntity<Long>{
         Permission that = (Permission) o;
         return Objects.equals(type, that.type) &&
                 Objects.equals(description, that.description) &&
-                Objects.equals(id,that.id);
+                Objects.equals(id, that.id);
     }
 
     @Override
