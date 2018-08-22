@@ -1,8 +1,9 @@
 package ro.msg.edu.jbugs.internationalization.business.control;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
+import javax.ejb.Stateless;
+import java.util.*;
 
+@Stateless
 public class LanguageTranslator {
 
 	public Locale getCurrentLocale(int languageIndexSelected){
@@ -17,7 +18,19 @@ public class LanguageTranslator {
 	}
 
 	public ResourceBundle getBundle(Locale currentLocale){
-		return ResourceBundle.getBundle("MessageBundle", currentLocale);
+		return ResourceBundle.getBundle("/MessageBundle", currentLocale);
 	}
+	public Map<String, String> convertResourceBundleToMap(ResourceBundle resource) {
+		Map<String, String> map = new HashMap<String, String>();
+
+		Enumeration<String> keys = resource.getKeys();
+		while (keys.hasMoreElements()) {
+			String key = keys.nextElement();
+			map.put(key, resource.getString(key));
+		}
+
+		return map;
+	}
+
 
 }
