@@ -8,8 +8,6 @@ import {Router} from "@angular/router";
 })
 
 
-
-
 export class TranslatorService {
   people:String="";
   baseURL = 'http://localhost:8080/jbugs/rest/language/';

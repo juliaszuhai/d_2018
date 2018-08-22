@@ -1,0 +1,16 @@
+{
+  "login": {
+    "submit": "Submit",
+    "username": "Username",
+    "password": "Password"
+  },
+  "header": {
+    "login":"Login",
+    "content":"Content",
+    "title":"Application Title"
+  },
+  "messages": {
+    "welcome": "Welcome",
+    "goodbye": "Goodbye"
+  }
+}

@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.internationalization.business.boundle;
+package ro.msg.edu.jbugs.internationalization.business.boundary;
 
 
 import ro.msg.edu.jbugs.internationalization.business.control.LanguageTranslator;
@@ -25,11 +25,11 @@ public class Language {
     public Response getFile(@PathParam("id") int id) {
         Locale locale = languageTranslator.getCurrentLocale(id);
 
-        ResourceBundle resourceBundle = languageTranslator.getBundle(locale);
+        ResourceBundle resourceBundle = languageTranslator.getBundle(id);
 
-        Map<String, String> mapBoundle = languageTranslator.convertResourceBundleToMap(resourceBundle);
+        Map<String, String> mapBundle = languageTranslator.convertResourceBundleToMap(resourceBundle);
 
-        Response.ResponseBuilder response = Response.ok(mapBoundle);
+        Response.ResponseBuilder response = Response.ok(mapBundle);
         return response.build();
     }
 

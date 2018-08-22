@@ -44,8 +44,9 @@ export class TranslatorComponent implements OnInit {
   }
 
   public open(event, id){
+    console.log("Selected language : ", this.allLanguages[id].Name);
     this.translateService.getLocal(id);
-      console.log("Selected language index", id);
+
 
   }
 

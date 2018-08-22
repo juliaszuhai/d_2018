@@ -4,7 +4,7 @@ package ro.msg.edu.jbugs.userManagement.business.boundary;
 import ro.msg.edu.jbugs.bugManagement.business.boundary.*;
 
 import ro.msg.edu.jbugs.bugManagement.business.boundary.ViewBug;
-import ro.msg.edu.jbugs.internationalization.business.boundle.Language;
+import ro.msg.edu.jbugs.internationalization.business.boundary.Language;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

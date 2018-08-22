@@ -8,18 +8,19 @@ public class LanguageTranslator {
 
 	public Locale getCurrentLocale(int languageIndexSelected){
 		if(languageIndexSelected == 0){
-			return new Locale("en","EN");
+			return new Locale("en","US");
 		}else{
 			if(languageIndexSelected == 1){
 				return new Locale("ro", "RO");
 			}
 		}
-		return new Locale("en","EN");
+		return new Locale("en","US");
 	}
 
-	public ResourceBundle getBundle(Locale currentLocale){
-		return ResourceBundle.getBundle("/MessageBundle", currentLocale);
+	public ResourceBundle getBundle(int id){
+		return ResourceBundle.getBundle("Lng" , getCurrentLocale(id));
 	}
+
 	public Map<String, String> convertResourceBundleToMap(ResourceBundle resource) {
 		Map<String, String> map = new HashMap<String, String>();
 

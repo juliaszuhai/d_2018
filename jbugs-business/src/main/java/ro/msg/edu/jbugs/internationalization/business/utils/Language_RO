@@ -1,0 +1,16 @@
+{
+  "login": {
+    "submit": "Inainteaza",
+    "username": "Nume utilizator",
+    "password": "Parola"
+  },
+  "header": {
+    "login":"Autentificare",
+    "content":"Continut",
+    "title":"Titlu Aplicatie"
+  },
+  "messages": {
+    "welcome": "Bun venit",
+    "goodbye": "Pa"
+  }
+}
