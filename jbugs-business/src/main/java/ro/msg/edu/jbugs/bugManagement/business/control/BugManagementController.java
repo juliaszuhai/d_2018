@@ -57,6 +57,8 @@ public class BugManagementController implements BugManagement {
                 .collect(Collectors.toList());
     }
 
+
+
     @Override
     public List<BugDTO> getBugsByStatus(Status status) throws BusinessException {
         return bugPersistenceManager.getBugsByStatus(status)
@@ -64,7 +66,6 @@ public class BugManagementController implements BugManagement {
                 .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public List<BugDTO> getBugsBySeverity(Severity severity) throws BusinessException {
