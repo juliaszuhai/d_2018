@@ -15,8 +15,12 @@ public interface BugManagement {
      */
     List<BugDTO> getAllBugs();
 
-
-    List<BugDTO> getBugsWithId(List<Integer> titles);
+    /**
+     * Return a list of bugs which have their ids contained in another list
+     * @param titles : List<Long>
+     * @return List<BugDTO>
+     */
+    public List<BugDTO> getBugsWithId(List<Long> titles);
     /**
      * Returns a bug entity with the matching id wrapped in an optional.
      * If none exist, returns an empty Optional Object
@@ -25,10 +29,6 @@ public interface BugManagement {
      * @return : Optional, containing a bug entity.
      */
     BugDTO getBugById(Long id) throws BusinessException;
-
-
-
-    List<BugDTO> getBugsWithTitle(List<String> titles);
 
 
     /**

@@ -18,7 +18,7 @@ import java.util.*;
 
 @Path("/view-bugs")
 public class GenerateExcel {
-    private static final String FILE_PATH = "T:/Try.xlsx";
+    private static final String FILE_PATH ="T:/Try.xlsx";
 
     @EJB
     private BugManagement bugManagement;
@@ -28,7 +28,7 @@ public class GenerateExcel {
      * @param titles - list of selected titles
      * @return a map containing the bugs corresponding to the selected titles
      */
-    private Map< String, Object[] > putInMap(List<Integer> titles)
+    private Map< String, Object[] > putInMap(List<Long> titles)
     {
         List<BugDTO> selectedBugs=bugManagement.getBugsWithId(titles);
         Map< String, Object[] > empinfo =
@@ -45,15 +45,13 @@ public class GenerateExcel {
 
     /**
      * The method generates the Excel file and lets you download it.
-     *  TODO : O clasa de control, sau in controller existent o metoda care va fi apelata aici
-     *
      * @param titles - list of selected titles
      * @return - response
      */
     @GET
     @Path("{titles}")
     @Produces("application/vnd.ms-excel")
-    public Response generate(@PathParam("titles") List<Integer> titles) {
+    public Response generate(@PathParam("titles") List<Long> titles) {
         try {
             File file = new File(FILE_PATH);
             FileInputStream fis = null;
@@ -80,7 +78,8 @@ public class GenerateExcel {
             fos.close();
             Response.ResponseBuilder response = Response.ok((Object) file);
             response.header("Content-Disposition",
-                    "attachment; filename=Try2.xls");
+                    "attachment; filename=new-excel-file.xlsx");
+            file.deleteOnExit();
             return response.build();
 
         } catch(Exception e){
