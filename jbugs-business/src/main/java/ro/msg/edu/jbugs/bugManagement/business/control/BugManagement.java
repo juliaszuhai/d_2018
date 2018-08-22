@@ -32,12 +32,6 @@ public interface BugManagement {
 
 
     /**
-     * @param title
-     * @return a bugDTO filtered by title
-     */
-    BugDTO getBugByTitle(String title) throws BusinessException;
-
-    /**
      * @return a list of DTOs containing information about bugs, filtered by title.
      */
     List<BugDTO> getBugsByTitle(String title) throws BusinessException;
@@ -51,8 +45,6 @@ public interface BugManagement {
      * @return a list of DTOs containing information about bugs, filtered by severity.
      */
     List<BugDTO> getBugsBySeverity(Severity severity) throws BusinessException;
-
-    BugDTO createBug(BugDTO bugDTO);
 
     /**
      * @return a list of DTOs containing information about bugs, filtered by description
