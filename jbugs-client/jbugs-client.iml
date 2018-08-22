@@ -20,6 +20,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.itextpdf:itextpdf:5.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcmail-jdk14:1.38" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk14:1.38" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bctsp-jdk14:1.38" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:itextpdf:5.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcmail-jdk14:1.38" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk14:1.38" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bctsp-jdk14:1.38" level="project" />
+    <orderEntry type="library" name="Maven: javax.json:javax.json-api:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20140107" level="project" />
     <orderEntry type="module" module-name="jbugs-business" />
     <orderEntry type="module" module-name="jbugs-persistence" />

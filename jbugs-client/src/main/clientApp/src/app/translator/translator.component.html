@@ -2,7 +2,7 @@
   <mat-menu #lngMenu="matMenu">
 
     <p *ngFor="let languages of allLanguages">
-      <button mat-menu-item (click)="open($event, languages.Id)">
+      <button mat-menu-item (click)="changeLanguage($event, languages.Id)">
         {{languages.Name}}
       </button>
     </p>

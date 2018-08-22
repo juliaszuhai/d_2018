@@ -96,6 +96,13 @@ public class BugPersistenceManager {
         }
     }
 
+
+    public Bug createBug(@NotNull Bug bug) {
+        em.persist(bug);
+        em.flush();
+        return bug;
+    }
+
 //    public Bug getBugById(@NotNull Long id){
 //        TypedQuery<Bug> q=em.createNamedQuery(Bug.,Bug.class)
 //                .setParameter("id",id);
