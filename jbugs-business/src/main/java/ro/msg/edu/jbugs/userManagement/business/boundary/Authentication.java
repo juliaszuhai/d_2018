@@ -11,10 +11,13 @@ import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 
 @Path("/authenticate")
@@ -57,6 +60,7 @@ public class Authentication {
         LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
         LocalDateTime tomorrowMidnight = todayMidnight.plusDays(1);
         Date out = Date.from(tomorrowMidnight.atZone(ZoneId.systemDefault()).toInstant());
+
 
 
         try {
