@@ -9,14 +9,14 @@ import {Router} from "@angular/router";
 
 
 export class TranslatorService {
-  people:String="";
+
   baseURL = 'http://localhost:8080/jbugs/rest/language/';
   constructor(private http: HttpClient,private  router: Router) { }
 
-  public getLocal(id:number){
+  public getLanguageFile(id:number){
       return this.http.get(`${this.baseURL}${id}`)
 
-        .subscribe(people => console.log(people));
+        .subscribe(lng => console.log(lng));
 
   }
 }

@@ -31,10 +31,7 @@ export class TranslatorComponent implements OnInit {
   constructor(private translateService:TranslatorService){
 
   }
-  translateForm() {
-    console.log("Translator chosen");
 
-  }
   ngOnInit(): void {
 
     this.allLanguages = [
@@ -45,7 +42,7 @@ export class TranslatorComponent implements OnInit {
 
   public open(event, id){
     console.log("Selected language : ", this.allLanguages[id].Name);
-    this.translateService.getLocal(id);
+    this.translateService.getLanguageFile(id);
 
 
   }
