@@ -12,6 +12,7 @@
       <th>Severity</th>
       <th>Created_By_User</th>
       <th>Assigned_To</th>
+      <th>Export Excel</th>
     </tr>
     </thead>
 
@@ -27,13 +28,14 @@
       <td>{{bug.severity}}</td>
       <td>{{bug.createdByUser.username}}</td>
       <td>{{bug.assignedTo.id}}</td>
+      <td><input type="checkbox" name="name1"></td>
 
     </tr>
     </tbody>
   </table>
 </div>
 
-<div>
+
 <div class="input-label">
       <label for="titleInput">Filter</label>
       <input type="text"
@@ -59,7 +61,14 @@
           (click)="getBugsBySeverity(titleElement.value)"
   >FindBySeverity
   </button>
+
+    <button type="submit"
+            (click)="getBugsByDescription(titleElement.value)"
+    >FindByDescription
+    </button>
+
   </div>
+
 
 <div class="col-md-4" >
 <table class="table">
@@ -75,7 +84,6 @@
     <td>{{bug.title}}</td>
   </tr>
 </table>
-</div>
 </div>
 
 
@@ -111,4 +119,21 @@
       </tr>
     </table>
   </div>
+
+
+<div class="col-md-4" >
+  <table class="table">
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+
+
+    </tr>
+
+    <tr *ngFor="let bug of bugsByDescription; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{bug.title}}</td>
+    </tr>
+  </table>
+</div>
 

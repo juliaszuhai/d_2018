@@ -19,6 +19,7 @@ import java.util.Objects;
                 @NamedQuery(name = Bug.GET_BUG_BY_SEVERITY, query = "SELECT b FROM Bug b WHERE b.severity=:severity"),
 
 
+
         }
 )
 
