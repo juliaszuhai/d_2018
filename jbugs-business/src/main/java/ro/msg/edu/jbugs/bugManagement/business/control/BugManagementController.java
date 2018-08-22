@@ -74,6 +74,13 @@ public class BugManagementController implements BugManagement {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public BugDTO createBug(BugDTO bugDTO) {
+        Bug bug=BugDTOHelper.toEntity(bugDTO);
+        bugPersistenceManager.createBug(bug);
+        return BugDTOHelper.fromEntity(bug);
+    }
+
 
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {

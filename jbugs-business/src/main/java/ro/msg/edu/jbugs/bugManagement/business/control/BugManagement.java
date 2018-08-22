@@ -46,5 +46,7 @@ public interface BugManagement {
      */
     List<BugDTO> getBugsBySeverity(Severity severity) throws BusinessException;
 
+    BugDTO createBug(BugDTO bugDTO);
+
 
 }
