@@ -22,6 +22,7 @@ public class AppBoundary extends Application {
 
         classes.add(GenerateExcel.class);
         classes.add(ListBugs.class);
+<<<<<<< HEAD
         classes.add(ListBugsByTitle.class);
         classes.add(ListBugsByStatus.class);
         classes.add(ListBugsBySeverity.class);
@@ -30,6 +31,11 @@ public class AppBoundary extends Application {
         classes.add(ActivateUser.class);
         classes.add(Language.class);
         classes.add(AddRole.class);
+=======
+        classes.add(GenerateExcel.class);
+        classes.add(ViewBug.class);
+        classes.add(Language.class);
+>>>>>>> d592d75e5a6887668850991edb29673d35ffd653
         return classes;
     }
 }

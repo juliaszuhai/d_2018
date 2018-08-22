@@ -1,6 +1,9 @@
 package ro.msg.edu.jbugs.internationalization.business.boundle;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d592d75e5a6887668850991edb29673d35ffd653
 import ro.msg.edu.jbugs.internationalization.business.control.LanguageTranslator;
 
 import javax.ejb.EJB;
