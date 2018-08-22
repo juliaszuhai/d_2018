@@ -28,7 +28,7 @@ public class GenerateExcel {
      * @param titles - list of selected titles
      * @return a map containing the bugs corresponding to the selected titles
      */
-    private Map< String, Object[] > putInMap(List<Long> titles)
+    private Map<String, Object[] > putInMap(List<Long> titles)
     {
         List<BugDTO> selectedBugs=bugManagement.getBugsWithId(titles);
         Map< String, Object[] > empinfo =

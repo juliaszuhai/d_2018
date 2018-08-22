@@ -38,7 +38,7 @@
                  required>
         </div>
         <button type="submit"
-                [disabled]="formControl.invalid"
+                [disabled]="!validatePassword()||!validateUsername()"
                 color="primary"
                 style="margin-left: 40%;"
                 mat-stroked-button="login">Submit!
