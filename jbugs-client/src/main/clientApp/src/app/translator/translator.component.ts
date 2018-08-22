@@ -40,7 +40,7 @@ export class TranslatorComponent implements OnInit {
     ]
   }
 
-  public open(event, id){
+  public changeLanguage(event, id){
     console.log("Selected language : ", this.allLanguages[id].Name);
     this.translateService.getLanguageFile(id);
 
