@@ -2,8 +2,6 @@ package ro.msg.edu.jbugs.bugManagement.business.control;
 
 import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException;
-import ro.msg.edu.jbugs.bugManagement.persistence.entity.Severity;
-import ro.msg.edu.jbugs.bugManagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.userManagement.business.dto.*;
 
 import java.util.List;
@@ -15,8 +13,12 @@ public interface BugManagement {
      */
     List<BugDTO> getAllBugs();
 
-
-    List<BugDTO> getBugsWithId(List<Integer> titles);
+    /**
+     * Return a list of bugs which have their ids contained in another list
+     * @param titles : List<Long>
+     * @return List<BugDTO>
+     */
+    public List<BugDTO> getBugsWithId(List<Long> titles);
     /**
      * Returns a bug entity with the matching id wrapped in an optional.
      * If none exist, returns an empty Optional Object
@@ -26,10 +28,11 @@ public interface BugManagement {
      */
     BugDTO getBugById(Long id) throws BusinessException;
 
-
-
-    List<BugDTO> getBugsWithTitle(List<String> titles);
-
+    /**
+     * @param title
+     * @return a bugDTO filtered by title
+     */
+    BugDTO getBugByTitle(String title) throws BusinessException;
 
     /**
      * @return a list of DTOs containing information about bugs, filtered by title.
