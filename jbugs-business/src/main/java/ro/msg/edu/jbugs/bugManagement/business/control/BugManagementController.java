@@ -47,18 +47,7 @@ public class BugManagementController implements BugManagement {
         }
         return selectedBugs;
     }
-    @Override
-    public BugDTO getBugByTitle(String title) throws BusinessException {
-        Optional<Bug> bug=bugPersistenceManager.getBugByTitle(title);
-        if(bug.isPresent()){
-            return BugDTOHelper.fromEntity(bug.get());
-        }
-        else{
-            throw new BusinessException(ExceptionCode.BUG_NOT_EXPORTED);
 
-        }
-
-    }
 
     @Override
     public List<BugDTO> getBugsByTitle(String title) throws BusinessException {
@@ -97,6 +86,10 @@ public class BugManagementController implements BugManagement {
 
     }
 
+    @Override
+    public List<BugDTO> getBugsWithTitle(List<String> titles) {
+        return null;
+    }
 
 
 }
