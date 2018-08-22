@@ -1,6 +1,5 @@
 package ro.msg.edu.jbugs.internationalization.business.boundle;
 
-import org.json.JSONObject;
 import ro.msg.edu.jbugs.internationalization.business.control.LanguageTranslator;
 
 import javax.ejb.EJB;
