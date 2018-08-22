@@ -19,12 +19,10 @@ public class AppBoundary extends Application {
         final Set<Class<?>> classes = new HashSet<>();
         classes.add(Authentication.class);
         classes.add(Registration.class);
-        classes.add(ViewBug.class);
-
-        classes.add(GenerateExcel.class);
         classes.add(ListBugs.class);
         classes.add(GenerateExcel.class);
         classes.add(ViewBug.class);
+        classes.add(ActivateUser.class);
         return classes;
     }
 }
