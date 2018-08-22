@@ -34,7 +34,7 @@ public class ViewBug {
      * Export the bug which have the specify title in a pdf
      *
      * @param id
-     * @return Response
+     * @return Response with a pdf
      */
     @GET
     @Path("{id}")
