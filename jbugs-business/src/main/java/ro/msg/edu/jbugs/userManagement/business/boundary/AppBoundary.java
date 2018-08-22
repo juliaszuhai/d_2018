@@ -30,6 +30,8 @@ public class AppBoundary extends Application {
         classes.add(ActivateUser.class);
         classes.add(Language.class);
         classes.add(AddRoleToUser.class);
+        classes.add(RemoveRoleFromUser.class);
+        classes.add(AddPermissionToRole.class);
         return classes;
     }
 }

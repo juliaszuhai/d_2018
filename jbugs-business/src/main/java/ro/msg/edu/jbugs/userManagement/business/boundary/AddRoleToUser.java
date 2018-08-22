@@ -21,9 +21,7 @@ public class AddRoleToUser {
     private PermissionManagementController permissionManagementController;
 
     @GET
-    public void doSomthing(){
-
-    }
+    public void doSomthing(){}
 
     @POST
     @Produces("application/json")
