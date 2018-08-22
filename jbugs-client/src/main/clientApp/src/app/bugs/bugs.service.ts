@@ -80,7 +80,16 @@ export class BugListService {
     );
   }
 
+  getBugsByDescription(description: string):  Observable<BugData[]> {
 
+    let params = new HttpParams();
+    params.set('description', description);
+
+
+    return this.http.get<BugData[]>(this.baseURL + '/listBugsByDescription/' + description,  {params}
+
+    );
+  }
 
 
 }

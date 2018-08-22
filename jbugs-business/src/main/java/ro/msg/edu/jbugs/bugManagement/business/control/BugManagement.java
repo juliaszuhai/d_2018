@@ -48,5 +48,10 @@ public interface BugManagement {
 
     BugDTO createBug(BugDTO bugDTO);
 
+    /**
+     * @return a list of DTOs containing information about bugs, filtered by description
+     */
+    List<BugDTO> getBugsByDescription(String description) throws BusinessException;
+
 
 }

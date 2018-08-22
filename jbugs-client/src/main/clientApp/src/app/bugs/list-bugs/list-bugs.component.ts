@@ -14,6 +14,7 @@ export class ListBugsComponent implements OnInit {
   bugsByTitle: BugData[];
   bugsByStatus: BugData[];
   bugsBySeverity: BugData[];
+  bugsByDescription: BugData[];
 
 
 
@@ -85,6 +86,17 @@ export class ListBugsComponent implements OnInit {
         next: (value: BugData[]) => {
           console.log('received: ' + JSON.stringify(value));
           this.bugsBySeverity = value;
+        }
+      }
+    );
+  }
+
+  getBugsByDescription(description: string){
+    this.bugService.getBugsByDescription(description).subscribe(
+      {
+        next: (value: BugData[]) => {
+          console.log('received: ' + JSON.stringify(value));
+          this.bugsByDescription = value;
         }
       }
     );
