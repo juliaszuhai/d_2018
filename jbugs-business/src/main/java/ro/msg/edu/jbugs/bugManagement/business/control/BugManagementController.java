@@ -6,6 +6,8 @@ import ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugManagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.bugManagement.persistence.dao.BugPersistenceManager;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
+import ro.msg.edu.jbugs.bugManagement.persistence.entity.Severity;
+import ro.msg.edu.jbugs.bugManagement.persistence.entity.Status;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -57,6 +59,43 @@ public class BugManagementController implements BugManagement {
             }
         }
         return selectedBugs;
+    }
+    @Override
+    public BugDTO getBugByTitle(String title) throws BusinessException {
+        Optional<Bug> bug=bugPersistenceManager.getBugByTitle(title);
+        if(bug.isPresent()){
+            return BugDTOHelper.fromEntity(bug.get());
+        }
+        else{
+            throw new BusinessException(ExceptionCode.BUG_NOT_EXPORTED);
+
+        }
+
+    }
+
+    @Override
+    public List<BugDTO> getBugsByTitle(String title) throws BusinessException {
+        return bugPersistenceManager.getBugsByTitle(title)
+                .stream()
+                .map(BugDTOHelper::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BugDTO> getBugsByStatus(Status status) throws BusinessException {
+        return bugPersistenceManager.getBugsByStatus(status)
+                .stream()
+                .map(BugDTOHelper::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<BugDTO> getBugsBySeverity(Severity severity) throws BusinessException {
+        return bugPersistenceManager.getBugsBySeverity(severity)
+                .stream()
+                .map(BugDTOHelper::fromEntity)
+                .collect(Collectors.toList());
     }
 
 
