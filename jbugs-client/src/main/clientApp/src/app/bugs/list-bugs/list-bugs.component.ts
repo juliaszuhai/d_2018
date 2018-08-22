@@ -11,6 +11,7 @@ export class ListBugsComponent implements OnInit {
   bugData: BugData;
   relatedUser: RelatedUser;
   bugList: BugData[];
+  bugsByTitle: BugData[];
 
 
 
@@ -51,6 +52,27 @@ export class ListBugsComponent implements OnInit {
           }
         }
       );
+
   }
+
+  getBugsByTitle(title: string){
+    this.bugService.getBugsByTitle(title).subscribe(
+      {
+        next: (value: BugData[]) => {
+          console.log('received: ' + JSON.stringify(value));
+          this.bugsByTitle = value;
+        }
+      }
+    );
+  }
+
+  getDate(d){
+
+    const correctSec = d * 1000;
+    var expiresAt = new Date(correctSec);
+
+    return expiresAt
+  }
+
 
 }
