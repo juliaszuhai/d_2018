@@ -29,8 +29,6 @@ public class Role extends BaseEntity<Long> {
 
 
 
-
-
     public String getType() {
         return type;
     }
