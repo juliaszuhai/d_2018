@@ -8,7 +8,8 @@ import java.util.Objects;
 @Table(name = "roles")
 @NamedQueries(
         {
-              @NamedQuery(name = Role.GET_ALL_ROLES,query = "SELECT r FROM Role r")
+              @NamedQuery(name = Role.GET_ALL_ROLES,query = "SELECT r FROM Role r"),
+              @NamedQuery(name = Role.GET_ROLE_BY_TYPE,query = "SELECT r FROM Role r where r.type = :type")
         }
 )
 public class Role extends BaseEntity<Long> {
@@ -16,6 +17,7 @@ public class Role extends BaseEntity<Long> {
     @Transient
     private final static int MAX_STRING_LENGTH = 20;
     public static final String GET_ALL_ROLES = "get_all_roles";
+    public static final String GET_ROLE_BY_TYPE = "get_role_by_type";
 
     @Column(name = "type", length = MAX_STRING_LENGTH)
     private String type;
