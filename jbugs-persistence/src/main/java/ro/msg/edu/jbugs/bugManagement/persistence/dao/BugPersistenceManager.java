@@ -70,7 +70,7 @@ public class BugPersistenceManager {
      */
     public List<Bug> getBugsByStatus(@NotNull Status status){
         TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_STATUS, Bug.class)
-                .setParameter("staus",status);
+                .setParameter("status",status);
         return q.getResultList();
 
     }

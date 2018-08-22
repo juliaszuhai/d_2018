@@ -1,11 +1,8 @@
 package ro.msg.edu.jbugs.userManagement.business.boundary;
 
 
-import ro.msg.edu.jbugs.bugManagement.business.boundary.GenerateExcel;
-import ro.msg.edu.jbugs.bugManagement.business.boundary.ViewBug;
+import ro.msg.edu.jbugs.bugManagement.business.boundary.*;
 
-import ro.msg.edu.jbugs.bugManagement.business.boundary.ListBugs;
-import ro.msg.edu.jbugs.bugManagement.business.boundary.ListBugsByTitle;
 import ro.msg.edu.jbugs.bugManagement.business.boundary.ViewBug;
 import ro.msg.edu.jbugs.internationalization.business.boundle.Language;
 
@@ -25,8 +22,11 @@ public class AppBoundary extends Application {
 
         classes.add(GenerateExcel.class);
         classes.add(ListBugs.class);
-        classes.add(GenerateExcel.class);
-        classes.add(ViewBug.class);
+        classes.add(ListBugsByTitle.class);
+        classes.add(ListBugsByStatus.class);
+        classes.add(ListBugsBySeverity.class);
+//        classes.add(ViewBug.class);
+        classes.add(ActivateUser.class);
         classes.add(Language.class);
         return classes;
     }
