@@ -7,6 +7,8 @@ import * as moment from "moment";
 import _date = moment.unitOfTime._date;
 import {UserData} from "../authentication/authentication.service";
 
+
+
 export interface RelatedUser {
   id: number;
   username: string;
@@ -16,7 +18,7 @@ export interface BugData {
   title: string;
   description: string;
   version: string;
-  targetDate: _date;
+  targetDate: Date;
   status: string;
   fixedVersion: string;
   severity: string;
@@ -44,4 +46,21 @@ export class BugListService {
       // params: new HttpParams().set('dummyParam', 'dummyvalue')
     });
   }
+
+  getBugsByTitle(title: string):  Observable<BugData[]> {
+
+    let params = new HttpParams();
+    params.set('title', title);
+
+
+    return this.http.get<BugData[]>(this.baseURL + '/listBugsByTitle/' + title,  {params}
+
+    );
+  }
+
+
+
+
+
+
 }

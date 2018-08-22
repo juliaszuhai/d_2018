@@ -13,12 +13,12 @@
       <th>Title</th>
       <th>Description</th>
       <th>Version</th>
-      <th>Target Date</th>
+      <th>Target_Date</th>
       <th>Status</th>
-      <th>Fixed Version</th>
+      <th>Fixed_Version</th>
       <th>Severity</th>
-      <th>Created By User</th>
-      <th>Assigned To</th>
+      <th>Created_By_User</th>
+      <th>Assigned_To</th>
 
     </tr>
     <tr *ngFor="let bug of bugList; let i = index">
@@ -26,7 +26,7 @@
       <td>{{bug.title}}</td>
       <td>{{bug.description}}</td>
       <td>{{bug.version}}</td>
-      <td>{{bug.targetDate}}</td>
+      <td>{{getDate(bug.targetDate).toDateString()}}</td>
       <td>{{bug.status}}</td>
       <td>{{bug.fixedVersion}}</td>
       <td>{{bug.severity}}</td>
@@ -35,5 +35,38 @@
 
     </tr>
   </table>`
+
+</div>
+
+<div>
+
+
+      <label for="titleInput">title</label>
+      <input type="text"
+             #titleElement
+             name="title"
+             id="titleInput"
+             class="form-control"
+             required>
+
+  <button type="submit"
+          (click)="getBugsByTitle(titleElement.value)"
+          >Submit!
+  </button>
+<div class="col-md-4" >
+<table class="table">
+  <tr>
+    <th>#</th>
+    <th>Title</th>
+
+
+  </tr>
+
+  <tr *ngFor="let bug of bugsByTitle; let i = index">
+    <td>{{i + 1}}</td>
+    <td>{{bug.title}}</td>
+  </tr>
+</table>
+</div>
 
 </div>
