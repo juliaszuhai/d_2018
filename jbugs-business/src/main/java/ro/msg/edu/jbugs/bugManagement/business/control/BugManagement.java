@@ -46,10 +46,13 @@ public interface BugManagement {
      */
     List<BugDTO> getBugsBySeverity(Severity severity) throws BusinessException;
 
+    BugDTO createBug(BugDTO bugDTO);
+
     /**
      * @return a list of DTOs containing information about bugs, filtered by description
      */
     List<BugDTO> getBugsByDescription(String description) throws BusinessException;
+
 
 
 }
