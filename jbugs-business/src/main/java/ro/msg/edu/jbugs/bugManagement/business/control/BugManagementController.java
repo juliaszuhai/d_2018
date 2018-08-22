@@ -30,7 +30,7 @@ public class BugManagementController implements BugManagement {
                 .collect(Collectors.toList());    }
 
     @Override
-    public List<BugDTO> getBugsWithId(List<Integer> titles) {
+    public List<BugDTO> getBugsWithId(List<Long> titles) {
         List<BugDTO> bugs=bugPersistenceManager.getAllBugs().stream()
                 .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());
@@ -96,6 +96,7 @@ public class BugManagementController implements BugManagement {
         }
 
     }
+
 
 
 
