@@ -17,11 +17,7 @@ public class Permission extends BaseEntity<Long>{
     @Column(name = "description")
     private String description;
 
-//
-//    @ManyToMany(cascade = CascadeType.ALL)
-////    @JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "pid"),
-////            inverseJoinColumns = { @JoinColumn(name = "rid")})
-//    private List<Role> roles;
+
 
     public Permission() {
     }
@@ -71,6 +67,4 @@ public class Permission extends BaseEntity<Long>{
                 ", description='" + description + '\'' +
                 '}';
     }
-
-
 }
