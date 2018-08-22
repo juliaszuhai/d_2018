@@ -147,7 +147,6 @@ public class BugManagementController implements BugManagement {
         return true;
     }
 
-
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {
         Optional<Bug> bug=bugPersistenceManager.getBugById(id);
@@ -158,7 +157,6 @@ public class BugManagementController implements BugManagement {
         }
 
     }
-
 
 
 
