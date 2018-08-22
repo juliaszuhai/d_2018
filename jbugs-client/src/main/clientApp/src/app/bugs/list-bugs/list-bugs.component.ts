@@ -12,6 +12,8 @@ export class ListBugsComponent implements OnInit {
   relatedUser: RelatedUser;
   bugList: BugData[];
   bugsByTitle: BugData[];
+  bugsByStatus: BugData[];
+  bugsBySeverity: BugData[];
 
 
 
@@ -61,6 +63,28 @@ export class ListBugsComponent implements OnInit {
         next: (value: BugData[]) => {
           console.log('received: ' + JSON.stringify(value));
           this.bugsByTitle = value;
+        }
+      }
+    );
+  }
+
+  getBugsByStatus(status: string){
+    this.bugService.getBugsByStatus(status).subscribe(
+      {
+        next: (value: BugData[]) => {
+          console.log('received: ' + JSON.stringify(value));
+          this.bugsByStatus = value;
+        }
+      }
+    );
+  }
+
+  getBugsBySeverity(severity: string){
+    this.bugService.getBugsBySeverity(severity).subscribe(
+      {
+        next: (value: BugData[]) => {
+          console.log('received: ' + JSON.stringify(value));
+          this.bugsBySeverity = value;
         }
       }
     );
