@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {TranslateService} from "ng2-translate";
+import {TranslatorService} from "./translator.service";
 
 
 export class Language {
@@ -18,6 +20,7 @@ export class Language {
 @Component({
   selector: 'language-dropdown',
   templateUrl: './translator.component.html',
+
   styleUrls: ['./translator.component.css']
 })
 export class TranslatorComponent implements OnInit {
@@ -25,7 +28,7 @@ export class TranslatorComponent implements OnInit {
   @Input()
   allLanguages: Language[];
 
-  constructor(){
+  constructor(private translateService:TranslatorService){
 
   }
   translateForm() {
@@ -41,7 +44,9 @@ export class TranslatorComponent implements OnInit {
   }
 
   public open(event, id){
+    this.translateService.getLocal(id);
       console.log("Selected language index", id);
+
   }
 
 

@@ -7,6 +7,7 @@ import ro.msg.edu.jbugs.bugManagement.business.boundary.ViewBug;
 import ro.msg.edu.jbugs.bugManagement.business.boundary.ListBugs;
 import ro.msg.edu.jbugs.bugManagement.business.boundary.ListBugsByTitle;
 import ro.msg.edu.jbugs.bugManagement.business.boundary.ViewBug;
+import ro.msg.edu.jbugs.internationalization.business.boundle.Language;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -24,9 +25,9 @@ public class AppBoundary extends Application {
 
         classes.add(GenerateExcel.class);
         classes.add(ListBugs.class);
-        classes.add(ListBugsByTitle.class);
-//        classes.add(ViewBug.class);
-        classes.add(ActivateUser.class);
+        classes.add(GenerateExcel.class);
+        classes.add(ViewBug.class);
+        classes.add(Language.class);
         return classes;
     }
 }
