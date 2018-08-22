@@ -6,6 +6,8 @@ import ro.msg.edu.jbugs.bugManagement.business.control.BugManagement;
 import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
+import ro.msg.edu.jbugs.bugManagement.persistence.entity.Severity;
+import ro.msg.edu.jbugs.bugManagement.persistence.entity.Status;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -29,4 +31,6 @@ public class ListBugsByTitle {
 
         return jsonResponse;
     }
+
+
 }
