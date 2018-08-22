@@ -110,10 +110,6 @@ public class BugManagementController implements BugManagement {
 
     }
 
-    @Override
-    public List<BugDTO> getBugsWithTitle(List<String> titles) {
-        return null;
-    }
 
 
 
