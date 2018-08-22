@@ -65,4 +65,5 @@ public interface BugManagement {
     boolean isBugValid(Bug bug) throws BusinessException;
 
 
+
 }
