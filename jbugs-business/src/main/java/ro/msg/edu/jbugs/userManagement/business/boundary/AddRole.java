@@ -5,6 +5,7 @@ import ro.msg.edu.jbugs.userManagement.business.control.PermissionManagementCont
 import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTOHelper;
+import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
@@ -21,7 +22,11 @@ public class AddRole {
 
     @GET
     public void addRole(){
-        permissionManagementController.addRoleToUser("ADM","doreld");
+        try {
+            permissionManagementController.addRoleToUser("ADM","doreld");
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        }
 
     }
 }

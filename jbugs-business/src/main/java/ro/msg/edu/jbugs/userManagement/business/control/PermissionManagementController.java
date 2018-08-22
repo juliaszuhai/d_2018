@@ -1,5 +1,7 @@
 package ro.msg.edu.jbugs.userManagement.business.control;
 
+import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.userManagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.userManagement.persistence.dao.PermissionPersistenceManager;
 import ro.msg.edu.jbugs.userManagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.Permission;
@@ -8,76 +10,105 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Optional;
 
 @Stateless
 public class PermissionManagementController {
 
-@EJB
-private PermissionPersistenceManager permissionPersistenceManager;
+    @EJB
+    private PermissionPersistenceManager permissionPersistenceManager;
 
-@EJB
-private UserPersistenceManager userPersistenceManager;
+    @EJB
+    private UserPersistenceManager userPersistenceManager;
 
-    public void createPermission(Permission permission){
+    public void createPermission(Permission permission) {
         permissionPersistenceManager.createPermission(permission);
     }
 
-    public void createRole(Role role){
+    public void createRole(Role role) {
         permissionPersistenceManager.createRole(role);
     }
 
-    public void addRoleToUser(String roleType, String username){
-        Optional<Role> roleOptional = permissionPersistenceManager.getRoleByType(roleType);
+
+    /**
+     * Adds a role to a user. If the role type does not exist it will automatically add the new role type to the database.
+     * If the user  already has the role, this method will do nothing.
+     * @param roleType
+     * @param username
+     */
+    public void addRoleToUser(String roleType, String username) throws BusinessException {
+
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
+        Role role = addRoleIfNotExists(roleType);
+        if (!userOptional.isPresent()) {
+            throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
+        } else {
+            User user = userOptional.get();
+            normalizeUserRoles(user);
+            if (!user.getRoles().contains(role)) {
+                userOptional.get().getRoles().add(role);
+            }
+        }
+
+    }
+
+    private void normalizeUserRoles(User user) {
+        if (user.getRoles() == null) {
+            user.setRoles(new LinkedList<>());
+        }
+    }
+
+    private void normalizesRolePermissions(Role role) {
+        if (role.getPermissions() == null) {
+            role.setPermissions(new LinkedList<>());
+        }
+    }
+
+    private Role addRoleIfNotExists(String roleType) {
+        Optional<Role> roleOptional = permissionPersistenceManager.getRoleByType(roleType);
         Role role;
-        if(!roleOptional.isPresent()){
+        if (!roleOptional.isPresent()) {
             role = new Role();
             role.setType("roleType");
             permissionPersistenceManager.createRole(role);
         } else {
             role = roleOptional.get();
         }
-
-        if(roleOptional.isPresent() && userOptional.isPresent()){
-            User user = userOptional.get();
-            if(user.getRoles()==null){
-                user.setRoles(new ArrayList<>());
-            }
-            user.getRoles().add(role);
-        }
-
-        //TODO add exceptions
+        return role;
     }
 
-    public void addPermissionToRole(String permissionType,String roleType){
-        Optional<Role> roleOptional = permissionPersistenceManager.getRoleByType(roleType);
+    private Permission addPermissionIfNotExists(String permissionType) {
         Optional<Permission> permissionOptional = permissionPersistenceManager.getPermissionByType(permissionType);
-        Role role;
+
         Permission permission;
-        if(!roleOptional.isPresent()){
-            role = new Role();
-            role.setType(roleType);
-            permissionPersistenceManager.createRole(role);
-        } else{
-            role = roleOptional.get();
-        }
-        if(!permissionOptional.isPresent()){
+        if (!permissionOptional.isPresent()) {
             permission = new Permission();
             permission.setType(permissionType);
             permissionPersistenceManager.createPermission(permission);
-        } else{
+        } else {
             permission = permissionOptional.get();
         }
+        return permission;
+    }
 
-        if(roleOptional.isPresent() && permissionOptional.isPresent()){
-            if(role.getPermissions()==null){
-                role.setPermissions(new ArrayList<>());
-            }
+    /**
+     * Adds a permission to a role. If the permission type or role type don't exist it will automatically add them to the database.
+     * If the role already has the permission this method will do nothing.
+     * @param permissionType
+     * @param roleType
+     */
+    public void addPermissionToRole(String permissionType, String roleType) {
+
+        Role role = addRoleIfNotExists(roleType);
+        Permission permission = addPermissionIfNotExists(permissionType);
+        normalizesRolePermissions(role);
+        if (!role.getPermissions().contains(permission)) {
             role.getPermissions().add(permission);
         }
+    }
 
-        //TODO add exceptions
+    public void revokeRoleFromUser(String roleType, String username) {
+
     }
 }
