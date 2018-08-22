@@ -74,15 +74,6 @@ public class BugManagementController implements BugManagement {
     }
 
     @Override
-    public List<BugDTO> getBugsByDescription(String description) throws BusinessException {
-        return bugPersistenceManager.getBugsByDescription(description)
-                .stream()
-                .map(BugDTOHelper::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-
-    @Override
     public BugDTO createBug(BugDTO bugDTO) {
         Bug bug=BugDTOHelper.toEntity(bugDTO);
         bugPersistenceManager.createBug(bug);
@@ -98,7 +89,6 @@ public class BugManagementController implements BugManagement {
     }
 
 
-
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {
         Optional<Bug> bug=bugPersistenceManager.getBugById(id);
@@ -109,6 +99,7 @@ public class BugManagementController implements BugManagement {
         }
 
     }
+
 
 
 
