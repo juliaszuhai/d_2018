@@ -8,7 +8,7 @@
       <div class="errorMessage server-error" *ngIf="displayError()">
         {{getMessage()}}
       </div>
-      <fieldset >
+      <fieldset>
         <div class="form-group">
           <div class="form-group">
             <label for="usernameInput">Username</label>
@@ -37,13 +37,15 @@
                  [ngClass]="{form_invalid: !validatePassword(), form_valid:validatePassword()}"
                  required>
         </div>
-        <button type="submit"
-                [disabled]="!validatePassword()||!validateUsername()"
-                color="primary"
-                style="margin-left: 40%;"
-                mat-stroked-button="login">Submit!
-        </button>
+
       </fieldset>
+      <div nbRecaptcha key="6LfwXmsUAAAAAA5Q7ULe0bxp2rC0ss0qSW21CS0N" ngForm="captcha"></div>
+      <button type="submit"
+              [disabled]="!validatePassword()||!validateUsername()"
+              color="primary"
+              style="margin-left: 40%;"
+              mat-stroked-button="login">Submit!
+      </button>
 
       <div class="errorMessage" *ngIf="!validateUsername()&&usernameControl.touched">Username must be at least 6
         characters

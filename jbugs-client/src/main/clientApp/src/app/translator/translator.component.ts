@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TranslateService} from "ng2-translate";
 import {TranslatorService} from "./translator.service";
 
 

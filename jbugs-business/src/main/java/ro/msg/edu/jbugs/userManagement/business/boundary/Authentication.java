@@ -4,9 +4,12 @@ package ro.msg.edu.jbugs.userManagement.business.boundary;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.google.gson.Gson;
 import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
+import ro.msg.edu.jbugs.userManagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -38,13 +41,8 @@ public class Authentication {
                                      @FormParam("password") String password) {
         try {
 
-            // Authenticate the user using the credentials provided
             UserDTO authUser = userManagement.login(username, password);
-
-            // Issue a token for the user
-            String token = issueToken(authUser);
-
-            // Return the token on the response
+            String token = issueToken(UserDTOHelper.toEntity(authUser));
             return Response.ok("{\"token\": \""+token+"\"}").build();
         } catch(BusinessException e){
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
@@ -54,7 +52,7 @@ public class Authentication {
         }
     }
 
-    private String issueToken(UserDTO userDTO) {
+    private String issueToken(User user) {
         LocalTime midnight = LocalTime.MIDNIGHT;
         LocalDate today = LocalDate.now(ZoneId.of("Europe/Bucharest"));
         LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
@@ -63,15 +61,17 @@ public class Authentication {
 
 
 
+
         try {
             Algorithm algorithm = Algorithm.HMAC256("secret");
             String token = JWT.create()
-                    .withIssuer(userDTO.getUsername())
+                    .withIssuer(user.getUsername())
                     .withExpiresAt(out)
-                    .withClaim("firstName", userDTO.getFirstName())
-                    .withClaim("lastName", userDTO.getLastName())
-                    .withClaim("email", userDTO.getEmail())
-                    .withClaim("phone", userDTO.getPhoneNumber())
+                    .withClaim("firstName", user.getFirstName())
+                    .withClaim("lastName", user.getLastName())
+                    .withClaim("email", user.getEmail())
+                    .withClaim("phone", user.getPhoneNumber())
+                    .withClaim("role", new Gson().toJson(user.getRoles()))
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception){

@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   error: boolean;
   errorMessage: string;
 
+
+
   constructor(private authenticationService: AuthenticationService, private router: Router) {
     this.userLoginData = {
       username: '',

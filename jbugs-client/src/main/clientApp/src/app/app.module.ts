@@ -20,6 +20,7 @@ import {TranslatorModule} from "./translator/translator.module";
 
 import {BugsModule} from "./bugs/bugs.module";
 import {ListBugsComponent} from "./bugs/list-bugs/list-bugs.component";
+import { RecaptchaDirective } from './authentication/login/recaptcha.directive';
 
 
 const appRoutes: Routes = [
@@ -38,7 +39,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ContentComponent
+    ContentComponent,
+    RecaptchaDirective
   ],
   imports: [
     BrowserModule,
@@ -52,6 +54,7 @@ const appRoutes: Routes = [
     UserModule,
     BugsModule,
     TranslatorModule
+
   ],
   providers: [{
     provide: LoginguardGuard, useClass: LoginguardGuard

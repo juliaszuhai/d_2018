@@ -10,22 +10,31 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
 import javax.ejb.EJB;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/addrole")
-public class AddRole {
+public class AddRoleToUser {
 
     @EJB
     private PermissionManagementController permissionManagementController;
 
     @GET
-    public void addRole(){
+    public void doSomthing(){
+
+    }
+
+    @POST
+    @Produces("application/json")
+    @Consumes("application/x-www-form-urlencoded")
+    public Response addRoleToUser(@FormParam("username") String username,
+                                  @FormParam("roleType") String roleType){
         try {
-            permissionManagementController.addRoleToUser("ADM","doreld");
+            permissionManagementController.addRoleToUser(roleType,username);
+            return Response.ok("Role added").build();
         } catch (BusinessException e) {
-            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
 
     }
