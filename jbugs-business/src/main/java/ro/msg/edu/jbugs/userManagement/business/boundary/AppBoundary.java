@@ -25,6 +25,7 @@ public class AppBoundary extends Application {
         classes.add(ListBugsByTitle.class);
         classes.add(ListBugsByStatus.class);
         classes.add(ListBugsBySeverity.class);
+        classes.add(ListBugsByDescription.class);
 //        classes.add(ViewBug.class);
         classes.add(ActivateUser.class);
         classes.add(Language.class);
