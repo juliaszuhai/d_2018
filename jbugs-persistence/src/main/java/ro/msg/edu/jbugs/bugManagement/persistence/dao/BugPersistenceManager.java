@@ -6,10 +6,7 @@ import ro.msg.edu.jbugs.bugManagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +31,7 @@ public class BugPersistenceManager {
     }
 
     /**
-     * Returns a user entity with the matching title wrapped in an optional.
+     * Returns a bug entity with the matching title wrapped in an optional.
      * If none exist, returns an empty Optional Object
      * @param title : String containing the title.
      * @return : Optional, containing a bug entity.
@@ -50,7 +47,7 @@ public class BugPersistenceManager {
     }
 
     /**
-     * Returns a user entity with the matching title wrapped in an optional.
+     * Returns a bug entity with the matching title wrapped in an optional.
      * If none exist, returns an empty Optional Object
      * @param title : String containing the title.
      * @return : List of Bugs, empty if there are no roles in the database.
@@ -63,20 +60,20 @@ public class BugPersistenceManager {
     }
 
     /**
-     * Returns a user entity with the matching status wrapped in an optional.
+     * Returns a bug entity with the matching status wrapped in an optional.
      * If none exist, returns an empty Optional Object
      * @param status : String containing the status.
      * @return : List of Bugs, empty if there are no roles in the database.
      */
     public List<Bug> getBugsByStatus(@NotNull Status status){
         TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_STATUS, Bug.class)
-                .setParameter("staus",status);
+                .setParameter("status",status);
         return q.getResultList();
 
     }
 
     /**
-     * Returns a user entity with the matching severity wrapped in an optional.
+     * Returns a bug entity with the matching severity wrapped in an optional.
      * If none exist, returns an empty Optional Object
      * @param severity : String containing the severity.
      * @return : List of Bugs, empty if there are no roles in the database.
@@ -104,5 +101,15 @@ public class BugPersistenceManager {
 //                .setParameter("id",id);
 //        return q.getSingleResult();
 //    }
+
+    /**
+     * Returns a bug entity with the matching description wrapped in an optional.
+     * @param description: String containing substring from description.
+     * @return: List of Bugs, empty if there are no roles in the database.
+     */
+    public List<Bug> getBugsByDescription(String description) {
+        Query q = em.createQuery("select b from Bug b where b.description like '%" + description + "%'");
+        return q.getResultList();
+    }
 
 }

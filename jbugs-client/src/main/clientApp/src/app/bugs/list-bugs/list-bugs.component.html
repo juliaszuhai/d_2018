@@ -1,13 +1,6 @@
-
-<!--<div class="col-md-4">-->
-  <!--<ul>-->
-        <!--<li>title: {{fromParent?.title}}</li>-->
-        <!--<li>description: {{fromParent?.description}}</li>-->
-  <!--</ul>-->
-
-<!--</div>-->
-<div class="col-md-4" (*ngFor)="ngOnInit()">
-  <table class="table">
+<div class="div col-md-4" (*ngFor)="ngOnInit()">
+  <table class="blueTable">
+    <thead>
     <tr>
       <th>#</th>
       <th>Title</th>
@@ -19,8 +12,11 @@
       <th>Severity</th>
       <th>Created_By_User</th>
       <th>Assigned_To</th>
-
+      <th>Export Excel</th>
     </tr>
+    </thead>
+
+    <tbody>
     <tr *ngFor="let bug of bugList; let i = index">
       <td>{{i + 1}}</td>
       <td>{{bug.title}}</td>
@@ -32,27 +28,48 @@
       <td>{{bug.severity}}</td>
       <td>{{bug.createdByUser.username}}</td>
       <td>{{bug.assignedTo.id}}</td>
+      <td><input type="checkbox" name="name1"></td>
 
     </tr>
-  </table>`
-
+    </tbody>
+  </table>
 </div>
 
-<div>
 
-
-      <label for="titleInput">title</label>
+<div class="input-label">
+      <label for="titleInput">Filter</label>
       <input type="text"
              #titleElement
              name="title"
              id="titleInput"
              class="form-control"
              required>
+</div>
 
+  <div>
   <button type="submit"
           (click)="getBugsByTitle(titleElement.value)"
-          >Submit!
+          >FindByTitle
   </button>
+
+  <button type="submit"
+          (click)="getBugsByStatus(titleElement.value)"
+  >FindByStatus
+  </button>
+
+  <button type="submit"
+          (click)="getBugsBySeverity(titleElement.value)"
+  >FindBySeverity
+  </button>
+
+    <button type="submit"
+            (click)="getBugsByDescription(titleElement.value)"
+    >FindByDescription
+    </button>
+
+  </div>
+
+
 <div class="col-md-4" >
 <table class="table">
   <tr>
@@ -69,4 +86,54 @@
 </table>
 </div>
 
+
+  <div class="col-md-4" >
+    <table class="table">
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+
+
+      </tr>
+
+      <tr *ngFor="let bug of bugsByStatus; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{bug.title}}</td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div class="col-md-4" >
+    <table class="table">
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+
+
+      </tr>
+
+      <tr *ngFor="let bug of bugsBySeverity; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{bug.title}}</td>
+      </tr>
+    </table>
+  </div>
+
+
+<div class="col-md-4" >
+  <table class="table">
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+
+
+    </tr>
+
+    <tr *ngFor="let bug of bugsByDescription; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{bug.title}}</td>
+    </tr>
+  </table>
 </div>
+

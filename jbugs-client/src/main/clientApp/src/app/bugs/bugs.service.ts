@@ -58,9 +58,38 @@ export class BugListService {
     );
   }
 
+  getBugsByStatus(status: string):  Observable<BugData[]> {
+
+    let params = new HttpParams();
+    params.set('status', status.toUpperCase());
 
 
+    return this.http.get<BugData[]>(this.baseURL + '/listBugsByStatus/' + status.toUpperCase(),  {params}
 
+    );
+  }
+
+  getBugsBySeverity(severity: string):  Observable<BugData[]> {
+
+    let params = new HttpParams();
+    params.set('severity', severity.toUpperCase());
+
+
+    return this.http.get<BugData[]>(this.baseURL + '/listBugsBySeverity/' + severity.toUpperCase(),  {params}
+
+    );
+  }
+
+  getBugsByDescription(description: string):  Observable<BugData[]> {
+
+    let params = new HttpParams();
+    params.set('description', description);
+
+
+    return this.http.get<BugData[]>(this.baseURL + '/listBugsByDescription/' + description,  {params}
+
+    );
+  }
 
 
 }

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ro.msg.edu.jbugs.bugManagement.business.control.BugManagement;
 import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException;
-import ro.msg.edu.jbugs.bugManagement.persistence.entity.Status;
 
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
@@ -14,18 +13,18 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.List;
 
-@Path("/listBugsByStatus")
-public class ListBugsByStatus {
+@Path("/listBugsByDescription")
+public class ListBugsByDescription {
 
     @EJB
     private BugManagement bugManagement;
 
     @GET
-    @Path("{status}")
+    @Path("{description}")
     @Produces("application/json")
 //     @Consumes("application/x-www-form-urlencoded")
-    public String getBugsByStatus(@PathParam("status") Status status) throws JsonProcessingException, BusinessException {
-        List<BugDTO> allBugs=bugManagement.getBugsByStatus(status);
+    public String getBugsByDescription(@PathParam("description") String description) throws JsonProcessingException, BusinessException {
+        List<BugDTO> allBugs=bugManagement.getBugsByDescription(description);
         ObjectMapper mapper=new ObjectMapper();
 
         String jsonResponse=mapper.writeValueAsString(allBugs);

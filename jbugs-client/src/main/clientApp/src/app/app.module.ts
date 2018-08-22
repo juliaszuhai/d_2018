@@ -19,6 +19,7 @@ import {LoginguardGuard} from './authentication/loginguard.guard';
 import {TranslatorModule} from "./translator/translator.module";
 
 import {BugsModule} from "./bugs/bugs.module";
+import {ListBugsComponent} from "./bugs/list-bugs/list-bugs.component";
 
 
 const appRoutes: Routes = [
@@ -29,6 +30,9 @@ const appRoutes: Routes = [
     path: 'content', component: ContentComponent,
   },
 
+  {
+    path: 'bugs', component: ListBugsComponent,
+  },
 ];
 
 @NgModule({

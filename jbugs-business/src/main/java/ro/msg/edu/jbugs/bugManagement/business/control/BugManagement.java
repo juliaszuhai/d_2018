@@ -46,5 +46,10 @@ public interface BugManagement {
      */
     List<BugDTO> getBugsBySeverity(Severity severity) throws BusinessException;
 
+    /**
+     * @return a list of DTOs containing information about bugs, filtered by description
+     */
+    List<BugDTO> getBugsByDescription(String description) throws BusinessException;
+
 
 }
