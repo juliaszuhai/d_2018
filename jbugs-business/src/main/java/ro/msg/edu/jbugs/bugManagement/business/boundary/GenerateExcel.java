@@ -18,7 +18,7 @@ import java.util.*;
 
 @Path("/view-bugs")
 public class GenerateExcel {
-    private static final String FILE_PATH ="T:/Try.xlsx";
+    private static final String FILE_PATH = "T:/Try.xlsx";
 
     @EJB
     private BugManagement bugManagement;
@@ -45,6 +45,8 @@ public class GenerateExcel {
 
     /**
      * The method generates the Excel file and lets you download it.
+     *  TODO : O clasa de control, sau in controller existent o metoda care va fi apelata aici
+     *
      * @param titles - list of selected titles
      * @return - response
      */
