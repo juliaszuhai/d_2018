@@ -135,6 +135,14 @@ public class BugManagementController implements BugManagement {
         return true;
     }
 
+    @Override
+    public List<BugDTO> getBugsByDescription(String description) throws BusinessException {
+        return bugPersistenceManager.getBugsByDescription(description)
+                .stream()
+                .map(BugDTOHelper::fromEntity)
+                .collect(Collectors.toList());
+    }
+
 
     public boolean validateVersion(String version) throws BusinessException {
         final Pattern VALID_VERSION_REGEX =
