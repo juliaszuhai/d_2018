@@ -26,11 +26,7 @@ public class AppBoundary extends Application {
         classes.add(ListBugsByStatus.class);
         classes.add(ListBugsBySeverity.class);
         classes.add(ListBugsByDescription.class);
-        classes.add(ActivateUser.class);
         classes.add(Language.class);
-        classes.add(AddRoleToUser.class);
-        classes.add(RemoveRoleFromUser.class);
-        classes.add(AddPermissionToRole.class);
         classes.add(ManageUsers.class);
         return classes;
     }
