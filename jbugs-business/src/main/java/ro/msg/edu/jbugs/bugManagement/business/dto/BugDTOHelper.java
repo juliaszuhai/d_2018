@@ -7,6 +7,7 @@ import ro.msg.edu.jbugs.userManagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.Optional;
 
@@ -55,15 +56,18 @@ public class BugDTOHelper {
         bug.setFixedVersion(bugDTO.getFixedVersion());
         bug.setSeverity(bugDTO.getSeverity());
 
-        User createdByUser=new User();
+        User createdByUser;
 
         Long createByUserId=bugDTO.getCreatedByUser().getId();
+        System.out.println("BugDTOHelper"+ createByUserId);
         createdByUser=userPersistenceManager.getUserById(createByUserId);
         bug.setCreatedByUser(createdByUser);
+
 
         User assignedTo=new User();
 
         Long assignedToId=bugDTO.getAssignedTo().getId();
+        System.out.println("BugDTOHelper"+ assignedToId);
         assignedTo=userPersistenceManager.getUserById(assignedToId);
         bug.setAssignedTo(assignedTo);
 
