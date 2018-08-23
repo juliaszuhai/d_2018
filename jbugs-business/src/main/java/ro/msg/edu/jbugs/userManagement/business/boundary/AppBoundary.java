@@ -19,6 +19,7 @@ public class AppBoundary extends Application {
         classes.add(Authentication.class);
         classes.add(Registration.class);
         classes.add(ViewBug.class);
+        classes.add(AddBug.class);
         classes.add(GenerateExcel.class);
         classes.add(ListBugs.class);
         classes.add(ListBugsByTitle.class);

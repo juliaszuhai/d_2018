@@ -23,7 +23,7 @@ import java.util.Objects;
         }
 )
 
-public class Bug extends BaseEntity<Long>  implements Serializable {
+public class Bug extends BaseEntity<Long>  {
 
 
     @Transient
@@ -38,7 +38,7 @@ public class Bug extends BaseEntity<Long>  implements Serializable {
     @Column(name = "title", length = MAX_STRING_LENGTH, nullable = false)
     private String title;
 
-    @Column(name = "description", length = MAX_STRING_LENGTH, nullable = false)
+    @Column(name = "description", length = 255, nullable = false)
     private String description;
 
     @Column(name = "version", length = MAX_STRING_LENGTH, nullable = false)
