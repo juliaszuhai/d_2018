@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {from, Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import { map, filter, catchError, mergeMap } from 'rxjs/operators';
+import {map, filter, catchError, mergeMap, tap} from 'rxjs/operators';
 import {UserData} from "../authentication/authentication.service";
 import {forEach} from "@angular/router/src/utils/collection";
 
@@ -98,4 +98,23 @@ export class BugListService {
   }
 
 
+  validateBug(title: string, description: string, version: string, fixedVersion: string, targetDate: Date, severity: string, username: string, username2: string) {
+    let body = new URLSearchParams();
+    body.set('title',title);
+    body.set('description',description);
+    body.set('version',version);
+    body.set('fixedVersion',fixedVersion);
+    body.set('targetDate',targetDate.toDateString());
+    body.set('severity',severity);
+    body.set('assignedTo',username);
+    body.set('createdBy',username2);
+
+    return this.http.post<UserData>(this.baseURL + '/add-bug',
+      body.toString(),
+      {
+        headers: new HttpHeaders(
+          {'Content-Type': 'application/x-www-form-urlencoded'}
+        )
+      });
+  }
 }

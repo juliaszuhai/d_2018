@@ -38,4 +38,13 @@ export class AddBugComponent implements OnInit {
   validateVersion() {
     return true;
   }
+
+  addBugForm() {
+    this.bugService.validateBug(this.bugData.title, this.bugData.description,this.bugData.version,this.bugData.fixedVersion,
+      this.bugData.targetDate,this.bugData.severity,this.bugData.assignedTo.username,this.bugData.createdByUser.username)
+      .subscribe(
+        data => {
+        },
+      );
+  }
 }
