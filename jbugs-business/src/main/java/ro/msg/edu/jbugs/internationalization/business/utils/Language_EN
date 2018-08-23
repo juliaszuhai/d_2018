@@ -7,7 +7,8 @@
   "header": {
     "login":"Login",
     "content":"Content",
-    "title":"Application Title"
+    "title":"Application Title",
+    "language": "Language"
   },
   "messages": {
     "welcome": "Welcome",

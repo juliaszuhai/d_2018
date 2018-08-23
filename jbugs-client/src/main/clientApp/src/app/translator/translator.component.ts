@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TranslatorService} from "./translator.service";
+import {element} from "protractor";
 
 
 export class Language {
@@ -27,6 +28,9 @@ export class TranslatorComponent implements OnInit {
   @Input()
   allLanguages: Language[];
 
+  json:Object;
+
+
   constructor(private translateService:TranslatorService){
 
   }
@@ -37,14 +41,26 @@ export class TranslatorComponent implements OnInit {
       new Language(0, 'English'),
       new Language(1, 'Romana')
     ]
+
   }
 
   public changeLanguage(event, id){
     console.log("Selected language : ", this.allLanguages[id].Name);
-    this.translateService.getLanguageFile(id);
-
+    sessionStorage.setItem("lng", id.toString());
+    //this.translateService.getLanguageFile(id);
+    this.getTranslation(id);
 
   }
 
+  public getTranslation(id : number){
+    this.translateService.getLanguageFile(id)
+      .subscribe(lng =>this.json=lng)
+  }
+/*
+
+  execute(){
+    element = document.getElementById("title");
+  }
+*/
 
 }
