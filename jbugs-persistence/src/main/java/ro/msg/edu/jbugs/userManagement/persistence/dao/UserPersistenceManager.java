@@ -70,9 +70,9 @@ public class UserPersistenceManager {
     }
 
     public User getUserById(@NotNull Long id){
-        TypedQuery<User> q=em.createNamedQuery(User.GET_USER_BY_ID,User.class)
-                .setParameter("id",id);
-        return q.getSingleResult();
+        System.out.println("persistance id "+id);
+        Query q = em.createQuery("SELECT u from User u where u.id=" + id);
+        return (User) q.getSingleResult();
     }
 
 

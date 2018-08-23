@@ -1,5 +1,6 @@
 package ro.msg.edu.jbugs.userManagement.business.control;
 
+import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.userManagement.persistence.dao.UserPersistenceManager;
@@ -252,6 +253,22 @@ public class UserManagementController {
         }
     }
 
+    public User getUserForUsername(String username) throws BusinessException {
+        Optional<User> userOptional=userPersistenceManager.getUserByUsername(username);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user;
+        } else {
+            throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
+        }
+    }
+    public User getUserForId(Long id) throws BusinessException {
+        User user=userPersistenceManager.getUserById(id);
+        if(user==null)
+            return null;
+        return user;
+        }
+    }
 
 
-}
+
