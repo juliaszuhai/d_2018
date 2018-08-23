@@ -30,23 +30,31 @@ public interface BugManagement {
     BugDTO getBugById(Long id) throws BusinessException;
 
 
-    BugDTO createBug(BugDTO bugDTO) throws BusinessException;
-
-
-    boolean isBugValid(Bug bug) throws BusinessException;
+    /**
+     * @return a list of DTOs containing information about bugs, filtered by title.
+     */
+    List<BugDTO> getBugsByTitle(String title) throws BusinessException;
 
     /**
-     * @return a list of DTOs containing information about bugs, filtered by different parameters
+     * @return a list of DTOs containing information about bugs, filtered by status.
      */
-    List<BugDTO> filter(String title, String description, Status status, Severity severity) throws BusinessException;
+    List<BugDTO> getBugsByStatus(Status status) throws BusinessException;
+
+    /**
+     * @return a list of DTOs containing information about bugs, filtered by severity.
+     */
+    List<BugDTO> getBugsBySeverity(Severity severity) throws BusinessException;
+
+    BugDTO createBug(BugDTO bugDTO) throws BusinessException;
 
     /**
      * @return a list of DTOs containing information about bugs, sorted by different parameters
      */
     List<BugDTO> sort(boolean title, boolean version) throws BusinessException;
 
+    boolean isBugValid(Bug bug) throws BusinessException;
+
     boolean validateDescription(String description) throws BusinessException;
 
     boolean validateVersion(String version) throws BusinessException;
-
 }

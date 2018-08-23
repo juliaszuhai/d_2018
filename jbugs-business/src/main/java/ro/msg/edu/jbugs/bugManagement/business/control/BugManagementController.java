@@ -14,7 +14,7 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -132,16 +132,16 @@ public class BugManagementController implements BugManagement {
         Optional<Bug> bug = bugPersistenceManager.getBugById(id);
         if (bug.isPresent()) {
             return BugDTOHelper.fromEntity(bug.get());
-        } else {
+        }else{
             throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
         }
 
     }
 
-<<<<<<< HEAD
-}
-=======
+
+
+
+
 
 
 }
->>>>>>> 51209c9bb22d160af28d4c7c0f674ac4325cf5c6

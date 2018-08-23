@@ -6,35 +6,17 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import ro.msg.edu.jbugs.bugManagement.business.control.BugManagement;
 import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugManagement.business.dto.NameIdDTO;
-import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTO;
-import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTOHelper;
-import ro.msg.edu.jbugs.bugManagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
-import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
-import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
+
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-<<<<<<< HEAD
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-=======
 
->>>>>>> 51209c9bb22d160af28d4c7c0f674ac4325cf5c6
 import java.util.Date;
 
 @Path("/add-bug")
@@ -95,7 +77,9 @@ public class AddBug {
             e.printStackTrace();
         } catch (ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        } catch (ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException e) {
             e.printStackTrace();
         }
         return Response.status(Response.Status.CREATED).build();
