@@ -83,31 +83,6 @@ public class BugManagementController implements BugManagement {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<BugDTO> getBugsByTitle(String title) throws BusinessException {
-        return bugPersistenceManager.getBugsByTitle(title)
-                .stream()
-                .map(BugDTOHelper::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-
-
-    @Override
-    public List<BugDTO> getBugsByStatus(Status status) throws BusinessException {
-        return bugPersistenceManager.getBugsByStatus(status)
-                .stream()
-                .map(BugDTOHelper::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<BugDTO> getBugsBySeverity(Severity severity) throws BusinessException {
-        return bugPersistenceManager.getBugsBySeverity(severity)
-                .stream()
-                .map(BugDTOHelper::fromEntity)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public BugDTO createBug(BugDTO bugDTO) {
@@ -116,13 +91,7 @@ public class BugManagementController implements BugManagement {
         return BugDTOHelper.fromEntity(bug);
     }
 
-    @Override
-    public List<BugDTO> getBugsByDescription(String description) throws BusinessException {
-        return bugPersistenceManager.getBugsByDescription(description)
-                .stream()
-                .map(BugDTOHelper::fromEntity)
-                .collect(Collectors.toList());
-    }
+
 
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {
@@ -133,11 +102,6 @@ public class BugManagementController implements BugManagement {
             throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
         }
 
-    }
-
-    @Override
-    public List<BugDTO> getBugsWithTitle(List<String> titles) {
-        return null;
     }
 
 
