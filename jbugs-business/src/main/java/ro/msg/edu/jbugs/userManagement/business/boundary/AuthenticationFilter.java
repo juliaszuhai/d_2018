@@ -3,6 +3,7 @@ package ro.msg.edu.jbugs.userManagement.business.boundary;
 
 import com.auth0.jwt.JWT;
 import com.google.gson.Gson;
+
 import com.google.gson.reflect.TypeToken;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.ExceptionCode;
@@ -19,13 +20,14 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
