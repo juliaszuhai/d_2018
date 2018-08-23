@@ -5,6 +5,7 @@ import {ProfileComponent} from "../user/profile/profile.component";
 import {LoginguardGuard} from "../authentication/loginguard.guard";
 import {UserManagementComponent} from "./user-management/user-management.component";
 import {MatTableModule} from '@angular/material/table'
+import {MatButtonModule} from "@angular/material";
 
 
 const userManagementRoutes: Routes = [
@@ -15,11 +16,14 @@ const userManagementRoutes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(userManagementRoutes),
-    MatTableModule
+    MatTableModule,
+    MatButtonModule
   ],
   declarations: [UserManagementComponent],
   exports: [UserManagementComponent,
     RouterModule,
-    MatTableModule]
+    MatTableModule,
+    MatButtonModule
+  ]
 })
 export class UsermanagementModule { }
