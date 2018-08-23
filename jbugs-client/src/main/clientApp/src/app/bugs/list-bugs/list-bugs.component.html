@@ -1,10 +1,9 @@
-<div class="div col-md-4" (*ngFor)="ngOnInit()">
-  <table class="blueTable">
+<div align="center" (*ngFor)="ngOnInit()">
+  <table mat-table class="mat-elevation-z8" >
     <thead>
     <tr>
       <th>#</th>
       <th>Title</th>
-      <th>Description</th>
       <th>Version</th>
       <th>Target_Date</th>
       <th>Status</th>
@@ -18,9 +17,11 @@
 
     <tbody>
     <tr *ngFor="let bug of bugList; let i = index">
-      <td>{{i + 1}}</td>
-      <td>{{bug.title}}</td>
-      <td>{{bug.description}}</td>
+      <td >{{i + 1}}</td>
+      <td>
+        <button class="btn btn-sm"  type="button" (click)="openDialog(bug)">{{bug.title}}
+        </button>
+      </td>
       <td>{{bug.version}}</td>
       <td>{{getDate(bug.targetDate).toDateString()}}</td>
       <td>{{bug.status}}</td>
@@ -33,107 +34,65 @@
     </tr>
     </tbody>
   </table>
+
 </div>
 
 
+
+<div align="center">
 <div class="input-label">
-      <label for="titleInput">Filter</label>
+      <label for="titleInput"></label>
       <input type="text"
              #titleElement
              name="title"
              id="titleInput"
              class="form-control"
-             required>
+             required
+             matInput placeholder="Title">
 </div>
 
-  <div>
-  <button type="submit"
-          (click)="getBugsByTitle(titleElement.value)"
-          >FindByTitle
-  </button>
-
-  <button type="submit"
-          (click)="getBugsByStatus(titleElement.value)"
-  >FindByStatus
-  </button>
-
-  <button type="submit"
-          (click)="getBugsBySeverity(titleElement.value)"
-  >FindBySeverity
-  </button>
-
-    <button type="submit"
-            (click)="getBugsByDescription(titleElement.value)"
-    >FindByDescription
-    </button>
-
-  </div>
-
-
-<div class="col-md-4" >
-<table class="table">
-  <tr>
-    <th>#</th>
-    <th>Title</th>
-
-
-  </tr>
-
-  <tr *ngFor="let bug of bugsByTitle; let i = index">
-    <td>{{i + 1}}</td>
-    <td>{{bug.title}}</td>
-  </tr>
-</table>
+<div class="input-label">
+  <label for="descriptionInput"></label>
+  <input type="text"
+         #descriptionElement
+         name="description"
+         id="descriptionInput"
+         class="form-control"
+         required
+         matInput placeholder="Description">
 </div>
 
-
-  <div class="col-md-4" >
-    <table class="table">
-      <tr>
-        <th>#</th>
-        <th>Title</th>
-
-
-      </tr>
-
-      <tr *ngFor="let bug of bugsByStatus; let i = index">
-        <td>{{i + 1}}</td>
-        <td>{{bug.title}}</td>
-      </tr>
-    </table>
-  </div>
-
-
-  <div class="col-md-4" >
-    <table class="table">
-      <tr>
-        <th>#</th>
-        <th>Title</th>
-
-
-      </tr>
-
-      <tr *ngFor="let bug of bugsBySeverity; let i = index">
-        <td>{{i + 1}}</td>
-        <td>{{bug.title}}</td>
-      </tr>
-    </table>
-  </div>
-
-
-<div class="col-md-4" >
-  <table class="table">
-    <tr>
-      <th>#</th>
-      <th>Title</th>
-
-
-    </tr>
-
-    <tr *ngFor="let bug of bugsByDescription; let i = index">
-      <td>{{i + 1}}</td>
-      <td>{{bug.title}}</td>
-    </tr>
-  </table>
+<div class="input-label">
+  <label for="statusInput"></label>
+  <input type="text"
+         #statusElement
+         name="status"
+         id="statusInput"
+         class="form-control"
+         required
+         matInput placeholder="Status">
 </div>
 
+<div class="input-label">
+  <label for="severityInput"></label>
+  <input type="text"
+         #severityElement
+         name="title"
+         id="severityInput"
+         class="form-control"
+         required
+         matInput placeholder="Severity">
+</div>
+
+<div align="center">
+  <!--<mat-checkbox value="1" align="left" (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">Find By Filter</mat-checkbox>-->
+  <button mat-button (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">Filter</button>
+ <!--<mat-chip>One fish</mat-chip>-->
+</div>
+
+    <!--<button type="submit"-->
+            <!--(click)="getBugsByDescriptionAndSeverity(titleElement.value,severityElement.value)"-->
+    <!--&gt;FindByDescriptionAndSeverity-->
+    <!--</button>-->
+
+</div>
