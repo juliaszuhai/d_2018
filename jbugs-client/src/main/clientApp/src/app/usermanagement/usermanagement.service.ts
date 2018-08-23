@@ -7,9 +7,9 @@ import {HttpClient} from "@angular/common/http";
 export class UsermanagementService {
 
   constructor(private http: HttpClient) { }
-  baseURL = 'http://localhost:8080/jbugs/rest/';
+  baseURL = 'http://localhost:8080/jbugs/rest/manageusers';
   getAllUsers(){
 
-    return this.http.get(this.baseURL + 'manageusers');
+    return this.http.get(this.baseURL + '/getallusers');
   }
 }
