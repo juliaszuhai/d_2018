@@ -83,7 +83,6 @@ public class UserManagementController {
     }
 
 
-
     private boolean isValidForCreation(UserDTO user) {
         return user.getEmail() != null
                 && user.getLastName() != null
@@ -99,8 +98,6 @@ public class UserManagementController {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.find();
     }
-
-
 
 
     /**
@@ -185,9 +182,9 @@ public class UserManagementController {
     }
 
 
-
     /**
      * TODO cazul in care nume + prenume < 6 si deja exista cineva cu acelasi nume.
+     *
      * @param firstName
      * @param lastName
      * @return
@@ -239,7 +236,7 @@ public class UserManagementController {
     }
 
     public User getUserForUsername(String username) throws BusinessException {
-        Optional<User> userOptional=userPersistenceManager.getUserByUsername(username);
+        Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             return user;
@@ -247,13 +244,18 @@ public class UserManagementController {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }
     }
+
     public User getUserForId(Long id) throws BusinessException {
-        User user=userPersistenceManager.getUserById(id);
-        if(user==null)
-            return null;
+        User user = userPersistenceManager.getUserById(id);
+        if (user == null)
+            throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         return user;
-        }
     }
+
+    public void updateUser(User user){
+       userPersistenceManager.updateUser(user);
+    }
+}
 
 
 

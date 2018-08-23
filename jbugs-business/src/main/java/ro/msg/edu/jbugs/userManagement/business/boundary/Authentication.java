@@ -45,7 +45,7 @@ public class Authentication {
         try {
 
             UserDTO authUser = userManagement.login(username, password);
-           User user = userManagement.getUserByUsername(username);
+           User user = userManagement.getUserForUsername(username);
             String token = issueToken(user);
             return Response.ok("{\"token\": \""+token+"\"}").build();
         } catch(BusinessException e){

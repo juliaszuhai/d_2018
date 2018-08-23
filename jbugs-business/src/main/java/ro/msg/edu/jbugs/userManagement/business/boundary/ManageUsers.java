@@ -53,5 +53,24 @@ public class ManageUsers {
         }
     }
 
-
+    @GET
+    @Produces("application/json")
+    @Path("/updateuser")
+    public Response updateUser(@QueryParam("username") String username,
+                               @QueryParam("firstName") String firstName,
+                               @QueryParam("lastName") String lastName,
+                               @QueryParam("email") String email,
+                               @QueryParam("phoneNumber") String phoneNumber) {
+        try {
+            User user = userManagementController.getUserForUsername(username);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setPhoneNumber(phoneNumber);
+            userManagementController.updateUser(user);
+            return Response.ok().build();
+        } catch (BusinessException e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+        }
+    }
 }
