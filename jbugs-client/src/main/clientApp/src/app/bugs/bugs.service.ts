@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
 import {from, Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {tap} from 'rxjs/operators';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import * as moment from "moment";
-import _date = moment.unitOfTime._date;
+import {map, filter, catchError, mergeMap, tap} from 'rxjs/operators';
 import {UserData} from "../authentication/authentication.service";
 
 
@@ -37,15 +34,23 @@ export class BugListService {
 
   constructor(private http: HttpClient) {
   }
+
   getBugList(): Observable<BugData> {
     return from(bugs);
   }
+
+  getLoggedUserName():string{
+    return localStorage.getItem("id_token");
+  }
+
 
   getBugsFromServer(): Observable<BugData[]> {
     return this.http.get<BugData[]>(this.baseURL + '/listBugs', {
       // params: new HttpParams().set('dummyParam', 'dummyvalue')
     });
   }
+
+
 
   getBugsByTitle(title: string):  Observable<BugData[]> {
 
@@ -92,4 +97,23 @@ export class BugListService {
   }
 
 
+  validateBug(title: string, description: string, version: string, fixedVersion: string, targetDate: Date, severity: string, username: string, username2: string) {
+    let body = new URLSearchParams();
+    body.set('title',title);
+    body.set('description',description);
+    body.set('version',version);
+    body.set('fixedVersion',fixedVersion);
+    body.set('targetDate',targetDate.toDateString());
+    body.set('severity',severity);
+    body.set('assignedTo',username);
+    body.set('createdBy',username2);
+
+    return this.http.post<UserData>(this.baseURL + '/add-bug',
+      body.toString(),
+      {
+        headers: new HttpHeaders(
+          {'Content-Type': 'application/x-www-form-urlencoded'}
+        )
+      });
+  }
 }

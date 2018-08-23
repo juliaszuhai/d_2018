@@ -1,0 +1,101 @@
+<div class="row login-component">
+  <form (ngSubmit)="addBugForm()">
+<fieldset>
+  <div class="form-group">
+    <div class="form-group">
+      <label for="titleInput">Title  </label>
+      <input type="text"
+             #titleElement
+             #titleControl="ngModel"
+             placeholder="Input the title..."
+             name="title"
+             id="titleInput"
+             class="form-control"
+             [(ngModel)]="bugData.title"
+             required>
+    </div>
+
+  <div class="form-group">
+    <label for="descriptionInput">Description  </label>
+    <input type="text"
+           #descriptionElement
+           #descriptionControl="ngModel"
+           placeholder="Input the description here..."
+           name="description"
+           id="descriptionInput"
+           class="form-control"
+           [(ngModel)]="bugData.description"
+           [ngClass]="{form_invalid: !validateDescription(), form_valid:validateDescription()}"
+           required>
+  </div>
+
+  <div class="form-group">
+    <label for="versionInput">Version  </label>
+    <input type="text"
+           #versionElement
+           #versionControl="ngModel"
+           placeholder="Input the version here..."
+           name="version"
+           id="versionInput"
+           class="form-control"
+           [(ngModel)]="bugData.version"
+           [ngClass]="{form_invalid: !validateVersion(), form_valid:validateVersion()}"
+           required>
+  </div>
+  <div class="form-group">
+    <label for="fixedVersionInput">Fixed Version  </label>
+    <input type="text"
+           #versionElement
+           #versionControl="ngModel"
+           placeholder="Input the fixed version here..."
+           name="fixedVersion"
+           id="fixedVersionInput"
+           class="form-control"
+           [(ngModel)]="bugData.fixedVersion"
+           [ngClass]="{form_invalid: !validateVersion(), form_valid:validateVersion()}"
+           required>
+  </div>
+
+  <div class="form-group">
+    <label for="targetDateInput">Target Date </label>
+    <input
+      name="targetDate"
+      id="targetDateInput"
+      [(ngModel)]="bugData.targetDate"
+      [matDatepicker]="targetDate">
+    <mat-datepicker-toggle [for]="targetDate"></mat-datepicker-toggle>
+    <mat-datepicker #targetDate></mat-datepicker>
+  </div>
+
+  <div class="form-group">
+    <label >Severity  </label>
+    <mat-form-field>
+      <mat-select placeholder="Severity">
+        <mat-option *ngFor="let severity of severities" [(ngModel)]="bugData.severity">
+          {{severity}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <label for="assignedToInput">Assigned to  </label>
+    <input type="text"
+           #assignedToElement
+           #assignedToControl="ngModel"
+           placeholder="Input the name here..."
+           name="assignedTo"
+           id="assignedToInput"
+           class="form-control"
+           [(ngModel)]="bugData.assignedTo.username"
+           required>
+  </div>
+  </div>
+</fieldset>
+    <button class="btn"
+            type="submit"
+            color="primary"
+            mat-stroked-button="add-bug">Add bug
+    </button>
+  </form>
+</div>
