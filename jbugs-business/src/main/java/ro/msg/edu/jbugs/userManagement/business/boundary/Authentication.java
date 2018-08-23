@@ -7,7 +7,6 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.google.gson.Gson;
 import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
-import ro.msg.edu.jbugs.userManagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
@@ -17,14 +16,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+
 
 @Path("/authenticate")
 public class Authentication {
@@ -41,17 +39,16 @@ public class Authentication {
     @Produces("application/json")
     @Consumes("application/x-www-form-urlencoded")
     public Response authenticateUser(@FormParam("username") String username,
-                                     @FormParam("password") String password,@Context SecurityContext securityContext) {
+                                     @FormParam("password") String password, @Context SecurityContext securityContext) {
         try {
 
             UserDTO authUser = userManagement.login(username, password);
-           User user = userManagement.getUserForUsername(username);
+            User user = userManagement.getUserForUsername(username);
             String token = issueToken(user);
-            return Response.ok("{\"token\": \""+token+"\"}").build();
-        } catch(BusinessException e){
+            return Response.ok("{\"token\": \"" + token + "\"}").build();
+        } catch (BusinessException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
-        }
-         catch (Exception e) {
+        } catch (Exception e) {
             return Response.status(Response.Status.FORBIDDEN).entity(e.getMessage()).build();
         }
     }
@@ -79,7 +76,7 @@ public class Authentication {
                     .withClaim("role", rolesJson)
                     .sign(algorithm);
             return token;
-        } catch (JWTCreationException exception){
+        } catch (JWTCreationException exception) {
             //Invalid Signing configuration / Couldn't convert Claims.
             exception.printStackTrace();
             return "";

@@ -3,8 +3,6 @@ package ro.msg.edu.jbugs.bugManagement.persistence.dao;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Status;
-import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
-
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
