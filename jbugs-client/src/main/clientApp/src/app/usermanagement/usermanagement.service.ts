@@ -10,6 +10,6 @@ export class UsermanagementService {
   baseURL = 'http://localhost:8080/jbugs/rest/';
   getAllUsers(){
 
-    return this.http.get(this.baseURL + '');
+    return this.http.get(this.baseURL + 'manageusers');
   }
 }
