@@ -55,12 +55,14 @@ public interface BugManagement {
      */
     List<BugDTO> getBugsBySeverity(Severity severity) throws BusinessException;
 
-    BugDTO createBug(BugDTO bugDTO);
+    BugDTO createBug(BugDTO bugDTO) throws BusinessException;
 
     /**
      * @return a list of DTOs containing information about bugs, filtered by description
      */
     List<BugDTO> getBugsByDescription(String description) throws BusinessException;
+
+    boolean isBugValid(Bug bug) throws BusinessException;
 
 
 }
