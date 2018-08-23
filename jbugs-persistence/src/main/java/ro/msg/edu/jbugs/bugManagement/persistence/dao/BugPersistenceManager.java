@@ -1,14 +1,14 @@
 package ro.msg.edu.jbugs.bugManagement.persistence.dao;
 
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
-import ro.msg.edu.jbugs.bugManagement.persistence.entity.Severity;
-import ro.msg.edu.jbugs.bugManagement.persistence.entity.Status;
+
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 import javax.validation.constraints.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

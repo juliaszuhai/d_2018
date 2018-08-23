@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 
+
 @Path("/authenticate")
 public class Authentication {
 
@@ -43,10 +44,10 @@ public class Authentication {
         try {
 
             UserDTO authUser = userManagement.login(username, password);
-            User user = userManagement.getUserForUsername(username);
+           User user = userManagement.getUserForUsername(username;
             String token = issueToken(user);
-            return Response.ok("{\"token\": \"" + token + "\"}").build();
-        } catch (BusinessException e) {
+            return Response.ok("{\"token\": \""+token+"\"}").build();
+        } catch(BusinessException e){
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
         } catch (Exception e) {
             return Response.status(Response.Status.FORBIDDEN).entity(e.getMessage()).build();
