@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -11,5 +11,19 @@ export class UsermanagementService {
   getAllUsers(){
 
     return this.http.get(this.baseURL + '/getallusers');
+  }
+
+  activateUser(username){
+    const params = new HttpParams()
+      .set('username', username);
+    return this.http.get(this.baseURL+'/activateuser', {params});
+
+  }
+
+  deactivateUser(username){
+    const params = new HttpParams()
+      .set('username', username);
+    return this.http.get(this.baseURL+'/deactivateuser', {params});
+
   }
 }

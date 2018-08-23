@@ -7,7 +7,7 @@ public class UserDTO {
     private String password;
     private String email;
     private String phoneNumber;
-
+    private Boolean isActive;
 
     public String getFirstName() {
         return firstName;
@@ -21,6 +21,13 @@ public class UserDTO {
         return lastName;
     }
 
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
