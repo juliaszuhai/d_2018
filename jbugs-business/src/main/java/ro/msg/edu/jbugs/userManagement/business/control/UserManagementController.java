@@ -11,7 +11,6 @@ import ro.msg.edu.jbugs.userManagement.business.utils.Encryptor;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
