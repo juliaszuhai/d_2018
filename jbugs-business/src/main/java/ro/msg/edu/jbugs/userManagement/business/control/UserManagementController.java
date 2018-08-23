@@ -1,6 +1,5 @@
 package ro.msg.edu.jbugs.userManagement.business.control;
 
-import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.userManagement.persistence.dao.UserPersistenceManager;
@@ -188,6 +187,7 @@ public class UserManagementController {
 
     /**
      * TODO cazul in care nume + prenume < 6 si deja exista cineva cu acelasi nume.
+     *
      * @param firstName
      * @param lastName
      * @return
