@@ -112,4 +112,5 @@ export class BugListService {
     return this.http.get<BugData[]>(this.baseURL + '/listBugs/sort', {params: params});
   }
 
+
 }

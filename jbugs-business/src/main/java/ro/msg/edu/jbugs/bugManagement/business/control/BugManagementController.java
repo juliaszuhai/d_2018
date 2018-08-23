@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Stateless
-public class BugManagementController implements BugManagement {
+public class BugManagementController  implements BugManagement {
 
     @EJB
     private BugPersistenceManager bugPersistenceManager;
@@ -56,6 +56,8 @@ public class BugManagementController implements BugManagement {
 
 
     @Override
+    public List<BugDTO> filter(String title, String description, Status status , Severity severity) throws BusinessException{
+        return bugPersistenceManager.filter(title,description, status, severity)
     public List<BugDTO> filter(String title, String description, Status status, Severity severity) throws BusinessException {
         return bugPersistenceManager.filter(title, description, status, severity)
                 .stream()
@@ -109,13 +111,15 @@ public class BugManagementController implements BugManagement {
         }
     }
 
+
+    @Override
     public boolean validateDescription(String description) throws BusinessException {
         if (description.length() < 250)
             throw new BusinessException(ExceptionCode.DESCRIPTION_TOO_SHORT);
         return true;
     }
 
-
+    @Override
     public boolean validateVersion(String version) throws BusinessException {
         final Pattern VALID_VERSION_REGEX =
                 Pattern.compile("([a-zA-Z0-9]+).([a-zA-Z0-9]+).([a-zA-Z0-9]+)", Pattern.CASE_INSENSITIVE);
@@ -132,7 +136,7 @@ public class BugManagementController implements BugManagement {
         Optional<Bug> bug = bugPersistenceManager.getBugById(id);
         if (bug.isPresent()) {
             return BugDTOHelper.fromEntity(bug.get());
-        }else{
+        } else {
             throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
         }
 

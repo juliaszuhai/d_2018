@@ -5,7 +5,9 @@ import ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Status;
+
 import java.util.List;
+
 
 public interface BugManagement {
 
@@ -30,21 +32,6 @@ public interface BugManagement {
     BugDTO getBugById(Long id) throws BusinessException;
 
 
-    /**
-     * @return a list of DTOs containing information about bugs, filtered by title.
-     */
-    List<BugDTO> getBugsByTitle(String title) throws BusinessException;
-
-    /**
-     * @return a list of DTOs containing information about bugs, filtered by status.
-     */
-    List<BugDTO> getBugsByStatus(Status status) throws BusinessException;
-
-    /**
-     * @return a list of DTOs containing information about bugs, filtered by severity.
-     */
-    List<BugDTO> getBugsBySeverity(Severity severity) throws BusinessException;
-
     BugDTO createBug(BugDTO bugDTO) throws BusinessException;
 
     /**
@@ -54,7 +41,16 @@ public interface BugManagement {
 
     boolean isBugValid(Bug bug) throws BusinessException;
 
+    /**
+     * @return a list of DTOs containing information about bugs, filtered by different parameters
+     */
+    List<BugDTO> filter(String title, String description, Status status, Severity severity) throws BusinessException;
+
+
     boolean validateDescription(String description) throws BusinessException;
 
+
     boolean validateVersion(String version) throws BusinessException;
+}
+
 }

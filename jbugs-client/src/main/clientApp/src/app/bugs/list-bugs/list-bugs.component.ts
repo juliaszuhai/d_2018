@@ -85,7 +85,7 @@ export class ListBugsComponent implements OnInit {
     );
   }
 
-  getDate(d) {
+  getDate(d){
 
     const correctSec = d * 1000;
     var expiresAt = new Date(correctSec);

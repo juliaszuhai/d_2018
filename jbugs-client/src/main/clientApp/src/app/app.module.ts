@@ -21,9 +21,12 @@ import {UserModule} from './user/user.module';
 import {LoginguardGuard} from './authentication/loginguard.guard';
 
 import {TranslatorModule} from "./translator/translator.module";
+
 import {BugsModule} from "./bugs/bugs.module";
 import {ListBugsComponent} from "./bugs/list-bugs/list-bugs.component";
 import { RecaptchaDirective } from './authentication/login/recaptcha.directive';
+import { BugsPopupComponent } from './bugs/bugs-popup/bugs-popup.component';
+import { UserManagementComponent } from './usermanagement/user-management/user-management.component';
 import {UsermanagementModule} from "./usermanagement/usermanagement.module";
 import { AddBugComponent } from './bugs/add-bug/add-bug.component';
 

@@ -34,6 +34,7 @@ public class ListBugs {
     }
 
     @GET
+    @Secured("BUG_MANAGEMENT")
     @Path("/getByFilter")
     @Produces("application/json")
     public String filter(@QueryParam("title") String title, @QueryParam("description") String description, @QueryParam("status") Status status, @QueryParam("severity") Severity severity) throws JsonProcessingException, BusinessException {
