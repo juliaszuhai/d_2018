@@ -1,29 +1,39 @@
 <mat-toolbar color="primary">
-  <span>Application Title</span>
-  <button mat-button="asdf" *ngIf="isLoggedIn()" routerLinkActive="active" routerLink="content">Content</button>
-  <button mat-button="asdf" *ngIf="isLoggedIn()" routerLinkActive="active" routerLink="bugs">View Bugs</button>
-
+  <span style="margin-right: 20px">JBugs</span>
+  <button
+    mat-button="asdf"
+    *ngIf="isLoggedIn()"
+    routerLinkActive="active"
+    routerLink="bugs">
+    Manage Bugs
+  </button>
+  <button
+    mat-button="asdf"
+    *ngIf="isLoggedIn()"
+    routerLinkActive="active"
+    routerLink="manageusers">
+    Manage Users
+  </button>
   <span class="fill-space"></span>
 
 
   <div class="jbugs-translator">
     <language-dropdown></language-dropdown>
   </div>
-  <button  mat-button [matMenuTriggerFor]="menu" *ngIf="isLoggedIn()">
+  <button mat-button [matMenuTriggerFor]="menu" *ngIf="isLoggedIn()">
     {{getFirstName()}}
   </button>
-  <mat-menu #menu="matMenu" >
+  <mat-menu #menu="matMenu">
     <button mat-menu-item routerLinkActive="active" routerLink="profile">
       <i class="material-icons">account_circle</i> Profile
     </button>
     <button mat-menu-item (click)="logout()">
-      <i class="material-icons" >logout</i> Logout
+      <i class="material-icons">logout</i> Logout
     </button>
   </mat-menu>
 
 
-
-  <button  mat-button *ngIf="!isLoggedIn()" routerLinkActive="active" routerLink="login">
+  <button mat-button *ngIf="!isLoggedIn()" routerLinkActive="active" routerLink="login">
     Login
   </button>
 

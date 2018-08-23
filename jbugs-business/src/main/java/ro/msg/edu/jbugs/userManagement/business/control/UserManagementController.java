@@ -80,24 +80,7 @@ public class UserManagementController {
         userDTO.setLastName(userDTO.getLastName().trim());
     }
 
-    /**
-     * Creates a suffix for the username, if the username already exists. The suffix consists
-     * of a number.
-     * TODO : Change this. Probably won't be needed.
-     *
-     * @param username
-     * @return
-     */
-    protected String createSuffix(String username) {
 
-        Optional<Integer> max = userPersistenceManager.getUsernamesLike(username)
-                .stream()
-                .map(x -> x.substring(MIN_USERNAME_LENGTH, x.length()))
-                .map(x -> x.equals("") ? 0 : Integer.parseInt(x))
-                .max(Comparator.naturalOrder())
-                .map(x -> x + 1);
-        return max.map(Object::toString).orElse("");
-    }
 
     private boolean isValidForCreation(UserDTO user) {
         return user.getEmail() != null

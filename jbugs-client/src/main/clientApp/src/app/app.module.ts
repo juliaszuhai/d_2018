@@ -21,18 +21,13 @@ import {TranslatorModule} from "./translator/translator.module";
 import {BugsModule} from "./bugs/bugs.module";
 import {ListBugsComponent} from "./bugs/list-bugs/list-bugs.component";
 import { RecaptchaDirective } from './authentication/login/recaptcha.directive';
+import { UserManagementComponent } from './usermanagement/user-management/user-management.component';
+import {UsermanagementModule} from "./usermanagement/usermanagement.module";
 
 
 const appRoutes: Routes = [
   {
     path: '', pathMatch: 'full', redirectTo: '/login'
-  },
-  {
-    path: 'content', component: ContentComponent,
-  },
-
-  {
-    path: 'bugs', component: ListBugsComponent,
   },
 ];
 
@@ -40,7 +35,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     ContentComponent,
-    RecaptchaDirective
+    RecaptchaDirective,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +48,8 @@ const appRoutes: Routes = [
     NavigationModule,
     UserModule,
     BugsModule,
-    TranslatorModule
+    TranslatorModule,
+    UsermanagementModule
 
   ],
   providers: [{

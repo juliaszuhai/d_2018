@@ -8,7 +8,7 @@ import {LoginguardGuard} from "../authentication/loginguard.guard";
 
 
 const bugRoutes: Routes = [
-  {path: 'listBugs', component: ListBugsComponent, canActivate: [LoginguardGuard]},
+  {path: 'bugs', component: ListBugsComponent, canActivate: [LoginguardGuard]},
 ];
 
 @NgModule({
