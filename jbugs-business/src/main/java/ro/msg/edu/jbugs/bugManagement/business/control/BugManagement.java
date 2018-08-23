@@ -55,6 +55,11 @@ public interface BugManagement {
     List<BugDTO> getBugsByDescription(String description) throws BusinessException;
 
     boolean isBugValid(Bug bug) throws BusinessException;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 98f2933fb8cde63ceed7a680fbcb2f0099cf7dc9
 
 
 

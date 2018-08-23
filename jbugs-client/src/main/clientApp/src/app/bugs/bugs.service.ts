@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {from, Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {tap} from 'rxjs/operators';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import * as moment from "moment";
-import _date = moment.unitOfTime._date;
+import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import {UserData} from "../authentication/authentication.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 
 
@@ -37,15 +35,23 @@ export class BugListService {
 
   constructor(private http: HttpClient) {
   }
+
   getBugList(): Observable<BugData> {
     return from(bugs);
   }
+
+  getLoggedUserName():string{
+    return localStorage.getItem("id_token");
+  }
+
 
   getBugsFromServer(): Observable<BugData[]> {
     return this.http.get<BugData[]>(this.baseURL + '/listBugs', {
       // params: new HttpParams().set('dummyParam', 'dummyvalue')
     });
   }
+
+
 
   getBugsByTitle(title: string):  Observable<BugData[]> {
 

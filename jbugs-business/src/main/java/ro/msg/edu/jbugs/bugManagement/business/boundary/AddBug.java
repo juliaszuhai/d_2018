@@ -39,6 +39,7 @@ public class AddBug {
                            @FormParam("description") String description,
                            @FormParam("version") String version,
                            @FormParam("fixedVersion") String fixedVersion,
+                           @FormParam("targetDate") Date targetDate,
                            @FormParam("severity") String severity,
                            @FormParam("assignedTo") String assignedTo,
                            @FormParam("createdBy") String createdBy
@@ -65,7 +66,7 @@ public class AddBug {
             bugDTO.setFixedVersion(fixedVersion);
             bugDTO.setAssignedTo(assignedUser);
             bugDTO.setStatus(Status.NEW);
-            bugDTO.setTargetDate(new Date());
+            bugDTO.setTargetDate(targetDate);
             bugDTO.setSeverity(Severity.valueOf(severity));
             System.out.println("severity "+bugDTO.getSeverity());
             bugDTO.setCreatedByUser(createdUser);
