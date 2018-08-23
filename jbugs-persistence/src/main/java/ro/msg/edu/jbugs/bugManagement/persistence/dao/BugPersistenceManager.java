@@ -7,7 +7,14 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,60 +37,6 @@ public class BugPersistenceManager {
         return q.getResultList();
     }
 
-    /**
-     * Returns a bug entity with the matching title wrapped in an optional.
-     * If none exist, returns an empty Optional Object
-     * @param title : String containing the title.
-     * @return : Optional, containing a bug entity.
-     */
-    public Optional<Bug> getBugByTitle(@NotNull String title){
-        TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_BUG_BY_TITLE, Bug.class)
-                .setParameter("title", title);
-        try {
-            return Optional.of(q.getSingleResult());
-        } catch (NoResultException ex) {
-            return Optional.empty();
-        }
-    }
-
-    /**
-     * Returns a bug entity with the matching title wrapped in an optional.
-     * If none exist, returns an empty Optional Object
-     * @param title : String containing the title.
-     * @return : List of Bugs, empty if there are no roles in the database.
-     */
-    public List<Bug> getBugsByTitle(@NotNull String title) {
-        //Query q = em.createQuery("SELECT b FROM Bug b WHERE b.title="+ title);
-        TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_TITLE, Bug.class)
-                .setParameter("title",title);
-        return q.getResultList();
-    }
-
-    /**
-     * Returns a bug entity with the matching status wrapped in an optional.
-     * If none exist, returns an empty Optional Object
-     * @param status : String containing the status.
-     * @return : List of Bugs, empty if there are no roles in the database.
-     */
-    public List<Bug> getBugsByStatus(@NotNull Status status){
-        TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_STATUS, Bug.class)
-                .setParameter("status",status);
-        return q.getResultList();
-
-    }
-
-    /**
-     * Returns a bug entity with the matching severity wrapped in an optional.
-     * If none exist, returns an empty Optional Object
-     * @param severity : String containing the severity.
-     * @return : List of Bugs, empty if there are no roles in the database.
-     */
-    public List<Bug> getBugsBySeverity(@NotNull Severity severity){
-        TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_SEVERITY, Bug.class)
-                .setParameter("severity",severity);
-        return q.getResultList();
-
-    }
 
 
     public Optional<Bug> getBugById(@NotNull Long id){
@@ -103,15 +56,38 @@ public class BugPersistenceManager {
         return bug;
     }
 
+    public List<Bug> filter(String title, String description, Status status, Severity severity) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Bug> cq = builder.createQuery(Bug.class);
+        Metamodel metamodel = em.getMetamodel();
 
-    /**
-     * Returns a bug entity with the matching description wrapped in an optional.
-     * @param description: String containing substring from description.
-     * @return: List of Bugs, empty if there are no roles in the database.
-     */
-    public List<Bug> getBugsByDescription(String description) {
-        Query q = em.createQuery("select b from Bug b where b.description like '%" + description + "%'");
-        return q.getResultList();
+        EntityType<Bug> entityType = metamodel.entity(Bug.class);
+        Root<Bug> root = cq.from(entityType);
+
+        List<Predicate> result = new ArrayList<>();
+
+        if (description != null) {
+            result.add(builder.like(root.get("description"), "%" + description + "%"));
+        }
+
+        if (title != null) {
+            result.add(builder.equal(root.get("title"), title));
+
+        }
+
+        if (status != null) {
+            result.add(builder.equal(root.get("status"), status));
+
+        }
+
+        if (severity != null) {
+            result.add(builder.equal(root.get("severity"), severity));
+
+        }
+        if (!result.isEmpty()) {
+            cq.where(result.toArray(new Predicate[0]));
+        }
+        return em.createQuery(cq).getResultList();
     }
 
 }

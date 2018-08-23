@@ -3,6 +3,7 @@ import {from, Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {map, filter, catchError, mergeMap, tap} from 'rxjs/operators';
 import {UserData} from "../authentication/authentication.service";
+import {st} from "@angular/core/src/render3";
 import {forEach} from "@angular/router/src/utils/collection";
 
 
@@ -52,51 +53,25 @@ export class BugListService {
   }
 
 
-
-  getBugsByTitle(title: string):  Observable<BugData[]> {
-
+  filter(title: string, description: string, status: string, severity: string): Observable<BugData[]> {
     let params = new HttpParams();
-    params.set('title', title);
+
+    if (title) {
+      params = params.append('title', title);
+    }
+    if (description) {
+      params = params.append('description', description);
+    }
+    if (status) {
+      params = params.append('status', status.toUpperCase());
+    }
+    if (severity) {
+      params = params.append('severity', severity.toUpperCase());
+    }
 
 
-    return this.http.get<BugData[]>(this.baseURL + '/listBugsByTitle/' + title,  {params}
-
-    );
+    return this.http.get<BugData[]>(this.baseURL + '/listBugs/getByFilter', {params: params});
   }
-
-  getBugsByStatus(status: string):  Observable<BugData[]> {
-
-    let params = new HttpParams();
-    params.set('status', status.toUpperCase());
-
-
-    return this.http.get<BugData[]>(this.baseURL + '/listBugsByStatus/' + status.toUpperCase(),  {params}
-
-    );
-  }
-
-  getBugsBySeverity(severity: string):  Observable<BugData[]> {
-
-    let params = new HttpParams();
-    params.set('severity', severity.toUpperCase());
-
-
-    return this.http.get<BugData[]>(this.baseURL + '/listBugsBySeverity/' + severity.toUpperCase(),  {params}
-
-    );
-  }
-
-  getBugsByDescription(description: string):  Observable<BugData[]> {
-
-    let params = new HttpParams();
-    params.set('description', description);
-
-
-    return this.http.get<BugData[]>(this.baseURL + '/listBugsByDescription/' + description,  {params}
-
-    );
-  }
-
 
   validateBug(title: string, description: string, version: string, fixedVersion: string, targetDate: Date, severity: string, username: string, username2: string) {
     let body = new URLSearchParams();

@@ -1,5 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
+import {DataSource} from '@angular/cdk/table';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material';
+import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
+import {MatChipsModule} from '@angular/material/chips';
 
 @Component({
   selector: 'app-list-bugs',
@@ -11,14 +15,8 @@ export class ListBugsComponent implements OnInit {
   bugData: BugData;
   relatedUser: RelatedUser;
   bugList: BugData[];
-  bugsByTitle: BugData[];
-  bugsByStatus: BugData[];
-  bugsBySeverity: BugData[];
-  bugsByDescription: BugData[];
 
-
-
-  constructor(private bugService: BugListService) {
+  constructor(private bugService: BugListService, public dialog: MatDialog) {
 
     this.bugData = {
       title: '',
@@ -38,28 +36,35 @@ export class ListBugsComponent implements OnInit {
 
 
     };
+
+
   }
 
-  // submitForm(){
-  //   this.bugService.getBugsFromServer()
-  //     .subscribe((response) => {
-  //       console.log(response);
-  //     });
-  // }
+  openDialog(bug: BugData): void {
+
+    const dialogRef = this.dialog.open(BugsPopupComponent, {
+      width: '250px',
+      data: {description: bug.description}
+    });
+
+  }
+
+
   ngOnInit() {
     this.bugService.getBugsFromServer().subscribe(
-        {
-          next: (value: BugData[]) => {
-            console.log('received: ' + JSON.stringify(value));
-            this.bugList = value;
-          }
+      {
+        next: (value: BugData[]) => {
+          console.log('received: ' + JSON.stringify(value));
+          this.bugList = value;
         }
-      );
+      }
+    );
 
   }
 
-  getBugsByTitle(title: string){
-    this.bugService.getBugsByTitle(title).subscribe(
+
+  filter(title: string, description: string, status: string, severity: string) {
+    this.bugService.filter(title, description, status, severity).subscribe(
       {
         next: (value: BugData[]) => {
           console.log('received: ' + JSON.stringify(value));
@@ -69,40 +74,7 @@ export class ListBugsComponent implements OnInit {
     );
   }
 
-  getBugsByStatus(status: string){
-    this.bugService.getBugsByStatus(status).subscribe(
-      {
-        next: (value: BugData[]) => {
-          console.log('received: ' + JSON.stringify(value));
-          this.bugList = value;
-        }
-      }
-    );
-  }
-
-  getBugsBySeverity(severity: string){
-    this.bugService.getBugsBySeverity(severity).subscribe(
-      {
-        next: (value: BugData[]) => {
-          console.log('received: ' + JSON.stringify(value));
-          this.bugList = value;
-        }
-      }
-    );
-  }
-
-  getBugsByDescription(description: string){
-    this.bugService.getBugsByDescription(description).subscribe(
-      {
-        next: (value: BugData[]) => {
-          console.log('received: ' + JSON.stringify(value));
-          this.bugList = value;
-        }
-      }
-    );
-  }
-
-  getDate(d){
+  getDate(d) {
 
     const correctSec = d * 1000;
     var expiresAt = new Date(correctSec);

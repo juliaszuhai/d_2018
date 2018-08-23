@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Stateless
-public class BugManagementController implements BugManagement {
+public class BugManagementController  implements BugManagement {
 
     @EJB
     private BugPersistenceManager bugPersistenceManager;
@@ -35,20 +35,18 @@ public class BugManagementController implements BugManagement {
         return bugPersistenceManager.getAllBugs()
                 .stream()
                 .map(BugDTOHelper::fromEntity)
-                .collect(Collectors.toList());    }
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<BugDTO> getBugsWithId(List<Long> titles) {
-        List<BugDTO> bugs=bugPersistenceManager.getAllBugs().stream()
+        List<BugDTO> bugs = bugPersistenceManager.getAllBugs().stream()
                 .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());
-        List<BugDTO> selectedBugs=new ArrayList<BugDTO>();
-        for(int k=0;k<titles.size();k++)
-        {
-            for(int l=0;l<bugs.size();l++)
-            {
-                if(titles.get(k).equals(bugs.get(l).getId()))
-                {
+        List<BugDTO> selectedBugs = new ArrayList<BugDTO>();
+        for (int k = 0; k < titles.size(); k++) {
+            for (int l = 0; l < bugs.size(); l++) {
+                if (titles.get(k).equals(bugs.get(l).getId())) {
                     selectedBugs.add(bugs.get(l));
                 }
             }
@@ -58,24 +56,8 @@ public class BugManagementController implements BugManagement {
 
 
     @Override
-    public List<BugDTO> getBugsByTitle(String title) throws BusinessException {
-        return bugPersistenceManager.getBugsByTitle(title)
-                .stream()
-                .map(BugDTOHelper::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<BugDTO> getBugsByStatus(Status status) throws BusinessException {
-        return bugPersistenceManager.getBugsByStatus(status)
-                .stream()
-                .map(BugDTOHelper::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<BugDTO> getBugsBySeverity(Severity severity) throws BusinessException {
-        return bugPersistenceManager.getBugsBySeverity(severity)
+    public List<BugDTO> filter(String title, String description, Status status , Severity severity) throws BusinessException{
+        return bugPersistenceManager.filter(title,description, status, severity)
                 .stream()
                 .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());
@@ -83,7 +65,7 @@ public class BugManagementController implements BugManagement {
 
     @Override
     public BugDTO createBug(BugDTO bugDTO) throws BusinessException {
-        Bug bug=new Bug();
+        Bug bug = new Bug();
         bug.setTitle(bugDTO.getTitle());
         bug.setDescription(bugDTO.getDescription());
         bug.setVersion(bugDTO.getVersion());
@@ -92,57 +74,46 @@ public class BugManagementController implements BugManagement {
         bug.setSeverity(bugDTO.getSeverity());
         bug.setStatus(bugDTO.getStatus());
         User userAssigned;
-        userAssigned=userPersistenceManager.getUserById(bugDTO.getAssignedTo().getId());
+        userAssigned = userPersistenceManager.getUserById(bugDTO.getAssignedTo().getId());
         bug.setAssignedTo(userAssigned);
         User userCreated;
-        userCreated=userPersistenceManager.getUserById(bugDTO.getCreatedByUser().getId());
+        userCreated = userPersistenceManager.getUserById(bugDTO.getCreatedByUser().getId());
         bug.setCreatedByUser(userCreated);
-        try{
+        try {
             this.isBugValid(bug);
             bugPersistenceManager.createBug(bug);
             return bugDTO;
-        }
-        catch(BusinessException e)
-        {
+        } catch (BusinessException e) {
             throw e;
         }
     }
 
     @Override
-    public List<BugDTO> getBugsByDescription(String description) throws BusinessException {
-        return bugPersistenceManager.getBugsByDescription(description)
-                .stream()
-                .map(BugDTOHelper::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public boolean isBugValid(Bug bug) throws BusinessException {
-        try{
+        try {
             this.validateDescription(bug.getDescription());
             this.validateVersion(bug.getVersion());
             this.validateVersion(bug.getFixedVersion());
             return true;
-        }
-        catch(BusinessException e)
-        {
+        } catch (BusinessException e) {
             throw new BusinessException(e.getExceptionCode());
-        } }
+        }
+    }
 
-    public boolean  validateDescription(String description) throws BusinessException {
-        if(description.length()<250)
+    @Override
+    public boolean validateDescription(String description) throws BusinessException {
+        if (description.length() < 250)
             throw new BusinessException(ExceptionCode.DESCRIPTION_TOO_SHORT);
         return true;
     }
 
-
-
+    @Override
     public boolean validateVersion(String version) throws BusinessException {
         final Pattern VALID_VERSION_REGEX =
                 Pattern.compile("([a-zA-Z0-9]+).([a-zA-Z0-9]+).([a-zA-Z0-9]+)", Pattern.CASE_INSENSITIVE);
 
         Matcher matcher = VALID_VERSION_REGEX.matcher(version);
-        if(matcher.find()==false)
+        if (matcher.find() == false)
             throw new BusinessException(ExceptionCode.VERSION_NOT_VALID);
 
         return true;
@@ -151,10 +122,10 @@ public class BugManagementController implements BugManagement {
 
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {
-        Optional<Bug> bug=bugPersistenceManager.getBugById(id);
-        if(bug.isPresent()){
+        Optional<Bug> bug = bugPersistenceManager.getBugById(id);
+        if (bug.isPresent()) {
             return BugDTOHelper.fromEntity(bug.get());
-        }else{
+        } else {
             throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
         }
 
