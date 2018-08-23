@@ -5,15 +5,28 @@
     *ngIf="isLoggedIn()"
     routerLinkActive="active"
     routerLink="bugs">
-    Manage Bugs
+    Bugs
   </button>
-  <button
-    mat-button="asdf"
-    *ngIf="isLoggedIn()"
-    routerLinkActive="active"
-    routerLink="manageusers">
-    Manage Users
+  <button mat-button [matMenuTriggerFor]="menuManage" *ngIf="isLoggedIn()">
+    Manager
   </button>
+  <mat-menu #menuManage="matMenu">
+    <button
+      mat-menu-item
+      *ngIf="isLoggedIn()"
+      routerLinkActive="active"
+      routerLink="manageusers">
+      Users
+    </button>
+    <button
+      mat-menu-item
+      *ngIf="isLoggedIn()"
+      routerLinkActive="active"
+      routerLink="manageusers">
+      Roles and Permissions
+    </button>
+  </mat-menu>
+
   <span class="fill-space"></span>
 
 
