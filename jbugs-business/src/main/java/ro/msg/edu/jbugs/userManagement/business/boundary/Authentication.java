@@ -9,16 +9,22 @@ import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 @Path("/authenticate")
 public class Authentication {
@@ -35,11 +41,12 @@ public class Authentication {
     @Produces("application/json")
     @Consumes("application/x-www-form-urlencoded")
     public Response authenticateUser(@FormParam("username") String username,
-                                     @FormParam("password") String password) {
+                                     @FormParam("password") String password,@Context SecurityContext securityContext) {
         try {
 
             UserDTO authUser = userManagement.login(username, password);
-            String token = issueToken(UserDTOHelper.toEntity(authUser));
+           User user = userManagement.getUserByUsername(username);
+            String token = issueToken(user);
             return Response.ok("{\"token\": \""+token+"\"}").build();
         } catch(BusinessException e){
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
@@ -56,7 +63,8 @@ public class Authentication {
         LocalDateTime tomorrowMidnight = todayMidnight.plusDays(1);
         Date out = Date.from(tomorrowMidnight.atZone(ZoneId.systemDefault()).toInstant());
 
-
+        List<Role> userRoles = user.getRoles();
+        String rolesJson = new Gson().toJson(user.getRoles());
 
 
         try {
@@ -68,7 +76,7 @@ public class Authentication {
                     .withClaim("lastName", user.getLastName())
                     .withClaim("email", user.getEmail())
                     .withClaim("phone", user.getPhoneNumber())
-                    .withClaim("role", new Gson().toJson(user.getRoles()))
+                    .withClaim("role", rolesJson)
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception){

@@ -103,11 +103,6 @@ public class BugPersistenceManager {
         return bug;
     }
 
-//    public Bug getBugById(@NotNull Long id){
-//        TypedQuery<Bug> q=em.createNamedQuery(Bug.,Bug.class)
-//                .setParameter("id",id);
-//        return q.getSingleResult();
-//    }
 
     /**
      * Returns a bug entity with the matching description wrapped in an optional.
