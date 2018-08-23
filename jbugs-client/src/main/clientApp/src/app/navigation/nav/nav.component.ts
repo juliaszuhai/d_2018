@@ -1,8 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatToolbar, MatButton} from '@angular/material';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {Router} from '@angular/router';
-import {TranslateService} from "ng2-translate";
 import {TranslatorService} from "../../translator/translator.service";
 
 @Component({
@@ -30,17 +28,15 @@ export class NavComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  languageOption:Object;
+  languageOption:Object = null;
 
 
 
-  public getTranslation(id : number){
-    this.translateService.getLanguageFile(id)
-      .subscribe(lng =>this.languageOption=lng)
-  }
   ngOnInit() {
-    sessionStorage.setItem("lng","0");
-    this.getTranslation(parseInt(sessionStorage.getItem("lng")));
+
+    this.languageOption = this.translateService.getTranslationData();
+    console.log("I'm in nav comp:");
+    console.log(this.languageOption);
 
   }
 

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TranslatorService} from "./translator.service";
-import {element} from "protractor";
+import {Observable} from "rxjs/Observable";
 
 
 export class Language {
@@ -27,11 +27,11 @@ export class TranslatorComponent implements OnInit {
 
   @Input()
   allLanguages: Language[];
-
-  json:Object;
+  //toggle:boolean = false;
 
 
   constructor(private translateService:TranslatorService){
+
 
   }
 
@@ -40,27 +40,18 @@ export class TranslatorComponent implements OnInit {
     this.allLanguages = [
       new Language(0, 'English'),
       new Language(1, 'Romana')
-    ]
-
+    ];
+    this.translateService.getTranslationObservable(0);
   }
 
   public changeLanguage(event, id){
-    console.log("Selected language : ", this.allLanguages[id].Name);
-    sessionStorage.setItem("lng", id.toString());
-    //this.translateService.getLanguageFile(id);
-    this.getTranslation(id);
-
+    sessionStorage.setItem("lng", String(id));
+    this.translateService.getTranslationObservable(id);
   }
 
-  public getTranslation(id : number){
-    this.translateService.getLanguageFile(id)
-      .subscribe(lng =>this.json=lng)
-  }
-/*
 
-  execute(){
-    element = document.getElementById("title");
-  }
-*/
+
+
+
 
 }

@@ -28,6 +28,7 @@ import { RecaptchaDirective } from './authentication/login/recaptcha.directive';
 import { BugsPopupComponent } from './bugs/bugs-popup/bugs-popup.component';
 import { UserManagementComponent } from './usermanagement/user-management/user-management.component';
 import {UsermanagementModule} from "./usermanagement/usermanagement.module";
+import {TranslatorService} from "./translator/translator.service";
 import { AddBugComponent } from './bugs/add-bug/add-bug.component';
 
 
@@ -43,10 +44,11 @@ const appRoutes: Routes = [
   },
 ];
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
-    RecaptchaDirective,
     RecaptchaDirective
   ],
   imports: [
@@ -68,7 +70,8 @@ const appRoutes: Routes = [
 
 
   ],
-  providers: [{
+  providers: [
+    {
     provide: LoginguardGuard, useClass: LoginguardGuard
   }],
 

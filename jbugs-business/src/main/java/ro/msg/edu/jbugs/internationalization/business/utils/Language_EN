@@ -1,5 +1,5 @@
 {
-  "login": {
+  "loginWindow": {
     "submit": "Submit",
     "username": "Username",
     "password": "Password"
@@ -8,10 +8,20 @@
     "login":"Login",
     "content":"Content",
     "title":"Application Title",
-    "language": "Language"
+    "language": "Language",
+    "bugs": "Manage Bugs",
+    "users": "Manage Users"
   },
-  "messages": {
+
+  "profileWindow": {
     "welcome": "Welcome",
-    "goodbye": "Goodbye"
+    "personalInfo": "Personal Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone Number"
   }
+
+
+
 }

@@ -8,7 +8,9 @@
     "login":"Autentificare",
     "content":"Continut",
     "title":"Titlu Aplicatie",
-    "language":"Limba"
+    "language":"Limba",
+    "bugs": "Gestiune Bugs",
+    "users": "Gestiune Utilizatori"
   },
   "messages": {
     "welcome": "Bun venit",

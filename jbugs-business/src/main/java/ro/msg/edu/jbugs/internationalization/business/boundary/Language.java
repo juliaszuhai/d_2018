@@ -10,7 +10,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import java.io.File;
 
-
 @Path("/language")
 public class Language {
 
@@ -32,6 +31,8 @@ public class Language {
 
         String language = languageTranslator.getLanguageSelected(id);
         File file = null;
+
+
 
         try{
             file = new File(FILE_PATH + language);
