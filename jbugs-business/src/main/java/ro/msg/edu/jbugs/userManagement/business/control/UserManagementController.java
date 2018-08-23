@@ -192,7 +192,6 @@ public class UserManagementController {
 
     /**
      * TODO cazul in care nume + prenume < 6 si deja exista cineva cu acelasi nume.
-     *
      * @param firstName
      * @param lastName
      * @return
@@ -313,6 +312,9 @@ public class UserManagementController {
         }
     }
 }
+
+
+
 
 
 
