@@ -7,6 +7,7 @@ import ro.msg.edu.jbugs.bugManagement.business.control.BugManagement;
 import ro.msg.edu.jbugs.bugManagement.business.control.ExportBugPdf;
 import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.userManagement.business.utils.Secured;
 
 
 import javax.ejb.EJB;
@@ -37,6 +38,7 @@ public class ViewBug {
      * @return Response with a pdf
      */
     @GET
+
     @Path("{id}")
     @Produces("application/pdf")
     public Response getFile(@PathParam("id") Long id) {
