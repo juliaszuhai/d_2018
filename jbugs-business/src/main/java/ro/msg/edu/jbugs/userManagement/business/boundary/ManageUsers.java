@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -34,19 +35,19 @@ public class ManageUsers {
     public Response activateUser(@QueryParam("username") String username) {
         try {
             userManagementController.activateUser(username);
-            return Response.ok("User activated").build();
+            return Response.ok().build();
         } catch (BusinessException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
         }
     }
 
-    @POST
+    @GET
     @Produces("application/json")
     @Path("/deactivateuser")
-    public Response authenticateUser(@QueryParam("username") String username) {
+    public Response deactivateUser(@QueryParam("username") String username) {
         try {
-            userManagementController.activateUser(username);
-            return Response.ok("User activated").build();
+            userManagementController.deactivateUser(username);
+            return Response.ok().build();
         } catch (BusinessException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
         }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UsermanagementService} from "../usermanagement.service";
 
 export interface UserElement {
@@ -8,7 +8,6 @@ export interface UserElement {
   email: string;
   phoneNumber: string;
 }
-
 
 
 @Component({
@@ -21,21 +20,69 @@ export class UserManagementComponent implements OnInit {
 
   userData;
   dataSource: any;
-  constructor(private usrMgmtService: UsermanagementService) { }
-  getUsers(){
+
+  constructor(private usrMgmtService: UsermanagementService) {
+  }
+
+  getUsers() {
     this.usrMgmtService.getAllUsers()
       .subscribe(
         data => {
           this.dataSource = data;
+          console.log(this.dataSource);
         }
       )
   }
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'username', 'email','phoneNumber'];
+  getActivationButtonText(isActive) {
+    if (isActive) {
+      return "Deactivate";
+    } else {
+      return "Activate";
+    }
+  }
+
+  activateUser(username) {
+    this.usrMgmtService.activateUser(username)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.getUsers();
+        }
+      );
+  }
+
+  deactivateUser(username) {
+    this.usrMgmtService.deactivateUser(username)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.getUsers();
+        }
+      );
+  }
+
+  toggleActivation(isActive, username) {
+    if (isActive) {
+      this.deactivateUser(username);
+    } else {
+      this.activateUser(username);
+    }
+  }
+
+  displayedColumns: string[] = [
+    'firstName',
+    'lastName',
+    'username',
+    'email',
+    'phoneNumber',
+    'activation',
+    'edit'
+  ];
 
 
   ngOnInit() {
-      this.getUsers();
+    this.getUsers();
   }
 
 }
