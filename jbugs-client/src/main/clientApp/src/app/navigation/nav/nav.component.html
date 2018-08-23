@@ -1,9 +1,10 @@
 <mat-toolbar color="primary">
   <span>Application Title</span>
   <button mat-button="asdf" *ngIf="isLoggedIn()" routerLinkActive="active" routerLink="content">Content</button>
+  <button mat-button="asdf" *ngIf="isLoggedIn()" routerLinkActive="active" routerLink="bugs">View Bugs</button>
+
   <span class="fill-space"></span>
 
-  <button mat-button="asdf" *ngIf="isLoggedIn()" routerLinkActive="active" routerLink="bugs">View Bugs</button>
 
   <div class="jbugs-translator">
     <language-dropdown></language-dropdown>

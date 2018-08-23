@@ -63,7 +63,7 @@ export class ListBugsComponent implements OnInit {
       {
         next: (value: BugData[]) => {
           console.log('received: ' + JSON.stringify(value));
-          this.bugsByTitle = value;
+          this.bugList = value;
         }
       }
     );
@@ -74,7 +74,7 @@ export class ListBugsComponent implements OnInit {
       {
         next: (value: BugData[]) => {
           console.log('received: ' + JSON.stringify(value));
-          this.bugsByStatus = value;
+          this.bugList = value;
         }
       }
     );
@@ -85,7 +85,7 @@ export class ListBugsComponent implements OnInit {
       {
         next: (value: BugData[]) => {
           console.log('received: ' + JSON.stringify(value));
-          this.bugsBySeverity = value;
+          this.bugList = value;
         }
       }
     );
@@ -96,7 +96,7 @@ export class ListBugsComponent implements OnInit {
       {
         next: (value: BugData[]) => {
           console.log('received: ' + JSON.stringify(value));
-          this.bugsByDescription = value;
+          this.bugList = value;
         }
       }
     );
