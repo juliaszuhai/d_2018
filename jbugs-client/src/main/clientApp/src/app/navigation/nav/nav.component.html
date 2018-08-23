@@ -5,10 +5,7 @@
     *ngIf="isLoggedIn()"
     routerLinkActive="active"
     routerLink="bugs">
-    Bugs
-  </button>
-  <button mat-button [matMenuTriggerFor]="menuManage" *ngIf="isLoggedIn()">
-    Manager
+    Manage Bugs
   </button>
   <mat-menu #menuManage="matMenu">
     <button
