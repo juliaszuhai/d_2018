@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatToolbar, MatButton} from '@angular/material';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {Router} from '@angular/router';
+import {TranslateService} from "ng2-translate";
+import {TranslatorService} from "../../translator/translator.service";
 
 @Component({
   selector: 'app-nav',
@@ -10,7 +12,9 @@ import {Router} from '@angular/router';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private authService: AuthenticationService, private router: Router) {
+  constructor(private authService: AuthenticationService,
+              private router: Router,
+              private translateService: TranslatorService) {
   }
 
   getFirstName() {
@@ -26,7 +30,18 @@ export class NavComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  languageOption:Object;
+
+
+
+  public getTranslation(id : number){
+    this.translateService.getLanguageFile(id)
+      .subscribe(lng =>this.languageOption=lng)
+  }
   ngOnInit() {
+    sessionStorage.setItem("lng","0");
+    this.getTranslation(parseInt(sessionStorage.getItem("lng")));
+
   }
 
 }

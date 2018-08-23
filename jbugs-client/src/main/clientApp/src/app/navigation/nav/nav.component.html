@@ -46,8 +46,9 @@
   </mat-menu>
 
 
-  <button mat-button *ngIf="!isLoggedIn()" routerLinkActive="active" routerLink="login">
-    Login
+
+  <button  mat-button *ngIf="!isLoggedIn()" routerLinkActive="active" routerLink="login">
+    {{this.languageOption['header']['login']}}
   </button>
 
 </mat-toolbar>
