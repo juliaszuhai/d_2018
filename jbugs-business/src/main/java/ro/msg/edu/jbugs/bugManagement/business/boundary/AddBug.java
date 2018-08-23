@@ -12,6 +12,7 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+
 import java.util.Date;
 
 @Path("/add-bug")

@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Stateless
-public class BugManagementController  implements BugManagement {
+public class BugManagementController implements BugManagement {
 
     @EJB
     private BugPersistenceManager bugPersistenceManager;
@@ -56,22 +56,22 @@ public class BugManagementController  implements BugManagement {
 
 
     @Override
-    public List<BugDTO> filter(String title, String description, Status status , Severity severity) throws BusinessException{
-        return bugPersistenceManager.filter(title,description, status, severity)
+    public List<BugDTO> filter(String title, String description, Status status, Severity severity) throws BusinessException {
+        return bugPersistenceManager.filter(title, description, status, severity)
                 .stream()
                 .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<BugDTO> sort(boolean title, boolean version) throws BusinessException{
-        return bugPersistenceManager.sort(title,version)
+    public List<BugDTO> sort(boolean title, boolean version) throws BusinessException {
+        return bugPersistenceManager.sort(title, version)
                 .stream()
                 .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());
     }
 
-    @Override
+
     public BugDTO createBug(BugDTO bugDTO) throws BusinessException {
         Bug bug = new Bug();
         bug.setTitle(bugDTO.getTitle());
@@ -96,6 +96,7 @@ public class BugManagementController  implements BugManagement {
         }
     }
 
+
     @Override
     public boolean isBugValid(Bug bug) throws BusinessException {
         try {
@@ -108,14 +109,13 @@ public class BugManagementController  implements BugManagement {
         }
     }
 
-    @Override
     public boolean validateDescription(String description) throws BusinessException {
         if (description.length() < 250)
             throw new BusinessException(ExceptionCode.DESCRIPTION_TOO_SHORT);
         return true;
     }
 
-    @Override
+
     public boolean validateVersion(String version) throws BusinessException {
         final Pattern VALID_VERSION_REGEX =
                 Pattern.compile("([a-zA-Z0-9]+).([a-zA-Z0-9]+).([a-zA-Z0-9]+)", Pattern.CASE_INSENSITIVE);
@@ -138,8 +138,6 @@ public class BugManagementController  implements BugManagement {
         }
 
     }
-
-
 
 
 }
