@@ -6,6 +6,7 @@ import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.userManagement.business.utils.Secured;
+import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
 
 import javax.ejb.EJB;
@@ -83,6 +84,26 @@ public class ManageUsers {
             return Response.status(Response.Status.CREATED).build();
         } catch (BusinessException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+    @GET
+    @Produces("application/json")
+    @Path("/updateuser")
+    public Response updateUser(@QueryParam("username") String username,
+                               @QueryParam("firstName") String firstName,
+                               @QueryParam("lastName") String lastName,
+                               @QueryParam("email") String email,
+                               @QueryParam("phoneNumber") String phoneNumber) {
+        try {
+            User user = userManagementController.getUserForUsername(username);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setPhoneNumber(phoneNumber);
+            userManagementController.updateUser(user);
+            return Response.ok().build();
+        } catch (BusinessException e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
         }
     }
 }

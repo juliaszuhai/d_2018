@@ -84,6 +84,7 @@ public class UserManagementController {
     }
 
 
+
     private boolean isValidForCreation(UserDTO user) {
         return user.getFirstName() != null
                 && user.getLastName() != null
@@ -316,4 +317,9 @@ public class UserManagementController {
 
 
 
+    public void updateUser(User user){
+       userPersistenceManager.updateUser(user);
+    }
 }
+
+
