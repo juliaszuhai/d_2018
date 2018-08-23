@@ -4,10 +4,10 @@ package ro.msg.edu.jbugs.userManagement.business.boundary;
 import com.google.gson.Gson;
 import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
+import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 
 import javax.ejb.EJB;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
@@ -17,6 +17,7 @@ public class ManageUsers {
     private UserManagementController userManagementController;
 
     @GET
+    @Path("/getallusers")
     public Response getAllUsers(){
         try{
             List<UserDTO> allUsers = userManagementController.getAllUsers();
@@ -26,4 +27,30 @@ public class ManageUsers {
             return Response.status(Response.Status.BAD_GATEWAY).build();
         }
     }
+
+    @GET
+    @Produces("application/json")
+    @Path("/activateuser")
+    public Response activateUser(@QueryParam("username") String username) {
+        try {
+            userManagementController.activateUser(username);
+            return Response.ok("User activated").build();
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
+        }
+    }
+
+    @POST
+    @Produces("application/json")
+    @Path("/deactivateuser")
+    public Response authenticateUser(@QueryParam("username") String username) {
+        try {
+            userManagementController.activateUser(username);
+            return Response.ok("User activated").build();
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
+        }
+    }
+
+
 }
