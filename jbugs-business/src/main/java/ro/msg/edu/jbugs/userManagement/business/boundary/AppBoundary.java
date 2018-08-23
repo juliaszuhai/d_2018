@@ -5,7 +5,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import ro.msg.edu.jbugs.bugManagement.business.boundary.*;
 
-import ro.msg.edu.jbugs.bugManagement.business.boundary.GeneratePdf;
+
 import ro.msg.edu.jbugs.internationalization.business.boundary.Language;
 
 import javax.servlet.Registration;
@@ -25,6 +25,8 @@ public class AppBoundary extends Application {
         classes.add(AuthenticationFilter.class);
         classes.add(Registration.class);
         classes.add(GeneratePdf.class);
+        classes.add(ViewBug.class);
+        classes.add(AddBug.class);
         classes.add(ViewBug.class);
         classes.add(AddBug.class);
         classes.add(GenerateExcel.class);

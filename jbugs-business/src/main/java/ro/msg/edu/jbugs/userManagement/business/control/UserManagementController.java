@@ -11,6 +11,7 @@ import ro.msg.edu.jbugs.userManagement.business.utils.Encryptor;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -24,7 +25,7 @@ public class UserManagementController {
     private final static int MIN_USERNAME_LENGTH = 6;
     public static final int MIN_LAST_NAME_LENGTH = 5;
     public static final int MAX_FAILED_LOGN_ATTEMPTS = 5;
-//    private static final Logger logger = LogManager.getLogger(UserManagementController.class);
+
 
     @EJB
     private UserPersistenceManager userPersistenceManager;
@@ -196,27 +197,27 @@ public class UserManagementController {
      * @param lastName
      * @return
      */
-    protected String generateUsername(@NotNull String firstName, @NotNull String lastName) {
+    protected String generateUsername(@NotNull String firstName,@NotNull String lastName){
 
         String username;
 
-        if (lastName.length() >= MIN_LAST_NAME_LENGTH) {
-            username = lastName.substring(0, MIN_LAST_NAME_LENGTH) + firstName.substring(0, 1);
-        } else if (firstName.length() >= 5) {
-            username = lastName + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
-        } else {
-            username = lastName + firstName;
-            while (username.length() < 6) {
-                username += '0';
+        if(lastName.length()>= MIN_LAST_NAME_LENGTH){
+            username =  lastName.substring(0,MIN_LAST_NAME_LENGTH)+firstName.substring(0,1);
+        } else if(firstName.length()>=5)  {
+            username = lastName+firstName.substring(0,MIN_LAST_NAME_LENGTH-lastName.length()+1);
+        } else{
+            username = lastName+firstName;
+            while(username.length()<6){
+                username+='0';
             }
         }
-        username = username.toLowerCase();
+        username=username.toLowerCase();
         Optional<User> exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
 
-        while (exists.isPresent()) {
+        while(exists.isPresent()){
             int stringCutter = 0;
-            lastName = lastName.substring(0, MIN_LAST_NAME_LENGTH - ++stringCutter);
-            username = lastName + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1).toLowerCase();
+            lastName = lastName.substring(0,MIN_LAST_NAME_LENGTH-++stringCutter);
+            username = lastName+firstName.substring(0,MIN_LAST_NAME_LENGTH-lastName.length()+1).toLowerCase();
             exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
         }
 
@@ -314,4 +315,4 @@ public class UserManagementController {
 
 
 
-
+}
