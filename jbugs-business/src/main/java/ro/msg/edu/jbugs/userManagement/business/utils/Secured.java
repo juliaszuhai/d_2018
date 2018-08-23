@@ -1,14 +1,15 @@
 package ro.msg.edu.jbugs.userManagement.business.utils;
 
 import javax.ws.rs.NameBinding;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @NameBinding
 @Retention(RUNTIME)
-@Target({TYPE, METHOD})
-public @interface Secured { }
+@Target({ElementType.METHOD, ElementType.TYPE})
+public @interface Secured {
+    String[] value() default {};
+}
+

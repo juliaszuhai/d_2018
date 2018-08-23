@@ -1,5 +1,6 @@
 package ro.msg.edu.jbugs.userManagement.business.control;
 
+
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.userManagement.persistence.dao.UserPersistenceManager;
@@ -7,6 +8,7 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.userManagement.business.utils.Encryptor;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
@@ -163,16 +165,17 @@ public class UserManagementController {
         }
         if (!Encryptor.encrypt(password).equals(userOptional.get().getPassword())) {
             User user = userOptional.get();
-            if(user.getFailedAttempts()==null){
+            if (user.getFailedAttempts() == null) {
                 user.setFailedAttempts(1);
-            } else{
-                user.setFailedAttempts(user.getFailedAttempts()+1);
+            } else {
+                user.setFailedAttempts(user.getFailedAttempts() + 1);
             }
-            if(userOptional.get().getFailedAttempts() > MAX_FAILED_LOGN_ATTEMPTS){
+            if (userOptional.get().getFailedAttempts() > MAX_FAILED_LOGN_ATTEMPTS) {
                 deactivateUser(username);
             }
             throw new BusinessException(ExceptionCode.PASSWORD_NOT_VALID);
-        } if(!userOptional.get().getActive()){
+        }
+        if (!userOptional.get().getActive()) {
             throw new BusinessException(ExceptionCode.USER_DEACTIVATED);
         }
 
@@ -185,31 +188,32 @@ public class UserManagementController {
 
     /**
      * TODO cazul in care nume + prenume < 6 si deja exista cineva cu acelasi nume.
+     *
      * @param firstName
      * @param lastName
      * @return
      */
-    protected String generateUsername(@NotNull String firstName,@NotNull String lastName){
+    protected String generateUsername(@NotNull String firstName, @NotNull String lastName) {
 
         String username;
 
-        if(lastName.length()>= MIN_LAST_NAME_LENGTH){
-            username =  lastName.substring(0,MIN_LAST_NAME_LENGTH)+firstName.substring(0,1);
-        } else if(firstName.length()>=5)  {
-            username = lastName+firstName.substring(0,MIN_LAST_NAME_LENGTH-lastName.length()+1);
-        } else{
-            username = lastName+firstName;
-            while(username.length()<6){
-                username+='0';
+        if (lastName.length() >= MIN_LAST_NAME_LENGTH) {
+            username = lastName.substring(0, MIN_LAST_NAME_LENGTH) + firstName.substring(0, 1);
+        } else if (firstName.length() >= 5) {
+            username = lastName + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
+        } else {
+            username = lastName + firstName;
+            while (username.length() < 6) {
+                username += '0';
             }
         }
-        username=username.toLowerCase();
+        username = username.toLowerCase();
         Optional<User> exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
 
-        while(exists.isPresent()){
+        while (exists.isPresent()) {
             int stringCutter = 0;
-            lastName = lastName.substring(0,MIN_LAST_NAME_LENGTH-++stringCutter);
-            username = lastName+firstName.substring(0,MIN_LAST_NAME_LENGTH-lastName.length()+1).toLowerCase();
+            lastName = lastName.substring(0, MIN_LAST_NAME_LENGTH - ++stringCutter);
+            username = lastName + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1).toLowerCase();
             exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
         }
 
@@ -225,7 +229,7 @@ public class UserManagementController {
         return matcher.find();
     }
 
-    private Integer getFailedAttempts(String username) throws BusinessException{
+    private Integer getFailedAttempts(String username) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
