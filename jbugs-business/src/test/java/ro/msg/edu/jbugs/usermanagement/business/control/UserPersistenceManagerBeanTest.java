@@ -100,11 +100,14 @@ public class UserPersistenceManagerBeanTest {
         when(userPersistenceManager.getUserByUsername(any(String.class)))
                 .thenReturn(Optional.of(user));
 
+        when(user.getActive()).thenReturn(true);
+
+
         try{
             UserDTO userDTO = userManagementController.login("salut","secret");
             assertEquals(userDTO.getUsername(),user.getUsername());
         } catch(BusinessException e){
-            fail("Shouldn't reach this point");
+            fail("Shouldn't reach this point: "+ e.getExceptionCode().getMessage());
         }
     }
 
@@ -113,6 +116,8 @@ public class UserPersistenceManagerBeanTest {
         when(userPersistenceManager.getUserByEmail(any(String.class)))
                 .thenReturn(Optional.empty());
 
+        when(userPersistenceManager.getUserByUsername(any(String.class)))
+                .thenReturn(Optional.empty());
 
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("Cristi");
