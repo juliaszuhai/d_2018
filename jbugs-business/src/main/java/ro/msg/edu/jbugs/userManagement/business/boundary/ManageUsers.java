@@ -5,12 +5,15 @@ import com.google.gson.Gson;
 import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
-import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
+import ro.msg.edu.jbugs.userManagement.business.utils.Secured;
+
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.util.List;
 
 @Path("/manage-users")
@@ -19,6 +22,7 @@ public class ManageUsers {
     private UserManagementController userManagementController;
 
     @GET
+    @Secured("USER_MANAGEMENT")
     @Path("/get-all-users")
     public Response getAllUsers() {
         try {

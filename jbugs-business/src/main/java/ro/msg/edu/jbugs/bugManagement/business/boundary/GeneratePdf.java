@@ -18,8 +18,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-@Path("/viewBug")
-public class ViewBug {
+@Path("/pdfbug")
+public class GeneratePdf {
 
     @EJB
     private ExportBugPdf exportBugPdf;
@@ -31,13 +31,13 @@ public class ViewBug {
 
 
     /**
-     * Export the bug which have the specify title in a pdf
+     *Export a bug identified by an id into a pdf file
      *
-     * @param id
+     * @param id bug  on the view / edit page
      * @return Response with a pdf
      */
     @GET
-
+    @Secured("BUG_EXPORT_PDF")
     @Path("{id}")
     @Produces("application/pdf")
     public Response getFile(@PathParam("id") Long id) {
@@ -60,8 +60,6 @@ public class ViewBug {
 
         } catch (DocumentException | BusinessException | IOException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
 }

@@ -10,16 +10,16 @@ import {Router} from '@angular/router';
 })
 export class TokenInterceptorService implements HttpInterceptor {
 
+  tokenField = 'token';
+
   constructor(public auth: AuthenticationService, private router: Router) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('I got called.');
-    if (localStorage.getItem('jwtToken')) {
-      console.log('inside');
+    if (localStorage.getItem(this.tokenField)) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ` + localStorage.getItem('jwtToken')
+          Authorization: `Bearer ` + localStorage.getItem(this.tokenField)
         }
       });
     }
@@ -29,7 +29,7 @@ export class TokenInterceptorService implements HttpInterceptor {
      */
     return next.handle(request).pipe(catchError((error, caught) => {
       // intercept the respons error and displace it to the console
-      console.log( error);
+      console.log(error);
       this.handleAuthError(error);
       return of(error);
     }) as any);

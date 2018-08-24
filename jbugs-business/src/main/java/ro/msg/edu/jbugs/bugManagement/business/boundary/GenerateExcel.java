@@ -7,6 +7,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import ro.msg.edu.jbugs.bugManagement.business.control.BugManagement;
 import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTO;
+import ro.msg.edu.jbugs.userManagement.business.utils.Secured;
+
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -49,6 +51,7 @@ public class GenerateExcel {
      * @return - response
      */
     @GET
+    @Secured("BUG_MANAGEMENT")
     @Path("{titles}")
     @Produces("application/vnd.ms-excel")
     public Response generate(@PathParam("titles") List<Long> titles) {
