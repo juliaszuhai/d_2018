@@ -13,7 +13,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {BugsPopupComponent} from "./bugs-popup/bugs-popup.component";
 import {MatChipsModule} from '@angular/material/chips';
 
-
 const bugRoutes: Routes = [
   {path: 'bugs', component: ListBugsComponent, canActivate: [LoginguardGuard]},
   {path: 'add-bug', component: AddBugComponent, canActivate: [LoginguardGuard]}

@@ -64,6 +64,14 @@ public class BugManagementController  implements BugManagement {
     }
 
     @Override
+    public List<BugDTO> sort(boolean title, boolean version) throws BusinessException{
+        return bugPersistenceManager.sort(title,version)
+                .stream()
+                .map(BugDTOHelper::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public BugDTO createBug(BugDTO bugDTO) throws BusinessException {
         Bug bug = new Bug();
         bug.setTitle(bugDTO.getTitle());

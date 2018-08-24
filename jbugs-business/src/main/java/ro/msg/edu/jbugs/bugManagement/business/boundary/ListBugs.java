@@ -23,10 +23,10 @@ public class ListBugs {
 
     @GET
     public String getAllBugs() throws JsonProcessingException {
-        List<BugDTO> allBugs=bugManagement.getAllBugs();
-        ObjectMapper mapper=new ObjectMapper();
+        List<BugDTO> allBugs = bugManagement.getAllBugs();
+        ObjectMapper mapper = new ObjectMapper();
 
-        String jsonResponse=mapper.writeValueAsString(allBugs);
+        String jsonResponse = mapper.writeValueAsString(allBugs);
 
         return jsonResponse;
     }
@@ -34,12 +34,23 @@ public class ListBugs {
     @GET
     @Path("/getByFilter")
     @Produces("application/json")
-//     @Consumes("application/x-www-form-urlencoded")
     public String filter(@QueryParam("title") String title, @QueryParam("description") String description, @QueryParam("status") Status status, @QueryParam("severity") Severity severity) throws JsonProcessingException, BusinessException {
-        List<BugDTO> allBugs=bugManagement.filter(title,description,status,severity);
-        ObjectMapper mapper=new ObjectMapper();
+        List<BugDTO> allBugs = bugManagement.filter(title, description, status, severity);
+        ObjectMapper mapper = new ObjectMapper();
 
-        String jsonResponse=mapper.writeValueAsString(allBugs);
+        String jsonResponse = mapper.writeValueAsString(allBugs);
+
+        return jsonResponse;
+    }
+
+    @GET
+    @Path("/sort")
+    @Produces("application/json")
+    public String filter(@QueryParam("title") boolean title, @QueryParam("version") boolean version) throws JsonProcessingException, BusinessException {
+        List<BugDTO> allBugs = bugManagement.sort(title, version);
+        ObjectMapper mapper = new ObjectMapper();
+
+        String jsonResponse = mapper.writeValueAsString(allBugs);
 
         return jsonResponse;
     }

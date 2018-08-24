@@ -74,6 +74,17 @@ export class ListBugsComponent implements OnInit {
     );
   }
 
+  sort(title, version) {
+    this.bugService.sort(title, version).subscribe(
+      {
+        next: (value: BugData[]) => {
+          console.log('received: ' + JSON.stringify(value));
+          this.bugList = value;
+        }
+      }
+    );
+  }
+
   getDate(d) {
 
     const correctSec = d * 1000;
