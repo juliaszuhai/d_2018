@@ -34,5 +34,17 @@ public class UserDTOHelper {
         return user;
 
     }
+
+
+    public static User updateEntityWithDTO(User user, UserDTO userDTO){
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setUsername(userDTO.getUsername());
+        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setActive(userDTO.getActive());
+        return user;
+    }
 }
 

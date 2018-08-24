@@ -228,6 +228,7 @@ public class UserManagementController {
         return matcher.find();
     }
 
+
     private Integer getFailedAttempts(String username) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (userOptional.isPresent()) {
@@ -238,6 +239,12 @@ public class UserManagementController {
         }
     }
 
+    /**
+     * Returns the user entity with the given username.
+     * @param username
+     * @return
+     * @throws BusinessException
+     */
     public User getUserForUsername(String username) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (userOptional.isPresent()) {
@@ -248,6 +255,12 @@ public class UserManagementController {
         }
     }
 
+    /**
+     * Returns the user with the given ID.
+     * @param id
+     * @return
+     * @throws BusinessException
+     */
     public User getUserForId(Long id) throws BusinessException {
         User user = userPersistenceManager.getUserById(id);
         if (user == null)
@@ -255,8 +268,27 @@ public class UserManagementController {
         return user;
     }
 
-    public void updateUser(User user){
-       userPersistenceManager.updateUser(user);
+    /**
+     * Updates the user with the contents of the given DTO.
+     * @param userDTO
+     * @return
+     * @throws BusinessException
+     */
+    public UserDTO updateUser(UserDTO userDTO) throws BusinessException {
+
+        Optional<User> userBeforeOptional = userPersistenceManager.getUserByUsername(userDTO.getUsername());
+        if (userBeforeOptional.isPresent()) {
+            User userBefore = userBeforeOptional.get();
+            normalizeUserDTO(userDTO);
+            validateUserForCreation(userDTO);
+            User userAfter = UserDTOHelper.updateEntityWithDTO(userBefore, userDTO);
+            userAfter.setPassword(Encryptor.encrypt(userDTO.getPassword()));
+            userAfter.setUsername(generateUsername(userDTO.getFirstName(), userDTO.getLastName()));
+            userPersistenceManager.updateUser(userAfter);
+            return userDTO;
+        } else {
+            throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
+        }
     }
 }
 
