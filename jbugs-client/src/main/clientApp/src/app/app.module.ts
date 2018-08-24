@@ -72,8 +72,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     {
-    provide: LoginguardGuard, useClass: LoginguardGuard
-  }],
+      provide: LoginguardGuard, useClass: LoginguardGuard
+    }],
 
   bootstrap: [AppComponent],
   exports: [

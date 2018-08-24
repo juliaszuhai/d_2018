@@ -1,3 +1,8 @@
+
+<button class="btn btn-sm"  type="button" (click)="openAddBug()">
+  <i class="material-icons">bug_report</i> Add user
+</button>
+
 <div align="center" (*ngFor)="ngOnInit()">
   <table mat-table class="mat-elevation-z8" >
     <thead>
@@ -43,55 +48,55 @@
 
 
 <div align="center">
-<div class="input-label">
-      <label for="titleInput"></label>
-      <input type="text"
-             #titleElement
-             name="title"
-             id="titleInput"
-             class="form-control"
-             required
-             matInput placeholder="Title">
-</div>
+  <div class="input-label">
+    <label for="titleInput"></label>
+    <input type="text"
+           #titleElement
+           name="title"
+           id="titleInput"
+           class="form-control"
+           required
+           matInput placeholder="Title">
+  </div>
 
-<div class="input-label">
-  <label for="descriptionInput"></label>
-  <input type="text"
-         #descriptionElement
-         name="description"
-         id="descriptionInput"
-         class="form-control"
-         required
-         matInput placeholder="Description">
-</div>
+  <div class="input-label">
+    <label for="descriptionInput"></label>
+    <input type="text"
+           #descriptionElement
+           name="description"
+           id="descriptionInput"
+           class="form-control"
+           required
+           matInput placeholder="Description">
+  </div>
 
-<div class="input-label">
-  <label for="statusInput"></label>
-  <input type="text"
-         #statusElement
-         name="status"
-         id="statusInput"
-         class="form-control"
-         required
-         matInput placeholder="Status">
-</div>
+  <div class="input-label">
+    <label for="statusInput"></label>
+    <input type="text"
+           #statusElement
+           name="status"
+           id="statusInput"
+           class="form-control"
+           required
+           matInput placeholder="Status">
+  </div>
 
-<div class="input-label">
-  <label for="severityInput"></label>
-  <input type="text"
-         #severityElement
-         name="title"
-         id="severityInput"
-         class="form-control"
-         required
-         matInput placeholder="Severity">
-</div>
+  <div class="input-label">
+    <label for="severityInput"></label>
+    <input type="text"
+           #severityElement
+           name="title"
+           id="severityInput"
+           class="form-control"
+           required
+           matInput placeholder="Severity">
+  </div>
 
 
-<div align="center">
-  <button mat-button (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">Filter</button>
- <!--<mat-chip>One fish</mat-chip>-->
-</div>
+  <div align="center">
+    <button mat-button (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">Filter</button>
+    <!--<mat-chip>One fish</mat-chip>-->
+  </div>
 
   <div align="center">
 
@@ -108,10 +113,10 @@
     <!--<mat-chip>One fish</mat-chip>-->
   </div>
 
-    <!--<button type="submit"-->
-            <!--(click)="getBugsByDescriptionAndSeverity(titleElement.value,severityElement.value)"-->
-    <!--&gt;FindByDescriptionAndSeverity-->
-    <!--</button>-->
+  <!--<button type="submit"-->
+  <!--(click)="getBugsByDescriptionAndSeverity(titleElement.value,severityElement.value)"-->
+  <!--&gt;FindByDescriptionAndSeverity-->
+  <!--</button>-->
 
 </div>
 

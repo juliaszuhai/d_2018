@@ -14,7 +14,7 @@ import {MatSelectModule} from '@angular/material/select';
 
 const bugRoutes: Routes = [
   {path: 'bugs', component: ListBugsComponent, canActivate: [LoginguardGuard]},
-  {path: 'add-bug', component: AddBugComponent, canActivate: [LoginguardGuard]}
+ // {path: 'add-bug', component: AddBugComponent, canActivate: [LoginguardGuard]}
 ];
 
 @NgModule({
@@ -30,7 +30,8 @@ const bugRoutes: Routes = [
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+
 
   ],
   declarations: [ListBugsComponent, BugsPopupComponent,AddBugComponent],
@@ -39,7 +40,8 @@ const bugRoutes: Routes = [
 
   ],
   entryComponents: [
-    BugsPopupComponent
+    BugsPopupComponent,
+    AddBugComponent
   ]
 })
 export class BugsModule { }

@@ -4,6 +4,7 @@ import {DataSource} from '@angular/cdk/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material';
 import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
 import {MatChipsModule} from '@angular/material/chips';
+import {AddBugComponent} from "../add-bug/add-bug.component";
 import {HttpParams} from "@angular/common/http";
 
 @Component({
@@ -121,4 +122,10 @@ export class ListBugsComponent implements OnInit {
   }
 
 
+  openAddBug() {
+    const dialogRef2 = this.dialog.open(AddBugComponent, {
+      width: '700px',
+      data: {bugService: this.bugService}
+    });
+  }
 }

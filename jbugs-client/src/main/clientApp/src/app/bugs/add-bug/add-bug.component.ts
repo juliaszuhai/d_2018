@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
-import {MatDatepickerContent, MatDatepickerModule} from '@angular/material/datepicker';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+
 
 @Component({
   selector: 'app-add-bug',
@@ -13,22 +14,28 @@ export class AddBugComponent implements OnInit {
   severities: string[]=[
     "CRITICAL","HIGH","MEDIUM","LOW"
   ];
-  constructor(private bugService: BugListService) {
+  constructor(public dialogRef2: MatDialogRef<AddBugComponent>,
+               private bugService: BugListService) {
     this.bugData={
-     title:'',
+      id:1,
+      title:'',
       description:'',
       version:'',
       fixedVersion:'',
       targetDate: new Date(''),
       status:'NEW',
       severity:'',
-      createdByUser: {id:4,username:bugService.getLoggedUserName()},
+      createdByUser: {id:4,username:this.bugService.getLoggedUserName()},
       assignedTo: {id:4,username:''}
 
     }
   }
 
   ngOnInit() {
+  }
+
+  onNoClick(): void {
+    this.dialogRef2.close();
   }
 
   validateDescription() {

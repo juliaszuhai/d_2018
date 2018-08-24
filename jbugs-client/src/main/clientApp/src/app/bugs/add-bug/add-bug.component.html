@@ -1,4 +1,4 @@
-<div class="row login-component">
+<div class="row addBug-component">
   <form (ngSubmit)="addBugForm()">
     <fieldset>
       <div class="form-group">
@@ -14,7 +14,6 @@
                  [(ngModel)]="bugData.title"
                  required>
         </div>
-
         <div class="form-group">
           <label for="descriptionInput">Description  </label>
           <input type="text"
@@ -28,7 +27,6 @@
                  [ngClass]="{form_invalid: !validateDescription(), form_valid:validateDescription()}"
                  required>
         </div>
-
         <div class="form-group">
           <label for="versionInput">Version  </label>
           <input type="text"
@@ -65,8 +63,8 @@
             [matDatepicker]="targetDate">
           <mat-datepicker-toggle [for]="targetDate"></mat-datepicker-toggle>
           <mat-datepicker #targetDate></mat-datepicker>
-        </div>
 
+        </div>
         <div class="form-group">
           <label >Severity  </label>
           <mat-form-field>
@@ -90,12 +88,13 @@
                  [(ngModel)]="bugData.assignedTo.username"
                  required>
         </div>
+
       </div>
     </fieldset>
-    <button class="btn"
-            type="submit"
-            color="primary"
-            mat-stroked-button="add-bug">Add bug
+    <button color="primary"
+            mat-raised-button
+            style="margin:30px 0">
+      Add Bug
     </button>
   </form>
 </div>

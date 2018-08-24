@@ -16,7 +16,7 @@ public class Language {
     @EJB
     private LanguageTranslator languageTranslator;
 
-    private static final String FILE_PATH = "T:/50_WORKSPACES/FINAL/d_2018/jbugs-business/src/main/java/ro/msg/edu/jbugs/internationalization/business/utils/Language_";
+    private static final String FILE_PATH = "T:\\Test\\d_2018\\jbugs-business\\src\\main\\java\\ro\\msg\\edu\\jbugs\\internationalization\\business\\utils\\Language_";
 
     /**
      * Retrieve JSON File specific to each language available
