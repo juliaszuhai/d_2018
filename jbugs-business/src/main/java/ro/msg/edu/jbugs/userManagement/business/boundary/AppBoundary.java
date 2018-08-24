@@ -24,7 +24,7 @@ public class AppBoundary extends Application {
         classes.add(AuthenticationFilter.class);
         classes.add(Registration.class);
         classes.add(GeneratePdf.class);
-        classes.add(ViewBug.class);
+
         classes.add(AddBug.class);
 
         classes.add(AddBug.class);

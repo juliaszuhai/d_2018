@@ -14,6 +14,9 @@ import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Path("/add-bug")
@@ -70,11 +73,7 @@ public class AddBug {
 
             return Response.status(Response.Status.CREATED).build();
 
-        } catch (BusinessException e) {
-            e.printStackTrace();
-        } catch (ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException e) {
-            e.printStackTrace();
-        } catch (BusinessException e) {
+        } catch (BusinessException | ParseException e) {
             e.printStackTrace();
         } catch (ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException e) {
             e.printStackTrace();

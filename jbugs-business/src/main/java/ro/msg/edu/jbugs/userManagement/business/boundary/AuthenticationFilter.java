@@ -23,10 +23,13 @@ import javax.ws.rs.core.HttpHeaders;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,7 +74,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
 
         validateRequest(token, requestContext);
-
 
     }
 
