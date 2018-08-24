@@ -17,6 +17,9 @@ import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -39,7 +42,7 @@ public class AddBug {
                            @FormParam("description") String description,
                            @FormParam("version") String version,
                            @FormParam("fixedVersion") String fixedVersion,
-                           @FormParam("targetDate") Date targetDate,
+                           @FormParam("targetDate") String targetDate,
                            @FormParam("severity") String severity,
                            @FormParam("assignedTo") String assignedTo,
                            @FormParam("createdBy") String createdBy
@@ -66,7 +69,8 @@ public class AddBug {
             bugDTO.setFixedVersion(fixedVersion);
             bugDTO.setAssignedTo(assignedUser);
             bugDTO.setStatus(Status.NEW);
-            bugDTO.setTargetDate(targetDate);
+            Date date = new java.sql.Date(new SimpleDateFormat("yyyy-mm-dd").parse(targetDate).getTime());
+            bugDTO.setTargetDate(date);
             bugDTO.setSeverity(Severity.valueOf(severity));
             System.out.println("severity "+bugDTO.getSeverity());
             bugDTO.setCreatedByUser(createdUser);
@@ -79,6 +83,8 @@ public class AddBug {
         } catch (BusinessException e) {
             e.printStackTrace();
         } catch (ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return Response.status(Response.Status.CREATED).build();
