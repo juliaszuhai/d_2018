@@ -19,7 +19,7 @@ import java.util.Objects;
 public class User extends BaseEntity {
 
     @Transient
-    private final static int MAX_STRING_LENGTH = 40;
+    private static final int MAX_STRING_LENGTH = 40;
     public static final String GET_ALL_USERS = "get_All_Users";
     public static final String GET_USER_BY_USERNAME = "get_User_By_Username";
     public static final String GET_USER_BY_EMAIL = "get_User_By_Email";
@@ -123,13 +123,7 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    public Boolean getIsActive() {
-        return isActive;
-    }
 
-    public void setIsActive(Boolean status) {
-        this.isActive = status;
-    }
 
     public List<Role> getRoles() {
         return roles;

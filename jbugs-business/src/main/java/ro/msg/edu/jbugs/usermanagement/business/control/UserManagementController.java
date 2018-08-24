@@ -38,7 +38,7 @@ public class UserManagementController {
         validateUserForCreation(userDTO);
         User user = UserDTOHelper.toEntity(userDTO);
         user.setUsername(generateUsername(userDTO.getFirstName(), userDTO.getLastName()));
-        user.setIsActive(true);
+        user.setActive(true);
         user.setPassword(Encryptor.encrypt(userDTO.getPassword()));
         userPersistenceManager.createUser(user);
 
@@ -65,7 +65,6 @@ public class UserManagementController {
     }
 
 
-
     /**
      * Trims stuff (first and last name)
      *
@@ -77,7 +76,6 @@ public class UserManagementController {
     }
 
 
-
     private boolean isValidForCreation(UserDTO user) {
         return user.getFirstName() != null
                 && user.getLastName() != null
@@ -86,7 +84,7 @@ public class UserManagementController {
                 && isValidEmail(user.getEmail());
     }
 
-    private boolean isValidForUpdate(UserDTO userDTO){
+    private boolean isValidForUpdate(UserDTO userDTO) {
         return userDTO.getFirstName() != null
                 && userDTO.getLastName() != null
                 && userDTO.getEmail() != null
@@ -111,7 +109,7 @@ public class UserManagementController {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            user.setIsActive(false);
+            user.setActive(false);
             userPersistenceManager.updateUser(user);
         } else {
             throw (new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
@@ -128,7 +126,7 @@ public class UserManagementController {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            user.setIsActive(true);
+            user.setActive(true);
             userPersistenceManager.updateUser(user);
         } else {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
@@ -186,31 +184,32 @@ public class UserManagementController {
 
     /**
      * TODO cazul in care nume + prenume < 6 si deja exista cineva cu acelasi nume.
+     *
      * @param firstName
      * @param lastName
      * @return
      */
-    protected String generateUsername(@NotNull String firstName,@NotNull String lastName){
+    protected String generateUsername(@NotNull String firstName, @NotNull String lastName) {
 
         String username;
 
-        if(lastName.length()>= MIN_LAST_NAME_LENGTH){
-            username =  lastName.substring(0,MIN_LAST_NAME_LENGTH)+firstName.substring(0,1);
-        } else if(firstName.length()>=5)  {
-            username = lastName+firstName.substring(0,MIN_LAST_NAME_LENGTH-lastName.length()+1);
-        } else{
-            username = lastName+firstName;
-            while(username.length()<6){
-                username+='0';
+        if (lastName.length() >= MIN_LAST_NAME_LENGTH) {
+            username = lastName.substring(0, MIN_LAST_NAME_LENGTH) + firstName.substring(0, 1);
+        } else if (firstName.length() >= 5) {
+            username = lastName + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
+        } else {
+            username = lastName + firstName;
+            while (username.length() < 6) {
+                username += '0';
             }
         }
-        username=username.toLowerCase();
+        username = username.toLowerCase();
         Optional<User> exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
 
-        while(exists.isPresent()){
+        while (exists.isPresent()) {
             int stringCutter = 0;
-            lastName = lastName.substring(0,MIN_LAST_NAME_LENGTH-++stringCutter);
-            username = lastName+firstName.substring(0,MIN_LAST_NAME_LENGTH-lastName.length()+1).toLowerCase();
+            lastName = lastName.substring(0, MIN_LAST_NAME_LENGTH - ++stringCutter);
+            username = lastName + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1).toLowerCase();
             exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
         }
 
@@ -219,19 +218,17 @@ public class UserManagementController {
 
     private boolean isValidPhoneNumber(String phonenumber) {
         //TODO Nu merge
-        final Pattern VALID_PHONE_ADDRESS_REGEX =
+        final Pattern validPhoneAddressRegex =
                 Pattern.compile("(^\\+49)|(^01[5-7][1-9])", Pattern.CASE_INSENSITIVE);
 
-        Matcher matcher = VALID_PHONE_ADDRESS_REGEX.matcher(phonenumber);
+        Matcher matcher = validPhoneAddressRegex.matcher(phonenumber);
         return matcher.find();
     }
 
 
-
-
-
     /**
      * Returns the user entity with the given username.
+     *
      * @param username
      * @return
      * @throws BusinessException
@@ -239,8 +236,8 @@ public class UserManagementController {
     public User getUserForUsername(String username) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            return user;
+            return userOptional.get();
+
         } else {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }
@@ -248,20 +245,24 @@ public class UserManagementController {
 
     /**
      * Returns the user with the given ID.
+     *
      * @param id
      * @return
      * @throws BusinessException
      */
     public User getUserForId(Long id) throws BusinessException {
-        User user = userPersistenceManager.getUserById(id);
-        if (user == null)
+        Optional<User> userOptional = userPersistenceManager.getUserById(id);
+        if (userOptional.isPresent()) {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
-        return user;
+        } else {
+            return userOptional.get();
+        }
     }
 
     /**
      * Updates the user with the contents of the given DTO. If the name of the user has changed it will also
      * change the username.
+     *
      * @param userDTO
      * @return
      * @throws BusinessException
@@ -273,7 +274,7 @@ public class UserManagementController {
             User userBefore = userBeforeOptional.get();
             normalizeUserDTO(userDTO);
             validateUserForUpdate(userDTO);
-            if(usernameShouldChange(userBefore,userDTO)){
+            if (usernameShouldChange(userBefore, userDTO)) {
                 userDTO.setUsername(generateUsername(userDTO.getFirstName(), userDTO.getLastName()));
             }
             User userAfter = UserDTOHelper.updateEntityWithDTO(userBefore, userDTO);
@@ -284,11 +285,10 @@ public class UserManagementController {
         }
     }
 
-    private boolean usernameShouldChange(User user, UserDTO userDTO){
-        if(user.getFirstName().equals(userDTO.getFirstName()) && user.getLastName().equals(userDTO.getLastName())){
-            return false;
-        }
-        return true;
+    private boolean usernameShouldChange(User user, UserDTO userDTO) {
+        return (user.getFirstName().equals(userDTO.getFirstName()) &&
+                user.getLastName().equals(userDTO.getLastName()));
+
     }
 
     private void validateUserForUpdate(UserDTO userDTO) throws BusinessException {

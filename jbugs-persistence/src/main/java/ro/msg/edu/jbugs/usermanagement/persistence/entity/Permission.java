@@ -14,7 +14,7 @@ import java.util.Objects;
 public class Permission extends BaseEntity {
 
     @Transient
-    private final static int MAX_STRING_LENGTH = 20;
+    private static final int MAX_STRING_LENGTH = 20;
     public static final String GET_PERMISSION_BY_TYPE = "get_permission_by_type";
 
     @Column(name = "type", nullable = false, length = MAX_STRING_LENGTH, unique = true)

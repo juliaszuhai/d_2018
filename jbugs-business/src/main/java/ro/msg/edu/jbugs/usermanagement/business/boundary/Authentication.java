@@ -65,7 +65,7 @@ public class Authentication {
 
         try {
             Algorithm algorithm = Algorithm.HMAC256("secret");
-            String token = JWT.create()
+            return JWT.create()
                     .withIssuer(user.getUsername())
                     .withExpiresAt(out)
                     .withClaim("firstName", user.getFirstName())
@@ -74,7 +74,7 @@ public class Authentication {
                     .withClaim("phone", user.getPhoneNumber())
                     .withClaim("role", rolesJson)
                     .sign(algorithm);
-            return token;
+
         } catch (JWTCreationException exception) {
             //Invalid Signing configuration / Couldn't convert Claims.
 //            exception.printStackTrace();
