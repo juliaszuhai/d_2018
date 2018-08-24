@@ -56,7 +56,8 @@ public class BugDTOHelper {
 
         Long createByUserId=bugDTO.getCreatedByUser().getId();
         System.out.println("BugDTOHelper"+ createByUserId);
-        createdByUser=userPersistenceManager.getUserById(createByUserId);
+        //TODO: la fel ca in bug management
+        createdByUser=userPersistenceManager.getUserById(createByUserId).get();
         bug.setCreatedByUser(createdByUser);
 
 
@@ -64,7 +65,8 @@ public class BugDTOHelper {
 
         Long assignedToId=bugDTO.getAssignedTo().getId();
         System.out.println("BugDTOHelper"+ assignedToId);
-        assignedTo=userPersistenceManager.getUserById(assignedToId);
+        //TODO: La fel ca in bug management
+        assignedTo=userPersistenceManager.getUserById(assignedToId).get();
         bug.setAssignedTo(assignedTo);
 
         return bug;
