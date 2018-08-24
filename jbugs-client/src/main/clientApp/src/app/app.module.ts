@@ -23,6 +23,9 @@ import {ListBugsComponent} from "./bugs/list-bugs/list-bugs.component";
 import { RecaptchaDirective } from './authentication/login/recaptcha.directive';
 import { UserManagementComponent } from './usermanagement/user-management/user-management.component';
 import {UsermanagementModule} from "./usermanagement/usermanagement.module";
+import { AddBugComponent } from './bugs/add-bug/add-bug.component';
+
+
 
 
 const appRoutes: Routes = [
@@ -36,6 +39,7 @@ const appRoutes: Routes = [
     AppComponent,
     ContentComponent,
     RecaptchaDirective,
+    AddBugComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,9 @@ const appRoutes: Routes = [
     UserModule,
     BugsModule,
     TranslatorModule,
-    UsermanagementModule
+    UsermanagementModule,
+
+
 
   ],
   providers: [{
@@ -61,7 +67,8 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatToolbarModule
+    MatToolbarModule,
+
   ]
 })
 export class AppModule {

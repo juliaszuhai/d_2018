@@ -3,6 +3,7 @@ import {from, Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {map, filter, catchError, mergeMap, tap} from 'rxjs/operators';
 import {UserData} from "../authentication/authentication.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 
 
