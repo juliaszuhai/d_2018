@@ -20,7 +20,7 @@ public class ManagePermissions {
 
     @GET
     @Produces("application/json")
-    @Path("/addpermissiontorole")
+    @Path("/add-permission-to-role")
     public Response addPermissionToRole(@QueryParam("permissionType") String permissionType,
                                         @QueryParam("roleType") String roleType){
 
@@ -32,7 +32,7 @@ public class ManagePermissions {
 
     @GET
     @Produces("application/json")
-    @Path("revokepermissionfromrole")
+    @Path("revoke-permission-from-role")
     public Response revokePermissionFromRole(@QueryParam("permissionType") String permissionType,
                                              @QueryParam("roleType") String roleType){
 
@@ -44,7 +44,7 @@ public class ManagePermissions {
 
     @GET
     @Produces("application/json")
-    @Path("addroletouser")
+    @Path("add-role-to-user")
     public Response addRoleToUser(@QueryParam("username") String username,
                                   @QueryParam("roleType") String roleType){
         try {
@@ -57,7 +57,7 @@ public class ManagePermissions {
 
     @GET
     @Produces("application/json")
-    @Path("revokerolefromuser")
+    @Path("revoke-role-from-user")
     public Response revokeRoleFromUser(@QueryParam("username") String username,
                                        @QueryParam("roleType") String roleType){
         try {

@@ -39,6 +39,7 @@ public class UserPersistenceManager {
      * @return : updated user entity from database
      */
     public User updateUser(@NotNull User user) {
+
         return em.merge(user);
     }
 
