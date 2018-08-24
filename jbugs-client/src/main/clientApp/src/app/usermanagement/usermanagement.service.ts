@@ -15,23 +15,23 @@ export interface UserUpdateData{
 export class UsermanagementService {
 
   constructor(private http: HttpClient) { }
-  baseURL = 'http://localhost:8080/jbugs/rest/manageusers';
+  baseURL = 'http://localhost:8080/jbugs/rest/manage-users';
   getAllUsers(){
 
-    return this.http.get(this.baseURL + '/getallusers');
+    return this.http.get(this.baseURL + '/get-all-users');
   }
 
   activateUser(username){
     const params = new HttpParams()
       .set('username', username);
-    return this.http.get(this.baseURL+'/activateuser', {params});
+    return this.http.get(this.baseURL+'/activate-user', {params});
 
   }
 
   deactivateUser(username){
     const params = new HttpParams()
       .set('username', username);
-    return this.http.get(this.baseURL+'/deactivateuser', {params});
+    return this.http.get(this.baseURL+'/deactivate-user', {params});
   }
 
 
