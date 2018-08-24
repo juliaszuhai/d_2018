@@ -4,6 +4,9 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 public class UserDTOHelper {
 
+    private void UserDTO(){
+        //empty private constructor to hide the public implicit one
+    }
 
     public static UserDTO fromEntity(User user){
         UserDTO userDTO = new UserDTO();

@@ -13,10 +13,10 @@ import java.util.Objects;
                 @NamedQuery(name = User.GET_USER_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username=:username"),
                 @NamedQuery(name= User.GET_USER_BY_EMAIL, query = "SELECT u from User u where u.email = :email "),
                 @NamedQuery(name = User.GET_USER_BY_ID, query = "SELECT u from User u where u.id=:id"),
-                //@NamedQuery(name = User.GET_USER_ROLES, query = "select u.roles from Role r join r where u.username = :username"),
+
         }
 )
-public class User extends BaseEntity<Long> {
+public class User extends BaseEntity {
 
     @Transient
     private final static int MAX_STRING_LENGTH = 40;
@@ -24,7 +24,6 @@ public class User extends BaseEntity<Long> {
     public static final String GET_USER_BY_USERNAME = "get_User_By_Username";
     public static final String GET_USER_BY_EMAIL = "get_User_By_Email";
     public static final String GET_USER_BY_ID="get_User_By_Id";
-    public static final String GET_USER_ROLES="get_Role_for_a_User";
 
     @Column(name = "firstName", length = MAX_STRING_LENGTH, nullable = false)
     private String firstName;
@@ -56,6 +55,7 @@ public class User extends BaseEntity<Long> {
     private List<Role> roles;
 
     public User() {
+        //Empty constructor needed for Entity
     }
 
 

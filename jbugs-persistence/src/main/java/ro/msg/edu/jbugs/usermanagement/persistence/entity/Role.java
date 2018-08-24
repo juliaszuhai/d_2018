@@ -12,7 +12,7 @@ import java.util.Objects;
               @NamedQuery(name = Role.GET_ROLE_BY_TYPE,query = "SELECT r FROM Role r where r.type = :type")
         }
 )
-public class Role extends BaseEntity<Long> {
+public class Role extends BaseEntity {
 
     @Transient
     private final static int MAX_STRING_LENGTH = 20;
@@ -27,6 +27,7 @@ public class Role extends BaseEntity<Long> {
 
 
     public Role() {
+        //Empty constructor needed for Entity
     }
 
 

@@ -11,7 +11,7 @@ import java.util.Objects;
                 @NamedQuery(name = Permission.GET_PERMISSION_BY_TYPE, query = "SELECT p FROM Permission p where p.type = :type")
         }
 )
-public class Permission extends BaseEntity<Long> {
+public class Permission extends BaseEntity {
 
     @Transient
     private final static int MAX_STRING_LENGTH = 20;
@@ -25,6 +25,7 @@ public class Permission extends BaseEntity<Long> {
 
 
     public Permission() {
+        //Empty constructor needed for Entity
     }
 
 

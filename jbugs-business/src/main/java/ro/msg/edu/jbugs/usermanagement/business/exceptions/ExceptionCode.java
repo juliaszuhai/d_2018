@@ -4,7 +4,8 @@ package ro.msg.edu.jbugs.usermanagement.business.exceptions;
  * Provides exception codes and description.
  */
 public enum ExceptionCode {
-    USER_VALIDATION_EXCEPTION(1000, "Validation Exception"),
+    UNKNOWN_EXCEPTION(1000, "Validation Exception"),
+    USER_VALIDATION_EXCEPTION(1001, "Validation Exception"),
     EMAIL_EXISTS_ALREADY(1001, "Email already exists Exception"),
     PASSWORD_NOT_VALID(1002, "Password not valid."),
     USERNAME_NOT_VALID(1003, "Username not valid"),
