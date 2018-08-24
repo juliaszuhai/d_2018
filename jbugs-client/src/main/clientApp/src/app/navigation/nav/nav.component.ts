@@ -3,6 +3,7 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import {Router} from '@angular/router';
 import {TranslatorService} from "../../translator/translator.service";
 
+
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -12,7 +13,7 @@ export class NavComponent implements OnInit {
 
   constructor(private authService: AuthenticationService,
               private router: Router,
-              private translateService: TranslatorService) {
+              public translatorService: TranslatorService) {
   }
 
   getFirstName() {
@@ -28,15 +29,10 @@ export class NavComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  languageOption:Object = null;
-
-
 
   ngOnInit() {
 
-    this.languageOption = this.translateService.getTranslationData();
-    console.log("I'm in nav comp:");
-    console.log(this.languageOption);
+    this.translatorService.getTranslationObservable(0);
 
   }
 

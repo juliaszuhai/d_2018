@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "../../../node_modules/@angular/common/http";
-import {Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 
 
@@ -10,10 +9,12 @@ import {Observable} from "rxjs/Observable";
 
 
 export class TranslatorService {
-  json: Observable<Object>;
+  public json: Observable<Object>;
   baseURL = 'http://localhost:8080/jbugs/rest/language/';
 
-  constructor(private http: HttpClient, private  router: Router) {
+
+  constructor(private http: HttpClient) {
+
   }
 
   public getLanguageFile(id: number) {
@@ -25,8 +26,5 @@ export class TranslatorService {
     return this.json;
   }
 
-  public getTranslationData() : Observable<Object> {
-    return this.json;
-  }
 
 }

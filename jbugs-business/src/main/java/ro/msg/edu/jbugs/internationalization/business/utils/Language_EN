@@ -7,10 +7,12 @@
   "header": {
     "login":"Login",
     "content":"Content",
-    "title":"Application Title",
+    "title":"JBugs",
     "language": "Language",
-    "bugs": "Manage Bugs",
-    "users": "Manage Users"
+    "bugs": "Bugs",
+    "users": "Users",
+    "logout": "Logout",
+    "profile": "Profile"
   },
 
   "profileWindow": {

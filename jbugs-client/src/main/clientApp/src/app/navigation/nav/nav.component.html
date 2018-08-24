@@ -1,11 +1,11 @@
 <mat-toolbar color="primary">
-  <span style="margin-right: 20px">JBugs</span>
-  <button
-    mat-button="asdf"
-    *ngIf="isLoggedIn()"
-    routerLinkActive="active"
+
+   <span style="margin-right: 20px">JBugs</span>
+
+  <button mat-button [matMenuTriggerFor]="menuManage" *ngIf="isLoggedIn()">
+    Manager
     routerLink="bugs">
-    Manage Bugs
+    {{(translatorService.json| async)?.header.bugs}}
   </button>
   <mat-menu #menuManage="matMenu">
     <button
@@ -13,7 +13,7 @@
       *ngIf="isLoggedIn()"
       routerLinkActive="active"
       routerLink="manageusers">
-      Users
+      {{(translatorService.json| async)?.header.users}}
     </button>
     <button
       mat-menu-item
@@ -35,17 +35,17 @@
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLinkActive="active" routerLink="profile">
-      <i class="material-icons">account_circle</i> Profile
+      <i class="material-icons">account_circle</i>
+      {{(translatorService.json| async)?.header.profile}}
     </button>
     <button mat-menu-item (click)="logout()">
-      <i class="material-icons">logout</i> Logout
+      <i class="material-icons">logout</i>
+      {{(translatorService.json| async)?.header.logout}}
     </button>
   </mat-menu>
 
 
-
-  <button  mat-button *ngIf="!isLoggedIn()" routerLinkActive="active" routerLink="login">
-    Login
+  <button mat-button *ngIf="!isLoggedIn()" routerLinkActive="active" routerLink="login">
+    {{(translatorService.json| async)?.header.login}}
   </button>
-
 </mat-toolbar>

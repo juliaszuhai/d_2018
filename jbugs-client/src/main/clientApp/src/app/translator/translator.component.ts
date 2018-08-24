@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TranslatorService} from "./translator.service";
-import {Observable} from "rxjs/Observable";
+import {Router} from "@angular/router";
 
 
 export class Language {
@@ -8,13 +8,10 @@ export class Language {
   Id: number;
   Name: string;
 
-
   constructor(lngId: number, lngName: string){
       this.Id = lngId;
       this.Name = lngName;
   }
-
-
 
 }
 @Component({
@@ -27,12 +24,10 @@ export class TranslatorComponent implements OnInit {
 
   @Input()
   allLanguages: Language[];
-  //toggle:boolean = false;
 
 
-  constructor(private translateService:TranslatorService){
-
-
+  constructor(private translateService:TranslatorService,
+              private router: Router){
   }
 
   ngOnInit(): void {
@@ -41,17 +36,12 @@ export class TranslatorComponent implements OnInit {
       new Language(0, 'English'),
       new Language(1, 'Romana')
     ];
-    this.translateService.getTranslationObservable(0);
+
   }
 
   public changeLanguage(event, id){
-    sessionStorage.setItem("lng", String(id));
     this.translateService.getTranslationObservable(id);
+
   }
-
-
-
-
-
 
 }

@@ -7,13 +7,20 @@
   "header": {
     "login":"Autentificare",
     "content":"Continut",
-    "title":"Titlu Aplicatie",
+    "title":"JBugs",
     "language":"Limba",
-    "bugs": "Gestiune Bugs",
-    "users": "Gestiune Utilizatori"
+    "bugs": "Bug-uri",
+    "users": "Utilizatori",
+    "logout": "Delogare",
+    "profile": "Profil"
   },
-  "messages": {
+
+  "profileWindow": {
     "welcome": "Bun venit",
-    "goodbye": "Pa"
+    "personalInfo": "Informatii Personale",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "email": "Email",
+    "phone": "Numar telefon"
   }
 }
