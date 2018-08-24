@@ -9,7 +9,6 @@ import {UserData} from "../authentication/authentication.service";
 import {st} from "@angular/core/src/render3";
 import {forEach} from "@angular/router/src/utils/collection";
 
-import {st} from "@angular/core/src/render3";
 
 
 export interface RelatedUser {

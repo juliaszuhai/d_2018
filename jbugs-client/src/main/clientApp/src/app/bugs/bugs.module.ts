@@ -4,14 +4,13 @@ import {RouterModule, Routes} from "@angular/router";
 import {ListBugsComponent} from "./list-bugs/list-bugs.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LoginguardGuard} from "../authentication/loginguard.guard";
-import {AddBugComponent} from "./add-bug/add-bug.component";
-import {MatNativeDateModule, MatDatepickerModule, MatFormFieldModule} from "@angular/material";
-import {MatSelectModule} from '@angular/material/select';
-
 import {MatButtonModule, MatCheckboxModule, MatDialogRef} from "@angular/material";
 import {MatDialogModule} from '@angular/material/dialog';
 import {BugsPopupComponent} from "./bugs-popup/bugs-popup.component";
 import {MatChipsModule} from '@angular/material/chips';
+import {AddBugComponent} from "./add-bug/add-bug.component";
+import {MatNativeDateModule, MatDatepickerModule, MatFormFieldModule} from "@angular/material";
+import {MatSelectModule} from '@angular/material/select';
 
 const bugRoutes: Routes = [
   {path: 'bugs', component: ListBugsComponent, canActivate: [LoginguardGuard]},
@@ -27,12 +26,16 @@ const bugRoutes: Routes = [
     MatButtonModule,
     MatCheckboxModule,
     MatDialogModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatSelectModule
 
   ],
-  declarations: [ListBugsComponent, BugsPopupComponent],
+  declarations: [ListBugsComponent, BugsPopupComponent,AddBugComponent],
   exports: [ListBugsComponent,RouterModule,MatButtonModule,  MatCheckboxModule, MatDialogModule, BugsPopupComponent, MatDialogModule,
-    MatChipsModule
+    MatChipsModule,MatDatepickerModule,MatFormFieldModule,MatNativeDateModule,MatSelectModule
 
   ],
   entryComponents: [

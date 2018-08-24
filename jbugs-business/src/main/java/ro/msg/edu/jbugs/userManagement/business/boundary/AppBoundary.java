@@ -21,7 +21,6 @@ public class AppBoundary extends Application {
         final Set<Class<?>> classes = new HashSet<>();
         classes.add(JacksonJaxbJsonProvider.class);
         classes.add(Authentication.class);
-        classes.add(Registration.class);
         classes.add(ViewBug.class);
         classes.add(AddBug.class);
         classes.add(GenerateExcel.class);

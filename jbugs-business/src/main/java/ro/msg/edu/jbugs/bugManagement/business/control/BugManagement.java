@@ -34,12 +34,6 @@ public interface BugManagement {
     BugDTO getBugById(Long id) throws BusinessException;
 
 
-    /**
-     * @param title
-     * @return a bugDTO filtered by title
-     */
-    BugDTO getBugByTitle(String title) throws BusinessException;
-
     BugDTO createBug(BugDTO bugDTO) throws BusinessException;
 
 

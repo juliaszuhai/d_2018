@@ -83,7 +83,6 @@ public class UserManagementController {
     }
 
 
-
     private boolean isValidForCreation(UserDTO user) {
         return user.getEmail() != null
                 && user.getLastName() != null
@@ -99,8 +98,6 @@ public class UserManagementController {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.find();
     }
-
-
 
 
     /**
