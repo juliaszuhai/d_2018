@@ -7,13 +7,9 @@ import javax.persistence.*;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
-import javax.persistence.criteria.*;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
+
 import javax.validation.constraints.NotNull;
 
-import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

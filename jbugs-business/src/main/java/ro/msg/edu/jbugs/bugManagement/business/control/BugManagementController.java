@@ -56,8 +56,6 @@ public class BugManagementController  implements BugManagement {
 
 
     @Override
-    public List<BugDTO> filter(String title, String description, Status status , Severity severity) throws BusinessException{
-        return bugPersistenceManager.filter(title,description, status, severity)
     public List<BugDTO> filter(String title, String description, Status status, Severity severity) throws BusinessException {
         return bugPersistenceManager.filter(title, description, status, severity)
                 .stream()
@@ -141,11 +139,5 @@ public class BugManagementController  implements BugManagement {
         }
 
     }
-
-
-
-
-
-
 
 }
