@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 
+export interface UserUpdateData{
+  firstName: string,
+  lastnName: string,
+  username: string,
+  active: boolean,
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +32,9 @@ export class UsermanagementService {
     const params = new HttpParams()
       .set('username', username);
     return this.http.get(this.baseURL+'/deactivateuser', {params});
-
   }
+
+
 }
+
+
