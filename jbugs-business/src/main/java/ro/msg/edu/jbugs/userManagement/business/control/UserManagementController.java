@@ -236,6 +236,7 @@ public class UserManagementController {
 
 
 
+
     private Integer getFailedAttempts(String username) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
         if (userOptional.isPresent()) {
@@ -317,9 +318,5 @@ public class UserManagementController {
 
 
 
-    public void updateUser(User user){
-       userPersistenceManager.updateUser(user);
-    }
-}
 
 
