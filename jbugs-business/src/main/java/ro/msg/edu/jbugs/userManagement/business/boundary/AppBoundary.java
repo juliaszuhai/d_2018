@@ -3,7 +3,7 @@ package ro.msg.edu.jbugs.userManagement.business.boundary;
 
 import ro.msg.edu.jbugs.bugManagement.business.boundary.*;
 
-import ro.msg.edu.jbugs.bugManagement.business.boundary.ViewBug;
+import ro.msg.edu.jbugs.bugManagement.business.boundary.GeneratePdf;
 import ro.msg.edu.jbugs.internationalization.business.boundary.Language;
 
 import javax.ws.rs.ApplicationPath;
@@ -17,8 +17,9 @@ public class AppBoundary extends Application {
     public Set<Class<?>> getClasses(){
         final Set<Class<?>> classes = new HashSet<>();
         classes.add(Authentication.class);
+        classes.add(AuthenticationFilter.class);
         classes.add(Registration.class);
-        classes.add(ViewBug.class);
+        classes.add(GeneratePdf.class);
         classes.add(AddBug.class);
         classes.add(GenerateExcel.class);
         classes.add(ListBugs.class);
@@ -28,6 +29,8 @@ public class AppBoundary extends Application {
         classes.add(ListBugsByDescription.class);
         classes.add(Language.class);
         classes.add(ManageUsers.class);
+        classes.add(ManagePermissions.class);
+        classes.add(CorsFilter.class);
         return classes;
     }
 }

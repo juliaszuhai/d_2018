@@ -5,11 +5,14 @@ import com.google.gson.Gson;
 import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.userManagement.business.utils.Secured;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
 @Path("/manageusers")
@@ -18,8 +21,9 @@ public class ManageUsers {
     private UserManagementController userManagementController;
 
     @GET
+    @Secured("USER_MANAGEMENT")
     @Path("/getallusers")
-    public Response getAllUsers(){
+    public Response getAllUsers(@Context SecurityContext securityContext){
         try{
             List<UserDTO> allUsers = userManagementController.getAllUsers();
             String allUsersJson = new Gson().toJson(allUsers);

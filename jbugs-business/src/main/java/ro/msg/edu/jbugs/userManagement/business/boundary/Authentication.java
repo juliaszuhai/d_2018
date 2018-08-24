@@ -9,6 +9,7 @@ import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.userManagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.userManagement.business.utils.Secured;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
 import ro.msg.edu.jbugs.userManagement.persistence.entity.User;
 
@@ -32,26 +33,22 @@ public class Authentication {
     @EJB
     private UserManagementController userManagement;
 
-    @GET
-    public String getUsers() {
-        return "qwer";
-    }
 
     @POST
     @Produces("application/json")
     @Consumes("application/x-www-form-urlencoded")
     public Response authenticateUser(@FormParam("username") String username,
-                                     @FormParam("password") String password,@Context SecurityContext securityContext) {
+                                     @FormParam("password") String password, @Context SecurityContext securityContext) {
         try {
 
             UserDTO authUser = userManagement.login(username, password);
-           User user = userManagement.getUserByUsername(username);
+            User user = userManagement.getUserForUsername(username);
             String token = issueToken(user);
-            return Response.ok("{\"token\": \""+token+"\"}").build();
-        } catch(BusinessException e){
+
+            return Response.ok("{\"token\": \"" + token + "\"}").build();
+        } catch (BusinessException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
-        }
-         catch (Exception e) {
+        } catch (Exception e) {
             return Response.status(Response.Status.FORBIDDEN).entity(e.getMessage()).build();
         }
     }
@@ -79,7 +76,7 @@ public class Authentication {
                     .withClaim("role", rolesJson)
                     .sign(algorithm);
             return token;
-        } catch (JWTCreationException exception){
+        } catch (JWTCreationException exception) {
             //Invalid Signing configuration / Couldn't convert Claims.
             exception.printStackTrace();
             return "";
