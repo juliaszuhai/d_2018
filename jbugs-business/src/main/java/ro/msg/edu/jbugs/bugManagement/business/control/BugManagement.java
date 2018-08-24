@@ -5,11 +5,7 @@ import ro.msg.edu.jbugs.bugManagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Status;
-import ro.msg.edu.jbugs.userManagement.business.dto.*;
-
-import javax.ejb.Stateless;
 import java.util.List;
-
 
 public interface BugManagement {
 

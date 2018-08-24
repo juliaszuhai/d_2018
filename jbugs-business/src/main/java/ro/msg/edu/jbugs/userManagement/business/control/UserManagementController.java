@@ -12,7 +12,6 @@ import ro.msg.edu.jbugs.userManagement.business.utils.Encryptor;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -72,6 +71,8 @@ public class UserManagementController {
 
     }
 
+
+
     /**
      * Trims stuff (first and last name)
      *
@@ -84,11 +85,18 @@ public class UserManagementController {
 
 
     private boolean isValidForCreation(UserDTO user) {
-        return user.getEmail() != null
+        return user.getFirstName() != null
                 && user.getLastName() != null
                 && user.getEmail() != null
                 && user.getPassword() != null
                 && isValidEmail(user.getEmail());
+    }
+
+    private boolean isValidForUpdate(UserDTO userDTO){
+        return userDTO.getFirstName() != null
+                && userDTO.getLastName() != null
+                && userDTO.getEmail() != null
+                && isValidEmail(userDTO.getEmail());
     }
 
     private boolean isValidEmail(String email) {
@@ -266,7 +274,8 @@ public class UserManagementController {
     }
 
     /**
-     * Updates the user with the contents of the given DTO.
+     * Updates the user with the contents of the given DTO. If the name of the user has changed it will also
+     * change the username.
      * @param userDTO
      * @return
      * @throws BusinessException
@@ -277,17 +286,33 @@ public class UserManagementController {
         if (userBeforeOptional.isPresent()) {
             User userBefore = userBeforeOptional.get();
             normalizeUserDTO(userDTO);
-            validateUserForCreation(userDTO);
+            validateUserForUpdate(userDTO);
+            if(usernameShouldChange(userBefore,userDTO)){
+                userDTO.setUsername(generateUsername(userDTO.getFirstName(), userDTO.getLastName()));
+            }
             User userAfter = UserDTOHelper.updateEntityWithDTO(userBefore, userDTO);
-            userAfter.setPassword(Encryptor.encrypt(userDTO.getPassword()));
-            userAfter.setUsername(generateUsername(userDTO.getFirstName(), userDTO.getLastName()));
             userPersistenceManager.updateUser(userAfter);
             return userDTO;
         } else {
             throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }
     }
+
+    private boolean usernameShouldChange(User user, UserDTO userDTO){
+        if(user.getFirstName().equals(userDTO.getFirstName()) && user.getLastName().equals(userDTO.getLastName())){
+            return false;
+        }
+        return true;
+    }
+
+    private void validateUserForUpdate(UserDTO userDTO) throws BusinessException {
+        if (!isValidForUpdate(userDTO)) {
+            throw new BusinessException(ExceptionCode.USER_VALIDATION_EXCEPTION);
+        }
+    }
 }
+
+
 
 
 
