@@ -22,7 +22,7 @@ import java.util.Objects;
         }
 )
 
-public class Bug extends BaseEntity<Long>  {
+public class Bug extends BaseEntity  {
 
 
     @Transient

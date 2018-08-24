@@ -13,6 +13,7 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.ext.ExceptionMapper;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -81,13 +82,22 @@ public class BugManagementController  implements BugManagement {
         bug.setTargetDate(bugDTO.getTargetDate());
         bug.setSeverity(bugDTO.getSeverity());
         bug.setStatus(bugDTO.getStatus());
-        User userAssigned;
-        userAssigned = userPersistenceManager.getUserById(bugDTO.getAssignedTo().getId());
-        bug.setAssignedTo(userAssigned);
-        User userCreated;
-        userCreated = userPersistenceManager.getUserById(bugDTO.getCreatedByUser().getId());
-        bug.setCreatedByUser(userCreated);
-        try {
+
+
+        Optional<User> userAssigned = userPersistenceManager.getUserById(bugDTO.getAssignedTo().getId());
+        if(userAssigned.isPresent()) {
+            bug.setAssignedTo(userAssigned.get());
+        } else {
+            throw new BusinessException(); // TODO : adauga exceptie buna
+        }
+
+        Optional<User> userCreated = userPersistenceManager.getUserById(bugDTO.getCreatedByUser().getId());
+        if(userCreated.isPresent()){
+            bug.setCreatedByUser(userCreated.get());
+        } else {
+            throw new BusinessException(); // TODO : adauga exceptie buna
+        }
+        try{
             this.isBugValid(bug);
             bugPersistenceManager.createBug(bug);
             return bugDTO;

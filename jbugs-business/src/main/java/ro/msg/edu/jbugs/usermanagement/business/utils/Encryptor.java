@@ -8,6 +8,10 @@ public class Encryptor {
 
     private static final String KEY = "Bar12345Bar12345";
 
+    private Encryptor(){
+        //Private constructor to hide the public one
+    }
+
     public static String encrypt(String toEncrypt){
         String encryptedString = null;
 

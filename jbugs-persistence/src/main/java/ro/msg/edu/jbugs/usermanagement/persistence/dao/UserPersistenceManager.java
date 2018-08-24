@@ -69,10 +69,20 @@ public class UserPersistenceManager {
 
     }
 
-    public User getUserById(@NotNull Long id){
-        System.out.println("persistance id "+id);
-        Query q = em.createQuery("SELECT u from User u where u.id=" + id);
-        return (User) q.getSingleResult();
+    /**
+     * Returns a user optional containing a user entity
+     * with the corresponding Id from the database.
+     * @param id
+     * @return
+     */
+    public Optional<User> getUserById(@NotNull Long id){
+        TypedQuery<User> q = em.createNamedQuery(User.GET_USER_BY_ID,User.class)
+                .setParameter("id",id);
+        try {
+            return Optional.of(q.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 
 
@@ -88,10 +98,7 @@ public class UserPersistenceManager {
      * Removes a role from the database.
      * @param role : role entity to be removed, should not be null
      */
-    public void removeRole(Role role) {
-        em.remove(role);
-
-    }
+    public void removeRole(Role role) { em.remove(role); }
 
     /**
      * Updates a role in the database using the given Role entity.
@@ -150,10 +157,7 @@ public class UserPersistenceManager {
         return q.getResultList();
     }
 
-//    public List<Role> getUserRoles(User user){
-//        TypedQuery<Role> q = em.createNamedQuery(User.GET_USER_ROLES, User.class)
-//                .setParameter("username",user.getUsername());
-//    }
+
 
 
 

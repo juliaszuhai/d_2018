@@ -12,22 +12,22 @@ public class BusinessException extends Exception {
     }
     public BusinessException(String message,ExceptionCode exceptionCode ) {
         super(message);
-        this.exceptionCode = exceptionCode;
+        this.setExceptionCode(exceptionCode);
     }
 
     public BusinessException(String message, Throwable cause, ExceptionCode exceptionCode) {
         super(message, cause);
-        this.exceptionCode = exceptionCode;
+        this.setExceptionCode(exceptionCode);
     }
 
     public BusinessException(Throwable cause, ExceptionCode exceptionCode) {
         super(cause);
-        this.exceptionCode = exceptionCode;
+        this.setExceptionCode(exceptionCode);
     }
 
     public BusinessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, ExceptionCode exceptionCode) {
         super(message, cause, enableSuppression, writableStackTrace);
-        this.exceptionCode = exceptionCode;
+        this.setExceptionCode(exceptionCode);
     }
 
     public ExceptionCode getExceptionCode() {

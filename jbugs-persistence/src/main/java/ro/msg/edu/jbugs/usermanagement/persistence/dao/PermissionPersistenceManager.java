@@ -14,7 +14,7 @@ import java.util.Optional;
 @Stateless
 public class PermissionPersistenceManager {
 
-    private static final Logger logger = LogManager.getLogger(PermissionPersistenceManager.class);
+    //private static final Logger logger = LogManager.getLogger(PermissionPersistenceManager.class);
 
     @PersistenceContext(unitName = "jbugs-persistence")
     private EntityManager em;

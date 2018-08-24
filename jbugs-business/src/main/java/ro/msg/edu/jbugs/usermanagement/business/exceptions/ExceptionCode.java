@@ -16,8 +16,8 @@ public enum ExceptionCode {
     String message;
 
     ExceptionCode(int id, String message) {
-        this.id = id;
-        this.message = message;
+        this.setId(id);
+        this.setMessage(message);
     }
 
     public int getId() {
