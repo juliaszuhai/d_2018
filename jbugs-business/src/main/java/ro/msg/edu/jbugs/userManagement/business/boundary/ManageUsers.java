@@ -13,6 +13,8 @@ import javax.ejb.EJB;
 import javax.ws.rs.*;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 import java.util.List;
@@ -25,8 +27,8 @@ public class ManageUsers {
     @GET
     @Secured("USER_MANAGEMENT")
     @Path("/get-all-users")
-    public Response getAllUsers() {
-        try {
+    public Response getAllUsers(@Context SecurityContext securityContext){
+        try{
             List<UserDTO> allUsers = userManagementController.getAllUsers();
             String allUsersJson = new Gson().toJson(allUsers);
             return Response.ok(allUsersJson).build();
@@ -73,22 +75,10 @@ public class ManageUsers {
     }
 
 
-    @POST
-    @Path("/register-user")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response registerUser(final UserDTO userDTO) {
 
-        try {
-            userManagementController.createUser(userDTO);
-            return Response.status(Response.Status.CREATED).build();
-        } catch (BusinessException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-    }
     @GET
     @Produces("application/json")
-    @Path("/updateuser")
+    @Path("/update-user")
     public Response updateUser(@QueryParam("username") String username,
                                @QueryParam("firstName") String firstName,
                                @QueryParam("lastName") String lastName,
@@ -104,6 +94,23 @@ public class ManageUsers {
             return Response.ok().build();
         } catch (BusinessException e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+        }
+    }
+
+
+    @POST
+    @Path("/register-user")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response registerUser(final  UserDTO userDTO){
+
+        try {
+            userManagementController.createUser(userDTO);
+
+            return Response.status(Response.Status.CREATED).build();
+        } catch (BusinessException e){
+//            return e.getExceptionCode().toString();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 }
