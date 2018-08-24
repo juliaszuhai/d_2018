@@ -103,11 +103,12 @@ export class BugListService {
     body.set('description',description);
     body.set('version',version);
     body.set('fixedVersion',fixedVersion);
-    body.set('targetDate',targetDate.toDateString());
+    body.set('targetDate',targetDate.toISOString().slice(0,10));
     body.set('severity',severity);
     body.set('assignedTo',username);
     body.set('createdBy',username2);
 
+    console.log("adding here");
     return this.http.post<UserData>(this.baseURL + '/add-bug',
       body.toString(),
       {
