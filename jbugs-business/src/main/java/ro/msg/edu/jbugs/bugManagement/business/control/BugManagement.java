@@ -44,6 +44,11 @@ public interface BugManagement {
      */
     List<BugDTO> filter(String title, String description, Status status, Severity severity) throws BusinessException;
 
+    /**
+     * @return a list of DTOs containing information about bugs, sorted by different parameters
+     */
+    List<BugDTO> sort(boolean title, boolean version) throws BusinessException;
+
     boolean validateDescription(String description) throws BusinessException;
 
     boolean validateVersion(String version) throws BusinessException;

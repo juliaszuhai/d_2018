@@ -69,4 +69,18 @@ export class BugListService {
     return this.http.get<BugData[]>(this.baseURL + '/listBugs/getByFilter', {params: params});
   }
 
+  sort(title, version): Observable<BugData[]> {
+    let params = new HttpParams();
+
+    if (title) {
+      params = params.append('title', title);
+    }
+    if (version) {
+      params = params.append('version', version);
+    }
+
+
+    return this.http.get<BugData[]>(this.baseURL + '/listBugs/sort', {params: params});
+  }
+
 }

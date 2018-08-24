@@ -84,11 +84,24 @@
          matInput placeholder="Severity">
 </div>
 
+
 <div align="center">
-  <!--<mat-checkbox value="1" align="left" (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">Find By Filter</mat-checkbox>-->
   <button mat-button (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">Filter</button>
  <!--<mat-chip>One fish</mat-chip>-->
 </div>
+
+  <div align="center">
+
+      <input type="checkbox" #sortElem (change)="0" >
+
+      <input type="checkbox" #sortElem2 (change)="0" >
+
+
+    <button mat-button *ngIf="sortElem.checked || sortElem2.checked" (click)="sort(sortElem.checked,sortElem2.checked)">Sort</button>
+
+
+    <!--<mat-chip>One fish</mat-chip>-->
+  </div>
 
     <!--<button type="submit"-->
             <!--(click)="getBugsByDescriptionAndSeverity(titleElement.value,severityElement.value)"-->
