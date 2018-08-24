@@ -16,7 +16,9 @@ public class Language {
     @EJB
     private LanguageTranslator languageTranslator;
 
-    private static final String FILE_PATH = "T:\\Test\\d_2018\\jbugs-business\\src\\main\\java\\ro\\msg\\edu\\jbugs\\internationalization\\business\\utils\\Language_";
+    private static final String FILE_PATH = "C:/Users/iftind/Desktop/JBUGS_D/d_2018/jbugs-business/src/main/java/ro/msg/edu/jbugs/internationalization/business/utils/Language_";
+//    private static final String FILE_PATH = System.getProperty("user.dir");
+
 
     /**
      * Retrieve JSON File specific to each language available
@@ -39,7 +41,7 @@ public class Language {
             Response.ResponseBuilder response = Response.ok(file);
             return response.build();
         }catch (Exception e){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
 

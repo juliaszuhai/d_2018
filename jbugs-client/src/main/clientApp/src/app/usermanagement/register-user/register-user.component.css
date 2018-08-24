@@ -1,0 +1,9 @@
+form{
+  text-align: center;
+}
+
+.register-user-form{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}

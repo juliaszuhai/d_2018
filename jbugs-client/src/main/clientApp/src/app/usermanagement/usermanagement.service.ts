@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {UserRegisterData} from "./register-user/register-user.component";
 
-export interface UserUpdateData{
-  firstName: string,
-  lastnName: string,
-  username: string,
-  active: boolean,
-}
+
 
 
 @Injectable({
@@ -34,6 +30,15 @@ export class UsermanagementService {
     return this.http.get(this.baseURL+'/deactivate-user', {params});
   }
 
+  registerUser(userData: UserRegisterData){
+    return this.http.post(this.baseURL+'/register-user',
+      userData,
+      {
+        headers: new HttpHeaders(
+          {'Content-Type': 'application/json'}
+        )
+      });
+  }
 
 }
 

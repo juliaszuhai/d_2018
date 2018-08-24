@@ -1,0 +1,84 @@
+
+<div class="register-user-form">
+
+
+
+
+  <form
+    (ngSubmit) = "submitRegister()"
+    #registerForm = "ngForm"
+    #formElement
+  >
+    <h3>Register User</h3> <br>
+    <mat-form-field>
+      <input
+        matInput
+        #firstNameControl = "ngModel"
+        #firstNameElement
+        name = "firstName"
+        required
+        [(ngModel)] = "data.firstName"
+        placeholder="First Name">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput
+             #lastNameControl = "ngModel"
+             #lastNameElement
+             name="lastName"
+             required
+             [(ngModel)] = "data.lastName"
+             placeholder="Last Name">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+    <input type="password"
+           #passwordElement
+           name="password"
+           matInput
+           [(ngModel)] = "data.password"
+           required
+           [formControl]="passwordFormControl"
+           [errorStateMatcher]="matcher"
+           placeholder="Password">
+
+      <mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPassowrdErrorMessage()}}</mat-error>
+  </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input
+        #emailElement
+        name="email"
+        matInput
+        [(ngModel)] = "data.email"
+        [formControl]="emailFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="Email">
+      <mat-error *ngIf="emailFormControl.invalid">{{getEmailErrorMessages()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input
+        #phoneControl = "ngModel"
+        #phoneElement
+        name="phone"
+        matInput
+        required
+        [(ngModel)] = "data.phoneNumber"
+        placeholder="PhoneNumber">
+    </mat-form-field>
+    <br>
+      <button type="submit" mat-button >Submit</button>
+  </form>
+  <div class="form-info">
+
+    Password must have:
+    <ul>
+      <li>at least 6 characters</li>
+      <li>an uppercase and a lowercase letter</li>
+      <li>a special character</li>
+      <li>a number</li>
+    </ul>
+    Email must be registered on the msggroup.com domain.
+  </div>
+</div>

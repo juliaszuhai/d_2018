@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ro.msg.edu.jbugs.userManagement.business.control.UserManagementController;
-import ro.msg.edu.jbugs.userManagement.business.exceptions.BusinessException;
-import ro.msg.edu.jbugs.userManagement.business.dto.UserDTO;
+import ro.msg.edu.jbugs.usermanagement.business.control.UserManagementController;
+import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 
 @WebServlet(urlPatterns = {"/TestServlet"})
 public class TestServlet extends HttpServlet {
@@ -48,8 +48,8 @@ public class TestServlet extends HttpServlet {
         userDTO2.setPassword("Password");
         userDTO2.setPhoneNumber("1234567890");
 //        try {
-            //persistentUserDTO = userManagement.createUser(userDTO);
-            //persistentUserDTO = userManagement.createUser(userDTO2);
+            //persistentUserDTO = usermanagement.createUser(userDTO);
+            //persistentUserDTO = usermanagement.createUser(userDTO2);
         try {
             userManagement.deactivateUser("doreld2");
         } catch (BusinessException e) {

@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UsermanagementService} from "../usermanagement.service";
+import {MatDialog} from "@angular/material";
+import {RegisterUserComponent, UserRegisterData} from "../register-user/register-user.component";
 
 export interface UserElement {
   firstName: string;
@@ -18,11 +20,32 @@ export interface UserElement {
 export class UserManagementComponent implements OnInit {
 
 
-  userData;
+  userData: UserRegisterData;
+
   dataSource: any;
 
-  constructor(private usrMgmtService: UsermanagementService) {
+  constructor(private usrMgmtService: UsermanagementService,public dialog: MatDialog) {
+
   }
+
+  openRegisterDialog(): void {
+    const dialogRef = this.dialog.open(RegisterUserComponent,{
+      width: '60%',
+      data: {
+        email: this.userData.email,
+        firstName: this.userData.firstName,
+        lastName: this.userData.lastName,
+        password: this.userData.password,
+        phoneNumber: this.userData.phoneNumber
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      this.getUsers();
+    });
+  }
+
 
   getUsers() {
     this.usrMgmtService.getAllUsers()
@@ -33,6 +56,8 @@ export class UserManagementComponent implements OnInit {
         }
       )
   }
+
+
 
   getActivationButtonText(isActive) {
     if (isActive) {
@@ -46,7 +71,6 @@ export class UserManagementComponent implements OnInit {
     this.usrMgmtService.activateUser(username)
       .subscribe(
         data => {
-          console.log(data);
           this.getUsers();
         }
       );
@@ -56,7 +80,6 @@ export class UserManagementComponent implements OnInit {
     this.usrMgmtService.deactivateUser(username)
       .subscribe(
         data => {
-          console.log(data);
           this.getUsers();
         }
       );
@@ -83,6 +106,13 @@ export class UserManagementComponent implements OnInit {
 
   ngOnInit() {
     this.getUsers();
+    this.userData = {
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: "",
+      phoneNumber: ""
+    }
   }
 
 }
