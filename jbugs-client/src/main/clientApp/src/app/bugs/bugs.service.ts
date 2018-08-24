@@ -1,14 +1,12 @@
 import {Injectable} from '@angular/core';
 import {from, Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {map, filter, catchError, mergeMap, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import * as moment from "moment";
 import _date = moment.unitOfTime._date;
 import {UserData} from "../authentication/authentication.service";
 import {st} from "@angular/core/src/render3";
-import {forEach} from "@angular/router/src/utils/collection";
-
 
 
 export interface RelatedUser {
@@ -17,6 +15,7 @@ export interface RelatedUser {
 }
 
 export interface BugData {
+  id: number;
   title: string;
   description: string;
   version: string;
@@ -111,6 +110,5 @@ export class BugListService {
 
     return this.http.get<BugData[]>(this.baseURL + '/listBugs/sort', {params: params});
   }
-
 
 }

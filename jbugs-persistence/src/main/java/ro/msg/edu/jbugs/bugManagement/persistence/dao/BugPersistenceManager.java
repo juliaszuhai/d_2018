@@ -3,15 +3,14 @@ package ro.msg.edu.jbugs.bugManagement.persistence.dao;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugManagement.persistence.entity.Status;
+import ro.msg.edu.jbugs.userManagement.persistence.entity.Role;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
-
 import javax.validation.constraints.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +53,13 @@ public class BugPersistenceManager {
         return bug;
     }
 
-
+    /**
+     * @param title
+     * @param description
+     * @param status
+     * @param severity
+     * @return: List of Bugs, filtered by the given parameters.
+     */
     public List<Bug> filter(String title, String description, Status status, Severity severity) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Bug> cq = builder.createQuery(Bug.class);
@@ -89,7 +94,11 @@ public class BugPersistenceManager {
         return em.createQuery(cq).getResultList();
     }
 
-
+    /**
+     * @param title
+     * @param version
+     * @return: List of bugs, sorted by given parameters.
+     */
     public List<Bug> sort(boolean title, boolean version){
 
         CriteriaBuilder builder = em.getCriteriaBuilder();

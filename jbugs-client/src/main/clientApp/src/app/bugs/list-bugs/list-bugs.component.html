@@ -29,7 +29,9 @@
       <td>{{bug.severity}}</td>
       <td>{{bug.createdByUser.username}}</td>
       <td>{{bug.assignedTo.id}}</td>
-      <td><input type="checkbox" name="name1"></td>
+      <td><input type="checkbox" #excelElem  (change)="onChangeCheck(bug, excelElem.checked)"></td>
+
+      <div *ngIf="excelElem.checked" >  </div>
 
     </tr>
     </tbody>
@@ -37,6 +39,7 @@
 
 </div>
 
+<a href="http://localhost:8080/jbugs/rest/view-bugs?{{selectedTitles}}"><button >EXCEL</button></a>
 
 
 <div align="center">
@@ -92,8 +95,10 @@
 
   <div align="center">
 
-      <input type="checkbox" #sortElem (change)="0" >
+    <label>Title</label>
+    <input type="checkbox" #sortElem (change)="0" >
 
+    <label>Version</label>
       <input type="checkbox" #sortElem2 (change)="0" >
 
 

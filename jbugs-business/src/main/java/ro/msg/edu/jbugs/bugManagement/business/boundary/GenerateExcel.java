@@ -7,8 +7,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import ro.msg.edu.jbugs.bugManagement.business.control.BugManagement;
 import ro.msg.edu.jbugs.bugManagement.business.dto.BugDTO;
-import ro.msg.edu.jbugs.userManagement.business.utils.Secured;
-
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -54,7 +52,7 @@ public class GenerateExcel {
     @Secured("BUG_MANAGEMENT")
     @Path("{titles}")
     @Produces("application/vnd.ms-excel")
-    public Response generate(@PathParam("titles") List<Long> titles) {
+    public Response generate(@QueryParam("titles") List<Long> titles) {
         try {
             File file = new File(FILE_PATH);
             FileInputStream fis = null;

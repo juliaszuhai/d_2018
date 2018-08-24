@@ -20,7 +20,7 @@ public class BugDTOHelper {
 
         BugDTO bugDTO=new BugDTO();
 
-        bug.setId(bug.getId());
+        bugDTO.setId(bug.getId());
         bugDTO.setTitle(bug.getTitle());
         bugDTO.setDescription(bug.getDescription());
         bugDTO.setVersion(bug.getVersion());

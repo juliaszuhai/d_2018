@@ -4,6 +4,7 @@ import {DataSource} from '@angular/cdk/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material';
 import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
 import {MatChipsModule} from '@angular/material/chips';
+import {HttpParams} from "@angular/common/http";
 
 @Component({
   selector: 'app-list-bugs',
@@ -12,13 +13,18 @@ import {MatChipsModule} from '@angular/material/chips';
 })
 export class ListBugsComponent implements OnInit {
 
+  selectedTitles: string;
+
   bugData: BugData;
   relatedUser: RelatedUser;
   bugList: BugData[];
+  listId: number[] = [];
+  forExcel: number[] = [];
 
   constructor(private bugService: BugListService, public dialog: MatDialog) {
 
     this.bugData = {
+      id: null,
       title: '',
       description: '',
       version: '',
@@ -85,7 +91,28 @@ export class ListBugsComponent implements OnInit {
     );
   }
 
-  getDate(d){
+  // addId(id){
+  //   this.listId.push(id);
+  // }
+  onChangeCheck(bug: BugData, checked: boolean) {
+    if (checked) {
+      this.forExcel.push(bug.id);
+    } else {
+      this.forExcel.splice(this.forExcel.indexOf(bug.id), 1);
+    }
+    this.updateExcelLink()
+  }
+
+  updateExcelLink() {
+    let httpParams = new HttpParams();
+    this.forExcel.forEach(value => httpParams = httpParams.append("titles", value.toString()));
+    this.selectedTitles = httpParams.toString();
+
+  }
+
+
+
+  getDate(d) {
 
     const correctSec = d * 1000;
     var expiresAt = new Date(correctSec);
