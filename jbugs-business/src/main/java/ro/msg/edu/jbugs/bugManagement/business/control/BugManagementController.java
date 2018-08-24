@@ -146,10 +146,7 @@ public class BugManagementController implements BugManagement {
 
         return true;
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> 98f2933fb8cde63ceed7a680fbcb2f0099cf7dc9
 
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {
@@ -163,14 +160,4 @@ public class BugManagementController implements BugManagement {
     }
 
 
-
-
-
-
-
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 98f2933fb8cde63ceed7a680fbcb2f0099cf7dc9
 }
