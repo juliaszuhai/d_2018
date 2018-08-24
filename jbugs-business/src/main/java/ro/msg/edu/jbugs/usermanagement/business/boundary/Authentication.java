@@ -42,14 +42,14 @@ public class Authentication {
                                      @FormParam("password") String password,@Context SecurityContext securityContext) {
         try {
 
-            UserDTO authUser = userManagement.login(username, password);
+           userManagement.login(username, password);
            User user = userManagement.getUserForUsername(username);
             String token = issueToken(user);
             return Response.ok("{\"token\": \""+token+"\"}").build();
         } catch(BusinessException e){
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.FORBIDDEN).entity(e.getMessage()).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 
@@ -60,7 +60,6 @@ public class Authentication {
         LocalDateTime tomorrowMidnight = todayMidnight.plusDays(1);
         Date out = Date.from(tomorrowMidnight.atZone(ZoneId.systemDefault()).toInstant());
 
-        List<Role> userRoles = user.getRoles();
         String rolesJson = new Gson().toJson(user.getRoles());
 
 
@@ -78,7 +77,7 @@ public class Authentication {
             return token;
         } catch (JWTCreationException exception) {
             //Invalid Signing configuration / Couldn't convert Claims.
-            exception.printStackTrace();
+//            exception.printStackTrace();
             return "";
         }
 

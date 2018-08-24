@@ -19,9 +19,6 @@ import java.util.stream.Collectors;
 
 @Stateless
 public class UserManagementController {
-    //TODO rename;
-    private final static int MAX_LAST_NAME_LENGTH = 5;
-    private final static int MIN_USERNAME_LENGTH = 6;
     public static final int MIN_LAST_NAME_LENGTH = 5;
     public static final int MAX_FAILED_LOGN_ATTEMPTS = 5;
 
@@ -37,9 +34,6 @@ public class UserManagementController {
      * @throws BusinessException
      */
     public UserDTO createUser(UserDTO userDTO) throws BusinessException {
-
-        //   logger.log(Level.INFO, "In createUser method");
-
         normalizeUserDTO(userDTO);
         validateUserForCreation(userDTO);
         User user = UserDTOHelper.toEntity(userDTO);
@@ -235,15 +229,6 @@ public class UserManagementController {
 
 
 
-    private Integer getFailedAttempts(String username) throws BusinessException {
-        Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            return user.getFailedAttempts();
-        } else {
-            throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
-        }
-    }
 
     /**
      * Returns the user entity with the given username.

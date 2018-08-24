@@ -5,6 +5,7 @@ public class BusinessException extends Exception {
     ExceptionCode exceptionCode;
 
     public BusinessException() {
+        this.exceptionCode = ExceptionCode.UNKNOWN_EXCEPTION;
     }
     public BusinessException(ExceptionCode exceptionCode) {
         this.exceptionCode = exceptionCode;
