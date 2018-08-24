@@ -1,4 +1,7 @@
 <div class="row addBug-component">
+  <div class="errorMessage server-error" *ngIf="displayError()">
+    {{getMessage()}}
+  </div>
   <form (ngSubmit)="addBugForm()">
     <fieldset>
       <div class="form-group">

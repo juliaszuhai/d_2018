@@ -73,9 +73,11 @@ public class AddBug {
 
             return Response.status(Response.Status.CREATED).build();
 
-        } catch (BusinessException | ParseException e) {
-            e.printStackTrace();
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
         } catch (ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return Response.status(Response.Status.CREATED).build();

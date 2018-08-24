@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -14,8 +15,13 @@ export class AddBugComponent implements OnInit {
   severities: string[]=[
     "CRITICAL","HIGH","MEDIUM","LOW"
   ];
+
+  error: boolean;
+  errorMessage: string;
+
   constructor(public dialogRef2: MatDialogRef<AddBugComponent>,
-               private bugService: BugListService) {
+               private bugService: BugListService,
+              private router: Router) {
     this.bugData={
       id:1,
       title:'',
@@ -29,9 +35,22 @@ export class AddBugComponent implements OnInit {
       assignedTo: {id:4,username:''}
 
     }
+    this.error = false;
+    this.errorMessage = '';
   }
 
+
+
   ngOnInit() {
+  }
+
+
+  displayError() {
+    return this.error;
+  }
+
+  getMessage(){
+    return this.errorMessage;
   }
 
   onNoClick(): void {
@@ -39,11 +58,12 @@ export class AddBugComponent implements OnInit {
   }
 
   validateDescription() {
-    return true;
+    return this.bugData.description.length >= 250;
   }
 
   validateVersion() {
-    return true;
+    const regex = new RegExp('([a-zA-Z0-9]+).([a-zA-Z0-9]+).([a-zA-Z0-9]+)');
+    return regex.test(this.bugData.version);
   }
 
   addBugForm() {
@@ -51,7 +71,17 @@ export class AddBugComponent implements OnInit {
       this.bugData.targetDate,this.bugData.severity,this.bugData.assignedTo.username,this.bugData.createdByUser.username)
       .subscribe(
         data => {
+          this.error = false;
+          this.router.navigate([`/bugs`]);
         },
+        err => {
+          this.error = true;
+          if(err.valueOf().error.value=='DESCRIPTION_TOO_SHORT') {
+            this.errorMessage = "Description is too short. Write more";
+          } else{
+            this.errorMessage = "Version syntax is incorrect"
+          }
+        }
       );
   }
 }
