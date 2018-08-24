@@ -12,7 +12,9 @@
     "bugs": "Bug-uri",
     "users": "Utilizatori",
     "logout": "Delogare",
-    "profile": "Profil"
+    "profile": "Profil",
+    "manage": "Administrator",
+    "roles_and_permissions": "Roluri si Permisiuni"
   },
 
   "profileWindow": {

@@ -26,8 +26,7 @@ export class TranslatorComponent implements OnInit {
   allLanguages: Language[];
 
 
-  constructor(private translateService:TranslatorService,
-              private router: Router){
+  constructor(private translatorService:TranslatorService){
   }
 
   ngOnInit(): void {
@@ -40,7 +39,7 @@ export class TranslatorComponent implements OnInit {
   }
 
   public changeLanguage(event, id){
-    this.translateService.getTranslationObservable(id);
+    this.translatorService.getTranslationObservable(id);
 
   }
 

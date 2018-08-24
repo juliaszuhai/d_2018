@@ -1,11 +1,13 @@
 <mat-toolbar color="primary">
 
    <span style="margin-right: 20px">JBugs</span>
+  <button mat-button  *ngIf="isLoggedIn()" routerLink="bugs">
 
-  <button mat-button [matMenuTriggerFor]="menuManage" *ngIf="isLoggedIn()">
-    Manager
-    routerLink="bugs">
     {{(translatorService.json| async)?.header.bugs}}
+  </button>
+  <button mat-button [matMenuTriggerFor]="menuManage" *ngIf="isLoggedIn()">
+
+    {{(translatorService.json| async)?.header.manage}}
   </button>
   <mat-menu #menuManage="matMenu">
     <button
@@ -20,7 +22,7 @@
       *ngIf="isLoggedIn()"
       routerLinkActive="active"
       routerLink="manageusers">
-      Roles and Permissions
+      {{(translatorService.json| async)?.header.roles_and_permissions}}
     </button>
   </mat-menu>
 
@@ -46,6 +48,6 @@
 
 
   <button mat-button *ngIf="!isLoggedIn()" routerLinkActive="active" routerLink="login">
-    {{(translatorService.json| async)?.header.login}}
+
   </button>
 </mat-toolbar>
