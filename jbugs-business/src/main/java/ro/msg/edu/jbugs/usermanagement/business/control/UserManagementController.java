@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class UserManagementController {
     public static final int MIN_LAST_NAME_LENGTH = 5;
     public static final int MAX_FAILED_LOGN_ATTEMPTS = 5;
+    public static final int MIN_USERNAME_LENGTH = 6;
 
 
     @EJB
@@ -76,19 +77,21 @@ public class UserManagementController {
     }
 
 
-    private boolean isValidForCreation(UserDTO user) {
-        return user.getFirstName() != null
-                && user.getLastName() != null
-                && user.getEmail() != null
-                && user.getPassword() != null
-                && isValidEmail(user.getEmail());
+    private boolean isValidForCreation(UserDTO userDTO) {
+        return userDTO.getFirstName() != null
+                && userDTO.getLastName() != null
+                && userDTO.getEmail() != null
+                && userDTO.getPassword() != null
+                && isValidEmail(userDTO.getEmail())
+                && isValidPhoneNumber(userDTO.getPhoneNumber());
     }
 
     private boolean isValidForUpdate(UserDTO userDTO) {
         return userDTO.getFirstName() != null
                 && userDTO.getLastName() != null
                 && userDTO.getEmail() != null
-                && isValidEmail(userDTO.getEmail());
+                && isValidEmail(userDTO.getEmail())
+                && isValidPhoneNumber(userDTO.getPhoneNumber());
     }
 
     private boolean isValidEmail(String email) {
@@ -195,31 +198,40 @@ public class UserManagementController {
 
         if (lastName.length() >= MIN_LAST_NAME_LENGTH) {
             username = lastName.substring(0, MIN_LAST_NAME_LENGTH) + firstName.substring(0, 1);
-        } else if (firstName.length() >= 5) {
+        } else if (firstName.length() >= MIN_LAST_NAME_LENGTH) {
             username = lastName + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
+            username = rebuildIfUsernameExists(firstName, lastName, username);
         } else {
             username = lastName + firstName;
+            StringBuilder sb = new StringBuilder(username);
             while (username.length() < 6) {
-                username += '0';
+                sb.append('0');
             }
+            username = sb.toString();
         }
-        username = username.toLowerCase();
-        Optional<User> exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
 
-        while (exists.isPresent()) {
-            int stringCutter = 0;
-            lastName = lastName.substring(0, MIN_LAST_NAME_LENGTH - ++stringCutter);
-            username = lastName + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1).toLowerCase();
-            exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
-        }
 
         return username.toLowerCase();
     }
 
+
+
+    private String rebuildIfUsernameExists(@NotNull String firstName, @NotNull String lastName, String username) {
+        Optional<User> exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
+
+        int stringCutter = 0;
+        while (exists.isPresent()) {
+
+            username = lastName.substring(0, MIN_LAST_NAME_LENGTH - ++stringCutter)
+                    + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
+            exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
+        }
+        return username;
+    }
+
     private boolean isValidPhoneNumber(String phonenumber) {
-        //TODO Nu merge
         final Pattern validPhoneAddressRegex =
-                Pattern.compile("(^\\+49)|(^01[5-7][1-9])", Pattern.CASE_INSENSITIVE);
+                Pattern.compile("(^\\+49)|(^\\+40)|(^0049)|(^0040)|(^0[1-9][1-9])", Pattern.CASE_INSENSITIVE);
 
         Matcher matcher = validPhoneAddressRegex.matcher(phonenumber);
         return matcher.find();
