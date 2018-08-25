@@ -6,6 +6,7 @@ import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
 import {MatChipsModule} from '@angular/material/chips';
 import {AddBugComponent} from "../add-bug/add-bug.component";
 import {HttpParams} from "@angular/common/http";
+import {TranslatorService} from "../../translator/translator.service";
 
 @Component({
   selector: 'app-list-bugs',
@@ -22,7 +23,7 @@ export class ListBugsComponent implements OnInit {
   listId: number[] = [];
   forExcel: number[] = [];
 
-  constructor(private bugService: BugListService, public dialog: MatDialog) {
+  constructor(private bugService: BugListService, public dialog: MatDialog,  public translatorService: TranslatorService) {
 
     this.bugData = {
       id: null,

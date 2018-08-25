@@ -59,5 +59,23 @@
     "inputAssignedTo": "Inserati numele aici...",
     "buttonAddBug": "Adaugare Bug"
 
+  },
+
+  "bugPopup": {
+    "description": "Descriere",
+    "exportPdf": "Exportare Pdf"
+  },
+
+  "bugList": {
+    "number": "#",
+    "title": "Titlu",
+    "version": "Versiune",
+    "targetDate": "Data Limita",
+    "status": "Stadiu",
+    "fixedVersion": "Versiune Fixata",
+    "severity": "Severitate",
+    "createdBy": "Creat de catre",
+    "assignedTo": "Responsabil",
+    "exportExcel": "Exportare Excel"
   }
 }

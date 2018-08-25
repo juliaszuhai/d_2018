@@ -59,5 +59,23 @@
     "inputAssignedTo": "Input the name here...",
     "buttonAddBug": "Add Bug"
 
+  },
+
+  "bugPopup": {
+    "description": "Descriprion",
+    "exportPdf": "Export to Pdf"
+  },
+
+  "bugList": {
+    "number": "#",
+    "title": "Title",
+    "version": "Version",
+    "targetDate": "Target Date",
+    "status": "Status",
+    "fixedVersion": "Fixed Version",
+    "severity": "Severity",
+    "createdBy": "Created By User",
+    "assignedTo": "Assigned To",
+    "exportExcel": "Export Excel"
   }
 }
