@@ -1,22 +1,22 @@
 
 <button class="btn btn-sm"  type="button" (click)="openAddBug()">
-  <i class="material-icons">bug_report</i> Add user
+  <i class="material-icons">bug_report</i> {{(translatorService.json| async)?.addBug.buttonAddBug}}
 </button>
 
 <div align="center" (*ngFor)="ngOnInit()">
   <table mat-table class="mat-elevation-z8" >
     <thead>
     <tr>
-      <th>#</th>
-      <th>Title</th>
-      <th>Version</th>
-      <th>Target_Date</th>
-      <th>Status</th>
-      <th>Fixed_Version</th>
-      <th>Severity</th>
-      <th>Created_By_User</th>
-      <th>Assigned_To</th>
-      <th>Export Excel</th>
+      <th>{{(translatorService.json| async)?.bugList.number}}</th>
+      <th>{{(translatorService.json| async)?.bugList.title}}</th>
+      <th>{{(translatorService.json| async)?.bugList.version}}</th>
+      <th>{{(translatorService.json| async)?.bugList.targetDate}}</th>
+      <th>{{(translatorService.json| async)?.bugList.status}}</th>
+      <th>{{(translatorService.json| async)?.bugList.fixedVersion}}</th>
+      <th>{{(translatorService.json| async)?.bugList.severity}}</th>
+      <th>{{(translatorService.json| async)?.bugList.createdBy}}</th>
+      <th>{{(translatorService.json| async)?.bugList.assignedTo}}</th>
+      <th>{{(translatorService.json| async)?.bugList.exportExcel}}</th>
     </tr>
     </thead>
 
