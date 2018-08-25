@@ -1,9 +1,23 @@
 {
-  "login": {
+  "loginWindow": {
     "submit": "Inainteaza",
     "username": "Nume utilizator",
-    "password": "Parola"
+    "password": "Parola",
+    "inputUsername":"Inserati numele de utilizator aici...",
+    "inputPassword": "Inserati parola aici..."
   },
+
+  "loginErrors": {
+    "usernameErrorLength": "Numele de utilizator trebuie sa fie de minim 6 caractere lungime",
+    "passwordErrorIntro": "Parola trebuie sa contina:",
+    "passwordErrorUpper": "Cel putin o litera mare,",
+    "passwordErrorLower": "Cel putin o litera mica,",
+    "passwordErrorDigit": "Cel putin o cifra,",
+    "passwordErrorSpecial": "Cel putin un caracter special,",
+    "passwordErrorLength": "Cel putin 6 caractere"
+
+  },
+
   "header": {
     "login":"Autentificare",
     "content":"Continut",
@@ -24,5 +38,26 @@
     "lastName": "Nume",
     "email": "Email",
     "phone": "Numar telefon"
+  },
+
+  "addBug": {
+    "title": "Titlu",
+    "inputTitle": "Inserati titlul aici...",
+    "description": "Descriere",
+    "inputDescription": "Inserati descrierea aici...",
+    "version": "Versiune",
+    "inputVersion": "Inserati versiunea aici...",
+    "fixedVersion": "Versiune Fixata",
+    "inputFixedVersion": "Inserati versiunea fixa aici...",
+    "targetDate": "Data limita",
+    "severity": "Severitate",
+    "CRITICAL": "CRITICA",
+    "HIGH": "RIDICATA",
+    "MEDIUM": "MEDIE",
+    "LOW": "MICA",
+    "assignedTo": "Responsabil",
+    "inputAssignedTo": "Inserati numele aici...",
+    "buttonAddBug": "Adaugare Bug"
+
   }
 }

@@ -13,7 +13,7 @@ export class NavComponent implements OnInit {
 
   constructor(private authService: AuthenticationService,
               private router: Router,
-              private translatorService: TranslatorService) {
+              public translatorService: TranslatorService) {
   }
 
   getFirstName() {

@@ -4,6 +4,7 @@
   <button mat-button  *ngIf="isLoggedIn()" routerLink="bugs">
 
     {{(translatorService.json| async)?.header.bugs}}
+
   </button>
   <button mat-button [matMenuTriggerFor]="menuManage" *ngIf="isLoggedIn()">
 

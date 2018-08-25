@@ -11,11 +11,11 @@
       <fieldset>
         <div class="form-group">
           <div class="form-group">
-            <label for="usernameInput">Username</label>
+            <label for="usernameInput">{{(translatorService.json| async)?.loginWindow.username}}</label>
             <input type="text"
                    #usernameElement
                    #usernameControl="ngModel"
-                   placeholder="Input your username here..."
+                   placeholder="{{(translatorService.json|async)?.loginWindow.inputUsername}}"
                    name="username"
                    id="usernameInput"
                    class="form-control"
@@ -25,11 +25,11 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="passwordInput">Password</label>
+          <label for="passwordInput">{{(translatorService.json| async)?.loginWindow.password}}</label>
           <input type="password"
                  #passwordElement
                  #passwordControl="ngModel"
-                 placeholder="Input your password here..."
+                 placeholder="{{(translatorService.json|async)?.loginWindow.inputPassword}}"
                  name="password"
                  id="passwordInput"
                  class="form-control"
@@ -44,19 +44,20 @@
               [disabled]="!validatePassword()||!validateUsername()"
               color="primary"
               style="margin-left: 40%;"
-              mat-stroked-button="login">Submit!
+              mat-stroked-button="login">{{(translatorService.json| async)?.loginWindow.submit}}!
       </button>
 
-      <div class="errorMessage" *ngIf="!validateUsername()&&usernameControl.touched">Username must be at least 6
-        characters
+      <div class="errorMessage" *ngIf="!validateUsername()&&usernameControl.touched">
+        {{(translatorService.json| async)?.loginErrors.usernameErrorLength}}
       </div>
-      <div class="errorMessage" *ngIf="!validatePassword()&&passwordControl.touched">Password must be:
+      <div class="errorMessage" *ngIf="!validatePassword()&&passwordControl.touched">
+        {{(translatorService.json| async)?.loginErrors.passwordErrorIntro}}
         <ul>
-          <li>At least one upper case English letter,</li>
-          <li>At least one lower case English letter,</li>
-          <li>At least one digit,</li>
-          <li>At least one special character,</li>
-          <li>Minimum six characters in length</li>
+          <li>{{(translatorService.json| async)?.loginErrors.passwordErrorUpper}}</li>
+          <li>{{(translatorService.json| async)?.loginErrors.passwordErrorLower}},</li>
+          <li>{{(translatorService.json| async)?.loginErrors.passwordErrorDigit}}</li>
+          <li>{{(translatorService.json| async)?.loginErrors.passwordErrorSpecial}}</li>
+          <li>{{(translatorService.json| async)?.loginErrors.passwordErrorLength}}</li>
         </ul>
       </div>
     </form>

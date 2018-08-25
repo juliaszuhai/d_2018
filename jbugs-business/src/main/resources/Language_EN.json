@@ -2,8 +2,22 @@
   "loginWindow": {
     "submit": "Submit",
     "username": "Username",
-    "password": "Password"
+    "password": "Password",
+    "inputUsername":"Input your username here...",
+    "inputPassword": "Input your password here..."
   },
+
+  "loginErrors": {
+    "usernameErrorLength": "Username must be at least 6 characters",
+    "passwordErrorIntro": "Password must contain:",
+    "passwordErrorUpper": "At least one upper case English letter,",
+    "passwordErrorLower": "At least one lower case English letter,",
+    "passwordErrorDigit": "At least one digit,",
+    "passwordErrorSpecial": "At least one special character,",
+    "passwordErrorLength": "Minimum of six characters"
+
+  },
+
   "header": {
     "login":"Login",
     "content":"Content",
@@ -24,8 +38,26 @@
     "lastName": "Last Name",
     "email": "Email",
     "phone": "Phone Number"
+  },
+
+  "addBug": {
+    "title": "Title",
+    "inputTitle": "Input title here...",
+    "description": "Description",
+    "inputDescription": "Input the description here...",
+    "version": "Version",
+    "inputVersion": "Input the version here...",
+    "fixedVersion": "Fixed Version",
+    "inputFixedVersion": "Input the fixed version here...",
+    "targetDate": "Target Date",
+    "severity": "Severity",
+    "CRITICAL": "CRITICAL",
+    "HIGH": "HIGH",
+    "MEDIUM": "MEDIUM",
+    "LOW": "LOW",
+    "assignedTo": "Assigned",
+    "inputAssignedTo": "Input the name here...",
+    "buttonAddBug": "Add Bug"
+
   }
-
-
-
 }

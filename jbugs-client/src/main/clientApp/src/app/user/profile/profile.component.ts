@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserData} from '../../authentication/authentication.service';
+import {TranslatorService} from "../../translator/translator.service";
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +11,7 @@ export class ProfileComponent implements OnInit {
 
   userData: UserData;
 
-  constructor() {
+  constructor(public translatorService: TranslatorService) {
     this.userData = {
       username: '',
       firstName: '',
