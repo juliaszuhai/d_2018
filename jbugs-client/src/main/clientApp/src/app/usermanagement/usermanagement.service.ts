@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {UserRegisterData} from "./register-user/register-user.component";
-
-
+import {UserData} from "./register-user/register-user.component";
 
 
 @Injectable({
@@ -30,7 +28,7 @@ export class UsermanagementService {
     return this.http.get(this.baseURL+'/deactivate-user', {params});
   }
 
-  registerUser(userData: UserRegisterData){
+  registerUser(userData: UserData) {
     return this.http.post(this.baseURL+'/register-user',
       userData,
       {
@@ -38,6 +36,15 @@ export class UsermanagementService {
           {'Content-Type': 'application/json'}
         )
       });
+  }
+
+  updateUser(userData: UserData) {
+    return this.http.post(this.baseURL + '/update-user', userData,
+      {
+        headers: new HttpHeaders(
+          {'Content-Type': 'application/json'}
+        )
+      })
   }
 
 }

@@ -7,16 +7,11 @@ import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
-
-
 import javax.ejb.EJB;
-
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-
 import java.util.List;
 
 @Path("/manage-users")
@@ -62,8 +57,8 @@ public class ManageUsers {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes("application/json")
+    @Produces("application/json")
     @Path("/update-user")
     public Response updateUser(UserDTO userDTO) {
         try {

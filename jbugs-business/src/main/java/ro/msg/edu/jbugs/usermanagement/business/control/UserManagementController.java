@@ -1,12 +1,12 @@
 package ro.msg.edu.jbugs.usermanagement.business.control;
 
-import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
-import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
-import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
-import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTOHelper;
+import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.usermanagement.business.utils.Encryptor;
+import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
+import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -300,6 +300,7 @@ public class UserManagementController {
                 userDTO.setUsername(generateUsername(userDTO.getFirstName(), userDTO.getLastName()));
             }
             User userAfter = UserDTOHelper.updateEntityWithDTO(userBefore, userDTO);
+
             userPersistenceManager.updateUser(userAfter);
             return userDTO;
         } else {

@@ -52,6 +52,7 @@
     <td mat-cell *matCellDef="let element">
       <button color="primary"
               mat-raised-button
+              (click)="openUpdateDialog(element)"
               >
         <i class="material-icons">edit</i> Edit user
       </button>

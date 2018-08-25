@@ -1,37 +1,16 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {UserManagementComponent} from "../user-management/user-management.component";
 import {UsermanagementService} from "../usermanagement.service";
-import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
-
-export interface UserData {
-  firstName: string,
-  lastName: string,
-  password: string,
-  email: string,
-  phoneNumber: string;
-}
-
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-
-  constructor() {
-  }
-
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
-
+import {UserManagementComponent} from "../user-management/user-management.component";
+import {FormControl, Validators} from "@angular/forms";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {MyErrorStateMatcher, UserData} from "../register-user/register-user.component";
 
 @Component({
-  selector: 'app-register-user',
-  templateUrl: './register-user.component.html',
-  styleUrls: ['./register-user.component.css']
+  selector: 'app-update-user',
+  templateUrl: './update-user.component.html',
+  styleUrls: ['./update-user.component.css']
 })
-export class RegisterUserComponent implements OnInit {
-
+export class UpdateUserComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<UserManagementComponent>,
@@ -54,6 +33,11 @@ export class RegisterUserComponent implements OnInit {
   validatePassword(control: FormControl) {
     const regex = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*.-]).{6,}$');
 
+    if (control.value === null ||
+      control.value === undefined ||
+      control.value === '') {
+      return null;
+    }
     if (regex.test(control.value)) {
       return null;
     }
@@ -76,13 +60,18 @@ export class RegisterUserComponent implements OnInit {
     }
   }
 
-  submitRegister() {
-    this.usermgmt.registerUser(this.data).subscribe(
+  submitUpdate() {
+    if (this.data.password === null ||
+      this.data.password === undefined ||
+      this.data.password === '') {
+      delete this.data.password;
+    }
+    console.log(this.data);
+    this.usermgmt.updateUser(this.data).subscribe(
       data => {
-        console.log("Register works");
         this.dialogRef.close();
       }, error => {
-        console.log("Register error:" + error)
+        console.log("Update error:" + error)
       }
     );
 
@@ -95,13 +84,11 @@ export class RegisterUserComponent implements OnInit {
         '';
   }
 
-  getEmailErrorMessages(){
+  getEmailErrorMessages() {
     console.log(this.emailFormControl);
-    if(this.emailFormControl.hasError('required')){
-      return 'This field is required.'
-    } else if(this.emailFormControl.hasError('email')){
+    if (this.emailFormControl.hasError('email')) {
       return 'Invalid email format'
-    } else if(this.emailFormControl.hasError('emaildomainerror')){
+    } else if (this.emailFormControl.hasError('emaildomainerror')) {
       return 'Unsupported email domain'
     }
   }

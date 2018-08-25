@@ -48,6 +48,6 @@
 
 
   <button mat-button *ngIf="!isLoggedIn()" routerLinkActive="active" routerLink="login">
-
+    {{(translatorService.json| async)?.header.login}}
   </button>
 </mat-toolbar>

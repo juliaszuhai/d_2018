@@ -1,5 +1,6 @@
 package ro.msg.edu.jbugs.usermanagement.business.dto;
 
+import ro.msg.edu.jbugs.usermanagement.business.utils.Encryptor;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 public class UserDTOHelper {
@@ -44,7 +45,12 @@ public class UserDTOHelper {
         user.setEmail(userDTO.getEmail());
         user.setUsername(userDTO.getUsername());
         user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setActive(userDTO.getActive());
+        if (userDTO.getActive() != null) {
+            user.setActive(userDTO.getActive());
+        }
+        if (userDTO.getPassword() != null) {
+            user.setPassword(Encryptor.encrypt(userDTO.getPassword()));
+        }
         return user;
     }
 }

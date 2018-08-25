@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UsermanagementService} from "../usermanagement.service";
 import {MatDialog} from "@angular/material";
-import {RegisterUserComponent, UserRegisterData} from "../register-user/register-user.component";
+import {RegisterUserComponent, UserData} from "../register-user/register-user.component";
+import {UpdateUserComponent} from "../update-user/update-user.component";
 
 export interface UserElement {
   firstName: string;
@@ -20,7 +21,7 @@ export interface UserElement {
 export class UserManagementComponent implements OnInit {
 
 
-  userData: UserRegisterData;
+  userData: UserData;
 
   dataSource: any;
 
@@ -46,6 +47,25 @@ export class UserManagementComponent implements OnInit {
     });
   }
 
+  openUpdateDialog(user): void {
+    const dialogRef = this.dialog.open(UpdateUserComponent, {
+      width: '60%',
+      data: {
+        active: user.isActive,
+        username: user.username,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        password: user.password,
+        phoneNumber: user.phoneNumber
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      this.getUsers();
+    });
+  }
 
   getUsers() {
     this.usrMgmtService.getAllUsers()
