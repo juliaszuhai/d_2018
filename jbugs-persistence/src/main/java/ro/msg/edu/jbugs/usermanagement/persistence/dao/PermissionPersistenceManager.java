@@ -44,13 +44,13 @@ public class PermissionPersistenceManager {
      */
     public boolean removePermissionById(long id) {
         Optional<Permission> permissionOptional = getPermissionForId(id);
-        permissionOptional.ifPresent(permOp -> {
-            getAllRoles().ifPresent(roleOp -> {
-                roleOp.forEach(role -> {
-                    role.getPermissions().remove(permOp);
-                });
-            });
-        });
+        permissionOptional.ifPresent(permOp ->
+                getAllRoles().ifPresent(roleOp ->
+                        roleOp.forEach(role ->
+                                role.getPermissions().remove(permOp)
+                        )
+                )
+        );
         if (!permissionOptional.isPresent())
             return false;
         em.remove(permissionOptional.get());
