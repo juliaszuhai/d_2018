@@ -8,7 +8,10 @@ import java.util.Objects;
 @Table(name = "permissions")
 @NamedQueries(
         {
-                @NamedQuery(name = Permission.GET_PERMISSION_BY_TYPE, query = "SELECT p FROM Permission p where p.type = :type")
+                @NamedQuery(name = Permission.GET_PERMISSION_BY_TYPE, query = "SELECT p FROM Permission p where p.type = :type"),
+                @NamedQuery(name = Permission.GET_PERMISSION_BY_ID, query = "SELECT p FROM Permission p where p.id = :id"),
+                @NamedQuery(name = Permission.GET_PERMISSIONS_FOR_ROLE, query = "SELECT r.permissions FROM Role r WHERE r=:role"),
+
         }
 )
 public class Permission extends BaseEntity {
@@ -16,6 +19,8 @@ public class Permission extends BaseEntity {
     @Transient
     private static final int MAX_STRING_LENGTH = 20;
     public static final String GET_PERMISSION_BY_TYPE = "get_permission_by_type";
+    public static final String GET_PERMISSION_BY_ID = "get_permission_by_id";
+    public static final String GET_PERMISSIONS_FOR_ROLE = "get_permissions_for_role";
 
     @Column(name = "type", nullable = false, length = MAX_STRING_LENGTH, unique = true)
     private String type;

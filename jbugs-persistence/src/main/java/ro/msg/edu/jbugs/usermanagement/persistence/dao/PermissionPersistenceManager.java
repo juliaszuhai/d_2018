@@ -3,9 +3,8 @@ package ro.msg.edu.jbugs.usermanagement.persistence.dao;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.Permission;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.Role;
 
-import javax.ejb.*;
+import javax.ejb.Stateless;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +18,7 @@ public class PermissionPersistenceManager {
 
     /**
      * Persists the permission from the parameter in the database
+     *
      * @param permission - permission entity
      */
     public void createPermission(Permission permission) {
@@ -28,6 +28,7 @@ public class PermissionPersistenceManager {
 
     /**
      * Updates the permission in the database with the one in the paramter
+     *
      * @param permission - permission entity
      */
     public void updatePermission(Permission permission) {
@@ -37,47 +38,54 @@ public class PermissionPersistenceManager {
 
     /**
      * Removes the permission with the id from the parameter
+     *
      * @param id - id of the permission to be removed
      * @return
      */
     public boolean removePermissionById(long id) {
-        Permission permission = getPermissionForId(id);
-        if(permission == null)
+        Optional<Permission> permissionOptional = getPermissionForId(id);
+        permissionOptional.ifPresent(permOp -> {
+            getAllRoles().ifPresent(roleOp -> {
+                roleOp.forEach(role -> {
+                    role.getPermissions().remove(permOp);
+                });
+            });
+        });
+        if (!permissionOptional.isPresent())
             return false;
-        em.remove(permission);
+        em.remove(permissionOptional.get());
         return true;
     }
 
 
-
-
+    /**
+     * Removes a certain permission from a certain role.
+     *
+     * @param role
+     * @param permission
+     * @return true if it was removed, false otherwise.
+     */
     public boolean removePermissionForRole(Role role, Permission permission) {
-        em.persist(role);
-        List<Permission> permissions = getPermissionsForRole(role);
-        return permissions.remove(permission);
+        return role.getPermissions().remove(permission);
 
     }
 
 
-    public boolean removeAllPermissionsForRole(Role role) {
-        em.persist(role);
-        List<Permission> permissions = getPermissionsForRole(role);
-        permissions.clear();
-        return true;
+    public Optional<Permission> getPermissionForId(long id) {
+        TypedQuery<Permission> query = em.createNamedQuery(Permission.GET_PERMISSION_BY_ID, Permission.class)
+                .setParameter("id", id);
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 
 
-    public Permission getPermissionForId(long id) {
-        Query query = em.createQuery("SELECT p FROM Permission p WHERE p.id=:id");
-        query.setParameter("id",id);
-        return (Permission) query.getSingleResult();
-    }
-
-
-    public List<Permission> getPermissionsForRole(Role role) {
-        Query query = em.createQuery("SELECT r.permissions FROM Role r WHERE r=:role");
-        query.setParameter("role",role);
-        return query.getResultList();
+    public Optional<List<Permission>> getPermissionsForRole(Role role) {
+        TypedQuery<Permission> query = em.createNamedQuery(Permission.GET_PERMISSIONS_FOR_ROLE, Permission.class)
+                .setParameter("role", role);
+        return Optional.ofNullable(query.getResultList());
 
     }
 
@@ -88,21 +96,17 @@ public class PermissionPersistenceManager {
     }
 
 
-    public Permission createPermissionForRole(Role role, Permission permission) {
-        List<Permission> permissions = new ArrayList<>();
-        permissions.add(permission);
-        role.setPermissions(permissions);
-        em.merge(role);
-        return permission;
+    public void createPermissionForRole(Role role, Permission permission) {
+        role.getPermissions().add(permission);
     }
 
-    public Role createRole(Role role){
+    public Role createRole(Role role) {
         em.persist(role);
         return role;
     }
 
-    public Optional<Role> getRoleByType(String type){
-        TypedQuery<Role> query = em.createNamedQuery(Role.GET_ROLE_BY_TYPE,Role.class)
+    public Optional<Role> getRoleByType(String type) {
+        TypedQuery<Role> query = em.createNamedQuery(Role.GET_ROLE_BY_TYPE, Role.class)
                 .setParameter("type", type);
 
         try {
@@ -112,8 +116,13 @@ public class PermissionPersistenceManager {
         }
     }
 
-    public Optional<Permission> getPermissionByType(String type){
-        TypedQuery<Permission> query = em.createNamedQuery(Permission.GET_PERMISSION_BY_TYPE,Permission.class)
+    public Optional<List<Role>> getAllRoles() {
+        TypedQuery<Role> q = em.createNamedQuery(Role.GET_ALL_ROLES, Role.class);
+        return Optional.of(q.getResultList());
+    }
+
+    public Optional<Permission> getPermissionByType(String type) {
+        TypedQuery<Permission> query = em.createNamedQuery(Permission.GET_PERMISSION_BY_TYPE, Permission.class)
                 .setParameter("type", type);
 
         try {
