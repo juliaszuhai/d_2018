@@ -219,6 +219,7 @@ public class UserManagementController {
            if(userOptional.isPresent()){
                sb.deleteCharAt(sb.length() - 1);
            }
+           endNumber++;
         }
 
         return sb.toString();
