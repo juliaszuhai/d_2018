@@ -1,22 +1,22 @@
 
 <button class="btn btn-sm"  type="button" (click)="openAddBug()">
-  <i class="material-icons">bug_report</i> {{(translatorService.json| async)?.addBug.buttonAddBug}}
+  <i class="material-icons">bug_report</i> {{(this.translatorService.json| async)?.addBug.buttonAddBug}}
 </button>
 
 <div align="center" (*ngFor)="ngOnInit()">
   <table mat-table class="mat-elevation-z8" >
     <thead>
     <tr>
-      <th>{{(translatorService.json| async)?.bugList.number}}</th>
-      <th>{{(translatorService.json| async)?.bugList.title}}</th>
-      <th>{{(translatorService.json| async)?.bugList.version}}</th>
-      <th>{{(translatorService.json| async)?.bugList.targetDate}}</th>
-      <th>{{(translatorService.json| async)?.bugList.status}}</th>
-      <th>{{(translatorService.json| async)?.bugList.fixedVersion}}</th>
-      <th>{{(translatorService.json| async)?.bugList.severity}}</th>
-      <th>{{(translatorService.json| async)?.bugList.createdBy}}</th>
-      <th>{{(translatorService.json| async)?.bugList.assignedTo}}</th>
-      <th>{{(translatorService.json| async)?.bugList.exportExcel}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.number}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.title}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.version}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.targetDate}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.status}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.fixedVersion}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.severity}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.createdBy}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.assignedTo}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.exportExcel}}</th>
     </tr>
     </thead>
 
@@ -56,7 +56,7 @@
            id="titleInput"
            class="form-control"
            required
-           matInput placeholder="Title">
+           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.title}}">
   </div>
 
   <div class="input-label">
@@ -67,7 +67,7 @@
            id="descriptionInput"
            class="form-control"
            required
-           matInput placeholder="Description">
+           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.description}}">
   </div>
 
   <div class="input-label">
@@ -78,7 +78,7 @@
            id="statusInput"
            class="form-control"
            required
-           matInput placeholder="Status">
+           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.status}}">
   </div>
 
   <div class="input-label">
@@ -89,25 +89,27 @@
            id="severityInput"
            class="form-control"
            required
-           matInput placeholder="Severity">
+           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.severity}}">
   </div>
 
 
   <div align="center">
-    <button mat-button (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">Filter</button>
+    <button mat-button (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">{{(this.translatorService.json|async)?.bugFilter.filter}}</button>
     <!--<mat-chip>One fish</mat-chip>-->
   </div>
 
   <div align="center">
 
-    <label>Title</label>
+    <label>{{(this.translatorService.json|async)?.bugFilter.title}}</label>
     <input type="checkbox" #sortElem (change)="0" >
 
-    <label>Version</label>
+    <label>{{(this.translatorService.json|async)?.bugFilter.version}}</label>
       <input type="checkbox" #sortElem2 (change)="0" >
 
 
-    <button mat-button *ngIf="sortElem.checked || sortElem2.checked" (click)="sort(sortElem.checked,sortElem2.checked)">Sort</button>
+    <button mat-button *ngIf="sortElem.checked || sortElem2.checked" (click)="sort(sortElem.checked,sortElem2.checked)">
+      {{(this.translatorService.json|async)?.bugFilter.sort}}
+    </button>
 
 
     <!--<mat-chip>One fish</mat-chip>-->
