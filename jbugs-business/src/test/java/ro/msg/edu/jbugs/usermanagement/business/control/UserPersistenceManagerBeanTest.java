@@ -1,20 +1,21 @@
 package ro.msg.edu.jbugs.usermanagement.business.control;
 
-import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
-import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
-import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
-import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
-import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
-import ro.msg.edu.jbugs.usermanagement.business.utils.Encryptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
+import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
+import ro.msg.edu.jbugs.usermanagement.business.utils.Encryptor;
+import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
+import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -66,13 +67,12 @@ public class UserPersistenceManagerBeanTest {
     public void testGenerateUsername_Expected(){
         User mockUser = new User();
         mockUser.setUsername("marini");
+        when(userPersistenceManager.getUserByUsername(any(String.class)))
+                .thenReturn(Optional.empty());
         when(userPersistenceManager.getUserByUsername("marini"))
                 .thenReturn(Optional.of(mockUser));
-
         when(userPersistenceManager.getUserByUsername("mariio"))
                 .thenReturn(Optional.empty());
-//        when(userPersistenceManager.getUserByUsername(any(String.class)))
-//                .thenReturn(Optional.empty());
         assertEquals("mariio",userManagementController.generateUsername("Ion","Marin"));
     }
 
@@ -123,7 +123,7 @@ public class UserPersistenceManagerBeanTest {
         userDTO.setFirstName("Cristi");
         userDTO.setLastName("Borcea");
         userDTO.setEmail("dinamo@msggroup.com");
-        userDTO.setPhoneNumber("1234456667");
+        userDTO.setPhoneNumber("0747046000");
         userDTO.setPassword("IloveSteaua");
         try{
         UserDTO createdUser = userManagementController.createUser(userDTO);

@@ -196,9 +196,10 @@ public class UserManagementController {
         String username;
         if (lastName.length() >= MIN_LAST_NAME_LENGTH) {
             username = lastName.substring(0, MIN_LAST_NAME_LENGTH) + firstName.substring(0, 1);
+            username = rebuildIfUsernameExists(firstName, lastName, username.toLowerCase());
         } else if (firstName.length() >= MIN_LAST_NAME_LENGTH) {
             username = lastName + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
-            username = rebuildIfUsernameExists(firstName, lastName, username);
+            username = rebuildIfUsernameExists(firstName, lastName, username.toLowerCase());
         } else {
             username = buildUsernameForShortNames(firstName, lastName);
         }
@@ -231,10 +232,11 @@ public class UserManagementController {
 
         int stringCutter = 0;
         while (exists.isPresent()) {
-
-            username = lastName.substring(0, MIN_LAST_NAME_LENGTH - ++stringCutter)
-                    + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
+            lastName = lastName.substring(0, MIN_LAST_NAME_LENGTH - stringCutter);
+            username = lastName +
+                    firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
             exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
+            stringCutter++;
         }
         return username;
     }
