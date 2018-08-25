@@ -66,7 +66,7 @@
     "exportPdf": "Exportare Pdf"
   },
 
-  "bugList": {
+  "bugTable": {
     "number": "#",
     "title": "Titlu",
     "version": "Versiune",
@@ -77,5 +77,15 @@
     "createdBy": "Creat de catre",
     "assignedTo": "Responsabil",
     "exportExcel": "Exportare Excel"
+  },
+
+  "bugFilter": {
+    "title": "Titlu",
+    "description": "Descriere",
+    "status": "Stadiu",
+    "severity": "Severitate",
+    "version": "Versiune",
+    "sort": "Sortare",
+    "filter": "Filtrare"
   }
 }

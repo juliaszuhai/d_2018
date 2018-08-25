@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
 import {DataSource} from '@angular/cdk/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material';
@@ -24,6 +24,7 @@ export class ListBugsComponent implements OnInit {
   forExcel: number[] = [];
 
   constructor(private bugService: BugListService, public dialog: MatDialog,  public translatorService: TranslatorService) {
+
 
     this.bugData = {
       id: null,
@@ -59,6 +60,7 @@ export class ListBugsComponent implements OnInit {
 
 
   ngOnInit() {
+
     this.bugService.getBugsFromServer().subscribe(
       {
         next: (value: BugData[]) => {

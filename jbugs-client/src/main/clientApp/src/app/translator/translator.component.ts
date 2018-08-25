@@ -41,6 +41,7 @@ export class TranslatorComponent implements OnInit {
   public changeLanguage(event, id){
     this.translatorService.getTranslationObservable(id);
 
+
   }
 
 }
