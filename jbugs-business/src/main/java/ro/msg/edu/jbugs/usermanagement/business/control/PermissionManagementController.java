@@ -11,6 +11,7 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 @Stateless
@@ -148,5 +149,9 @@ public class PermissionManagementController {
             permission = permissionOptional.get();
         }
         return permission;
+    }
+
+    public List<Permission> getPermissionsByRole(Role role) {
+        return role.getPermissions();
     }
 }
