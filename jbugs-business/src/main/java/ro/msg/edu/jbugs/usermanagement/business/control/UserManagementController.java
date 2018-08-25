@@ -186,34 +186,43 @@ public class UserManagementController {
 
 
     /**
-     * TODO cazul in care nume + prenume < 6 si deja exista cineva cu acelasi nume.
+     *
      * Generates a username from the first and last name.
      * @param firstName :
      * @param lastName :
      * @return : the generated username
      */
     protected String generateUsername(@NotNull String firstName, @NotNull String lastName) {
-
         String username;
-
         if (lastName.length() >= MIN_LAST_NAME_LENGTH) {
             username = lastName.substring(0, MIN_LAST_NAME_LENGTH) + firstName.substring(0, 1);
         } else if (firstName.length() >= MIN_LAST_NAME_LENGTH) {
             username = lastName + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
             username = rebuildIfUsernameExists(firstName, lastName, username);
         } else {
-            username = lastName + firstName;
-            StringBuilder sb = new StringBuilder(username);
-            while (username.length() < 6) {
-                sb.append('0');
-            }
-            username = sb.toString();
+            username = buildUsernameForShortNames(firstName, lastName);
         }
-
-
         return username.toLowerCase();
     }
 
+    private String buildUsernameForShortNames(@NotNull String firstName, @NotNull String lastName) {
+
+        StringBuilder sb = new StringBuilder(lastName + firstName);
+        while (sb.length() < 6) {
+            sb.append('0');
+        }
+        Optional<User> userOptional = userPersistenceManager.getUserByUsername(sb.toString());
+        Integer endNumber = 0;
+        while (userOptional.isPresent()){
+           sb.append(endNumber.toString());
+           userOptional = userPersistenceManager.getUserByUsername(sb.toString());
+           if(userOptional.isPresent()){
+               sb.deleteCharAt(sb.length() - 1);
+           }
+        }
+
+        return sb.toString();
+    }
 
 
     private String rebuildIfUsernameExists(@NotNull String firstName, @NotNull String lastName, String username) {

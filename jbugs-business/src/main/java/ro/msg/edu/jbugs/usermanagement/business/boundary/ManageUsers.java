@@ -85,7 +85,7 @@ public class ManageUsers {
             userManagementController.createUser(userDTO);
             return Response.status(Response.Status.CREATED).build();
         } catch (BusinessException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
         }
     }
 }

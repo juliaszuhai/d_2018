@@ -18,6 +18,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatChipsModule} from "@angular/material/chips";
 import {BugsPopupComponent} from "../bugs/bugs-popup/bugs-popup.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {UpdateUserComponent} from "./update-user/update-user.component";
 
 
 const userManagementRoutes: Routes = [
@@ -41,6 +42,7 @@ const userManagementRoutes: Routes = [
   declarations: [
     UserManagementComponent,
     RegisterUserComponent,
+    UpdateUserComponent
   ],
   exports: [UserManagementComponent,
     RouterModule,

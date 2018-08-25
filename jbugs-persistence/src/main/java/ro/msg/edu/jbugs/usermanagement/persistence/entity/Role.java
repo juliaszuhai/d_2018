@@ -19,7 +19,7 @@ public class Role extends BaseEntity {
     public static final String GET_ALL_ROLES = "get_all_roles";
     public static final String GET_ROLE_BY_TYPE = "get_role_by_type";
 
-    @Column(name = "type", length = MAX_STRING_LENGTH)
+    @Column(name = "type", length = MAX_STRING_LENGTH, unique = true)
     private String type;
 
     @ManyToMany(cascade = CascadeType.PERSIST)

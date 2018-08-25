@@ -26,6 +26,7 @@ import { RecaptchaDirective } from './authentication/login/recaptcha.directive';
 import {UsermanagementModule} from "./usermanagement/usermanagement.module";
 import {TranslatorService} from "./translator/translator.service";
 import {ListBugsComponent} from "./bugs/list-bugs/list-bugs.component";
+import { UpdateUserComponent } from './usermanagement/update-user/update-user.component';
 
 
 
@@ -45,7 +46,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    RecaptchaDirective
+    RecaptchaDirective,
   ],
   imports: [
     BrowserModule,
