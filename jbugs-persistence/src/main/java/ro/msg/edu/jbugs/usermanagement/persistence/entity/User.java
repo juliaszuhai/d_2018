@@ -34,11 +34,9 @@ public class User extends BaseEntity {
     @Column(name = "phoneNumber", length = MAX_STRING_LENGTH, nullable = false)
     private String phoneNumber;
 
-    //TODO CONSTRAINT PE FORMAT
     @Column(name = "email", length = MAX_STRING_LENGTH, nullable = false, unique = true)
     private String email;
 
-    //TODO GENERAT AUTOMAT
     @Column(name = "username", length = MAX_STRING_LENGTH, nullable = false, unique = true)
     private String username;
 

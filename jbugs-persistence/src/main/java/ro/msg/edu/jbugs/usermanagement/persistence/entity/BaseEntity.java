@@ -15,6 +15,7 @@ public class BaseEntity implements Serializable {
     protected Long id;
 
     public BaseEntity() {
+        //Empty constructor needed for Entity
     }
 
     public Long getId() {

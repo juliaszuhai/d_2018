@@ -15,7 +15,7 @@ import java.util.Optional;
 @Stateless
 public class UserPersistenceManager {
 
-    private static final long serialVersionUID = 1L;
+
 
     @PersistenceContext(unitName = "jbugs-persistence")
     private EntityManager em;
@@ -24,22 +24,18 @@ public class UserPersistenceManager {
     /**
      * Persists a user in the database.
      * @param user : user entity to be created, should not be null
-     * @return : inserted user entity from database
      */
-    public User createUser(@NotNull User user) {
+    public void createUser(@NotNull User user) {
         em.persist(user);
         em.flush();
-        return user;
     }
 
     /**
      * Updates a user from the database.
      * @param user : user entity to be updated, should not be null
-     * @return : updated user entity from database
      */
-    public User updateUser(@NotNull User user) {
-
-        return em.merge(user);
+    public void updateUser(@NotNull User user) {
+        em.merge(user);
     }
 
     /**
@@ -72,8 +68,8 @@ public class UserPersistenceManager {
     /**
      * Returns a user optional containing a user entity
      * with the corresponding Id from the database.
-     * @param id
-     * @return
+     * @param id - id corresponding with the primary key from the user table in the db
+     * @return Optional of user
      */
     public Optional<User> getUserById(@NotNull Long id){
         TypedQuery<User> q = em.createNamedQuery(User.GET_USER_BY_ID,User.class)
@@ -110,16 +106,7 @@ public class UserPersistenceManager {
         return role;
     }
 
-    /**
-     * TODO: nu cred ca avem nevoie de metoda asta - nu am mai facut-o frumoasa
-     * Returns the role with the given id
-     * @param id : id
-     * @return : Role entity
-     */
-    public Role getRoleForId(long id) {
-        Query q = em.createQuery("SELECT r FROM Role r WHERE r.id=" + id);
-        return (Role) q.getSingleResult();
-    }
+
 
     /**
      * Get a list of all roles stored in the database.

@@ -6,7 +6,7 @@ addons:
     organization: "msgjt-github"
     branches:
       - master
-      - develop
+      - branchBun
 notifications:
   email: false
   on_success: never

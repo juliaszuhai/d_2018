@@ -184,10 +184,10 @@ public class UserManagementController {
 
     /**
      * TODO cazul in care nume + prenume < 6 si deja exista cineva cu acelasi nume.
-     *
-     * @param firstName
-     * @param lastName
-     * @return
+     * Generates a username from the first and last name.
+     * @param firstName :
+     * @param lastName :
+     * @return : the generated username
      */
     protected String generateUsername(@NotNull String firstName, @NotNull String lastName) {
 

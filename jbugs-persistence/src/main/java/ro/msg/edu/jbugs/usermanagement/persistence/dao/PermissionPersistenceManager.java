@@ -14,29 +14,34 @@ import java.util.Optional;
 @Stateless
 public class PermissionPersistenceManager {
 
-    //private static final Logger logger = LogManager.getLogger(PermissionPersistenceManager.class);
 
     @PersistenceContext(unitName = "jbugs-persistence")
     private EntityManager em;
 
 
-
-
-
-
-    public Permission createPermission(Permission permission) {
-
+    /**
+     * Persists the permission from the parameter in the database
+     * @param permission - permission entity
+     */
+    public void createPermission(Permission permission) {
         em.persist(permission);
-        return permission;
     }
 
 
-    public Permission updatePermission(Permission permission) {
+    /**
+     * Updates the permission in the database with the one in the paramter
+     * @param permission - permission entity
+     */
+    public void updatePermission(Permission permission) {
         em.merge(permission);
-        return permission;
     }
 
 
+    /**
+     * Removes the permission with the id from the parameter
+     * @param id - id of the permission to be removed
+     * @return
+     */
     public boolean removePermissionById(long id) {
         Permission permission = getPermissionForId(id);
         if(permission == null)
