@@ -4,7 +4,10 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.Role;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.Stateless;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
@@ -16,13 +19,13 @@ import java.util.Optional;
 public class UserPersistenceManager {
 
 
-
     @PersistenceContext(unitName = "jbugs-persistence")
     private EntityManager em;
 
 
     /**
      * Persists a user in the database.
+     *
      * @param user : user entity to be created, should not be null
      */
     public void createUser(@NotNull User user) {
@@ -32,6 +35,7 @@ public class UserPersistenceManager {
 
     /**
      * Updates a user from the database.
+     *
      * @param user : user entity to be updated, should not be null
      */
     public void updateUser(@NotNull User user) {
@@ -40,6 +44,7 @@ public class UserPersistenceManager {
 
     /**
      * Get a list of all users from the database.
+     *
      * @return : ResultList, empty if there are no users in the database.
      */
     public List<User> getAllUsers() {
@@ -51,12 +56,13 @@ public class UserPersistenceManager {
     /**
      * Returns a user entity with the matching username wrapped in an optional.
      * If none exist, returns an empty Optional Object
+     *
      * @param username : String containing the username.
      * @return : Optional, containing a user entity.
      */
     public Optional<User> getUserByUsername(@NotNull String username) {
-        TypedQuery<User> q = em.createNamedQuery(User.GET_USER_BY_USERNAME,User.class)
-                .setParameter("username",username);
+        TypedQuery<User> q = em.createNamedQuery(User.GET_USER_BY_USERNAME, User.class)
+                .setParameter("username", username);
         try {
             return Optional.of(q.getSingleResult());
         } catch (NoResultException ex) {
@@ -68,12 +74,13 @@ public class UserPersistenceManager {
     /**
      * Returns a user optional containing a user entity
      * with the corresponding Id from the database.
+     *
      * @param id - id corresponding with the primary key from the user table in the db
      * @return Optional of user
      */
-    public Optional<User> getUserById(@NotNull Long id){
-        TypedQuery<User> q = em.createNamedQuery(User.GET_USER_BY_ID,User.class)
-                .setParameter("id",id);
+    public Optional<User> getUserById(@NotNull Long id) {
+        TypedQuery<User> q = em.createNamedQuery(User.GET_USER_BY_ID, User.class)
+                .setParameter("id", id);
         try {
             return Optional.of(q.getSingleResult());
         } catch (NoResultException ex) {
@@ -84,6 +91,7 @@ public class UserPersistenceManager {
 
     /**
      * Persists a user in the database.
+     *
      * @param role : role entity to be created, should not be null
      */
     public void createRole(@NotNull Role role) {
@@ -92,12 +100,16 @@ public class UserPersistenceManager {
 
     /**
      * Removes a role from the database.
+     *
      * @param role : role entity to be removed, should not be null
      */
-    public void removeRole(Role role) { em.remove(role); }
+    public void removeRole(Role role) {
+        em.remove(role);
+    }
 
     /**
      * Updates a role in the database using the given Role entity.
+     *
      * @param role : role entity to be updated, should not be null
      * @return : returns the updated role entity
      */
@@ -107,13 +119,13 @@ public class UserPersistenceManager {
     }
 
 
-
     /**
      * Get a list of all roles stored in the database.
+     *
      * @return : List of Roles, empty if there are no roles in the database.
      */
     public List<Role> getAllRoles() {
-        TypedQuery<Role> q = em.createNamedQuery(Role.GET_ALL_ROLES,Role.class);
+        TypedQuery<Role> q = em.createNamedQuery(Role.GET_ALL_ROLES, Role.class);
         return q.getResultList();
     }
 
@@ -121,31 +133,19 @@ public class UserPersistenceManager {
     /**
      * Returns a user entity with the matching email wrapped in an optional.
      * If none exist, returns an empty Optional Object
+     *
      * @param email : String containing the email.
      * @return : Optional, containing a user entity.
      */
     public Optional<User> getUserByEmail(@NotNull String email) {
         TypedQuery<User> q = em.createNamedQuery(User.GET_USER_BY_EMAIL, User.class)
-                .setParameter("email",email);
+                .setParameter("email", email);
         try {
             return Optional.of(q.getSingleResult());
         } catch (NoResultException ex) {
             return Optional.empty();
         }
     }
-
-    /**
-     * TODO: de vazut alternative. Posibil sa nu mai trebuiasca.
-     * @param username
-     * @return
-     */
-    public List<String> getUsernamesLike(String username) {
-        Query q = em.createQuery("select u.username from User u where u.username like '" + username + "%'");
-        return q.getResultList();
-    }
-
-
-
 
 
 }

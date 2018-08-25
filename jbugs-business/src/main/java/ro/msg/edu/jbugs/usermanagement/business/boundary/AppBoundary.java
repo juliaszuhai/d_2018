@@ -2,8 +2,6 @@ package ro.msg.edu.jbugs.usermanagement.business.boundary;
 
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-
-
 import ro.msg.edu.jbugs.bugmanagement.business.boundary.AddBug;
 import ro.msg.edu.jbugs.bugmanagement.business.boundary.GenerateExcel;
 import ro.msg.edu.jbugs.bugmanagement.business.boundary.GeneratePdf;
@@ -19,6 +17,7 @@ import java.util.Set;
 @ApplicationPath("rest/")
 public class AppBoundary extends Application {
 
+    @Override
     public Set<Class<?>> getClasses(){
         final Set<Class<?>> classes = new HashSet<>();
         classes.add(JacksonJaxbJsonProvider.class);

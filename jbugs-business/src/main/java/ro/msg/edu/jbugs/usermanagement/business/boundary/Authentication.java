@@ -6,11 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.google.gson.Gson;
 import ro.msg.edu.jbugs.usermanagement.business.control.UserManagementController;
-import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
-
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
-
-import ro.msg.edu.jbugs.usermanagement.persistence.entity.Role;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.EJB;
@@ -18,13 +14,11 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
 
 
 @Path("/authenticate")

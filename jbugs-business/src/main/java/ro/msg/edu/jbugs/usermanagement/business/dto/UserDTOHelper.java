@@ -5,7 +5,7 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 public class UserDTOHelper {
 
-    private void UserDTO(){
+    private UserDTOHelper() {
         //empty private constructor to hide the public implicit one
     }
 
