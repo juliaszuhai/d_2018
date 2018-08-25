@@ -2,19 +2,26 @@ package ro.msg.edu.jbugs.bugmanagement.business.dto;
 
 
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
+import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.EJB;
+import java.util.Optional;
 
 public class BugDTOHelper {
 
     @EJB
     private static UserPersistenceManager userPersistenceManager;
 
-    public static BugDTO fromEntity(Bug bug){
+    private BugDTOHelper() {
+        //hiding the default constructor.
+    }
 
-        BugDTO bugDTO=new BugDTO();
+    public static BugDTO fromEntity(Bug bug) {
+
+        BugDTO bugDTO = new BugDTO();
 
         bugDTO.setId(bug.getId());
         bugDTO.setTitle(bug.getTitle());
@@ -25,13 +32,13 @@ public class BugDTOHelper {
         bugDTO.setFixedVersion(bug.getFixedVersion());
         bugDTO.setSeverity(bug.getSeverity());
 
-        NameIdDTO createdBy=new NameIdDTO();
+        NameIdDTO createdBy = new NameIdDTO();
 
         createdBy.setId(bug.getCreatedByUser().getId());
         createdBy.setUsername(bug.getCreatedByUser().getUsername());
         bugDTO.setCreatedByUser(createdBy);
 
-        NameIdDTO assignedTo=new NameIdDTO();
+        NameIdDTO assignedTo = new NameIdDTO();
 
         assignedTo.setId(bug.getAssignedTo().getId());
         assignedTo.setUsername(bug.getAssignedTo().getUsername());
@@ -41,7 +48,7 @@ public class BugDTOHelper {
 
     }
 
-    public static Bug toEntity(BugDTO bugDTO){
+    public static Bug toEntity(BugDTO bugDTO) throws BusinessException {
         Bug bug = new Bug();
 
         bug.setId(bugDTO.getId());
@@ -52,22 +59,26 @@ public class BugDTOHelper {
         bug.setFixedVersion(bugDTO.getFixedVersion());
         bug.setSeverity(bugDTO.getSeverity());
 
-        User createdByUser;
 
-        Long createByUserId=bugDTO.getCreatedByUser().getId();
-        System.out.println("BugDTOHelper"+ createByUserId);
-        //TODO: la fel ca in bug management
-        createdByUser=userPersistenceManager.getUserById(createByUserId).get();
-        bug.setCreatedByUser(createdByUser);
+        Long createByUserId = bugDTO.getCreatedByUser().getId();
+        Optional<User> createdByOp = userPersistenceManager.getUserById(createByUserId);
+        if (createdByOp.isPresent()) {
+            User createdByUser = createdByOp.get();
+            bug.setCreatedByUser(createdByUser);
+        } else {
+            throw new BusinessException(ExceptionCode.UNKNOWN_EXCEPTION);
+        }
 
 
-        User assignedTo=new User();
+        Long assignedToId = bugDTO.getAssignedTo().getId();
+        Optional<User> assignedToUserOp = userPersistenceManager.getUserById(assignedToId);
+        if (assignedToUserOp.isPresent()) {
+            User assignedTo = assignedToUserOp.get();
+            bug.setAssignedTo(assignedTo);
+        } else {
+            throw new BusinessException(ExceptionCode.UNKNOWN_EXCEPTION);
+        }
 
-        Long assignedToId=bugDTO.getAssignedTo().getId();
-        System.out.println("BugDTOHelper"+ assignedToId);
-        //TODO: La fel ca in bug management
-        assignedTo=userPersistenceManager.getUserById(assignedToId).get();
-        bug.setAssignedTo(assignedTo);
 
         return bug;
     }
