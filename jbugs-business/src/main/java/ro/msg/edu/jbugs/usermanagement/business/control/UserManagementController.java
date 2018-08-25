@@ -92,10 +92,10 @@ public class UserManagementController {
     }
 
     private boolean isValidEmail(String email) {
-        final Pattern VALID_EMAIL_ADDRESS_REGEX =
+        final Pattern validEmailAddressRegex =
                 Pattern.compile("^[A-Z0-9._%+-]+@msggroup.com$", Pattern.CASE_INSENSITIVE);
 
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+        Matcher matcher = validEmailAddressRegex.matcher(email);
         return matcher.find();
     }
 
@@ -253,9 +253,9 @@ public class UserManagementController {
     public User getUserForId(Long id) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserById(id);
         if (userOptional.isPresent()) {
-            throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
-        } else {
             return userOptional.get();
+        } else {
+            throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
         }
     }
 

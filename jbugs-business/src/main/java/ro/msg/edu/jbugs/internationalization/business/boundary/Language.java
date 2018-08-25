@@ -17,8 +17,6 @@ public class Language {
     private LanguageTranslator languageTranslator;
 
     private static final String FILE_PATH = "C:\\Users\\iftind\\Desktop\\JBUGS_D\\d_2018\\jbugs-business\\src\\main\\java\\ro\\msg\\edu\\jbugs\\internationalization\\business\\utils\\Language_";
-//    private static final String FILE_PATH = System.getProperty("user.dir");
-
 
     /**
      * Retrieve JSON File specific to each language available

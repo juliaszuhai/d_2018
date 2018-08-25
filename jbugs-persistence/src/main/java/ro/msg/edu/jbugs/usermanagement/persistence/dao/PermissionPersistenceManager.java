@@ -2,8 +2,6 @@ package ro.msg.edu.jbugs.usermanagement.persistence.dao;
 
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.Permission;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.Role;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.ejb.*;
 import javax.persistence.*;
