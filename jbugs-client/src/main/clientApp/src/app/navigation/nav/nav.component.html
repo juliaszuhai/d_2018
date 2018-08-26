@@ -1,0 +1,54 @@
+<mat-toolbar color="primary">
+
+  <span style="margin-right: 20px">JBugs</span>
+  <button mat-button  *ngIf="isLoggedIn()" routerLink="bugs">
+
+    {{(translatorService.json| async)?.header.bugs}}
+
+  </button>
+  <button mat-button [matMenuTriggerFor]="menuManage" *ngIf="isLoggedIn()">
+
+    {{(translatorService.json| async)?.header.manage}}
+  </button>
+  <mat-menu #menuManage="matMenu">
+    <button
+      mat-menu-item
+      *ngIf="isLoggedIn()"
+      routerLinkActive="active"
+      routerLink="manageusers">
+      {{(translatorService.json| async)?.header.users}}
+    </button>
+    <button
+      mat-menu-item
+      *ngIf="isLoggedIn()"
+      routerLinkActive="active"
+      routerLink="roles-and-permissions">
+      {{(translatorService.json| async)?.header.roles_and_permissions}}
+    </button>
+  </mat-menu>
+
+  <span class="fill-space"></span>
+
+
+  <div class="jbugs-translator">
+    <language-dropdown></language-dropdown>
+  </div>
+  <button mat-button [matMenuTriggerFor]="menu" *ngIf="isLoggedIn()">
+    {{getFirstName()}}
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLinkActive="active" routerLink="profile">
+      <i class="material-icons">account_circle</i>
+      {{(translatorService.json| async)?.header.profile}}
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <i class="material-icons">logout</i>
+      {{(translatorService.json| async)?.header.logout}}
+    </button>
+  </mat-menu>
+
+
+  <button mat-button *ngIf="!isLoggedIn()" routerLinkActive="active" routerLink="login">
+    {{(translatorService.json| async)?.header.login}}
+  </button>
+</mat-toolbar>

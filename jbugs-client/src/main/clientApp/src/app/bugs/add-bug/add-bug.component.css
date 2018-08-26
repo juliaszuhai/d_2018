@@ -1,0 +1,11 @@
+.errorMessage{
+  background: rgba(255, 155, 158, 0.54);
+  padding:10px 10px;
+  border-radius:10px;
+  margin:10px 0;
+}
+
+.example-full-width {
+  width: 80%;
+  margin-left: 10%;
+}

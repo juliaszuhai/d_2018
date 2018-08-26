@@ -1,0 +1,85 @@
+
+<div class="register-user-form">
+
+
+
+
+  <form
+    (ngSubmit) = "submitRegister()"
+    #registerForm = "ngForm"
+    #formElement
+  >
+    <h3>{{(this.translatorService.json|async)?.userManagement.registerUser}}</h3> <br>
+    <mat-form-field>
+      <input
+        matInput
+        #firstNameControl = "ngModel"
+        #firstNameElement
+        name = "firstName"
+        required
+        [(ngModel)] = "data.firstName"
+        placeholder="{{(this.translatorService.json|async)?.userManagement.firstName}}">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput
+             #lastNameControl = "ngModel"
+             #lastNameElement
+             name="lastName"
+             required
+             [(ngModel)] = "data.lastName"
+             placeholder="{{(this.translatorService.json|async)?.userManagement.lastName}}">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+    <input type="password"
+           #passwordElement
+           name="password"
+           matInput
+           [(ngModel)] = "data.password"
+           required
+           [formControl]="passwordFormControl"
+           [errorStateMatcher]="matcher"
+           placeholder="{{(this.translatorService.json|async)?.userManagement.password}}">
+
+      <mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPassowordErrorMessage()}}</mat-error>
+  </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input
+        #emailElement
+        name="email"
+        matInput
+        [(ngModel)] = "data.email"
+        required
+        [formControl]="emailFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="{{(this.translatorService.json|async)?.userManagement.email}}">
+      <mat-error *ngIf="emailFormControl.invalid">{{getEmailErrorMessages()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input
+        #phoneControl = "ngModel"
+        #phoneElement
+        name="phone"
+        matInput
+        required
+        [(ngModel)] = "data.phoneNumber"
+        placeholder="{{(this.translatorService.json|async)?.userManagement.phoneNumber}}">
+    </mat-form-field>
+    <br>
+      <button type="submit" mat-button >{{(this.translatorService.json|async)?.userManagement.buttonSubmit}}</button>
+  </form>
+  <div class="form-info">
+
+    {{(this.translatorService.json|async)?.userManagementErrorMsg.passwordRequirements}}:
+    <ul>
+      <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqLength}}</li>
+      <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqLetters}}</li>
+      <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqSpecial}}</li>
+      <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqDigit}}</li>
+    </ul>
+    {{(this.translatorService.json|async)?.userManagementErrorMsg.emailRequirement}}.
+  </div>
+</div>

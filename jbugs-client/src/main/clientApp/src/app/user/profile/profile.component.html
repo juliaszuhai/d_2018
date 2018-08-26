@@ -1,0 +1,16 @@
+<div class="profile">
+  <h2>{{(translatorService.json| async)?.profileWindow.welcome}}, {{this.userData.firstName}} !</h2>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{(translatorService.json| async)?.profileWindow.personalInfo}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p><span class="profile-label">{{(translatorService.json| async)?.profileWindow.firstName}}:</span> {{this.userData.firstName}}</p>
+    <p><span class="profile-label">{{(translatorService.json| async)?.profileWindow.lastName}}: </span>{{this.userData.lastName}}</p>
+    <p><span class="profile-label">{{(translatorService.json| async)?.profileWindow.email}}:</span> {{this.userData.email}}</p>
+    <p><span class="profile-label">{{(translatorService.json| async)?.profileWindow.phone}}:</span> {{this.userData.phoneNumber}}</p>
+
+  </mat-expansion-panel>
+</div>

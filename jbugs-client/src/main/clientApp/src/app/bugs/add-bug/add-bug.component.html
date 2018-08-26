@@ -1,0 +1,103 @@
+<div class="row addBug-component">
+  <div class="errorMessage server-error" *ngIf="displayError()">
+    {{getMessage()}}
+  </div>
+  <form (ngSubmit)="addBugForm()">
+    <fieldset>
+      <div class="form-group">
+        <div class="form-group">
+          <label for="titleInput">{{(translatorService.json| async)?.addBug.title}}  </label>
+          <input type="text"
+                 #titleElement
+                 #titleControl="ngModel"
+                 placeholder="{{(translatorService.json|async)?.addBug.inputTitle}}"
+                 name="title"
+                 id="titleInput"
+                 class="form-control"
+                 [(ngModel)]="bugData.title"
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="descriptionInput">{{(translatorService.json| async)?.addBug.description}}   </label>
+          <input type="text"
+                 #descriptionElement
+                 #descriptionControl="ngModel"
+                 placeholder="{{(translatorService.json|async)?.addBug.inputDescription}} "
+                 name="description"
+                 id="descriptionInput"
+                 class="form-control"
+                 [(ngModel)]="bugData.description"
+                 [ngClass]="{form_invalid: !validateDescription(), form_valid:validateDescription()}"
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="versionInput">{{(translatorService.json| async)?.addBug.version}}   </label>
+          <input type="text"
+                 #versionElement
+                 #versionControl="ngModel"
+                 placeholder="{{(translatorService.json|async)?.addBug.inputVersion}}"
+                 name="version"
+                 id="versionInput"
+                 class="form-control"
+                 [(ngModel)]="bugData.version"
+                 [ngClass]="{form_invalid: !validateVersion(), form_valid:validateVersion()}"
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="fixedVersionInput">{{(translatorService.json| async)?.addBug.fixedVersion}}   </label>
+          <input type="text"
+                 #versionElement
+                 #versionControl="ngModel"
+                 placeholder="{{(translatorService.json|async)?.addBug.inputFixedVersion}}"
+                 name="fixedVersion"
+                 id="fixedVersionInput"
+                 class="form-control"
+                 [(ngModel)]="bugData.fixedVersion"
+                 [ngClass]="{form_invalid: !validateVersion(), form_valid:validateVersion()}"
+                 required>
+        </div>
+
+        <div class="form-group">
+          <label for="targetDateInput">{{(translatorService.json| async)?.addBug.targetDate}}  </label>
+          <input
+            name="targetDate"
+            id="targetDateInput"
+            [(ngModel)]="bugData.targetDate"
+            [matDatepicker]="targetDate">
+          <mat-datepicker-toggle [for]="targetDate"></mat-datepicker-toggle>
+          <mat-datepicker #targetDate></mat-datepicker>
+
+        </div>
+        <div class="form-group">
+          <label >{{(translatorService.json| async)?.addBug.severity}}   </label>
+          <mat-form-field>
+            <mat-select [(value)]="bugData.severity" placeholder="{{(translatorService.json|async)?.addBug.severity}}">
+              <mat-option *ngFor="let severity of severities" [value]="severity">
+                {{severity}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <label for="assignedToInput">{{(translatorService.json| async)?.addBug.assignedTo}}</label>
+          <input type="text"
+                 #assignedToElement
+                 #assignedToControl="ngModel"
+                 placeholder="{{(translatorService.json|async)?.addBug.inputAssignedTo}}"
+                 name="assignedTo"
+                 id="assignedToInput"
+                 class="form-control"
+                 [(ngModel)]="bugData.assignedTo.username"
+                 required>
+        </div>
+
+      </div>
+    </fieldset>
+    <button color="primary"
+            mat-raised-button
+            style="margin:30px 0">
+      {{(translatorService.json| async)?.addBug.buttonAddBug}}
+    </button>
+  </form>
+</div>

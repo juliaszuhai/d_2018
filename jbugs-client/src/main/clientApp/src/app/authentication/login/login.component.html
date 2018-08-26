@@ -1,0 +1,66 @@
+<div class="row login-component">
+  <div class="login-form">
+    <form (ngSubmit)="submitForm()"
+          *ngIf="!isLoggedIn()"
+          #formControl="ngForm"
+          #formElement
+    >
+      <div class="errorMessage server-error" *ngIf="displayError()">
+        {{getMessage()}}
+      </div>
+      <fieldset>
+        <div class="form-group">
+          <div class="form-group">
+            <label for="usernameInput">{{(translatorService.json| async)?.loginWindow.username}}</label>
+            <input type="text"
+                   #usernameElement
+                   #usernameControl="ngModel"
+                   placeholder="{{(translatorService.json|async)?.loginWindow.inputUsername}}"
+                   name="username"
+                   id="usernameInput"
+                   class="form-control"
+                   [ngClass]="{form_invalid: !validateUsername(), form_valid:validateUsername()}"
+                   [(ngModel)]="userLoginData.username"
+                   required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">{{(translatorService.json| async)?.loginWindow.password}}</label>
+          <input type="password"
+                 #passwordElement
+                 #passwordControl="ngModel"
+                 placeholder="{{(translatorService.json|async)?.loginWindow.inputPassword}}"
+                 name="password"
+                 id="passwordInput"
+                 class="form-control"
+                 [(ngModel)]="userLoginData.password"
+                 [ngClass]="{form_invalid: !validatePassword(), form_valid:validatePassword()}"
+                 required>
+        </div>
+
+      </fieldset>
+      <div nbRecaptcha key="6LfwXmsUAAAAAA5Q7ULe0bxp2rC0ss0qSW21CS0N" ngForm="captcha"></div>
+      <button type="submit"
+              [disabled]="!validatePassword()||!validateUsername()"
+              color="primary"
+              style="margin-left: 40%;"
+              mat-stroked-button="login">{{(translatorService.json| async)?.loginWindow.submit}}!
+      </button>
+
+      <div class="errorMessage" *ngIf="!validateUsername()&&usernameControl.touched">
+        {{(translatorService.json| async)?.loginErrors.usernameErrorLength}}
+      </div>
+      <div class="errorMessage" *ngIf="!validatePassword()&&passwordControl.touched">
+        {{(translatorService.json| async)?.loginErrors.passwordErrorIntro}}
+        <ul>
+          <li>{{(translatorService.json| async)?.loginErrors.passwordErrorUpper}}</li>
+          <li>{{(translatorService.json| async)?.loginErrors.passwordErrorLower}},</li>
+          <li>{{(translatorService.json| async)?.loginErrors.passwordErrorDigit}}</li>
+          <li>{{(translatorService.json| async)?.loginErrors.passwordErrorSpecial}}</li>
+          <li>{{(translatorService.json| async)?.loginErrors.passwordErrorLength}}</li>
+        </ul>
+      </div>
+    </form>
+
+  </div>
+</div>

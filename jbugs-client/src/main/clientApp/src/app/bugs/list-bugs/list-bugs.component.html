@@ -1,0 +1,124 @@
+
+<button class="btn btn-sm"  type="button" (click)="openAddBug()">
+  <i class="material-icons">bug_report</i> {{(this.translatorService.json| async)?.addBug.buttonAddBug}}
+</button>
+
+<div align="center" (*ngFor)="ngOnInit()">
+  <table mat-table class="mat-elevation-z8" >
+    <thead>
+    <tr>
+      <th>{{(this.translatorService.json| async)?.bugTable.number}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.title}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.version}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.targetDate}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.status}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.fixedVersion}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.severity}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.createdBy}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.assignedTo}}</th>
+      <th>{{(this.translatorService.json| async)?.bugTable.exportExcel}}</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let bug of bugList; let i = index">
+      <td >{{i + 1}}</td>
+      <td>
+        <button class="btn btn-sm"  type="button" (click)="openDialog(bug)">{{bug.title}}
+        </button>
+      </td>
+      <td>{{bug.version}}</td>
+      <td>{{getDate(bug.targetDate).toDateString()}}</td>
+      <td>{{bug.status}}</td>
+      <td>{{bug.fixedVersion}}</td>
+      <td>{{bug.severity}}</td>
+      <td>{{bug.createdByUser.username}}</td>
+      <td>{{bug.assignedTo.id}}</td>
+      <td><input type="checkbox" #excelElem  (change)="onChangeCheck(bug, excelElem.checked)"></td>
+
+      <div *ngIf="excelElem.checked" >  </div>
+
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<a href="http://localhost:8080/jbugs/rest/view-bugs?{{selectedTitles}}"><button >EXCEL</button></a>
+
+
+<div align="center">
+  <div class="input-label">
+    <label for="titleInput"></label>
+    <input type="text"
+           #titleElement
+           name="title"
+           id="titleInput"
+           class="form-control"
+           required
+           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.title}}">
+  </div>
+
+  <div class="input-label">
+    <label for="descriptionInput"></label>
+    <input type="text"
+           #descriptionElement
+           name="description"
+           id="descriptionInput"
+           class="form-control"
+           required
+           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.description}}">
+  </div>
+
+  <div class="input-label">
+    <label for="statusInput"></label>
+    <input type="text"
+           #statusElement
+           name="status"
+           id="statusInput"
+           class="form-control"
+           required
+           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.status}}">
+  </div>
+
+  <div class="input-label">
+    <label for="severityInput"></label>
+    <input type="text"
+           #severityElement
+           name="title"
+           id="severityInput"
+           class="form-control"
+           required
+           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.severity}}">
+  </div>
+
+
+  <div align="center">
+    <button mat-button (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">{{(this.translatorService.json|async)?.bugFilter.filter}}</button>
+    <!--<mat-chip>One fish</mat-chip>-->
+  </div>
+
+  <div align="center">
+
+    <label>{{(this.translatorService.json|async)?.bugFilter.title}}</label>
+    <input type="checkbox" #sortElem (change)="0" >
+
+    <label>{{(this.translatorService.json|async)?.bugFilter.version}}</label>
+      <input type="checkbox" #sortElem2 (change)="0" >
+
+
+    <button mat-button *ngIf="sortElem.checked || sortElem2.checked" (click)="sort(sortElem.checked,sortElem2.checked)">
+      {{(this.translatorService.json|async)?.bugFilter.sort}}
+    </button>
+
+
+    <!--<mat-chip>One fish</mat-chip>-->
+  </div>
+
+  <!--<button type="submit"-->
+  <!--(click)="getBugsByDescriptionAndSeverity(titleElement.value,severityElement.value)"-->
+  <!--&gt;FindByDescriptionAndSeverity-->
+  <!--</button>-->
+
+</div>
+

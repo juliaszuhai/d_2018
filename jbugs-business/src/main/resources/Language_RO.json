@@ -1,0 +1,126 @@
+{
+  "loginWindow": {
+    "submit": "Confirma",
+    "username": "Nume utilizator",
+    "password": "Parola",
+    "inputUsername":"Inserati numele de utilizator aici...",
+    "inputPassword": "Inserati parola aici..."
+  },
+
+  "loginErrors": {
+    "usernameErrorLength": "Numele de utilizator trebuie sa fie de minim 6 caractere lungime",
+    "passwordErrorIntro": "Parola trebuie sa contina:",
+    "passwordErrorUpper": "Cel putin o litera mare,",
+    "passwordErrorLower": "Cel putin o litera mica,",
+    "passwordErrorDigit": "Cel putin o cifra,",
+    "passwordErrorSpecial": "Cel putin un caracter special,",
+    "passwordErrorLength": "Cel putin 6 caractere"
+
+  },
+
+  "header": {
+    "login":"Autentificare",
+    "content":"Continut",
+    "title":"JBugs",
+    "language":"Limba",
+    "bugs": "Bug-uri",
+    "users": "Utilizatori",
+    "logout": "Delogare",
+    "profile": "Profil",
+    "manage": "Administrator",
+    "roles_and_permissions": "Roluri si Permisiuni"
+  },
+
+  "profileWindow": {
+    "welcome": "Bun venit",
+    "personalInfo": "Informatii Personale",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "email": "Email",
+    "phone": "Numar telefon"
+  },
+
+  "addBug": {
+    "title": "Titlu",
+    "inputTitle": "Inserati titlul aici...",
+    "description": "Descriere",
+    "inputDescription": "Inserati descrierea aici...",
+    "version": "Versiune",
+    "inputVersion": "Inserati versiunea aici...",
+    "fixedVersion": "Versiune Fixata",
+    "inputFixedVersion": "Inserati versiunea fixa aici...",
+    "targetDate": "Data limita",
+    "severity": "Severitate",
+    "CRITICAL": "CRITICA",
+    "HIGH": "RIDICATA",
+    "MEDIUM": "MEDIE",
+    "LOW": "MICA",
+    "assignedTo": "Responsabil",
+    "inputAssignedTo": "Inserati numele aici...",
+    "buttonAddBug": "Adaugare Bug"
+
+  },
+
+  "bugPopup": {
+    "description": "Descriere",
+    "exportPdf": "Exportare Pdf"
+  },
+
+  "bugTable": {
+    "number": "#",
+    "title": "Titlu",
+    "version": "Versiune",
+    "targetDate": "Data Limita",
+    "status": "Stadiu",
+    "fixedVersion": "Versiune Fixata",
+    "severity": "Severitate",
+    "createdBy": "Creat de catre",
+    "assignedTo": "Responsabil",
+    "exportExcel": "Exportare Excel"
+  },
+
+  "bugFilter": {
+    "title": "Titlu",
+    "description": "Descriere",
+    "status": "Stadiu",
+    "severity": "Severitate",
+    "version": "Versiune",
+    "sort": "Sortare",
+    "filter": "Filtrare"
+  },
+
+  "userManagement": {
+    "buttonAddUser": "Adauga Utilizator",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "username": "Nume utilizator",
+    "email": "E-mail",
+    "phoneNumber": "Numar Telefon",
+    "activation": "Activare",
+    "edit": "Editare",
+    "buttonActivate": "Activeaza",
+    "buttonDeactivate": "Dezactiveaza",
+    "buttonEdit": "Editeaza Utilizator",
+    "password": "Parola",
+    "buttonSubmit": "Confirma",
+    "registerUser": "Inregistrare Utilizator",
+    "updateUser": "Actualizare Utilizator"
+
+  },
+
+  "userManagementErrorMsg": {
+    "updateUserNoChange": "Daca nu doriti schimbarea parolei, lasati campul liber",
+    "passwordRequirements": "Parola trebuie sa contina",
+    "emailRequirement": "E-mail-ul trebuie sa fie inregistrat pe domeniul msggroup.com",
+    "required": "Acest camp este obligatoriu",
+    "invalidEmail": "Format e-mail invalid",
+    "invalidDomain": "Domeniu e-mail invalid",
+    "invalidPassword": "Format parola invalid",
+    "passwordReqLength": "cel putin 6 caractere",
+    "passwordReqLetters": "o litera mare si o litera mica",
+    "passwordReqSpecial": "un caracter special",
+    "passwordReqDigit": "o cifra"
+  }
+
+
+}

@@ -1,0 +1,14 @@
+<div xmlns="http://java.sun.com/jsf/html" class="col-md-4">
+  <mat-menu #lngMenu="matMenu">
+
+    <p *ngFor="let languages of allLanguages">
+      <button mat-menu-item (click)="changeLanguage($event, languages.Id)">
+        {{languages.Name}}
+      </button>
+    </p>
+
+  </mat-menu>
+  <button mat-button id="language"[matMenuTriggerFor]="lngMenu">
+    {{(translatorService.json| async)?.header.language}}
+  </button>
+</div>
