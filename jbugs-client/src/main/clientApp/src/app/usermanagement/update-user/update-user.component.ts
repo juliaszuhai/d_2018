@@ -4,6 +4,7 @@ import {UserManagementComponent} from "../user-management/user-management.compon
 import {FormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {MyErrorStateMatcher, UserData} from "../register-user/register-user.component";
+import {TranslatorService} from "../../translator/translator.service";
 
 @Component({
   selector: 'app-update-user',
@@ -13,6 +14,7 @@ import {MyErrorStateMatcher, UserData} from "../register-user/register-user.comp
 export class UpdateUserComponent implements OnInit {
 
   constructor(
+    public translatorService: TranslatorService,
     public dialogRef: MatDialogRef<UserManagementComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UserData,
     public usermgmt: UsermanagementService) {

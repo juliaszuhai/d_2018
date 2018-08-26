@@ -40,8 +40,15 @@ export class TranslatorComponent implements OnInit {
 
   public changeLanguage(event, id){
     this.translatorService.getTranslationObservable(id);
-
+    this.switchLanguage(id);
 
   }
 
+  public switchLanguage(id){
+    if(id == 1 && this.translatorService.switch == false)
+      this.translatorService.switch = !this.translatorService.switch;
+    else if(id == 0 && this.translatorService.switch == true)
+      this.translatorService.switch = !this.translatorService.switch;
+
+  }
 }

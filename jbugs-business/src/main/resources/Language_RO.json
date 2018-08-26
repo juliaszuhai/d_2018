@@ -1,6 +1,6 @@
 {
   "loginWindow": {
-    "submit": "Inainteaza",
+    "submit": "Confirma",
     "username": "Nume utilizator",
     "password": "Parola",
     "inputUsername":"Inserati numele de utilizator aici...",
@@ -87,5 +87,40 @@
     "version": "Versiune",
     "sort": "Sortare",
     "filter": "Filtrare"
+  },
+
+  "userManagement": {
+    "buttonAddUser": "Adauga Utilizator",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "username": "Nume utilizator",
+    "email": "E-mail",
+    "phoneNumber": "Numar Telefon",
+    "activation": "Activare",
+    "edit": "Editare",
+    "buttonActivate": "Activeaza",
+    "buttonDeactivate": "Dezactiveaza",
+    "buttonEdit": "Editeaza Utilizator",
+    "password": "Parola",
+    "buttonSubmit": "Confirma",
+    "registerUser": "Inregistrare Utilizator",
+    "updateUser": "Actualizare Utilizator"
+
+  },
+
+  "userManagementErrorMsg": {
+    "updateUserNoChange": "Daca nu doriti schimbarea parolei, lasati campul liber",
+    "passwordRequirements": "Parola trebuie sa contina",
+    "emailRequirement": "E-mail-ul trebuie sa fie inregistrat pe domeniul msggroup.com",
+    "required": "Acest camp este obligatoriu",
+    "invalidEmail": "Format e-mail invalid",
+    "invalidDomain": "Domeniu e-mail invalid",
+    "invalidPassword": "Format parola invalid",
+    "passwordReqLength": "cel putin 6 caractere",
+    "passwordReqLetters": "o litera mare si o litera mica",
+    "passwordReqSpecial": "un caracter special",
+    "passwordReqDigit": "o cifra"
   }
+
+
 }

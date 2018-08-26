@@ -9,7 +9,7 @@
     #registerForm = "ngForm"
     #formElement
   >
-    <h3>Register User</h3> <br>
+    <h3>{{(this.translatorService.json|async)?.userManagement.registerUser}}</h3> <br>
     <mat-form-field>
       <input
         matInput
@@ -18,7 +18,7 @@
         name = "firstName"
         required
         [(ngModel)] = "data.firstName"
-        placeholder="First Name">
+        placeholder="{{(this.translatorService.json|async)?.userManagement.firstName}}">
     </mat-form-field>
     <br>
     <mat-form-field>
@@ -28,7 +28,7 @@
              name="lastName"
              required
              [(ngModel)] = "data.lastName"
-             placeholder="Last Name">
+             placeholder="{{(this.translatorService.json|async)?.userManagement.lastName}}">
     </mat-form-field>
     <br>
     <mat-form-field>
@@ -40,9 +40,9 @@
            required
            [formControl]="passwordFormControl"
            [errorStateMatcher]="matcher"
-           placeholder="Password">
+           placeholder="{{(this.translatorService.json|async)?.userManagement.password}}">
 
-      <mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPassowrdErrorMessage()}}</mat-error>
+      <mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPassowordErrorMessage()}}</mat-error>
   </mat-form-field>
     <br>
     <mat-form-field>
@@ -51,9 +51,10 @@
         name="email"
         matInput
         [(ngModel)] = "data.email"
+        required
         [formControl]="emailFormControl"
         [errorStateMatcher]="matcher"
-        placeholder="Email">
+        placeholder="{{(this.translatorService.json|async)?.userManagement.email}}">
       <mat-error *ngIf="emailFormControl.invalid">{{getEmailErrorMessages()}}</mat-error>
     </mat-form-field>
     <br>
@@ -65,20 +66,20 @@
         matInput
         required
         [(ngModel)] = "data.phoneNumber"
-        placeholder="PhoneNumber">
+        placeholder="{{(this.translatorService.json|async)?.userManagement.phoneNumber}}">
     </mat-form-field>
     <br>
-      <button type="submit" mat-button >Submit</button>
+      <button type="submit" mat-button >{{(this.translatorService.json|async)?.userManagement.buttonSubmit}}</button>
   </form>
   <div class="form-info">
 
-    Password must have:
+    {{(this.translatorService.json|async)?.userManagementErrorMsg.passwordRequirements}}:
     <ul>
-      <li>at least 6 characters</li>
-      <li>an uppercase and a lowercase letter</li>
-      <li>a special character</li>
-      <li>a number</li>
+      <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqLength}}</li>
+      <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqLetters}}</li>
+      <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqSpecial}}</li>
+      <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqDigit}}</li>
     </ul>
-    Email must be registered on the msggroup.com domain.
+    {{(this.translatorService.json|async)?.userManagementErrorMsg.emailRequirement}}.
   </div>
 </div>

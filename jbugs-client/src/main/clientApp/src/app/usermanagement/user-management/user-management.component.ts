@@ -3,6 +3,8 @@ import {UsermanagementService} from "../usermanagement.service";
 import {MatDialog} from "@angular/material";
 import {RegisterUserComponent, UserData} from "../register-user/register-user.component";
 import {UpdateUserComponent} from "../update-user/update-user.component";
+import {TranslatorService} from "../../translator/translator.service";
+import {element} from "protractor";
 
 export interface UserElement {
   firstName: string;
@@ -25,7 +27,7 @@ export class UserManagementComponent implements OnInit {
 
   dataSource: any;
 
-  constructor(private usrMgmtService: UsermanagementService,public dialog: MatDialog) {
+  constructor(private usrMgmtService: UsermanagementService, public dialog: MatDialog, public translatorService: TranslatorService) {
 
   }
 
@@ -81,9 +83,11 @@ export class UserManagementComponent implements OnInit {
 
   getActivationButtonText(isActive) {
     if (isActive) {
-      return "Deactivate";
+     return (this.translatorService.switch)?"Dezactivare":"Deactivate";
+
     } else {
-      return "Activate";
+      return (this.translatorService.switch)?"Activare":"Activate";
+
     }
   }
 

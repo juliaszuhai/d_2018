@@ -36,7 +36,7 @@
     "personalInfo": "Personal Information",
     "firstName": "First Name",
     "lastName": "Last Name",
-    "email": "Email",
+    "email": "E-mail",
     "phone": "Phone Number"
   },
 
@@ -87,5 +87,38 @@
     "version": "Version",
     "sort": "Sort",
     "filter": "Filter"
+  },
+
+  "userManagement": {
+    "buttonAddUser": "Add User",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "username": "Username",
+    "email": "E-mail",
+    "phoneNumber": "Phone Number",
+    "activation": "Activation",
+    "edit": "Edit",
+    "buttonActivate": "Activate",
+    "buttonDeactivate": "Deactivate",
+    "buttonEdit": "Edit User",
+    "password": "Password",
+    "buttonSubmit": "Submit",
+    "registerUser": "Register User",
+    "updateUser": "Update User"
+
+  },
+
+  "userManagementErrorMsg": {
+    "updateUserNoChange": "If you don't want to change the password please leave it empty",
+    "passwordRequirements": "Password must contain",
+    "emailRequirement": "E-mail must be registered on the msggroup.com domain",
+    "required": "This field is required",
+    "invalidEmail": "Invalid e-mail format",
+    "invalidDomain": "Unsupported e-mail domain",
+    "invalidPassword": "Not a valid password format",
+    "passwordReqLength": "at least 6 characters",
+    "passwordReqLetters": "an uppercase and a lowercase letter",
+    "passwordReqSpecial": "a special character",
+    "passwordReqDigit": "a digit"
   }
 }

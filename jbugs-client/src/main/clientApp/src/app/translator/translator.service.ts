@@ -10,11 +10,12 @@ import {Observable} from "rxjs/Observable";
 
 export class TranslatorService {
   public json: Observable<Object>;
+  public switch: boolean;
   baseURL = 'http://localhost:8080/jbugs/rest/language/';
 
 
   constructor(private http: HttpClient) {
-
+    this.switch = false;
   }
 
   public getLanguageFile(id: number) {
