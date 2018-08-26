@@ -28,9 +28,10 @@ public class UserPersistenceManager {
      *
      * @param user : user entity to be created, should not be null
      */
-    public void createUser(@NotNull User user) {
+    public User createUser(@NotNull User user) {
         em.persist(user);
         em.flush();
+        return user;
     }
 
     /**
