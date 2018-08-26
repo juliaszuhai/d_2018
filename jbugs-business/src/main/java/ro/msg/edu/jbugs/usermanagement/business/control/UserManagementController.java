@@ -1,5 +1,9 @@
 package ro.msg.edu.jbugs.usermanagement.business.control;
 
+import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
+import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
@@ -26,6 +30,9 @@ public class UserManagementController {
 
     @EJB
     private UserPersistenceManager userPersistenceManager;
+
+    @EJB
+    private BugPersistenceManager bugPersistenceManager;
 
     /**
      * Creates a user entity using a user DTO.
@@ -145,6 +152,21 @@ public class UserManagementController {
         return userPersistenceManager.getAllUsers()
                 .stream()
                 .map(UserDTOHelper::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     *
+     * @param username
+     * @return: A list og Bugs assigned to a user, given it's username
+     * @throws BusinessException
+     */
+    public List<BugDTO> getBugsAssignedToUser(String username) throws BusinessException {
+
+      return  bugPersistenceManager.getAllBugs()
+                .stream()
+                .filter(bug -> bug.getAssignedTo().getUsername().equals(username))
+                .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());
     }
 
