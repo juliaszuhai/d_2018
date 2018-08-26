@@ -1,11 +1,10 @@
+package ro.msg.edu.jbugs.usermanagement.business.boundary;
 
 import com.auth0.jwt.JWT;
 import com.google.gson.Gson;
-
 import com.google.gson.reflect.TypeToken;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
-
 import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.Permission;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.Role;
@@ -18,7 +17,6 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.lang.reflect.AnnotatedElement;
@@ -130,10 +128,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 .stream()
                 .map(role -> {
                     List<Permission> permissions = role.getPermissions();
-                    List<String> permisionType = permissions.stream()
-                            .map(permission -> permission.getType())
+                    return permissions.stream()
+                            .map(Permission::getType)
                             .collect(Collectors.toList());
-                    return permisionType;
+
                 }).collect(Collectors.toList());
 
         return userPermisions.stream()

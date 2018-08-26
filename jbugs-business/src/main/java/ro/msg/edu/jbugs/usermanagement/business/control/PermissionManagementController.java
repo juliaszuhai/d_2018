@@ -156,11 +156,10 @@ public class PermissionManagementController {
     }
 
     public List<Permission> getAllPermissions() {
-        Optional<List<Permission>> allPermissions = permissionPersistenceManager.getAllPermissions();
-        if (allPermissions.isPresent()) {
-            return allPermissions.get();
-        } else {
-            return new LinkedList<>();
-        }
+        return permissionPersistenceManager.getAllPermissions();
+    }
+
+    public List<Role> getAllRoles() {
+        return permissionPersistenceManager.getAllRoles();
     }
 }

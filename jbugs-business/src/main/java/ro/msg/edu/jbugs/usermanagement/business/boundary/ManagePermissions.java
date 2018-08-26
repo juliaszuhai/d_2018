@@ -1,15 +1,19 @@
 package ro.msg.edu.jbugs.usermanagement.business.boundary;
 
 
+import com.google.gson.Gson;
 import ro.msg.edu.jbugs.usermanagement.business.control.PermissionManagementController;
 import ro.msg.edu.jbugs.usermanagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 
 import javax.ejb.EJB;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
-@Path("/managepermissions")
+@Path("/manage-permissions")
 public class ManagePermissions {
     @EJB
     private UserManagementController userManagementController;
@@ -69,4 +73,22 @@ public class ManagePermissions {
     }
 
 
+    @GET
+    @Path("get-all-permissions")
+    @Produces("application/json")
+    public Response getAllPermissions() {
+        return Response
+                .ok(new Gson().toJson(permissionManagementController.getAllPermissions()))
+                .build();
+    }
+
+
+    @GET
+    @Path("get-all-roles")
+    @Produces("application/json")
+    public Response getAllRoles() {
+        return Response
+                .ok(new Gson().toJson(permissionManagementController.getAllRoles()))
+                .build();
+    }
 }

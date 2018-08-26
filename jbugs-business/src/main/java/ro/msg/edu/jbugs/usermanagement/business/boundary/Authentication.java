@@ -5,6 +5,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.google.gson.Gson;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ro.msg.edu.jbugs.usermanagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
@@ -28,6 +30,7 @@ public class Authentication {
     @EJB
     private UserManagementController userManagement;
 
+    static Logger log = LogManager.getLogger(Authentication.class.getName());
 
     @POST
     @Produces("application/json")
@@ -71,7 +74,7 @@ public class Authentication {
 
         } catch (JWTCreationException exception) {
             //Invalid Signing configuration / Couldn't convert Claims.
-//            exception.printStackTrace();
+            log.catching(exception);
             return "";
         }
 

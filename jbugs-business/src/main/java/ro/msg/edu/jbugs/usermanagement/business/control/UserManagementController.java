@@ -3,7 +3,7 @@ package ro.msg.edu.jbugs.usermanagement.business.control;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
@@ -155,13 +155,23 @@ public class UserManagementController {
                 .collect(Collectors.toList());
     }
 
+
+    public long getUnifinishedBugsAssignedToUser(String username) {
+        return getBugsAssignedToUser(username)
+                .stream()
+                .filter(bug -> bug.getStatus().equals(Status.CLOSED) ||
+                        bug.getStatus().equals(Status.FIXED)
+                )
+                .count();
+    }
+
     /**
      *
      * @param username
      * @return: A list og Bugs assigned to a user, given it's username
      * @throws BusinessException
      */
-    public List<BugDTO> getBugsAssignedToUser(String username) throws BusinessException {
+    public List<BugDTO> getBugsAssignedToUser(String username) {
 
       return  bugPersistenceManager.getAllBugs()
                 .stream()

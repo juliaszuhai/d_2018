@@ -11,7 +11,7 @@ import java.util.Objects;
                 @NamedQuery(name = Permission.GET_PERMISSION_BY_TYPE, query = "SELECT p FROM Permission p where p.type = :type"),
                 @NamedQuery(name = Permission.GET_PERMISSION_BY_ID, query = "SELECT p FROM Permission p where p.id = :id"),
                 @NamedQuery(name = Permission.GET_PERMISSIONS_FOR_ROLE, query = "SELECT r.permissions FROM Role r WHERE r=:role"),
-                @NamedQuery(name = Permission.GET_ALL_PERMISSIONS, query = "SELECT r.permissions FROM Role r WHERE r=:role"),
+                @NamedQuery(name = Permission.GET_ALL_PERMISSIONS, query = "SELECT p from Permission p"),
 
         }
 )

@@ -3,6 +3,7 @@ package ro.msg.edu.jbugs.bugmanagement.business.control;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+import ro.msg.edu.jbugs.bugmanagement.business.boundary.GenerateExcel;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
@@ -14,7 +15,7 @@ import java.util.List;
 @RunWith(MockitoJUnitRunner.class)
 public class GenerateExcelTest {
 
-    private ro.msg.edu.jbugs.bugManagement.business.boundary.GenerateExcel excel;
+    private GenerateExcel excel;
 
     @Test
     public void testGenerateExcel_ExpectedOK()

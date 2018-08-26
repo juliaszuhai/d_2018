@@ -45,19 +45,11 @@ public class PermissionPersistenceManager {
      * @param id - id of the permission to be removed
      * @return
      */
-    public boolean removePermissionById(long id) {
-        Optional<Permission> permissionOptional = getPermissionForId(id);
-        permissionOptional.ifPresent(permOp ->
-                getAllRoles().ifPresent(roleOp ->
-                        roleOp.forEach(role ->
-                                role.getPermissions().remove(permOp)
-                        )
-                )
-        );
-        if (!permissionOptional.isPresent())
-            return false;
-        em.remove(permissionOptional.get());
-        return true;
+    public void removePermissionById(long id) {
+        getAllPermissions()
+                .stream()
+                .filter(permission -> permission.getId() == id)
+                .forEach(permission -> em.remove(permission));
     }
 
 
@@ -85,17 +77,17 @@ public class PermissionPersistenceManager {
     }
 
 
-    public Optional<List<Permission>> getPermissionsForRole(Role role) {
+    public List<Permission> getPermissionsForRole(Role role) {
         TypedQuery<Permission> query = em.createNamedQuery(Permission.GET_PERMISSIONS_FOR_ROLE, Permission.class)
                 .setParameter("role", role);
-        return Optional.ofNullable(query.getResultList());
+        return query.getResultList();
 
     }
 
 
-    public Optional<List<Permission>> getAllPermissions() {
+    public List<Permission> getAllPermissions() {
         TypedQuery<Permission> query = em.createNamedQuery(Permission.GET_ALL_PERMISSIONS, Permission.class);
-        return Optional.ofNullable(query.getResultList());
+        return query.getResultList();
     }
 
 
@@ -116,9 +108,9 @@ public class PermissionPersistenceManager {
         }
     }
 
-    public Optional<List<Role>> getAllRoles() {
+    public List<Role> getAllRoles() {
         TypedQuery<Role> q = em.createNamedQuery(Role.GET_ALL_ROLES, Role.class);
-        return Optional.of(q.getResultList());
+        return q.getResultList();
     }
 
     public Optional<Permission> getPermissionByType(String type) {
