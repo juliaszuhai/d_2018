@@ -1,8 +1,6 @@
 package ro.msg.edu.jbugs.bugmanagement.persistence.entity;
 
-import ro.msg.edu.jbugs.usermanagement.persistence.entity.BaseEntity;
-import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
-
+import ro.msg.edu.jbugs.usermanagement.persistence.entity.*;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
@@ -26,7 +24,7 @@ public class Bug extends BaseEntity  {
 
 
     @Transient
-    private final static int MAX_STRING_LENGTH = 40;
+    private static final int MAX_STRING_LENGTH = 40;
     public static final String GET_ALL_BUGS = "get_All_Bugs";
     public static final String GET_BUG_BY_TITLE = "get_Bug_By_Title";
     public static final String GET_BUG_BY_ID="get_Bug_By_Id";
@@ -64,10 +62,6 @@ public class Bug extends BaseEntity  {
     @ManyToOne
     @JoinColumn(name="assignedTo")
     private User assignedTo;
-
-    public Bug(){
-
-    }
 
     public String getTitle() {
         return title;

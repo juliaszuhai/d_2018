@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.bugmanagement.business.boundary;
+package ro.msg.edu.jbugs.bugManagement.business.boundary;
 
 
 import org.apache.poi.ss.usermodel.Cell;

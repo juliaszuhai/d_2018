@@ -10,12 +10,9 @@ import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ws.rs.ext.ExceptionMapper;
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -44,7 +41,7 @@ public class BugManagementController  implements BugManagement {
         List<BugDTO> bugs = bugPersistenceManager.getAllBugs().stream()
                 .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());
-        List<BugDTO> selectedBugs = new ArrayList<BugDTO>();
+        List<BugDTO> selectedBugs = new ArrayList<>();
         for (int k = 0; k < titles.size(); k++) {
             for (int l = 0; l < bugs.size(); l++) {
                 if (titles.get(k).equals(bugs.get(l).getId())) {
@@ -97,13 +94,10 @@ public class BugManagementController  implements BugManagement {
         } else {
             throw new BusinessException(); // TODO : adauga exceptie buna
         }
-        try{
             this.isBugValid(bug);
             bugPersistenceManager.createBug(bug);
             return bugDTO;
-        } catch (BusinessException e) {
-            throw e;
-        }
+
     }
 
 
@@ -129,11 +123,11 @@ public class BugManagementController  implements BugManagement {
 
     @Override
     public boolean validateVersion(String version) throws BusinessException {
-        final Pattern VALID_VERSION_REGEX =
+        final Pattern validVersionRegex =
                 Pattern.compile("([a-zA-Z0-9]+).([a-zA-Z0-9]+).([a-zA-Z0-9]+)", Pattern.CASE_INSENSITIVE);
 
-        Matcher matcher = VALID_VERSION_REGEX.matcher(version);
-        if (matcher.find() == false)
+        Matcher matcher = validVersionRegex.matcher(version);
+        if (!matcher.find())
             throw new BusinessException(ExceptionCode.VERSION_NOT_VALID);
 
         return true;

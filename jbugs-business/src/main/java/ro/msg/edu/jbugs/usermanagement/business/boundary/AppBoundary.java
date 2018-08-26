@@ -3,7 +3,6 @@ package ro.msg.edu.jbugs.usermanagement.business.boundary;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import ro.msg.edu.jbugs.bugmanagement.business.boundary.AddBug;
-import ro.msg.edu.jbugs.bugmanagement.business.boundary.GenerateExcel;
 import ro.msg.edu.jbugs.bugmanagement.business.boundary.GeneratePdf;
 import ro.msg.edu.jbugs.bugmanagement.business.boundary.ListBugs;
 import ro.msg.edu.jbugs.internationalization.business.boundary.Language;
@@ -26,7 +25,7 @@ public class AppBoundary extends Application {
         classes.add(Registration.class);
         classes.add(GeneratePdf.class);
         classes.add(AddBug.class);
-        classes.add(GenerateExcel.class);
+        classes.add(ro.msg.edu.jbugs.bugManagement.business.boundary.GenerateExcel.class);
         classes.add(ListBugs.class);
         classes.add(Language.class);
         classes.add(ManageUsers.class);

@@ -26,23 +26,21 @@ export class AddBugComponent implements OnInit {
               private router: Router,
               public translatorService: TranslatorService) {
     this.bugData={
-      id:1,
-      title:'',
+      id: null,
+     title:'',
       description:'',
       version:'',
       fixedVersion:'',
       targetDate: new Date(''),
       status:'NEW',
       severity:'',
-      createdByUser: {id:4,username:this.bugService.getLoggedUserName()},
+      createdByUser: {id:4,username:bugService.getLoggedUserName()},
       assignedTo: {id:4,username:''}
 
     }
     this.error = false;
     this.errorMessage = '';
   }
-
-
 
   ngOnInit() {
   }

@@ -8,7 +8,6 @@ import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
-
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.QueryParam;
@@ -28,9 +27,9 @@ public class ListBugs {
         List<BugDTO> allBugs = bugManagement.getAllBugs();
         ObjectMapper mapper = new ObjectMapper();
 
-        String jsonResponse = mapper.writeValueAsString(allBugs);
+        return mapper.writeValueAsString(allBugs);
 
-        return jsonResponse;
+
     }
 
     @GET
@@ -41,9 +40,8 @@ public class ListBugs {
         List<BugDTO> allBugs = bugManagement.filter(title, description, status, severity);
         ObjectMapper mapper = new ObjectMapper();
 
-        String jsonResponse = mapper.writeValueAsString(allBugs);
+        return mapper.writeValueAsString(allBugs);
 
-        return jsonResponse;
     }
 
     @GET
@@ -53,8 +51,8 @@ public class ListBugs {
         List<BugDTO> allBugs = bugManagement.sort(title, version);
         ObjectMapper mapper = new ObjectMapper();
 
-        String jsonResponse = mapper.writeValueAsString(allBugs);
+        return mapper.writeValueAsString(allBugs);
 
-        return jsonResponse;
+
     }
 }

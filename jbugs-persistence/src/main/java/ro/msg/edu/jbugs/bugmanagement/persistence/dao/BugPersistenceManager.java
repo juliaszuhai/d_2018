@@ -1,9 +1,6 @@
 package ro.msg.edu.jbugs.bugmanagement.persistence.dao;
 
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
-
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.*;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
@@ -109,11 +106,11 @@ public class BugPersistenceManager {
 
         List<Order> result = new ArrayList<>();
 
-        if(title==true){
+        if(title){
             result.add(builder.asc(root.get("title")));
         }
 
-        if(version==true){
+        if(version){
             result.add(builder.asc(root.get("version")));
         }
 
