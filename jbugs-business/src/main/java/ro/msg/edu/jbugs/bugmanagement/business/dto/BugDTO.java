@@ -1,6 +1,8 @@
 package ro.msg.edu.jbugs.bugmanagement.business.dto;
 
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.*;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
+
 import java.util.Date;
 
 public class BugDTO {

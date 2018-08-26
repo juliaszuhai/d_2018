@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 @Path("/add-bug")
 public class AddBug {
 
@@ -40,17 +41,15 @@ public class AddBug {
 
     ) {
         try {
-            System.out.println("intra aici");
+
             User user = userManagement.getUserForUsername(assignedTo);
             User user2 = userManagement.getUserForUsername(createdBy);
             NameIdDTO assignedUser = new NameIdDTO();
             assignedUser.setId(user.getId());
             assignedUser.setUsername(assignedTo);
-            System.out.println("am format un user" + assignedUser.getId());
             NameIdDTO createdUser = new NameIdDTO();
             createdUser.setId(user2.getId());
             createdUser.setUsername(createdBy);
-            System.out.println("am format al doilea user" + createdUser.getId());
             BugDTO bugDTO = new BugDTO();
             bugDTO.setTitle(title);
             bugDTO.setDescription(description);
@@ -61,18 +60,14 @@ public class AddBug {
             Date date = new java.sql.Date(new SimpleDateFormat("yyyy-mm-dd").parse(targetDate).getTime());
             bugDTO.setTargetDate(date);
             bugDTO.setSeverity(Severity.valueOf(severity));
-            System.out.println("severity " + bugDTO.getSeverity());
             bugDTO.setCreatedByUser(createdUser);
-            System.out.println("am format bug-ul");
 
             bugManagement.createBug(bugDTO);
 
             return Response.status(Response.Status.CREATED).build();
 
-        } catch (BusinessException e) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
-        } catch (ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException e) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
+        } catch (BusinessException | ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         } catch (ParseException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
