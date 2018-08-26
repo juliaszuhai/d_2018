@@ -1,5 +1,4 @@
-package ro.msg.edu.jbugs.bugManagement.business.boundary;
-
+package ro.msg.edu.jbugs.bugmanagement.business.boundary;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -40,7 +39,7 @@ public class GenerateExcel {
     {
         List<BugDTO> selectedBugs=bugManagement.getBugsWithId(titles);
         Map< String, Object[] > empinfo =
-                new TreeMap< String, Object[] >();
+                new TreeMap< >();
 
         empinfo.put( "1", new Object[] { "Title", "Description", "Version" ,"TargetDate","Status","FixedVersion","Severity","CreatedBy","AssignedTo"});
         for(int i=0;i<selectedBugs.size();i++)

@@ -1,5 +1,3 @@
-package ro.msg.edu.jbugs.usermanagement.business.boundary;
-
 
 import com.auth0.jwt.JWT;
 import com.google.gson.Gson;
@@ -101,11 +99,11 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     private List<String> extractPermission(AnnotatedElement annotatedElement) {
         if (annotatedElement == null) {
-            return new ArrayList<String>();
+            return new ArrayList<>();
         } else {
             Secured secured = annotatedElement.getAnnotation(Secured.class);
             if (secured == null) {
-                return new ArrayList<String>();
+                return new ArrayList<>();
             } else {
                 String[] allowedPermissions = secured.value();
                 return Arrays.asList(allowedPermissions);
@@ -138,10 +136,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                     return permisionType;
                 }).collect(Collectors.toList());
 
-        List<String> userPermisionType = userPermisions.stream()
+        return userPermisions.stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
-        return userPermisionType;
+
     }
 
 }

@@ -30,10 +30,6 @@ public class Language {
     @Produces("application/json")
     public Response getTranslation(@PathParam("id") int id) {
 
-        String language = languageTranslator.getLanguageSelected(id);
-        File file = null;
-
-
 
         try{
 

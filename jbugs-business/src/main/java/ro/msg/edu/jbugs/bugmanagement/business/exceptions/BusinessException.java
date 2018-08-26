@@ -6,7 +6,8 @@ public class BusinessException extends Exception {
 
     public BusinessException() {
     }
-    public BusinessException(ExceptionCode exceptionCode) {
+    public BusinessException(ExceptionCode exceptionCode)
+    {
         this.exceptionCode = exceptionCode;
     }
     public BusinessException(String message,ExceptionCode exceptionCode ) {
