@@ -161,7 +161,6 @@ public class User extends BaseEntity {
                 ", mobileNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", status='" + isActive + '\'' +
                 '}';
     }

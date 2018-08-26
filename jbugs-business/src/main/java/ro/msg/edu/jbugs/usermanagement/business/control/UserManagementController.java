@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 @Stateless
 public class UserManagementController {
-    public static final int MIN_LAST_NAME_LENGTH = 5;
-    public static final int MAX_FAILED_LOGN_ATTEMPTS = 5;
+    private static final int MIN_LAST_NAME_LENGTH = 5;
+    private static final int MAX_FAILED_LOGN_ATTEMPTS = 5;
     public static final int MIN_USERNAME_LENGTH = 6;
 
 

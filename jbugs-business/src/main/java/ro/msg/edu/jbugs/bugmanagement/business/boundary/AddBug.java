@@ -9,12 +9,9 @@ import ro.msg.edu.jbugs.usermanagement.business.control.UserManagementController
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
-
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,21 +38,20 @@ public class AddBug {
                            @FormParam("createdBy") String createdBy
 
 
-
-    ){
+    ) {
         try {
             System.out.println("intra aici");
-            User user=userManagement.getUserForUsername(assignedTo);
-            User user2=userManagement.getUserForUsername(createdBy);
-            NameIdDTO assignedUser=new NameIdDTO();
+            User user = userManagement.getUserForUsername(assignedTo);
+            User user2 = userManagement.getUserForUsername(createdBy);
+            NameIdDTO assignedUser = new NameIdDTO();
             assignedUser.setId(user.getId());
             assignedUser.setUsername(assignedTo);
-            System.out.println("am format un user"+assignedUser.getId());
-            NameIdDTO createdUser=new NameIdDTO();
+            System.out.println("am format un user" + assignedUser.getId());
+            NameIdDTO createdUser = new NameIdDTO();
             createdUser.setId(user2.getId());
             createdUser.setUsername(createdBy);
-            System.out.println("am format al doilea user"+createdUser.getId());
-            BugDTO bugDTO=new BugDTO();
+            System.out.println("am format al doilea user" + createdUser.getId());
+            BugDTO bugDTO = new BugDTO();
             bugDTO.setTitle(title);
             bugDTO.setDescription(description);
             bugDTO.setVersion(version);
@@ -65,7 +61,7 @@ public class AddBug {
             Date date = new java.sql.Date(new SimpleDateFormat("yyyy-mm-dd").parse(targetDate).getTime());
             bugDTO.setTargetDate(date);
             bugDTO.setSeverity(Severity.valueOf(severity));
-            System.out.println("severity "+bugDTO.getSeverity());
+            System.out.println("severity " + bugDTO.getSeverity());
             bugDTO.setCreatedByUser(createdUser);
             System.out.println("am format bug-ul");
 
@@ -78,10 +74,9 @@ public class AddBug {
         } catch (ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
         } catch (ParseException e) {
-            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        return Response.status(Response.Status.CREATED).build();
-        }
+    }
 
 }
 

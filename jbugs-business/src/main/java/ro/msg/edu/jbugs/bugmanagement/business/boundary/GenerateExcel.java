@@ -9,13 +9,19 @@ import ro.msg.edu.jbugs.bugmanagement.business.control.BugManagement;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
-
-
 import javax.ejb.EJB;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 
 @Path("/view-bugs")
@@ -81,16 +87,14 @@ public class GenerateExcel {
             FileOutputStream fos = new FileOutputStream(FILE_PATH);
             workbook.write(fos);
             fos.close();
-            Response.ResponseBuilder response = Response.ok((Object) file);
+            Response.ResponseBuilder response = Response.ok(file);
             response.header("Content-Disposition",
                     "attachment; filename=new-excel-file.xlsx");
             file.deleteOnExit();
             return response.build();
 
         } catch(Exception e){
-            e.printStackTrace();
-            System.out.println();
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
 

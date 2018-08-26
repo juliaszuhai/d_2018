@@ -1,10 +1,16 @@
 package ro.msg.edu.jbugs.usermanagement.business.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 
 public class Encryptor {
+
+    /* Get actual class name to be printed on */
+    static Logger log = LogManager.getLogger(Encryptor.class.getName());
 
     private static final String KEY = "Bar12345Bar12345";
 
@@ -27,7 +33,7 @@ public class Encryptor {
            }
         catch(Exception e)
         {
-            e.printStackTrace();
+            log.catching(e);
         }
         return encryptedString;
     }
