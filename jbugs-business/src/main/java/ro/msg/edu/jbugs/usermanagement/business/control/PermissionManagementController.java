@@ -151,8 +151,13 @@ public class PermissionManagementController {
         return permission;
     }
 
-    public List<Permission> getPermissionsByRole(Role role) {
-        return role.getPermissions();
+    public List<Permission> getPermissionsByRole(String roleType) throws BusinessException {
+        Optional<Role> roleByType = permissionPersistenceManager.getRoleByType(roleType);
+        if (roleByType.isPresent()) {
+            return roleByType.get().getPermissions();
+        } else {
+            throw new BusinessException(ExceptionCode.ROLE_DOESNT_EXIST);
+        }
     }
 
     public List<Permission> getAllPermissions() {

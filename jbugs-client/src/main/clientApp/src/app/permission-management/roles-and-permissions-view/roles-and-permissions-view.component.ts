@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PermissionManagementService} from "../permission-management.service";
+import {MatDialog} from "@angular/material";
+import {EditRoleComponent} from "../edit-role/edit-role.component";
 
 @Component({
   selector: 'app-roles-and-permissions-view',
@@ -8,7 +10,8 @@ import {PermissionManagementService} from "../permission-management.service";
 })
 export class RolesAndPermissionsViewComponent implements OnInit {
 
-  constructor(private permissionmanager: PermissionManagementService) {
+  constructor(private permissionmanager: PermissionManagementService,
+              public dialog: MatDialog) {
   }
 
   roleDataSource: any;
@@ -16,6 +19,7 @@ export class RolesAndPermissionsViewComponent implements OnInit {
   displayedColumns: string[] = [
     'type',
     'permissions',
+    'addPermission',
   ];
 
   getRoles() {
@@ -23,7 +27,7 @@ export class RolesAndPermissionsViewComponent implements OnInit {
       .subscribe(
         data => {
           this.roleDataSource = data;
-          console.log(this.roleDataSource);
+
         }
       )
   }
@@ -34,6 +38,20 @@ export class RolesAndPermissionsViewComponent implements OnInit {
       permissionString += p.type + ', ';
     });
     return permissionString.slice(0, permissionString.length - 2);
+  }
+
+  openRoleEditDialog(element): void {
+    const dialogRef = this.dialog.open(EditRoleComponent, {
+      width: '60%',
+      data: {
+        type: element.type,
+        permissions: element.permissions,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+      this.getRoles();
+    });
   }
 
   ngOnInit() {
