@@ -3,8 +3,9 @@ import {UsermanagementService} from "../usermanagement.service";
 import {UserManagementComponent} from "../user-management/user-management.component";
 import {FormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {MyErrorStateMatcher, UserData} from "../register-user/register-user.component";
+import {MyErrorStateMatcher} from "../register-user/register-user.component";
 import {TranslatorService} from "../../translator/translator.service";
+import {PermissionManagementService} from "../../permission-management/permission-management.service";
 
 @Component({
   selector: 'app-update-user',
@@ -16,8 +17,10 @@ export class UpdateUserComponent implements OnInit {
   constructor(
     public translatorService: TranslatorService,
     public dialogRef: MatDialogRef<UserManagementComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: UserData,
-    public usermgmt: UsermanagementService) {
+    @Inject(MAT_DIALOG_DATA) public data,
+    public usermgmt: UsermanagementService,
+    public permissionmngmt: PermissionManagementService
+  ) {
   }
 
   matcher = new MyErrorStateMatcher();
@@ -97,11 +100,47 @@ export class UpdateUserComponent implements OnInit {
 
 
   onNoClick(): void {
-
     this.dialogRef.close();
   }
 
+
+  userRoles;
+  allRoles;
+  selectedrole;
+
+  getUserRoles() {
+    this.usermgmt.getRolesOfUser(this.data.username)
+      .subscribe(roles => {
+        this.userRoles = roles;
+      })
+  }
+
+  getAllRoles() {
+    this.permissionmngmt.getAllRoles()
+      .subscribe(roles => {
+        this.allRoles = roles;
+        console.log(roles);
+      });
+  }
+
+  addRoleToUser() {
+    this.usermgmt.addRoleToUser(this.data.username, this.selectedrole)
+      .subscribe(() => {
+        this.getUserRoles();
+      });
+  }
+
+  removeRoleFromUser() {
+    this.usermgmt.revokeRoleFromUser(this.data.username, this.selectedrole)
+      .subscribe(() => {
+        this.getUserRoles();
+      });
+  }
+
+
   ngOnInit() {
+    this.getUserRoles();
+    this.getAllRoles();
   }
 
 }

@@ -4,7 +4,6 @@ import {MatDialog} from "@angular/material";
 import {RegisterUserComponent, UserData} from "../register-user/register-user.component";
 import {UpdateUserComponent} from "../update-user/update-user.component";
 import {TranslatorService} from "../../translator/translator.service";
-import {element} from "protractor";
 
 export interface UserElement {
   firstName: string;
@@ -39,7 +38,8 @@ export class UserManagementComponent implements OnInit {
         firstName: this.userData.firstName,
         lastName: this.userData.lastName,
         password: this.userData.password,
-        phoneNumber: this.userData.phoneNumber
+        phoneNumber: this.userData.phoneNumber,
+        username: this.userData.username
       }
     });
 

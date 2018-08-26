@@ -10,6 +10,9 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatListModule,
+  MatSelectModule,
+  MatTabsModule,
   ShowOnDirtyErrorStateMatcher
 } from "@angular/material";
 import {RegisterUserComponent} from "./register-user/register-user.component";
@@ -35,7 +38,10 @@ const userManagementRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    MatTabsModule,
+    MatListModule,
+    MatSelectModule
   ],
   declarations: [
     UserManagementComponent,
@@ -52,7 +58,10 @@ const userManagementRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    MatTabsModule,
+    MatListModule,
+    MatSelectModule
   ],
   entryComponents: [
     RegisterUserComponent,

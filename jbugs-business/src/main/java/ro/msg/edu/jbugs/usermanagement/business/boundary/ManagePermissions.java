@@ -18,6 +18,7 @@ public class ManagePermissions {
     @EJB
     private PermissionManagementController permissionManagementController;
 
+    //TODO : fix request types.
 
     @GET
     @Produces("application/json")
@@ -103,4 +104,6 @@ public class ManagePermissions {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
         }
     }
+
+
 }

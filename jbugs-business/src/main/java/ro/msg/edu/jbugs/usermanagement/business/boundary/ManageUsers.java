@@ -83,4 +83,22 @@ public class ManageUsers {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
         }
     }
+
+    @GET
+    @Path("/get-roles-of-user")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response getRolesOfUser(@QueryParam("username") String username) {
+        try {
+            return Response
+                    .ok(
+                            new Gson().toJson(userManagementController
+                                    .getUserForUsername(username)
+                                    .getRoles())
+                    )
+                    .build();
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+        }
+    }
 }
