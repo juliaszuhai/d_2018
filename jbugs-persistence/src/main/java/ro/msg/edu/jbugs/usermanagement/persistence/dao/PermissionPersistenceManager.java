@@ -4,7 +4,10 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.Permission;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.Role;
 
 import javax.ejb.Stateless;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,15 +93,12 @@ public class PermissionPersistenceManager {
     }
 
 
-    public List<Permission> getAllPermissions() {
-        Query query = em.createQuery("SELECT p FROM Permission p");
-        return query.getResultList();
+    public Optional<List<Permission>> getAllPermissions() {
+        TypedQuery<Permission> query = em.createNamedQuery(Permission.GET_ALL_PERMISSIONS, Permission.class);
+        return Optional.ofNullable(query.getResultList());
     }
 
 
-    public void createPermissionForRole(Role role, Permission permission) {
-        role.getPermissions().add(permission);
-    }
 
     public Role createRole(Role role) {
         em.persist(role);

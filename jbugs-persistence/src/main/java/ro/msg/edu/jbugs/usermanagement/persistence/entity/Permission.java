@@ -11,6 +11,7 @@ import java.util.Objects;
                 @NamedQuery(name = Permission.GET_PERMISSION_BY_TYPE, query = "SELECT p FROM Permission p where p.type = :type"),
                 @NamedQuery(name = Permission.GET_PERMISSION_BY_ID, query = "SELECT p FROM Permission p where p.id = :id"),
                 @NamedQuery(name = Permission.GET_PERMISSIONS_FOR_ROLE, query = "SELECT r.permissions FROM Role r WHERE r=:role"),
+                @NamedQuery(name = Permission.GET_ALL_PERMISSIONS, query = "SELECT r.permissions FROM Role r WHERE r=:role"),
 
         }
 )
@@ -21,6 +22,7 @@ public class Permission extends BaseEntity {
     public static final String GET_PERMISSION_BY_TYPE = "get_permission_by_type";
     public static final String GET_PERMISSION_BY_ID = "get_permission_by_id";
     public static final String GET_PERMISSIONS_FOR_ROLE = "get_permissions_for_role";
+    public static final String GET_ALL_PERMISSIONS = "get_all_permissions";
 
     @Column(name = "type", nullable = false, length = MAX_STRING_LENGTH, unique = true)
     private String type;
