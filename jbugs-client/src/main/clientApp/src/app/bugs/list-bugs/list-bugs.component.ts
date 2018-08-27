@@ -4,9 +4,8 @@ import {MatDialog} from '@angular/material';
 import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
 import {AddBugComponent} from "../add-bug/add-bug.component";
 import {HttpParams} from "@angular/common/http";
-import {TranslatorService} from "../../translator/translator.service";
-import {UpdateBugComponent} from "../update-bug/update-bug.component";
 import {TranslateService} from "@ngx-translate/core";
+import {UpdateBugComponent} from "../update-bug/update-bug.component";
 
 @Component({
   selector: 'app-list-bugs',
