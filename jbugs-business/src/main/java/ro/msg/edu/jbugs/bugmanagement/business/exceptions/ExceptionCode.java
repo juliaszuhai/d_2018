@@ -2,10 +2,11 @@ package ro.msg.edu.jbugs.bugmanagement.business.exceptions;
 
 public enum ExceptionCode {
 
-    BUG_NOT_EXPORTED(1001, "Bug not be exported"),
-    BUG_NOT_EXIST(1002,"Bug selected not exist"),
-    DESCRIPTION_TOO_SHORT(1003,"Bug description is too short.Write more"),
-    VERSION_NOT_VALID(1004,"Version is not valid");
+    BUG_NOT_EXPORTED(4001, "Bug not be exported"),
+    BUG_NOT_EXIST(4002,"Bug selected not exist"),
+    DESCRIPTION_TOO_SHORT(4003,"Bug description is too short.Write more"),
+    VERSION_NOT_VALID(4004,"Version is not valid"),
+    COULD_NOT_CREATE_BUG(4005,"Can't create bug");
     int id;
     String message;
 

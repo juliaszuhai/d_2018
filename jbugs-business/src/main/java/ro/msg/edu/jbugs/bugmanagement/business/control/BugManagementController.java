@@ -79,28 +79,28 @@ public class BugManagementController  implements BugManagement {
         try {
             date = new java.sql.Date(new SimpleDateFormat("yyyy-mm-dd").parse(bugDTO.getTargetDateString()).getTime());
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
         }
         bug.setTitle(bugDTO.getTitle());
         bug.setDescription(bugDTO.getDescription());
         bug.setVersion(bugDTO.getVersion());
         bug.setFixedVersion(bugDTO.getFixedVersion());
         bug.setTargetDate(date);
-        bug.setSeverity(Severity.valueOf(bugDTO.getSeverityString()));
-        bug.setStatus(Status.valueOf(bugDTO.getStatusString()));
+        bug.setSeverity(Severity.valueOf(Severity.class,bugDTO.getSeverityString()));
+        bug.setStatus(Status.NEW);
 
         Optional<User> userAssigned = userPersistenceManager.getUserByUsername(bugDTO.getAssignedToString());
-        if(userAssigned.isPresent()) {
+        if(!userAssigned.equals(Optional.empty())) {
             bug.setAssignedTo(userAssigned.get());
         } else {
-            throw new BusinessException(); // TODO : adauga exceptie buna
+            throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
         }
 
         Optional<User> userCreated = userPersistenceManager.getUserByUsername(bugDTO.getCreatedByUserString());
-        if(userCreated.isPresent()){
+        if(!userCreated.equals(Optional.empty())){
             bug.setCreatedByUser(userCreated.get());
         } else {
-            throw new BusinessException(); // TODO : adauga exceptie buna
+            throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
         }
             this.isBugValid(bug);
             bugPersistenceManager.createBug(bug);
@@ -144,11 +144,9 @@ public class BugManagementController  implements BugManagement {
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {
         Optional<Bug> bug = bugPersistenceManager.getBugById(id);
-        if (bug.equals(Optional.empty())) {
-            return BugDTOHelper.fromEntity(bug.get());
-        } else {
-            throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
-        }
+        return BugDTOHelper.fromEntity(bug.orElseThrow(()->new BusinessException(ExceptionCode.BUG_NOT_EXIST)));
+
+
 
     }
 

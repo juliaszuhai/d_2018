@@ -76,24 +76,23 @@ export class BugListService {
     return this.http.get<BugData[]>(this.baseURL + '/listBugs/getByFilter', {params: params});
   }
 
-  validateBug(title: string, description: string, version: string, fixedVersion: string, targetDate: Date, severity: string, username: string, username2: string,status: string) {
+  validateBug(bug: BugData) {
     let body = new URLSearchParams();
-    body.set('title',title);
-    body.set('description',description);
-    body.set('version',version);
-    body.set('fixedVersion',fixedVersion);
-    body.set('targetDateString',targetDate.toISOString().slice(0,10));
-    body.set('severityString',severity);
-    body.set('assignedToString',username);
-    body.set('createdByString',username2);
-    body.set('statusString',status);
+    body.set('title',bug.title);
+    body.set('description',bug.description);
+    body.set('version',bug.version);
+    body.set('fixedVersion',bug.fixedVersion);
+    body.set('targetDateString',bug.targetDate.toISOString().slice(0,10));
+    body.set('severityString',bug.severity);
+    body.set('assignedToString',bug.assignedTo.username);
+    body.set('createdByUserString',bug.createdByUser.username);
 
-    console.log("adding here");
-    return this.http.post<UserData>(this.baseURL + '/add-bug',
-      body.toString(),
+    console.log(body);
+    return this.http.post(this.baseURL + '/add-bug',
+      JSON.stringify(body),
       {
         headers: new HttpHeaders(
-          {'Content-Type': 'application/x-www-form-urlencoded'}
+          {'Content-Type': 'application/json'}
         )
       });
   }

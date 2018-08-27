@@ -93,17 +93,8 @@ public class BugManagementTest {
 
     @Test
     public void getBugsWithId_ExpectedException() {
-        User userUsed= new User();
-        userUsed.setId(1L);
-        userUsed.setUsername("ionion");
-        when(userPersistenceManager.getUserById(any(Long.class)))
-                .thenReturn(Optional.of(userUsed));
-        Bug bug=new Bug();
-        bug.setTitle("ceva");
-        bug.setVersion("1.2.3");
-        bug.setAssignedTo(userUsed);
-        bug.setCreatedByUser(userUsed);
-        when(bugPersistenceManager.getBugById(any(Long.class))).thenReturn(Optional.of(bug));
+
+        when(bugPersistenceManager.getBugById(any(Long.class))).thenReturn(Optional.empty());
         try {
             bugManagementController.getBugById(100L);
             fail("Should not reach this point");

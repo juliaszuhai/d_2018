@@ -27,8 +27,8 @@ public class AddBug {
     private UserManagementController userManagement;
 
     @POST
+    @Consumes("application/json")
     @Produces("application/json")
-    @Consumes("application/x-www-form-urlencoded")
     public Response addBug(final BugDTO bugDTO) {
         try {
             bugManagement.createBug(bugDTO);
