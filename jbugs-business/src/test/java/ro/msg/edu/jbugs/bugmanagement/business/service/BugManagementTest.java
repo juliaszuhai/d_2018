@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.bugmanagement.business.control;
+package ro.msg.edu.jbugs.bugmanagement.business.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +35,7 @@ public class BugManagementTest {
     private BugPersistenceManager bugPersistenceManager;
 
     @InjectMocks
-    private BugManagementController bugManagementController;
+    private BugManagementService bugManagementController;
 
 
 //    @Test

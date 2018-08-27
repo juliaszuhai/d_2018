@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.bugmanagement.business.control;
+package ro.msg.edu.jbugs.bugmanagement.business.service;
 
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
@@ -21,7 +21,7 @@ public interface BugManagement {
      * @param titles : List<Long>
      * @return List<BugDTO>
      */
-    public List<BugDTO> getBugsWithId(List<Long> titles);
+    List<BugDTO> getBugsWithId(List<Long> titles);
     /**
      * Returns a bug entity with the matching id wrapped in an optional.
      * If none exist, returns an empty Optional Object

@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.bugmanagement.business.control;
+package ro.msg.edu.jbugs.bugmanagement.business.service;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -7,14 +7,13 @@ import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
 
-
 import javax.ejb.Stateless;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 
 @Stateless
-public class ExportBugPdf {
+public class PdfExportService {
 
 
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,

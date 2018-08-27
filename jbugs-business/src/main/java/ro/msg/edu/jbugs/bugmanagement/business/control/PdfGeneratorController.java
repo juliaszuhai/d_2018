@@ -1,17 +1,18 @@
-package ro.msg.edu.jbugs.bugmanagement.business.boundary;
+package ro.msg.edu.jbugs.bugmanagement.business.control;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
-import ro.msg.edu.jbugs.bugmanagement.business.control.BugManagement;
-import ro.msg.edu.jbugs.bugmanagement.business.control.ExportBugPdf;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
-
-
+import ro.msg.edu.jbugs.bugmanagement.business.service.BugManagement;
+import ro.msg.edu.jbugs.bugmanagement.business.service.PdfExportService;
 
 import javax.ejb.EJB;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,10 +20,10 @@ import java.io.IOException;
 
 
 @Path("/pdfbug")
-public class GeneratePdf {
+public class PdfGeneratorController {
 
     @EJB
-    private ExportBugPdf exportBugPdf;
+    private PdfExportService exportBugPdf;
 
     @EJB
     private BugManagement bugManagement;
@@ -51,7 +52,7 @@ public class GeneratePdf {
             PdfWriter.getInstance(document, fileOutputStream);
             exportBugPdf.createPdf(bugDTO, document);
 
-            Response.ResponseBuilder response = Response.ok((Object) file);
+            Response.ResponseBuilder response = Response.ok(file);
             response.header("Content-Disposition",
                     "attachment; filename=new-android-book.pdf");
             file.deleteOnExit();

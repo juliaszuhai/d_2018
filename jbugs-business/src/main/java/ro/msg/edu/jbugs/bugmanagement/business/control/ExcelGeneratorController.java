@@ -1,11 +1,11 @@
-package ro.msg.edu.jbugs.bugmanagement.business.boundary;
+package ro.msg.edu.jbugs.bugmanagement.business.control;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import ro.msg.edu.jbugs.bugmanagement.business.control.BugManagement;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
+import ro.msg.edu.jbugs.bugmanagement.business.service.BugManagement;
 import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
 import javax.ejb.EJB;
@@ -24,7 +24,7 @@ import java.util.TreeMap;
 
 
 @Path("/view-bugs")
-public class GenerateExcel {
+public class ExcelGeneratorController {
     private static final String FILE_PATH = "T:/Try.xlsx";
 
     @EJB

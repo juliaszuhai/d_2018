@@ -2,10 +2,10 @@ package ro.msg.edu.jbugs.boundary;
 
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-import ro.msg.edu.jbugs.bugmanagement.business.boundary.AddBug;
-import ro.msg.edu.jbugs.bugmanagement.business.boundary.GenerateExcel;
-import ro.msg.edu.jbugs.bugmanagement.business.boundary.GeneratePdf;
-import ro.msg.edu.jbugs.bugmanagement.business.boundary.ListBugs;
+import ro.msg.edu.jbugs.bugmanagement.business.control.BugAdditionManager;
+import ro.msg.edu.jbugs.bugmanagement.business.control.BugManagementController;
+import ro.msg.edu.jbugs.bugmanagement.business.control.ExcelGeneratorController;
+import ro.msg.edu.jbugs.bugmanagement.business.control.PdfGeneratorController;
 import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManager;
 import ro.msg.edu.jbugs.usermanagement.business.control.PermissionManager;
 import ro.msg.edu.jbugs.usermanagement.business.control.UserManager;
@@ -28,10 +28,10 @@ public class AppBoundary extends Application {
         classes.add(AuthenticationManager.class);
         classes.add(AuthenticationFilter.class);
         classes.add(Registration.class);
-        classes.add(GeneratePdf.class);
-        classes.add(AddBug.class);
-        classes.add(GenerateExcel.class);
-        classes.add(ListBugs.class);
+        classes.add(PdfGeneratorController.class);
+        classes.add(BugAdditionManager.class);
+        classes.add(ExcelGeneratorController.class);
+        classes.add(BugManagementController.class);
         classes.add(UserManager.class);
         classes.add(PermissionManager.class);
         classes.add(CorsFilter.class);
