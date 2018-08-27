@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import ro.msg.edu.jbugs.usermanagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
 import javax.ejb.EJB;
@@ -52,6 +53,9 @@ public class ManageUsers {
             userManagementController.deactivateUser(username);
             return Response.ok().build();
         } catch (BusinessException e) {
+            if (e.getExceptionCode() == ExceptionCode.USER_HAS_ASSIGNED_BUGS) {
+                return Response.status(Response.Status.FOUND).entity(e.getExceptionCode().getMessage()).build();
+            }
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
         }
     }

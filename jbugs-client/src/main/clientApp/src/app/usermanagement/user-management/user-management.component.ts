@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UsermanagementService} from "../usermanagement.service";
 import {MatDialog} from "@angular/material";
-import {RegisterUserComponent, UserData} from "../register-user/register-user.component";
+import {RegisterUserComponent} from "../register-user/register-user.component";
 import {UpdateUserComponent} from "../update-user/update-user.component";
 import {TranslatorService} from "../../translator/translator.service";
 
@@ -22,7 +22,7 @@ export interface UserElement {
 export class UserManagementComponent implements OnInit {
 
 
-  userData: UserData;
+  userData;
 
   dataSource: any;
 
