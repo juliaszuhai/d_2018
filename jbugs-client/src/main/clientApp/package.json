@@ -24,6 +24,8 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
     "@auth0/angular-jwt": "^2.0.0",
+    "@ngx-translate/core": "^10.0.2",
+    "@ngx-translate/http-loader": "^3.0.1",
     "angular-aria": "^1.7.3",
     "angular-recaptcha": "^4.2.0",
     "bootstrap": "^3.3.7",

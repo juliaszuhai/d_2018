@@ -9,6 +9,6 @@
 
   </mat-menu>
   <button mat-button id="language"[matMenuTriggerFor]="lngMenu">
-    {{(translatorService.json| async)?.header.language}}
+    {{'header.language' | translate}}
   </button>
 </div>

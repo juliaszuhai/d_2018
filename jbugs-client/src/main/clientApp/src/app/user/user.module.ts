@@ -5,6 +5,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from '../authentication/login/login.component';
 import {MatExpansionModule} from '@angular/material';
 import {LoginguardGuard} from '../authentication/loginguard.guard';
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {HttpLoaderFactory} from "../app.module";
+import {HttpClient} from "@angular/common/http";
 
 
 const profileRoutes: Routes = [
@@ -14,6 +17,19 @@ const profileRoutes: Routes = [
 
 @NgModule({
   imports: [
+    TranslateModule.forChild({
+
+      loader: {
+
+        provide: TranslateLoader,
+
+        useFactory: HttpLoaderFactory,
+
+        deps: [HttpClient]
+
+      }
+
+    }),
     CommonModule,
     RouterModule.forChild(profileRoutes),
     MatExpansionModule,

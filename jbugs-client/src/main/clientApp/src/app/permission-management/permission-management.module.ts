@@ -16,6 +16,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTableModule} from "@angular/material/table";
 import {EditRoleComponent} from "./edit-role/edit-role.component";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {HttpLoaderFactory} from "../app.module";
+import {HttpClient} from "@angular/common/http";
 
 const permissionRoutes: Routes = [
   {path: 'roles-and-permissions', component: RolesAndPermissionsViewComponent, canActivate: [LoginguardGuard]},
@@ -24,6 +27,19 @@ const permissionRoutes: Routes = [
 
 @NgModule({
   imports: [
+    TranslateModule.forChild({
+
+      loader: {
+
+        provide: TranslateLoader,
+
+        useFactory: HttpLoaderFactory,
+
+        deps: [HttpClient]
+
+      }
+
+    }),
     CommonModule,
     RouterModule.forChild(permissionRoutes),
     MatTableModule,

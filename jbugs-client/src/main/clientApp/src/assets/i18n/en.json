@@ -104,7 +104,11 @@
     "password": "Password",
     "buttonSubmit": "Submit",
     "registerUser": "Register User",
-    "updateUser": "Update User"
+    "updateUser": "Update User",
+    "tabUpdateInfo": "Update User Info",
+    "tabUpdateRoles": "Update User Roles",
+    "buttonAddRole": "Add Role",
+    "buttonRemoveRole": "Remove Role"
 
   },
 
@@ -121,4 +125,6 @@
     "passwordReqSpecial": "a special character",
     "passwordReqDigit": "a digit"
   }
+
+
 }

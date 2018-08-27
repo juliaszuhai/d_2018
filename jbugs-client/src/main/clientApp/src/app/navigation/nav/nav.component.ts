@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {Router} from '@angular/router';
 import {TranslatorService} from "../../translator/translator.service";
+import {TranslateService,  TranslatePipe} from "@ngx-translate/core";
 
 
 @Component({
@@ -13,7 +14,7 @@ export class NavComponent implements OnInit {
 
   constructor(private authService: AuthenticationService,
               private router: Router,
-              public translatorService: TranslatorService) {
+              private translate: TranslateService) {
   }
 
   getFirstName() {
@@ -36,7 +37,7 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
 
-    this.translatorService.getTranslationObservable(0);
+    //this.translatorService.getTranslationObservable(0);
 
   }
 

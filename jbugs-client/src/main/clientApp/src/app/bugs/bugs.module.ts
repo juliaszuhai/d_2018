@@ -11,6 +11,10 @@ import {MatChipsModule} from '@angular/material/chips';
 import {AddBugComponent} from "./add-bug/add-bug.component";
 import {MatNativeDateModule, MatDatepickerModule, MatFormFieldModule} from "@angular/material";
 import {MatSelectModule} from '@angular/material/select';
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {HttpLoaderFactory} from "../app.module";
+import {HttpClient} from "@angular/common/http";
+
 
 const bugRoutes: Routes = [
   {path: 'bugs', component: ListBugsComponent, canActivate: [LoginguardGuard]},
@@ -19,6 +23,19 @@ const bugRoutes: Routes = [
 
 @NgModule({
   imports: [
+    TranslateModule.forChild({
+
+      loader: {
+
+        provide: TranslateLoader,
+
+        useFactory: HttpLoaderFactory,
+
+        deps: [HttpClient]
+
+      }
+
+    }),
     CommonModule,
     RouterModule.forChild(bugRoutes),
     FormsModule,

@@ -33,7 +33,7 @@
 
   "profileWindow": {
     "welcome": "Bun venit",
-    "personalInfo": "Informatii Personale",
+    "personalInfo": "Date Personale",
     "firstName": "Prenume",
     "lastName": "Nume",
     "email": "Email",
@@ -104,7 +104,11 @@
     "password": "Parola",
     "buttonSubmit": "Confirma",
     "registerUser": "Inregistrare Utilizator",
-    "updateUser": "Actualizare Utilizator"
+    "updateUser": "Actualizare Utilizator",
+    "tabUpdateInfo": "Actualizare Date Utilizator",
+    "tabUpdateRoles": "Actualizare Roluri Utilizator",
+    "buttonAddRole": "Adauga Rol",
+    "buttonRemoveRole": "Sterge Rol"
 
   },
 

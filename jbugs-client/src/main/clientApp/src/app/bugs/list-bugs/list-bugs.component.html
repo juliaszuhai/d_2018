@@ -1,22 +1,22 @@
 
 <button class="btn btn-sm"  type="button" (click)="openAddBug()">
-  <i class="material-icons">bug_report</i> {{(this.translatorService.json| async)?.addBug.buttonAddBug}}
+  <i class="material-icons">bug_report</i> {{ 'addBug.buttonAddBug' | translate}}
 </button>
 
 <div align="center" (*ngFor)="ngOnInit()">
   <table mat-table class="mat-elevation-z8" >
     <thead>
     <tr>
-      <th>{{(this.translatorService.json| async)?.bugTable.number}}</th>
-      <th>{{(this.translatorService.json| async)?.bugTable.title}}</th>
-      <th>{{(this.translatorService.json| async)?.bugTable.version}}</th>
-      <th>{{(this.translatorService.json| async)?.bugTable.targetDate}}</th>
-      <th>{{(this.translatorService.json| async)?.bugTable.status}}</th>
-      <th>{{(this.translatorService.json| async)?.bugTable.fixedVersion}}</th>
-      <th>{{(this.translatorService.json| async)?.bugTable.severity}}</th>
-      <th>{{(this.translatorService.json| async)?.bugTable.createdBy}}</th>
-      <th>{{(this.translatorService.json| async)?.bugTable.assignedTo}}</th>
-      <th>{{(this.translatorService.json| async)?.bugTable.exportExcel}}</th>
+      <th>{{ 'bugTable.number' | translate}}</th>
+      <th>{{ 'bugTable.title' | translate}}</th>
+      <th>{{ 'bugTable.version' | translate}}</th>
+      <th>{{ 'bugTable.targetDate' | translate}}</th>
+      <th>{{ 'bugTable.status' | translate}}</th>
+      <th>{{ 'bugTable.fixedVersion' | translate}}</th>
+      <th>{{ 'bugTable.severity' | translate}}</th>
+      <th>{{ 'bugTable.createdBy' | translate}}</th>
+      <th>{{ 'bugTable.assignedTo' | translate}}</th>
+      <th>{{ 'bugTable.exportExcel' | translate}}</th>
     </tr>
     </thead>
 
@@ -56,7 +56,7 @@
            id="titleInput"
            class="form-control"
            required
-           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.title}}">
+           matInput placeholder="{{ 'bugFilter.title' | translate}}">
   </div>
 
   <div class="input-label">
@@ -67,7 +67,7 @@
            id="descriptionInput"
            class="form-control"
            required
-           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.description}}">
+           matInput placeholder="{{ 'bugFilter.description' | translate}}">
   </div>
 
   <div class="input-label">
@@ -78,7 +78,7 @@
            id="statusInput"
            class="form-control"
            required
-           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.status}}">
+           matInput placeholder="{{ 'bugFilter.status' | translate}}">
   </div>
 
   <div class="input-label">
@@ -89,26 +89,26 @@
            id="severityInput"
            class="form-control"
            required
-           matInput placeholder="{{(this.translatorService.json|async)?.bugFilter.severity}}">
+           matInput placeholder="{{ 'bugFilter.severity'}}">
   </div>
 
 
   <div align="center">
-    <button mat-button (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">{{(this.translatorService.json|async)?.bugFilter.filter}}</button>
+    <button mat-button (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">{{'bugFilter.filter' | translate}}</button>
     <!--<mat-chip>One fish</mat-chip>-->
   </div>
 
   <div align="center">
 
-    <label>{{(this.translatorService.json|async)?.bugFilter.title}}</label>
+    <label>{{ 'bugFilter.title' | translate}}</label>
     <input type="checkbox" #sortElem (change)="0" >
 
-    <label>{{(this.translatorService.json|async)?.bugFilter.version}}</label>
+    <label>{{ 'bugFilter.version' | translate}}</label>
       <input type="checkbox" #sortElem2 (change)="0" >
 
 
     <button mat-button *ngIf="sortElem.checked || sortElem2.checked" (click)="sort(sortElem.checked,sortElem2.checked)">
-      {{(this.translatorService.json|async)?.bugFilter.sort}}
+      {{ 'bugFilter.sort' | translate}}
     </button>
 
 

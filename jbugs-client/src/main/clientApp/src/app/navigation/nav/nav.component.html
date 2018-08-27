@@ -3,12 +3,12 @@
   <span style="margin-right: 20px">JBugs</span>
   <button mat-button  *ngIf="isLoggedIn()" routerLink="bugs">
 
-    {{(translatorService.json| async)?.header.bugs}}
+    {{'header.bugs'| translate}}
 
   </button>
   <button mat-button [matMenuTriggerFor]="menuManage" *ngIf="isLoggedIn()">
 
-    {{(translatorService.json| async)?.header.manage}}
+    {{'header.manage'| translate}}
   </button>
   <mat-menu #menuManage="matMenu">
     <button
@@ -16,14 +16,15 @@
       *ngIf="isLoggedIn()"
       routerLinkActive="active"
       routerLink="manage-users">
-      {{(translatorService.json| async)?.header.users}}
+      {{'header.users'| translate}}
     </button>
     <button
       mat-menu-item
       *ngIf="isLoggedIn()"
       routerLinkActive="active"
       routerLink="roles-and-permissions">
-      {{(translatorService.json| async)?.header.roles_and_permissions}}
+      <!--{{(translatorService.json| async)?.header.roles_and_permissions}}-->
+      {{'header.roles_and_permissions' | translate}}
     </button>
   </mat-menu>
 
@@ -39,16 +40,16 @@
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLinkActive="active" routerLink="profile">
       <i class="material-icons">account_circle</i>
-      {{(translatorService.json| async)?.header.profile}}
+      {{'header.profile'| translate}}
     </button>
     <button mat-menu-item (click)="logout()">
       <i class="material-icons">logout</i>
-      {{(translatorService.json| async)?.header.logout}}
+      {{'header.logout'| translate}}
     </button>
   </mat-menu>
 
 
   <button mat-button *ngIf="!isLoggedIn()" routerLinkActive="active" routerLink="login">
-    {{(translatorService.json| async)?.header.login}}
+    {{'header.login'| translate}}
   </button>
 </mat-toolbar>

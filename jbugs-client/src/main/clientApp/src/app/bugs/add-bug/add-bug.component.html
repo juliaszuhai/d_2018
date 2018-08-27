@@ -6,11 +6,11 @@
     <fieldset>
       <div class="form-group">
         <div class="form-group">
-          <label for="titleInput">{{(translatorService.json| async)?.addBug.title}}  </label>
+          <label for="titleInput">{{'addBug.title' | translate}} </label>
           <input type="text"
                  #titleElement
                  #titleControl="ngModel"
-                 placeholder="{{(translatorService.json|async)?.addBug.inputTitle}}"
+                 placeholder="{{'addBug.inputTitle' | translate}}"
                  name="title"
                  id="titleInput"
                  class="form-control"
@@ -18,11 +18,11 @@
                  required>
         </div>
         <div class="form-group">
-          <label for="descriptionInput">{{(translatorService.json| async)?.addBug.description}}   </label>
+          <label for="descriptionInput">{{'addBug.description' | translate}} </label>
           <input type="text"
                  #descriptionElement
                  #descriptionControl="ngModel"
-                 placeholder="{{(translatorService.json|async)?.addBug.inputDescription}} "
+                 placeholder="{{'addBug.inputDescription' | translate}} "
                  name="description"
                  id="descriptionInput"
                  class="form-control"
@@ -31,11 +31,11 @@
                  required>
         </div>
         <div class="form-group">
-          <label for="versionInput">{{(translatorService.json| async)?.addBug.version}}   </label>
+          <label for="versionInput">{{'addBug.version' | translate}} </label>
           <input type="text"
                  #versionElement
                  #versionControl="ngModel"
-                 placeholder="{{(translatorService.json|async)?.addBug.inputVersion}}"
+                 placeholder="{{'addBug.inputVersion' | translate}}"
                  name="version"
                  id="versionInput"
                  class="form-control"
@@ -44,11 +44,11 @@
                  required>
         </div>
         <div class="form-group">
-          <label for="fixedVersionInput">{{(translatorService.json| async)?.addBug.fixedVersion}}   </label>
+          <label for="fixedVersionInput">{{'addBug.fixedVersion' | translate}}</label>
           <input type="text"
                  #versionElement
                  #versionControl="ngModel"
-                 placeholder="{{(translatorService.json|async)?.addBug.inputFixedVersion}}"
+                 placeholder="{{'addBug.fixedVersion' | translate}}"
                  name="fixedVersion"
                  id="fixedVersionInput"
                  class="form-control"
@@ -58,7 +58,7 @@
         </div>
 
         <div class="form-group">
-          <label for="targetDateInput">{{(translatorService.json| async)?.addBug.targetDate}}  </label>
+          <label for="targetDateInput">{{'addBug.targetDate' | translate}} </label>
           <input
             name="targetDate"
             id="targetDateInput"
@@ -69,9 +69,9 @@
 
         </div>
         <div class="form-group">
-          <label >{{(translatorService.json| async)?.addBug.severity}}   </label>
+          <label>{{'addBug.severity' | translate}} </label>
           <mat-form-field>
-            <mat-select [(value)]="bugData.severity" placeholder="{{(translatorService.json|async)?.addBug.severity}}">
+            <mat-select [(value)]="bugData.severity" placeholder="{{'addBug.severity' | translate}}">
               <mat-option *ngFor="let severity of severities" [value]="severity">
                 {{severity}}
               </mat-option>
@@ -80,11 +80,11 @@
         </div>
 
         <div class="form-group">
-          <label for="assignedToInput">{{(translatorService.json| async)?.addBug.assignedTo}}</label>
+          <label for="assignedToInput">{{'addBug.assignedTo' | translate}}</label>
           <input type="text"
                  #assignedToElement
                  #assignedToControl="ngModel"
-                 placeholder="{{(translatorService.json|async)?.addBug.inputAssignedTo}}"
+                 placeholder="{{'addBug.inputAssignedTo' | translate}}"
                  name="assignedTo"
                  id="assignedToInput"
                  class="form-control"
@@ -97,7 +97,7 @@
     <button color="primary"
             mat-raised-button
             style="margin:30px 0">
-      {{(translatorService.json| async)?.addBug.buttonAddBug}}
+      {{'addBug.buttonAddBug' | translate}}
     </button>
   </form>
 </div>

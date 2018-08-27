@@ -21,6 +21,9 @@ import {MatChipsModule} from "@angular/material/chips";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {UpdateUserComponent} from "./update-user/update-user.component";
 import {DeactivationPopupComponent} from "./deactivation-popup/deactivation-popup.component";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {HttpLoaderFactory} from "../app.module";
+import {HttpClient} from "@angular/common/http";
 
 
 const userManagementRoutes: Routes = [
@@ -29,6 +32,19 @@ const userManagementRoutes: Routes = [
 
 @NgModule({
   imports: [
+    TranslateModule.forChild({
+
+      loader: {
+
+        provide: TranslateLoader,
+
+        useFactory: HttpLoaderFactory,
+
+        deps: [HttpClient]
+
+      }
+
+    }),
     CommonModule,
     RouterModule.forChild(userManagementRoutes),
     MatTableModule,

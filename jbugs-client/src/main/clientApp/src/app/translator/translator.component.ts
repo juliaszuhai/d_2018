@@ -1,14 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TranslatorService} from "./translator.service";
 import {Router} from "@angular/router";
+import {TranslateService} from "@ngx-translate/core";
+
 
 
 export class Language {
 
-  Id: number;
+  Id: string;
   Name: string;
 
-  constructor(lngId: number, lngName: string){
+  constructor(lngId: string, lngName: string){
       this.Id = lngId;
       this.Name = lngName;
   }
@@ -26,29 +28,28 @@ export class TranslatorComponent implements OnInit {
   allLanguages: Language[];
 
 
-  constructor(private translatorService:TranslatorService){
+  constructor(private translate: TranslateService){
   }
 
   ngOnInit(): void {
 
     this.allLanguages = [
-      new Language(0, 'English'),
-      new Language(1, 'Romana')
+      new Language('en', 'English'),
+      new Language('ro', 'Romana')
     ];
 
   }
 
   public changeLanguage(event, id){
-    this.translatorService.getTranslationObservable(id);
-    this.switchLanguage(id);
+    this.translate.use(id);
 
   }
 
-  public switchLanguage(id){
+ /* public switchLanguage(id){
     if(id == 1 && this.translatorService.switch == false)
       this.translatorService.switch = !this.translatorService.switch;
     else if(id == 0 && this.translatorService.switch == true)
       this.translatorService.switch = !this.translatorService.switch;
 
-  }
+  }*/
 }
