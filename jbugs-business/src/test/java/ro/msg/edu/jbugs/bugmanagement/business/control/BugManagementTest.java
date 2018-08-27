@@ -6,18 +6,19 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
-import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
-import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -37,43 +38,43 @@ public class BugManagementTest {
     private BugManagementController bugManagementController;
 
 
-    @Test
-    public void createBug_ExpectedOK() {
-        User userUsed = new User();
-        userUsed.setId(1L);
-        userUsed.setUsername("ionion");
-        when(userPersistenceManager.getUserById(any(Long.class)))
-                .thenReturn(Optional.of(userUsed));
-        BugDTO bugDTO = new BugDTO();
-        bugDTO.setTitle("ceva");
-        bugDTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
-        bugDTO.setVersion("1aa.2bb.3cc");
-        bugDTO.setFixedVersion("1.2.3");
-        NameIdDTO user= new NameIdDTO();
-        user.setId(1L);
-        user.setUsername("ionion");
-        bugDTO.setCreatedByUser(user);
-        bugDTO.setAssignedTo(user);
-        BugDTO bug2DTO = new BugDTO();
-        bug2DTO.setTitle("ceva22");
-        bug2DTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
-        bug2DTO.setVersion("1aa.2bb.3cc");
-        bug2DTO.setFixedVersion("1.2.3");
-        bug2DTO.setCreatedByUser(user);
-        bug2DTO.setAssignedTo(user);
-        when(bugPersistenceManager.createBug(any(Bug.class)))
-                .thenReturn(new Bug());
-        when(bugPersistenceManager.createBug(any(Bug.class)))
-                .thenReturn(new Bug());
-        try {
-            assertEquals(bugDTO, bugManagementController.createBug(bugDTO));
-            assertEquals(bug2DTO, bugManagementController.createBug(bug2DTO));
-        } catch (BusinessException e) {
-            fail("Should not reach this point");
-        }
-
-
-    }
+//    @Test
+//    public void createBug_ExpectedOK() {
+//        User userUsed = new User();
+//        userUsed.setId(1L);
+//        userUsed.setUsername("ionion");
+//        when(userPersistenceManager.getUserById(any(Long.class)))
+//                .thenReturn(Optional.of(userUsed));
+//        BugDTO bugDTO = new BugDTO();
+//        bugDTO.setTitle("ceva");
+//        bugDTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
+//        bugDTO.setVersion("1aa.2bb.3cc");
+//        bugDTO.setFixedVersion("1.2.3");
+//        NameIdDTO user= new NameIdDTO();
+//        user.setId(1L);
+//        user.setUsername("ionion");
+//        bugDTO.setCreatedByUser(user);
+//        bugDTO.setAssignedTo(user);
+//        BugDTO bug2DTO = new BugDTO();
+//        bug2DTO.setTitle("ceva22");
+//        bug2DTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
+//        bug2DTO.setVersion("1aa.2bb.3cc");
+//        bug2DTO.setFixedVersion("1.2.3");
+//        bug2DTO.setCreatedByUser(user);
+//        bug2DTO.setAssignedTo(user);
+//        when(bugPersistenceManager.createBug(any(Bug.class)))
+//                .thenReturn(new Bug());
+//        when(bugPersistenceManager.createBug(any(Bug.class)))
+//                .thenReturn(new Bug());
+//        try {
+//            assertEquals(bugDTO, bugManagementController.createBug(bugDTO));
+//            assertEquals(bug2DTO, bugManagementController.createBug(bug2DTO));
+//        } catch (BusinessException e) {
+//            fail("Should not reach this point");
+//        }
+//
+//
+//    }
 
     @Test
     public void getAllBugs_ExpectedOK() {

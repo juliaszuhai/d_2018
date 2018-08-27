@@ -295,4 +295,72 @@ public class UserPersistenceManagerBeanTest {
         when(userPersistenceManager.getAllUsers()).thenReturn(userList);
         assertEquals(1, userManagementController.getAllUsers().size());
     }
+
+    @Test
+    public void getUserForUsername_ExpectedOk() {
+        User dorel = new User();
+        dorel.setUsername("dorel");
+        when(userPersistenceManager.getUserByUsername("dorel"))
+                .thenReturn(Optional.of(dorel));
+
+        try {
+            assertEquals("dorel", userManagementController.getUserForUsername("dorel").getUsername());
+        } catch (BusinessException e) {
+            fail("Should not reach this point");
+        }
+    }
+
+    @Test
+    public void getUserForUsername_ExpectedException() {
+        User dorel = new User();
+        dorel.setUsername("dorel");
+        when(userPersistenceManager.getUserByUsername("dorel"))
+                .thenReturn(Optional.of(dorel));
+        when(userPersistenceManager.getUserByUsername(any(String.class)))
+                .thenReturn(Optional.empty());
+
+        try {
+            userManagementController.getUserForUsername("asdf");
+            fail("Should not reach this point");
+        } catch (BusinessException e) {
+            assertEquals(ExceptionCode.USERNAME_NOT_VALID, e.getExceptionCode());
+        }
+    }
+
+    @Test
+    public void getUserForId_ExpectedOk() {
+        User dorel = new User();
+        dorel.setUsername("dorel");
+        dorel.setId(1L);
+        when(userPersistenceManager.getUserById(1L))
+                .thenReturn(Optional.of(dorel));
+
+        try {
+            assertEquals("dorel", userManagementController.getUserForId(1L).getUsername());
+        } catch (BusinessException e) {
+            fail("Should not reach this point");
+        }
+    }
+
+    @Test
+    public void getUserForId_ExpectedException() {
+        User dorel = new User();
+        dorel.setUsername("dorel");
+        dorel.setId(1L);
+        when(userPersistenceManager.getUserById(1L))
+                .thenReturn(Optional.of(dorel));
+        when(userPersistenceManager.getUserById(any(Long.class)))
+                .thenReturn(Optional.empty());
+
+        try {
+            userManagementController.getUserForId(2L);
+
+            fail("Should not reach this point");
+        } catch (BusinessException e) {
+            assertEquals(ExceptionCode.USERNAME_NOT_VALID, e.getExceptionCode());
+        }
+    }
+
+
+
 }
