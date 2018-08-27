@@ -75,20 +75,12 @@ export class BugListService {
     return this.http.get<BugData[]>(this.baseURL + '/listBugs/getByFilter', {params: params});
   }
 
-  validateBug(bug: BugData) {
-    let body = new URLSearchParams();
-    body.set('title',bug.title);
-    body.set('description',bug.description);
-    body.set('version',bug.version);
-    body.set('fixedVersion',bug.fixedVersion);
-    body.set('targetDateString',bug.targetDate.toISOString().slice(0,10));
-    body.set('severityString',bug.severity);
-    body.set('assignedToString',bug.assignedTo.username);
-    body.set('createdByUserString',bug.createdByUser.username);
-
-    console.log(body);
+  validateBug(bug) {
+    bug.targetDateString = bug.targetDate.toISOString().slice(0,10);
+    bug.assignedToString=bug.assignedTo.username;
+    bug.createdByUserString=bug.createdByUser.username;
     return this.http.post(this.baseURL + '/add-bug',
-      JSON.stringify(body),
+      bug,
       {
         headers: new HttpHeaders(
           {'Content-Type': 'application/json'}

@@ -86,7 +86,7 @@ public class BugManagementController  implements BugManagement {
         bug.setVersion(bugDTO.getVersion());
         bug.setFixedVersion(bugDTO.getFixedVersion());
         bug.setTargetDate(date);
-        bug.setSeverity(Severity.valueOf(Severity.class,bugDTO.getSeverityString()));
+        bug.setSeverity(bugDTO.getSeverity());
         bug.setStatus(Status.NEW);
 
         Optional<User> userAssigned = userPersistenceManager.getUserByUsername(bugDTO.getAssignedToString());
