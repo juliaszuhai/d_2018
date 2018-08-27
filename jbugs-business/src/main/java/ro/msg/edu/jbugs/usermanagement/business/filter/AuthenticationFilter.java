@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.usermanagement.business.boundary;
+package ro.msg.edu.jbugs.usermanagement.business.filter;
 
 import com.auth0.jwt.JWT;
 import com.google.gson.Gson;

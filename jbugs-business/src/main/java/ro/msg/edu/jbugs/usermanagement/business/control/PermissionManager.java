@@ -1,22 +1,22 @@
-package ro.msg.edu.jbugs.usermanagement.business.boundary;
+package ro.msg.edu.jbugs.usermanagement.business.control;
 
 
 import com.google.gson.Gson;
-import ro.msg.edu.jbugs.usermanagement.business.control.PermissionManagementController;
-import ro.msg.edu.jbugs.usermanagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.usermanagement.business.service.PermissionManagementService;
+import ro.msg.edu.jbugs.usermanagement.business.service.UserManagementService;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 @Path("/manage-permissions")
-public class ManagePermissions {
+public class PermissionManager {
     @EJB
-    private UserManagementController userManagementController;
+    private UserManagementService userManagementController;
 
     @EJB
-    private PermissionManagementController permissionManagementController;
+    private PermissionManagementService permissionManagementController;
 
     //TODO : fix request types.
 

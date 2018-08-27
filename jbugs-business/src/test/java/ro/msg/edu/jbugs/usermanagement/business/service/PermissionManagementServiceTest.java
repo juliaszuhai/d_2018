@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.usermanagement.business.control;
+package ro.msg.edu.jbugs.usermanagement.business.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PermissionManagementControllerTest {
+public class PermissionManagementServiceTest {
 
     @Mock
     private PermissionPersistenceManager permissionPersistenceManager;
@@ -32,7 +32,7 @@ public class PermissionManagementControllerTest {
     private UserPersistenceManager userPersistenceManager;
 
     @InjectMocks
-    private PermissionManagementController permissionManagementController;
+    private PermissionManagementService permissionManagementController;
 
 
     @Test

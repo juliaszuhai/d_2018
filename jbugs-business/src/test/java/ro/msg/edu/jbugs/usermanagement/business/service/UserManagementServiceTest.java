@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.usermanagement.business.control;
+package ro.msg.edu.jbugs.usermanagement.business.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,11 +26,11 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserManagementControllerTest {
+public class UserManagementServiceTest {
 
 
     @InjectMocks
-    private UserManagementController userManagementController;
+    private UserManagementService userManagementController;
 
     @Mock
     private UserPersistenceManager userPersistenceManager;

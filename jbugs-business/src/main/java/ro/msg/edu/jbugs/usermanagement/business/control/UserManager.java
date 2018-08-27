@@ -1,11 +1,11 @@
-package ro.msg.edu.jbugs.usermanagement.business.boundary;
+package ro.msg.edu.jbugs.usermanagement.business.control;
 
 
 import com.google.gson.Gson;
-import ro.msg.edu.jbugs.usermanagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
+import ro.msg.edu.jbugs.usermanagement.business.service.UserManagementService;
 import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
 import javax.ejb.EJB;
@@ -16,9 +16,9 @@ import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
 @Path("/manage-users")
-public class ManageUsers {
+public class UserManager {
     @EJB
-    private UserManagementController userManagementController;
+    private UserManagementService userManagementController;
 
     @GET
     @Secured("USER_MANAGEMENT")

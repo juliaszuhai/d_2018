@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.usermanagement.business.control;
+package ro.msg.edu.jbugs.usermanagement.business.service;
 
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Stateless
-public class PermissionManagementController {
+public class PermissionManagementService {
 
     @EJB
     private PermissionPersistenceManager permissionPersistenceManager;

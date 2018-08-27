@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.usermanagement.business.boundary;
+package ro.msg.edu.jbugs.usermanagement.business.control;
 
 
 import com.auth0.jwt.JWT;
@@ -7,8 +7,8 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ro.msg.edu.jbugs.usermanagement.business.control.UserManagementController;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.usermanagement.business.service.UserManagementService;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.EJB;
@@ -25,12 +25,12 @@ import java.util.Date;
 
 @Path("/authenticate")
 
-public class Authentication {
+public class AuthenticationManager {
 
     @EJB
-    private UserManagementController userManagement;
+    private UserManagementService userManagement;
 
-    static Logger log = LogManager.getLogger(Authentication.class.getName());
+    static Logger log = LogManager.getLogger(AuthenticationManager.class.getName());
 
     @POST
     @Produces("application/json")

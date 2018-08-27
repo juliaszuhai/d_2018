@@ -1,4 +1,4 @@
-package ro.msg.edu.jbugs.usermanagement.business.control;
+package ro.msg.edu.jbugs.usermanagement.business.service;
 
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Stateless
-public class UserManagementController {
+public class UserManagementService {
     private static final int MIN_LAST_NAME_LENGTH = 5;
     private static final int MAX_FAILED_LOGN_ATTEMPTS = 5;
     public static final int MIN_USERNAME_LENGTH = 6;

@@ -9,7 +9,10 @@ import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
 import javax.ejb.EJB;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,7 +52,7 @@ public class GenerateExcel {
 
     /**
      * The method generates the Excel file and lets you download it.
-     *  TODO : O clasa de control, sau in controller existent o metoda care va fi apelata aici
+     *  TODO : O clasa de service, sau in controller existent o metoda care va fi apelata aici
      *
      * @param titles - list of selected titles
      * @return - response
