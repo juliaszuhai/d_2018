@@ -68,8 +68,6 @@ public class UserManagementController {
         if (userPersistenceManager.getUserByEmail(userDTO.getEmail()).isPresent()) {
             throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
         }
-
-
     }
 
 
@@ -84,22 +82,19 @@ public class UserManagementController {
     }
 
 
-    private boolean isValidForCreation(UserDTO userDTO) {
+    private boolean validateFields(UserDTO userDTO) {
         return userDTO.getFirstName() != null
                 && userDTO.getLastName() != null
                 && userDTO.getEmail() != null
-                && userDTO.getPassword() != null
                 && isValidEmail(userDTO.getEmail())
                 && isValidPhoneNumber(userDTO.getPhoneNumber());
     }
 
-    private boolean isValidForUpdate(UserDTO userDTO) {
-        return userDTO.getFirstName() != null
-                && userDTO.getLastName() != null
-                && userDTO.getEmail() != null
-                && isValidEmail(userDTO.getEmail())
-                && isValidPhoneNumber(userDTO.getPhoneNumber());
+    private boolean isValidForCreation(UserDTO userDTO) {
+        return validateFields(userDTO)
+                && userDTO.getPassword() != null;
     }
+
 
     private boolean isValidEmail(String email) {
         final Pattern validEmailAddressRegex =
@@ -116,19 +111,22 @@ public class UserManagementController {
      * @param username
      */
     public void deactivateUser(String username) throws BusinessException {
+        checkForOpenBugs(username);
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
+        User user = userOptional.orElseThrow(() -> new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
+        user.setActive(false);
+        userPersistenceManager.updateUser(user);
+    }
 
-        if (userOptional.isPresent()) {
-            if (getUnifinishedBugsAssignedToUser(username) > 0) {
-                throw new BusinessException(ExceptionCode.USER_HAS_ASSIGNED_BUGS);
-            }
-            User user = userOptional.get();
-            user.setActive(false);
-            userPersistenceManager.updateUser(user);
-        } else {
-            throw (new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
+    private void checkForOpenBugs(String username) throws BusinessException {
+        Optional<Status> found = getBugsAssignedToUser(username)
+                .stream()
+                .map(BugDTO::getStatus)
+                .filter(status -> !Status.CLOSED.equals(status) || !Status.FIXED.equals(status))
+                .findAny();
+        if (found.isPresent()) {
+            throw new BusinessException(ExceptionCode.USER_HAS_ASSIGNED_BUGS);
         }
-
     }
 
     /**
@@ -138,13 +136,9 @@ public class UserManagementController {
      */
     public void activateUser(String username) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setActive(true);
-            userPersistenceManager.updateUser(user);
-        } else {
-            throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
-        }
+        User user = userOptional.orElseThrow(() -> new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
+        user.setActive(true);
+        userPersistenceManager.updateUser(user);
     }
 
     /**
@@ -159,25 +153,13 @@ public class UserManagementController {
                 .collect(Collectors.toList());
     }
 
-
-    public long getUnifinishedBugsAssignedToUser(String username) {
-        return getBugsAssignedToUser(username)
-                .stream()
-                .filter(bug -> !bug.getStatus().equals(Status.CLOSED) ||
-                        !bug.getStatus().equals(Status.FIXED)
-                )
-                .count();
-    }
-
     /**
-     *
      * @param username
-     * @return: A list og Bugs assigned to a user, given it's username
      * @throws BusinessException
+     * @return: A list og Bugs assigned to a user, given it's username
      */
     public List<BugDTO> getBugsAssignedToUser(String username) {
-
-      return  bugPersistenceManager.getAllBugs()
+        return bugPersistenceManager.getAllBugs()
                 .stream()
                 .filter(bug -> bug.getAssignedTo().getUsername().equals(username))
                 .map(BugDTOHelper::fromEntity)
@@ -201,11 +183,8 @@ public class UserManagementController {
         }
         if (!Encryptor.encrypt(password).equals(userOptional.get().getPassword())) {
             User user = userOptional.get();
-            if (user.getFailedAttempts() == null) {
-                user.setFailedAttempts(1);
-            } else {
-                user.setFailedAttempts(user.getFailedAttempts() + 1);
-            }
+            int failedAttempts = user.getFailedAttempts() == null ? 1 : user.getFailedAttempts() + 1;
+            user.setFailedAttempts(failedAttempts);
             if (userOptional.get().getFailedAttempts() > MAX_FAILED_LOGN_ATTEMPTS) {
                 deactivateUser(username);
             }
@@ -222,10 +201,10 @@ public class UserManagementController {
 
 
     /**
-     *
      * Generates a username from the first and last name.
+     *
      * @param firstName :
-     * @param lastName :
+     * @param lastName  :
      * @return : the generated username
      */
     protected String generateUsername(@NotNull String firstName, @NotNull String lastName) {
@@ -250,13 +229,13 @@ public class UserManagementController {
         }
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(sb.toString());
         Integer endNumber = 0;
-        while (userOptional.isPresent()){
-           sb.append(endNumber.toString());
-           userOptional = userPersistenceManager.getUserByUsername(sb.toString());
-           if(userOptional.isPresent()){
-               sb.deleteCharAt(sb.length() - 1);
-           }
-           endNumber++;
+        while (userOptional.isPresent()) {
+            sb.append(endNumber.toString());
+            userOptional = userPersistenceManager.getUserByUsername(sb.toString());
+            if (userOptional.isPresent()) {
+                sb.deleteCharAt(sb.length() - 1);
+            }
+            endNumber++;
         }
 
         return sb.toString();
@@ -294,13 +273,9 @@ public class UserManagementController {
      * @throws BusinessException
      */
     public User getUserForUsername(String username) throws BusinessException {
-        Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
-        if (userOptional.isPresent()) {
-            return userOptional.get();
-
-        } else {
-            throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
-        }
+        return userPersistenceManager
+                .getUserByUsername(username)
+                .orElseThrow(() -> new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
     }
 
     /**
@@ -353,7 +328,7 @@ public class UserManagementController {
     }
 
     private void validateUserForUpdate(UserDTO userDTO) throws BusinessException {
-        if (!isValidForUpdate(userDTO)) {
+        if (!validateFields(userDTO)) {
             throw new BusinessException(ExceptionCode.USER_VALIDATION_EXCEPTION);
         }
     }

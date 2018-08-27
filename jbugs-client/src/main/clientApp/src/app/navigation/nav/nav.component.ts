@@ -22,7 +22,7 @@ export class NavComponent implements OnInit {
 
   public isLoggedIn() {
     if (!this.authService.isLoggedIn()) {
-      this.logout();
+
     }
     return this.authService.isLoggedIn();
   }
