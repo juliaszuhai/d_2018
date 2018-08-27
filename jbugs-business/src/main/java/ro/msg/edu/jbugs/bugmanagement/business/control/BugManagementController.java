@@ -90,14 +90,14 @@ public class BugManagementController  implements BugManagement {
         bug.setStatus(Status.NEW);
 
         Optional<User> userAssigned = userPersistenceManager.getUserByUsername(bugDTO.getAssignedToString());
-        if(!userAssigned.equals(Optional.empty())) {
+        if(userAssigned.isPresent()) {
             bug.setAssignedTo(userAssigned.get());
         } else {
             throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
         }
 
         Optional<User> userCreated = userPersistenceManager.getUserByUsername(bugDTO.getCreatedByUserString());
-        if(!userCreated.equals(Optional.empty())){
+        if(userCreated.isPresent()){
             bug.setCreatedByUser(userCreated.get());
         } else {
             throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
