@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {ListBugsComponent} from "./list-bugs/list-bugs.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -18,7 +18,7 @@ import {HttpClient} from "@angular/common/http";
 
 const bugRoutes: Routes = [
   {path: 'bugs', component: ListBugsComponent, canActivate: [LoginguardGuard]},
- // {path: 'add-bug', component: AddBugComponent, canActivate: [LoginguardGuard]}
+  // {path: 'add-bug', component: AddBugComponent, canActivate: [LoginguardGuard]}
 ];
 
 @NgModule({
@@ -51,9 +51,9 @@ const bugRoutes: Routes = [
 
 
   ],
-  declarations: [ListBugsComponent, BugsPopupComponent,AddBugComponent],
-  exports: [ListBugsComponent,RouterModule,MatButtonModule,  MatCheckboxModule, MatDialogModule, BugsPopupComponent, MatDialogModule,
-    MatChipsModule,MatDatepickerModule,MatFormFieldModule,MatNativeDateModule,MatSelectModule
+  declarations: [ListBugsComponent, BugsPopupComponent, AddBugComponent],
+  exports: [ListBugsComponent, RouterModule, MatButtonModule, MatCheckboxModule, MatDialogModule, BugsPopupComponent, MatDialogModule,
+    MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatSelectModule
 
   ],
   entryComponents: [
@@ -61,4 +61,5 @@ const bugRoutes: Routes = [
     AddBugComponent
   ]
 })
-export class BugsModule { }
+export class BugsModule {
+}

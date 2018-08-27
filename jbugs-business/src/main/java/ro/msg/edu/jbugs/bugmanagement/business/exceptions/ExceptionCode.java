@@ -6,7 +6,8 @@ public enum ExceptionCode {
     BUG_NOT_EXIST(4002,"Bug selected not exist"),
     DESCRIPTION_TOO_SHORT(4003,"Bug description is too short.Write more"),
     VERSION_NOT_VALID(4004,"Version is not valid"),
-    COULD_NOT_CREATE_BUG(4005,"Can't create bug");
+    COULD_NOT_CREATE_BUG(4005,"Can't create bug"),
+    BUG_VALIDATION_EXCEPTION(4006, "Bug not valid");
     int id;
     String message;
 

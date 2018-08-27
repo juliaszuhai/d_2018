@@ -1,0 +1,145 @@
+<h3>{{(this.translatorService.json|async)?.bugManagement.updateBug}}</h3>
+<mat-tab-group>
+  <mat-tab label="Update User Info">
+    <div class="update-user-form">
+
+
+      <form
+        (ngSubmit)="submitUpdate()"
+        #updateForm="ngForm"
+        #formElement
+      >
+
+        <mat-form-field>
+          <input
+            matInput
+            #descriptionControl="ngModel"
+            #descriptionElement
+            name="description"
+            required
+            [(ngModel)]="data.description"
+            placeholder="{{(this.translatorService.json|async)?.bugManagement.description}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput
+                 #fixedVersionControl="ngModel"
+                 #fixedVersionElement
+                 name="fixedVersion"
+                 required
+                 [(ngModel)]="data.fixedVersion"
+                 placeholder="{{(this.translatorService.json|async)?.bugManagement.fixedVersion}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input type="password"
+                 #titleElement
+                 name="title"
+                 matInput
+                 [(ngModel)]="data.title"
+                 placeholder="{{(this.translatorService.json|async)?.bugManagement.title}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input
+            #versionElement
+            name="version"
+            matInput
+            [(ngModel)]="data.version"
+            placeholder="{{(this.translatorService.json|async)?.bugManagement.version}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input
+            #statusControl="ngModel"
+            #statusElement
+            name="status"
+            matInput
+            required
+            [(ngModel)]="data.status"
+            placeholder="{{(this.translatorService.json|async)?.bugManagement.status}}">
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            #severityControl="ngModel"
+            #severityElement
+            name="severity"
+            matInput
+            required
+            [(ngModel)]="data.severity"
+            placeholder="{{(this.translatorService.json|async)?.bugManagement.severity}}">
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            #assignedToControl="ngModel"
+            #assignedToElement
+            name="assignedTo"
+            matInput
+            required
+            [(ngModel)]="data.assignedTo"
+            placeholder="{{(this.translatorService.json|async)?.bugManagement.assignedTo}}">
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            #createdByUserControl="ngModel"
+            #createdByUserElement
+            name="createdByUser"
+            matInput
+            required
+            [(ngModel)]="data.createdByUser"
+            placeholder="{{(this.translatorService.json|async)?.bugManagement.createdByUser}}">
+        </mat-form-field>
+        <br>
+        <button type="submit" mat-button>{{(this.translatorService.json|async)?.userManagement.buttonSubmit}}</button>
+      </form>
+      <div class="form-info">
+
+        {{(this.translatorService.json|async)?.userManagementErrorMsg.updateUserNoChange}}.<br>
+        {{(this.translatorService.json|async)?.userManagementErrorMsg.passwordRequirements}}.:
+        <ul>
+          <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqLength}}.</li>
+          <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqLetters}}.</li>
+          <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqSpecial}}.</li>
+          <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqDigit}}.</li>
+        </ul>
+        {{(this.translatorService.json|async)?.userManagementErrorMsg.emailRequirement}}.
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Update user Roles">
+
+    <mat-list *ngFor="let element of this.userRoles">
+      <mat-list-item>{{element.type}}</mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+
+    <br>
+    <mat-form-field>
+      <mat-select [(value)]="selectedrole"
+
+      >
+        <div *ngFor="let element of this.allRoles" class="options">
+          <mat-option
+            value={{element.type}}
+          >{{element.type}}
+          </mat-option>
+        </div>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button
+            color="primary"
+            style="margin:0 10px;"
+            (click)="addRoleToUser()
+"
+    >Add Role
+    </button>
+    <button mat-raised-button
+            color="warn"
+            style="margin:0 10px;"
+            (click)="removeRoleFromUser()"
+    >Remove Role
+    </button>
+
+  </mat-tab>
+</mat-tab-group>

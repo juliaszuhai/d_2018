@@ -51,6 +51,9 @@ public interface BugManagement {
 
 
     boolean validateVersion(String version) throws BusinessException;
+
+    BugDTO updateBug(BugDTO bugDTO) throws BusinessException;
+
 }
 
 

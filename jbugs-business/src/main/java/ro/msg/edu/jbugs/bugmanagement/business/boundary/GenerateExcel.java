@@ -9,10 +9,7 @@ import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
 import javax.ejb.EJB;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +22,7 @@ import java.util.TreeMap;
 
 @Path("/view-bugs")
 public class GenerateExcel {
+    private static final String FILE_PATH = "T:/Try.xlsx";
 
     @EJB
     private BugManagement bugManagement;
@@ -57,14 +55,14 @@ public class GenerateExcel {
      * @return - response
      */
     @GET
-    //@Secured("BUG_MANAGEMENT")
-    @Path("{titles}")
+    @Secured("BUG_MANAGEMENT")
     @Produces("application/vnd.ms-excel")
     public Response generate(@QueryParam("titles") List<Long> titles) {
         try {
-            String pathFile = System.getProperty("user.dir")+"\\Try.xlsx";
-            File file = new File(pathFile);
-            XSSFWorkbook workbook = new XSSFWorkbook();
+            File file = new File(FILE_PATH);
+            FileInputStream fis = null;
+            fis = new FileInputStream(FILE_PATH);
+            XSSFWorkbook workbook = new XSSFWorkbook(fis);
             XSSFSheet spreadsheet = workbook.getSheetAt(0);
             Row row;
             Map< String, Object[] > empinfo=this.putInMap(titles);
@@ -81,10 +79,10 @@ public class GenerateExcel {
                 }
             }
             //Write the workbook in file system
-            FileOutputStream fos = new FileOutputStream(file);
+            FileOutputStream fos = new FileOutputStream(FILE_PATH);
             workbook.write(fos);
             fos.close();
-            Response.ResponseBuilder response = Response.ok((Object)file);
+            Response.ResponseBuilder response = Response.ok(file);
             response.header("Content-Disposition",
                     "attachment; filename=new-excel-file.xlsx");
             file.deleteOnExit();
@@ -96,6 +94,4 @@ public class GenerateExcel {
 
 
     }
-
-
 }

@@ -6,6 +6,9 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import * as moment from "moment";
 import _date = moment.unitOfTime._date;
 import {UserData} from "../authentication/authentication.service";
+import {st} from "@angular/core/src/render3";
+import {ResponseContentType} from "@angular/http";
+import { saveAs } from 'file-saver/FileSaver';
 import {TranslateService} from "@ngx-translate/core";
 
 
@@ -111,5 +114,28 @@ export class BugListService {
 
     return this.http.get<BugData[]>(this.baseURL + '/listBugs/sort', {params: params});
   }
+
+  excel(ids:number[]) {
+    let httpParams = new HttpParams();
+    ids.forEach(value => httpParams = httpParams.append("titles", value.toString()));
+    const headers = new HttpHeaders();
+    headers.append('accept', 'application/vnd.ms-excel');
+    return this.http.get(this.baseURL+'/view-bugs', {params: httpParams, responseType: 'blob'})
+      .subscribe(res=> {
+          let filename = 'Export.xlsx';
+          saveAs(res, filename);
+      });
+
+  }
+
+  updateBug(bugData: BugData) {
+    return this.http.post(this.baseURL + '/listBugs/updateBug', bugData,
+      {
+        headers: new HttpHeaders(
+          {'Content-Type': 'application/json'}
+        )
+      })
+  }
+
 
 }

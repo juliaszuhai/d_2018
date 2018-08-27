@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {UsermanagementService} from "../usermanagement.service";
 import {MatDialog} from "@angular/material";
-import {RegisterUserComponent} from "../register-user/register-user.component";
+import {RegisterUserComponent, UserData} from "../register-user/register-user.component";
 import {UpdateUserComponent} from "../update-user/update-user.component";
-import {DeactivationPopupComponent} from "../deactivation-popup/deactivation-popup.component";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslatorService} from "../../translator/translator.service";
 
 export interface UserElement {
   firstName: string;
@@ -24,7 +23,7 @@ export class UserManagementComponent implements OnInit {
 
 
   userData;
-  button: string;
+
   dataSource: any;
 
   constructor(private usrMgmtService: UsermanagementService,

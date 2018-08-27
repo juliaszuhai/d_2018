@@ -11,6 +11,7 @@ import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/listBugs")
@@ -55,4 +56,18 @@ public class ListBugs {
 
 
     }
+
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    @Path("/updateBug")
+    public Response updateBug(BugDTO bugDTO) {
+        try {
+            bugManagement.updateBug(bugDTO);
+            return Response.ok().build();
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+        }
+    }
+
 }

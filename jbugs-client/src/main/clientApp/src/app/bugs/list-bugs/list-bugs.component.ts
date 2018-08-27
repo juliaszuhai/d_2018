@@ -6,6 +6,9 @@ import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
 import {MatChipsModule} from '@angular/material/chips';
 import {AddBugComponent} from "../add-bug/add-bug.component";
 import {HttpParams} from "@angular/common/http";
+import {TranslatorService} from "../../translator/translator.service";
+import {UpdateUserComponent} from "../../usermanagement/update-user/update-user.component";
+import {UpdateBugComponent} from "../update-bug/update-bug.component";
 import {TranslateService} from "@ngx-translate/core";
 
 @Component({
@@ -61,6 +64,22 @@ export class ListBugsComponent implements OnInit {
   }
 
 
+  openUpdateDialog(bug): void {
+    const dialogRef = this.dialog.open(UpdateBugComponent, {
+      width: '60%',
+      data: {
+        description: bug.description,
+        fixedVersion: bug.fixedVersion,
+        version: bug.version,
+        targetDate: bug.targetDate,
+        status: bug.status,
+        severity: bug.severity,
+        assignedTo: bug.assignedTo,
+        createdByUser: bug.createdByUser
+      }
+    })
+  }
+
   ngOnInit() {
 
     this.bugService.getBugsFromServer().subscribe(
@@ -113,24 +132,29 @@ export class ListBugsComponent implements OnInit {
     let httpParams = new HttpParams();
     this.forExcel.forEach(value => httpParams = httpParams.append("titles", value.toString()));
     this.selectedTitles = httpParams.toString();
-
   }
 
+    downloadExcel()
+    {
+      this.bugService.excel(this.forExcel);
+    }
 
 
-  getDate(d) {
+    getDate(d)
+    {
 
-    const correctSec = d * 1000;
-    var expiresAt = new Date(correctSec);
+      const correctSec = d * 1000;
+      var expiresAt = new Date(correctSec);
 
-    return expiresAt
+      return expiresAt
+    }
+
+
+    openAddBug()
+    {
+      const dialogRef2 = this.dialog.open(AddBugComponent, {
+        width: '700px',
+        data: {bugService: this.bugService}
+      });
+    }
   }
-
-
-  openAddBug() {
-    const dialogRef2 = this.dialog.open(AddBugComponent, {
-      width: '700px',
-      data: {bugService: this.bugService}
-    });
-  }
-}

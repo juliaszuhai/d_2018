@@ -1,6 +1,8 @@
 package ro.msg.edu.jbugs.bugmanagement.persistence.dao;
 
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.*;
+import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
+
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
@@ -119,6 +121,14 @@ public class BugPersistenceManager {
         }
 
         return em.createQuery(cq).getResultList();
+    }
+
+    /**
+     * Updates a bug from the database.
+      * @param bug: bug entity to be updated, should not be null
+     */
+    public void updateBug(@NotNull Bug bug) {
+        em.merge(bug);
     }
 
 }

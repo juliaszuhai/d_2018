@@ -44,7 +44,7 @@
 
 </div>
 
-<a href="http://localhost:8080/jbugs/rest/view-bugs?{{selectedTitles}}"><button >EXCEL</button></a>
+<button (click)="downloadExcel()" >EXCEL</button>
 
 
 <div align="center">
@@ -114,6 +114,10 @@
 
     <!--<mat-chip>One fish</mat-chip>-->
   </div>
+
+  <button (click)="openUpdateDialog()">
+    UPDATE
+  </button>
 
   <!--<button type="submit"-->
   <!--(click)="getBugsByDescriptionAndSeverity(titleElement.value,severityElement.value)"-->

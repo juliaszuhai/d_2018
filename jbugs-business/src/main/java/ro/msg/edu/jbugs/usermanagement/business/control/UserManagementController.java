@@ -68,6 +68,8 @@ public class UserManagementController {
         if (userPersistenceManager.getUserByEmail(userDTO.getEmail()).isPresent()) {
             throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
         }
+
+
     }
 
 
@@ -86,6 +88,7 @@ public class UserManagementController {
         return userDTO.getFirstName() != null
                 && userDTO.getLastName() != null
                 && userDTO.getEmail() != null
+                && userDTO.getPassword() != null
                 && isValidEmail(userDTO.getEmail())
                 && isValidPhoneNumber(userDTO.getPhoneNumber());
     }
@@ -94,7 +97,6 @@ public class UserManagementController {
         return validateFields(userDTO)
                 && userDTO.getPassword() != null;
     }
-
 
     private boolean isValidEmail(String email) {
         final Pattern validEmailAddressRegex =
@@ -153,10 +155,21 @@ public class UserManagementController {
                 .collect(Collectors.toList());
     }
 
+
+    public long getUnifinishedBugsAssignedToUser(String username) {
+        return getBugsAssignedToUser(username)
+                .stream()
+                .filter(bug -> !bug.getStatus().equals(Status.CLOSED) ||
+                        !bug.getStatus().equals(Status.FIXED)
+                )
+                .count();
+    }
+
     /**
+     *
      * @param username
-     * @throws BusinessException
      * @return: A list og Bugs assigned to a user, given it's username
+     * @throws BusinessException
      */
     public List<BugDTO> getBugsAssignedToUser(String username) {
         return bugPersistenceManager.getAllBugs()
@@ -201,10 +214,10 @@ public class UserManagementController {
 
 
     /**
-     * Generates a username from the first and last name.
      *
+     * Generates a username from the first and last name.
      * @param firstName :
-     * @param lastName  :
+     * @param lastName :
      * @return : the generated username
      */
     protected String generateUsername(@NotNull String firstName, @NotNull String lastName) {
