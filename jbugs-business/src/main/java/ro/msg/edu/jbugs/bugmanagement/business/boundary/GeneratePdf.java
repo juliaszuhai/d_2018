@@ -42,10 +42,10 @@ public class GeneratePdf {
     public Response getFile(@PathParam("id") Long id) {
         File file = null;
         FileOutputStream fileOutputStream = null;
-        String localDir = System.getProperty("user.dir");
+        String localDir = System.getProperty("user.dir")+"\\BugPdf.pdf";
         try {
             BugDTO bugDTO = bugManagement.getBugById(id);
-            file = new File(localDir+"\\BugPdf.pdf");
+            file = new File(localDir);
             Document document = new Document();
             fileOutputStream = new FileOutputStream(file);
             PdfWriter.getInstance(document, fileOutputStream);
