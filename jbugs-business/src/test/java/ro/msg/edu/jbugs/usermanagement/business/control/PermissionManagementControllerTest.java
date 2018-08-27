@@ -5,9 +5,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import ro.msg.edu.jbugs.bugmanagement.business.control.BugManagementController;
-import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.PermissionPersistenceManager;
@@ -21,10 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PermissionManagementControllerTest {
@@ -41,10 +37,48 @@ public class PermissionManagementControllerTest {
 
     @Test
     public void createRole() {
+        Permission permission = new Permission();
+        permission.setType("USER_MANAGEMENT");
+        permission.setDescription("Can add a new user");
+        PermissionPersistenceManager permissionPersistenceManagerr = mock(PermissionPersistenceManager.class);
+        doNothing().when(permissionPersistenceManagerr).createPermission(permission);
+        Role role = new Role();
+        role.setType("ADM");
+        List<Permission> permissions = new ArrayList<>();
+        permissions.add(permission);
+        role.setPermissions(permissions);
+        when(permissionPersistenceManagerr.createRole(role)).thenReturn(new Role());
+        permissionManagementController.createRole(role);
     }
 
     @Test
     public void addRoleToUser() {
+        User user =  new User();
+        user.setFirstName("Mihai");
+        user.setLastName("Tantarean");
+        user.setEmail("mihaitudor@msggroup.com");
+        user.setPassword("Parola12.34");
+        when(userPersistenceManager.createUser(user)).thenReturn(user);
+        when(userPersistenceManager.getUserById(1L)).thenReturn(Optional.of(user));
+        Permission permission = new Permission();
+        permission.setType("USER_MANAGEMENT");
+        permission.setDescription("Can add a new user");
+        PermissionPersistenceManager permissionPersistenceManagerr = mock(PermissionPersistenceManager.class);
+        doNothing().when(permissionPersistenceManagerr).createPermission(permission);
+        Role role = new Role();
+        role.setType("ADM");
+        List<Permission> permissions = new ArrayList<>();
+        permissions.add(permission);
+        role.setPermissions(permissions);
+        when(permissionPersistenceManagerr.createRole(role)).thenReturn(new Role());
+        when(permissionPersistenceManager.getRoleByType(role.getType())).thenReturn(Optional.of(role));
+        when(permissionPersistenceManager.getRoleByType("ADM")).thenReturn(Optional.of(role));
+        when(userPersistenceManager.getUserByUsername(user.getUsername())).thenReturn(Optional.of(user));
+       try {
+           permissionManagementController.addRoleToUser("ADM", user.getUsername());
+       }catch (BusinessException e){
+           fail("Not exist the username");
+       }
     }
 
     @Test
@@ -159,8 +193,6 @@ public class PermissionManagementControllerTest {
             fail("Should not reach this point");
         }
     }
-
-
 
     @Test
     public void getPermissionByRole_ExpectedException(){
