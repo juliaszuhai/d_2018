@@ -12,7 +12,10 @@ import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -72,23 +75,28 @@ public class BugManagementController  implements BugManagement {
 
     public BugDTO createBug(BugDTO bugDTO) throws BusinessException {
         Bug bug = new Bug();
+        Date date = null;
+        try {
+            date = new java.sql.Date(new SimpleDateFormat("yyyy-mm-dd").parse(bugDTO.getTargetDateString()).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         bug.setTitle(bugDTO.getTitle());
         bug.setDescription(bugDTO.getDescription());
         bug.setVersion(bugDTO.getVersion());
         bug.setFixedVersion(bugDTO.getFixedVersion());
-        bug.setTargetDate(bugDTO.getTargetDate());
-        bug.setSeverity(bugDTO.getSeverity());
-        bug.setStatus(bugDTO.getStatus());
+        bug.setTargetDate(date);
+        bug.setSeverity(Severity.valueOf(bugDTO.getSeverityString()));
+        bug.setStatus(Status.valueOf(bugDTO.getStatusString()));
 
-
-        Optional<User> userAssigned = userPersistenceManager.getUserById(bugDTO.getAssignedTo().getId());
+        Optional<User> userAssigned = userPersistenceManager.getUserByUsername(bugDTO.getAssignedToString());
         if(userAssigned.isPresent()) {
             bug.setAssignedTo(userAssigned.get());
         } else {
             throw new BusinessException(); // TODO : adauga exceptie buna
         }
 
-        Optional<User> userCreated = userPersistenceManager.getUserById(bugDTO.getCreatedByUser().getId());
+        Optional<User> userCreated = userPersistenceManager.getUserByUsername(bugDTO.getCreatedByUserString());
         if(userCreated.isPresent()){
             bug.setCreatedByUser(userCreated.get());
         } else {
@@ -136,7 +144,7 @@ public class BugManagementController  implements BugManagement {
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {
         Optional<Bug> bug = bugPersistenceManager.getBugById(id);
-        if (bug.isPresent()) {
+        if (bug.equals(Optional.empty())) {
             return BugDTOHelper.fromEntity(bug.get());
         } else {
             throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
