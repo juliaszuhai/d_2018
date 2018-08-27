@@ -17,6 +17,54 @@ public class BugDTO {
     private Severity severity;
     private NameIdDTO createdByUser;
     private NameIdDTO assignedTo;
+    private String targetDateString;
+    private String statusString;
+    private String severityString;
+    private String createdByUserString;
+    private String assignedToString;
+
+
+    public String getCreatedByUserString() {
+        return createdByUserString;
+    }
+
+    public void setCreatedByUserString(String createdByUserString) {
+        this.createdByUserString = createdByUserString;
+    }
+
+    public String getAssignedToString() {
+        return assignedToString;
+    }
+
+    public void setAssignedToString(String assignedToString) {
+        this.assignedToString = assignedToString;
+    }
+
+    public String getStatusString() {
+        return statusString;
+    }
+
+    public void setStatusString(String statusString) {
+        this.statusString = statusString;
+    }
+
+    public String getSeverityString() {
+        return severityString;
+    }
+
+    public void setSeverityString(String severityString) {
+        this.severityString = severityString;
+    }
+
+    public String getTargetDateString() {
+        return targetDateString;
+    }
+
+    public void setTargetDateString(String targetDateString) {
+        this.targetDateString = targetDateString;
+    }
+
+
 
     public String getTitle() {
         return title;

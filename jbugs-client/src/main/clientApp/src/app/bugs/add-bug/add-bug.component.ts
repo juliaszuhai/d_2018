@@ -27,7 +27,7 @@ export class AddBugComponent implements OnInit {
               ) {
     this.bugData={
       id: null,
-     title:'',
+      title:'',
       description:'',
       version:'',
       fixedVersion:'',
@@ -69,7 +69,7 @@ export class AddBugComponent implements OnInit {
 
   addBugForm() {
     this.bugService.validateBug(this.bugData.title, this.bugData.description,this.bugData.version,this.bugData.fixedVersion,
-      this.bugData.targetDate,this.bugData.severity,this.bugData.assignedTo.username,this.bugData.createdByUser.username)
+      this.bugData.targetDate,this.bugData.severity,this.bugData.assignedTo.username,this.bugData.createdByUser.username,this.bugData.status)
       .subscribe(
         data => {
           this.error = false;

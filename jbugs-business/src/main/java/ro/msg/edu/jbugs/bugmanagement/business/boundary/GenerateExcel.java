@@ -57,17 +57,14 @@ public class GenerateExcel {
      * @return - response
      */
     @GET
-    @Secured("BUG_MANAGEMENT")
+    //@Secured("BUG_MANAGEMENT")
     @Path("{titles}")
     @Produces("application/vnd.ms-excel")
     public Response generate(@QueryParam("titles") List<Long> titles) {
         try {
             String pathFile = System.getProperty("user.dir")+"\\T:/Try.xlsx";
-
             File file = new File(pathFile);
-            FileInputStream fis = null;
-            fis = new FileInputStream(pathFile);
-            XSSFWorkbook workbook = new XSSFWorkbook(fis);
+            XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet spreadsheet = workbook.getSheetAt(0);
             Row row;
             Map< String, Object[] > empinfo=this.putInMap(titles);
@@ -84,10 +81,10 @@ public class GenerateExcel {
                 }
             }
             //Write the workbook in file system
-            FileOutputStream fos = new FileOutputStream(pathFile);
+            FileOutputStream fos = new FileOutputStream(file);
             workbook.write(fos);
             fos.close();
-            Response.ResponseBuilder response = Response.ok(file);
+            Response.ResponseBuilder response = Response.ok((Object)file);
             response.header("Content-Disposition",
                     "attachment; filename=new-excel-file.xlsx");
             file.deleteOnExit();

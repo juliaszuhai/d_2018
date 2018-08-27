@@ -12,8 +12,7 @@ import java.util.Optional;
 
 public class BugDTOHelper {
 
-    @EJB
-    private static UserPersistenceManager userPersistenceManager;
+
 
     private BugDTOHelper() {
         //hiding the default constructor.
@@ -48,7 +47,7 @@ public class BugDTOHelper {
 
     }
 
-    public static Bug toEntity(BugDTO bugDTO) throws BusinessException {
+    /*public static Bug toEntity(BugDTO bugDTO) throws BusinessException {
         Bug bug = new Bug();
 
         bug.setId(bugDTO.getId());
@@ -81,6 +80,6 @@ public class BugDTOHelper {
 
 
         return bug;
-    }
+    }*/
 
 }
