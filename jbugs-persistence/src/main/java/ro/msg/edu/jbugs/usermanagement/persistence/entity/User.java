@@ -13,7 +13,7 @@ import java.util.Objects;
                 @NamedQuery(name = User.GET_USER_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username=:username"),
                 @NamedQuery(name= User.GET_USER_BY_EMAIL, query = "SELECT u from User u where u.email = :email "),
                 @NamedQuery(name = User.GET_USER_BY_ID, query = "SELECT u from User u where u.id=:id"),
-
+                @NamedQuery(name = User.GET_NOTIFICATIONS_BY_USERNAME, query = "SELECT u.notifications from User u where u.username=:username"),
         }
 )
 public class User extends BaseEntity {
@@ -24,6 +24,7 @@ public class User extends BaseEntity {
     public static final String GET_USER_BY_USERNAME = "get_User_By_Username";
     public static final String GET_USER_BY_EMAIL = "get_User_By_Email";
     public static final String GET_USER_BY_ID="get_User_By_Id";
+    public static final String GET_NOTIFICATIONS_BY_USERNAME="get_Notifications_By_Username";
 
     @Column(name = "firstName", length = MAX_STRING_LENGTH, nullable = false)
     private String firstName;
@@ -51,6 +52,10 @@ public class User extends BaseEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Role> roles;
+
+    @OneToMany(targetEntity=Notification.class)
+    private List<Notification> notifications;
+
 
     public User() {
         //Empty constructor needed for Entity
@@ -121,7 +126,13 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
 
+    public void setNotifications(List notifications) {
+        this.notifications = notifications;
+    }
 
     public List<Role> getRoles() {
         return roles;

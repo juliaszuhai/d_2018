@@ -9,6 +9,7 @@ public class UserDTO {
     private String phoneNumber;
     private Boolean isActive;
 
+
     public String getFirstName() {
         return firstName;
     }

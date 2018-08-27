@@ -105,4 +105,22 @@ public class UserManager {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
         }
     }
+
+    @GET
+    @Path("/get-notification-of-user")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response getNotificationOfUser(@QueryParam("username") String username) {
+        try {
+            return Response
+                    .ok(
+                            new Gson().toJson(userManagementController
+                                    .getUserForUsername(username)
+                                    .getNotifications())
+                    )
+                    .build();
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+        }
+    }
 }
