@@ -36,7 +36,7 @@ public class PermissionManagementControllerTest {
 
 
     @Test
-    public void createRole() {
+    public void createRole_ExpectedOK() {
         Permission permission = new Permission();
         permission.setType("USER_MANAGEMENT");
         permission.setDescription("Can add a new user");
@@ -52,7 +52,7 @@ public class PermissionManagementControllerTest {
     }
 
     @Test
-    public void addRoleToUser() {
+    public void addRoleToUser_ExpectedOK() {
         User user =  new User();
         user.setFirstName("Mihai");
         user.setLastName("Tantarean");
@@ -80,6 +80,37 @@ public class PermissionManagementControllerTest {
            fail("Not exist the username");
        }
     }
+
+//    @Test
+//    public void addRoleToUser_ExpectedException() {
+//        User user =  new User();
+//        user.setFirstName("Mihai");
+//        user.setLastName("Tantarean");
+//        user.setEmail("mihaitudor@msggroup.com");
+//        user.setPassword("Parola12.34");
+//        when(userPersistenceManager.createUser(user)).thenReturn(user);
+//        when(userPersistenceManager.getUserById(1L)).thenReturn(Optional.of(user));
+//        Permission permission = new Permission();
+//        permission.setType("USER_MANAGEMENT");
+//        permission.setDescription("Can add a new user");
+//        PermissionPersistenceManager permissionPersistenceManagerr = mock(PermissionPersistenceManager.class);
+//        doNothing().when(permissionPersistenceManagerr).createPermission(permission);
+//        Role role = new Role();
+//        role.setType("ADM");
+//        List<Permission> permissions = new ArrayList<>();
+//        permissions.add(permission);
+//        role.setPermissions(permissions);
+//        when(permissionPersistenceManagerr.createRole(role)).thenReturn(new Role());
+//        when(permissionPersistenceManager.getRoleByType(role.getType())).thenReturn(Optional.of(role));
+//        when(permissionPersistenceManager.getRoleByType("ADM")).thenReturn(Optional.of(role));
+//        when(userPersistenceManager.getUserByUsername(user.getUsername())).thenReturn(Optional.of(user));
+//        try {
+//            permissionManagementController.addRoleToUser("ADM", user.getUsername());
+//            fail("Not exist the username");
+//        }catch (BusinessException e){
+//
+//        }
+//    }
 
     @Test
     public void addPermissionToRole() {
@@ -156,7 +187,7 @@ public class PermissionManagementControllerTest {
     }
 
     @Test
-    public void revokePermissionFromRole() {
+    public void revokePermissionFromRole_ExpectedOK() {
         Permission permission = new Permission();
         permission.setType("USER_MANAGEMENT");
         permission.setDescription("Can add a new user");
