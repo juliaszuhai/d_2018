@@ -26,7 +26,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserPersistenceManagerBeanTest {
+public class UserManagementControllerTest {
 
 
 
