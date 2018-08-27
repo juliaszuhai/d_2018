@@ -25,7 +25,6 @@ import java.util.TreeMap;
 
 @Path("/view-bugs")
 public class GenerateExcel {
-    private static final String FILE_PATH = "T:/Try.xlsx";
 
     @EJB
     private BugManagement bugManagement;
@@ -63,9 +62,11 @@ public class GenerateExcel {
     @Produces("application/vnd.ms-excel")
     public Response generate(@QueryParam("titles") List<Long> titles) {
         try {
-            File file = new File(FILE_PATH);
+            String pathFile = System.getProperty("user.dir")+"\\T:/Try.xlsx";
+
+            File file = new File(pathFile);
             FileInputStream fis = null;
-            fis = new FileInputStream(FILE_PATH);
+            fis = new FileInputStream(pathFile);
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
             XSSFSheet spreadsheet = workbook.getSheetAt(0);
             Row row;
@@ -83,7 +84,7 @@ public class GenerateExcel {
                 }
             }
             //Write the workbook in file system
-            FileOutputStream fos = new FileOutputStream(FILE_PATH);
+            FileOutputStream fos = new FileOutputStream(pathFile);
             workbook.write(fos);
             fos.close();
             Response.ResponseBuilder response = Response.ok(file);

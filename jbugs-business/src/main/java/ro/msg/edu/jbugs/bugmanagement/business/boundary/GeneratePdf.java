@@ -7,7 +7,7 @@ import ro.msg.edu.jbugs.bugmanagement.business.control.BugManagement;
 import ro.msg.edu.jbugs.bugmanagement.business.control.ExportBugPdf;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
-import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
+
 
 
 import javax.ejb.EJB;
@@ -27,7 +27,6 @@ public class GeneratePdf {
     @EJB
     private BugManagement bugManagement;
 
-    private static final String FILE_PATH = "t:/BugPdf.pdf";
 
 
     /**
@@ -37,16 +36,16 @@ public class GeneratePdf {
      * @return Response with a pdf
      */
     @GET
-    @Secured("BUG_EXPORT_PDF")
+//    @Secured("BUG_EXPORT_PDF")
     @Path("{id}")
     @Produces("application/pdf")
     public Response getFile(@PathParam("id") Long id) {
         File file = null;
         FileOutputStream fileOutputStream = null;
-
+        String localDir = System.getProperty("user.dir");
         try {
             BugDTO bugDTO = bugManagement.getBugById(id);
-            file = new File(FILE_PATH);
+            file = new File(localDir+"\\BugPdf.pdf");
             Document document = new Document();
             fileOutputStream = new FileOutputStream(file);
             PdfWriter.getInstance(document, fileOutputStream);
