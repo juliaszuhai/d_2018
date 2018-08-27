@@ -1,13 +1,13 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {BugData, BugListService} from "../bugs.service";
 import {ListBugsComponent} from "../list-bugs/list-bugs.component";
 
-@Component({
-  selector: 'app-update-bug',
-  templateUrl: './update-bug.component.html',
-  styleUrls: ['./update-bug.component.css']
-})
+// @Component({
+//   selector: 'app-update-bug',
+//   templateUrl: './update-bug.component.html',
+//   styleUrls: ['./update-bug.component.css']
+// })
 export class UpdateBugComponent implements OnInit {
 
   constructor( //TODO: add new translator

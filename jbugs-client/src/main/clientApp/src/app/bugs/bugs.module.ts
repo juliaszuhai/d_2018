@@ -19,7 +19,6 @@ import {MatSelectModule} from '@angular/material/select';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../app.module";
 import {HttpClient} from "@angular/common/http";
-import {UpdateBugComponent} from "./update-bug/update-bug.component";
 
 
 const bugRoutes: Routes = [
@@ -57,7 +56,7 @@ const bugRoutes: Routes = [
 
 
   ],
-  declarations: [ListBugsComponent, BugsPopupComponent, AddBugComponent, UpdateBugComponent],
+  declarations: [ListBugsComponent, BugsPopupComponent, AddBugComponent],
   exports: [ListBugsComponent, RouterModule, MatButtonModule, MatCheckboxModule, MatDialogModule, BugsPopupComponent, MatDialogModule,
     MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatSelectModule
 
