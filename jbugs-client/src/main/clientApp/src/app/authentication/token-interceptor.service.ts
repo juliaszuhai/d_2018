@@ -46,8 +46,10 @@ export class TokenInterceptorService implements HttpInterceptor {
       this.router.navigate([`/login`]);
 
       throw err;
+    } else if (err.status === 302) {
+
     } else {
-      console.log('something went really wrong: ' + err);
+      console.log('something went really wrong: ' + err.status);
     }
     throw err;
   }

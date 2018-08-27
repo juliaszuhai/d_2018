@@ -4,6 +4,7 @@ import {MatDialog} from "@angular/material";
 import {RegisterUserComponent} from "../register-user/register-user.component";
 import {UpdateUserComponent} from "../update-user/update-user.component";
 import {TranslatorService} from "../../translator/translator.service";
+import {DeactivationPopupComponent} from "../deactivation-popup/deactivation-popup.component";
 
 export interface UserElement {
   firstName: string;
@@ -100,6 +101,16 @@ export class UserManagementComponent implements OnInit {
       );
   }
 
+  openDeactivationErrorDialog(user): void {
+    const dialogRef = this.dialog.open(DeactivationPopupComponent, {
+      width: '300px',
+      data: {
+        username: user.username
+      }
+    });
+  }
+
+
   deactivateUser(username) {
     this.usrMgmtService.deactivateUser(username)
       .subscribe(
@@ -107,8 +118,8 @@ export class UserManagementComponent implements OnInit {
           this.getUsers();
         },
         error1 => {
-          if (error1.error === "User still has assigned bugs.") {
-            console.log("still has bugs");
+          if (error1.status == 302) {
+            this.openDeactivationErrorDialog(username);
           }
         }
       );

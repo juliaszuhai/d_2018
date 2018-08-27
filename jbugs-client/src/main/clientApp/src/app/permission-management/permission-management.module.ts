@@ -3,7 +3,14 @@ import {CommonModule} from '@angular/common';
 import {LoginguardGuard} from "../authentication/loginguard.guard";
 import {RouterModule, Routes} from "@angular/router";
 import {RolesAndPermissionsViewComponent} from "./roles-and-permissions-view/roles-and-permissions-view.component";
-import {MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule} from "@angular/material";
+import {
+  MatButtonModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatSelectModule
+} from "@angular/material";
 import {MatChipsModule} from "@angular/material/chips";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -28,10 +35,12 @@ const permissionRoutes: Routes = [
     MatInputModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule
   ],
   declarations: [
-    RolesAndPermissionsViewComponent
+    RolesAndPermissionsViewComponent,
+    EditRoleComponent
   ],
   exports: [
     MatTableModule,
@@ -43,7 +52,8 @@ const permissionRoutes: Routes = [
     MatInputModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule
   ],
   entryComponents: [
     EditRoleComponent

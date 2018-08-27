@@ -20,10 +20,11 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatChipsModule} from "@angular/material/chips";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {UpdateUserComponent} from "./update-user/update-user.component";
+import {DeactivationPopupComponent} from "./deactivation-popup/deactivation-popup.component";
 
 
 const userManagementRoutes: Routes = [
-  {path: 'manageusers', component: UserManagementComponent, canActivate: [LoginguardGuard]},
+  {path: 'manage-users', component: UserManagementComponent, canActivate: [LoginguardGuard]},
 ];
 
 @NgModule({
@@ -46,7 +47,8 @@ const userManagementRoutes: Routes = [
   declarations: [
     UserManagementComponent,
     RegisterUserComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    DeactivationPopupComponent
   ],
   exports: [UserManagementComponent,
     RouterModule,
@@ -65,7 +67,8 @@ const userManagementRoutes: Routes = [
   ],
   entryComponents: [
     RegisterUserComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    DeactivationPopupComponent
   ],
   providers: [
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}

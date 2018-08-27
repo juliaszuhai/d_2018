@@ -18,7 +18,6 @@ import {BugsModule} from "./bugs/bugs.module";
 import {RecaptchaDirective} from './authentication/login/recaptcha.directive';
 import {UsermanagementModule} from "./usermanagement/usermanagement.module";
 import {PermissionManagementModule} from "./permission-management/permission-management.module";
-import {EditRoleComponent} from './permission-management/edit-role/edit-role.component';
 
 
 const appRoutes: Routes = [
@@ -34,7 +33,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     RecaptchaDirective,
-    EditRoleComponent,
   ],
   imports: [
     BrowserModule,
