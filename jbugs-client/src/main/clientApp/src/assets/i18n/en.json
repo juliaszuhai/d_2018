@@ -62,7 +62,7 @@
   },
 
   "bugPopup": {
-    "description": "Descriprion",
+    "description": "Description",
     "exportPdf": "Export to Pdf"
   },
 
@@ -116,14 +116,24 @@
     "updateUserNoChange": "If you don't want to change the password please leave it empty",
     "passwordRequirements": "Password must contain",
     "emailRequirement": "E-mail must be registered on the msggroup.com domain",
-    "required": "This field is required",
-    "invalidEmail": "Invalid e-mail format",
-    "invalidDomain": "Unsupported e-mail domain",
-    "invalidPassword": "Not a valid password format",
     "passwordReqLength": "at least 6 characters",
     "passwordReqLetters": "an uppercase and a lowercase letter",
     "passwordReqSpecial": "a special character",
-    "passwordReqDigit": "a digit"
+    "passwordReqDigit": "a digit",
+    "userHasTasks": "This User still has bugs assigned"
+  },
+  "textFieldValidation": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid e-mail format",
+    "invalidDomain": "Unsupported e-mail domain",
+    "invalidPassword": "Not a valid password format"
+  },
+  "rolesAndPermissions": {
+    "role": "Role",
+    "permission": "Permissions",
+    "editRole": "Edit Role",
+    "buttonAddPermission": "Add Permission",
+    "buttonRemovePermission": "Remove Permission"
   }
 
 

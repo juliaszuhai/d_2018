@@ -1,25 +1,25 @@
 <table mat-table [dataSource]="roleDataSource" class="mat-elevation-z8">
 
   <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef> Role</th>
+    <th mat-header-cell *matHeaderCellDef> {{'rolesAndPermissions.role'| translate}}</th>
     <td mat-cell *matCellDef="let element"> {{element.type}}</td>
 
   </ng-container>
 
   <ng-container matColumnDef="permissions">
-    <th mat-header-cell *matHeaderCellDef> Permissions</th>
+    <th mat-header-cell *matHeaderCellDef> {{'rolesAndPermissions.permission'| translate}}</th>
     <td mat-cell *matCellDef="let element"> {{getStringPermissionList(element.permissions)}}</td>
 
   </ng-container>
 
   <ng-container matColumnDef="addPermission">
-    <th mat-header-cell *matHeaderCellDef> Edit Role</th>
+    <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
       <button color="primary"
               mat-raised-button
               (click)="openRoleEditDialog(element)"
       >
-        <i class="material-icons">edit</i> Edit Role
+        <i class="material-icons">edit</i> {{'rolesAndPermissions.editRole'| translate}}
       </button>
 
     </td>

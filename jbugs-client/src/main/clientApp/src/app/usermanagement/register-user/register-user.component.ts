@@ -5,6 +5,7 @@ import {UsermanagementService} from "../usermanagement.service";
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {TranslateService} from "@ngx-translate/core";
 
+
 export interface UserData {
   firstName: string,
   lastName: string,
@@ -90,22 +91,25 @@ export class RegisterUserComponent implements OnInit {
 
   }
 
+  passwordErrorMessage: string;
+  emailErrorMessage: string;
 
-  getPassowordErrorMessage() {
-    return this.passwordFormControl.hasError('required') ? 'This field is required.' :
-      this.passwordFormControl.hasError('passwordInvalid') ? 'Not a valid password format.' :
+  getPasswordErrorMessage() {
+    this.passwordFormControl.hasError('required') ? (this.translate.get('textFieldValidation.required').subscribe((res: string) => this.passwordErrorMessage = res)) :
+      this.passwordFormControl.hasError('passwordInvalid') ? (this.translate.get('textFieldValidation.invalidPassword').subscribe((res: string) => this.passwordErrorMessage = res)) :
         '';
+
+    return this.passwordErrorMessage;
   }
 
   getEmailErrorMessages(){
     console.log(this.emailFormControl);
-    if(this.emailFormControl.hasError('required')){
-      return 'This field is required.'
-    } else if(this.emailFormControl.hasError('email')){
-      return 'Invalid email format'
-    } else if(this.emailFormControl.hasError('emaildomainerror')){
-      return 'Unsupported email domain'
-    }
+    this.emailFormControl.hasError('required') ? (this.translate.get('textFieldValidation.required').subscribe((res: string) => this.emailErrorMessage = res)) :
+      this.emailFormControl.hasError('email') ? (this.translate.get('textFieldValidation.invalidEmail').subscribe((res: string) => this.emailErrorMessage = res)) :
+        this.emailFormControl.hasError('emaildomainerror') ? (this.translate.get('textFieldValidation.invalidDomain').subscribe((res: string) => this.emailErrorMessage = res)) :
+          '';
+    return this.emailErrorMessage;
+
   }
 
 

@@ -1,6 +1,6 @@
 <h3>{{'userManagement.updateUser'| translate}}</h3>
 <mat-tab-group>
-  <mat-tab label="Update User Info">
+  <mat-tab label="{{'userManagement.tabUpdateInfo'| translate}}">
     <div class="update-user-form">
 
 
@@ -41,7 +41,7 @@
                  [errorStateMatcher]="matcher"
                  placeholder="{{'userManagement.password'| translate}}">
 
-          <mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPassowrdErrorMessage()}}</mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPasswordErrorMessage()}}</mat-error>
         </mat-form-field>
         <br>
         <mat-form-field>
@@ -83,7 +83,7 @@
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Update user Roles">
+  <mat-tab label="{{'userManagement.tabUpdateRoles'| translate}}">
 
     <mat-list *ngFor="let element of this.userRoles">
       <mat-list-item>{{element.type}}</mat-list-item>
@@ -109,13 +109,13 @@
             style="margin:0 10px;"
             (click)="addRoleToUser()
 "
-    >Add Role
+    >{{'userManagement.buttonAddRole'| translate}}
     </button>
     <button mat-raised-button
             color="warn"
             style="margin:0 10px;"
             (click)="removeRoleFromUser()"
-    >Remove Role
+    >{{'userManagement.buttonRemoveRole'| translate}}
     </button>
 
   </mat-tab>

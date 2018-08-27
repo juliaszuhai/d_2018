@@ -42,7 +42,7 @@
            [errorStateMatcher]="matcher"
            placeholder="{{'userManagement.password'| translate}}">
 
-      <mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPassowordErrorMessage()}}</mat-error>
+      <mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPasswordErrorMessage()}}</mat-error>
   </mat-form-field>
     <br>
     <mat-form-field>
