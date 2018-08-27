@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PermissionManagementService} from "../permission-management.service";
 import {MatDialog} from "@angular/material";
 import {EditRoleComponent} from "../edit-role/edit-role.component";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-roles-and-permissions-view',
@@ -11,7 +12,8 @@ import {EditRoleComponent} from "../edit-role/edit-role.component";
 export class RolesAndPermissionsViewComponent implements OnInit {
 
   constructor(private permissionmanager: PermissionManagementService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private translate: TranslateService) {
   }
 
   roleDataSource: any;

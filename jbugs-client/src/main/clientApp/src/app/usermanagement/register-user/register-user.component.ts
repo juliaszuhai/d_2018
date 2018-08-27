@@ -3,7 +3,7 @@ import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialogRef} from "@angular/materia
 import {UserManagementComponent} from "../user-management/user-management.component";
 import {UsermanagementService} from "../usermanagement.service";
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
-import {TranslatorService} from "../../translator/translator.service";
+import {TranslateService} from "@ngx-translate/core";
 
 export interface UserData {
   firstName: string,
@@ -35,7 +35,7 @@ export class RegisterUserComponent implements OnInit {
 
 
   constructor(
-    public translatorService: TranslatorService,
+    private translate: TranslateService,
     public dialogRef: MatDialogRef<UserManagementComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UserData,
     public usermgmt: UsermanagementService) {

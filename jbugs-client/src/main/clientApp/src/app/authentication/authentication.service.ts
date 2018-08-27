@@ -6,6 +6,7 @@ import {tap} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Router} from '@angular/router';
 import {now} from 'moment';
+import {TranslateService} from "@ngx-translate/core";
 
 export interface UserLoginData {
   username: string;
@@ -27,7 +28,10 @@ export class AuthenticationService {
 
   baseURL = 'http://localhost:8080/jbugs/rest/';
 
-  constructor(private http: HttpClient, private  router: Router) {
+  constructor(private http: HttpClient,
+              private  router: Router,
+              private translate: TranslateService
+              ) {
   }
 
   public getToken(): string {

@@ -1,6 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TranslatorService} from "./translator.service";
-import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 
 
@@ -18,11 +16,11 @@ export class Language {
 }
 @Component({
   selector: 'language-dropdown',
-  templateUrl: './translator.component.html',
+  templateUrl: './language.component.html',
 
-  styleUrls: ['./translator.component.css']
+  styleUrls: ['./language.component.css']
 })
-export class TranslatorComponent implements OnInit {
+export class LanguageComponent implements OnInit {
 
   @Input()
   allLanguages: Language[];
@@ -45,11 +43,4 @@ export class TranslatorComponent implements OnInit {
 
   }
 
- /* public switchLanguage(id){
-    if(id == 1 && this.translatorService.switch == false)
-      this.translatorService.switch = !this.translatorService.switch;
-    else if(id == 0 && this.translatorService.switch == true)
-      this.translatorService.switch = !this.translatorService.switch;
-
-  }*/
 }

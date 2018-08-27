@@ -3,8 +3,8 @@ import {UsermanagementService} from "../usermanagement.service";
 import {MatDialog} from "@angular/material";
 import {RegisterUserComponent} from "../register-user/register-user.component";
 import {UpdateUserComponent} from "../update-user/update-user.component";
-import {TranslatorService} from "../../translator/translator.service";
 import {DeactivationPopupComponent} from "../deactivation-popup/deactivation-popup.component";
+import {TranslateService} from "@ngx-translate/core";
 
 export interface UserElement {
   firstName: string;
@@ -24,10 +24,12 @@ export class UserManagementComponent implements OnInit {
 
 
   userData;
-
+  button: string;
   dataSource: any;
 
-  constructor(private usrMgmtService: UsermanagementService, public dialog: MatDialog, public translatorService: TranslatorService) {
+  constructor(private usrMgmtService: UsermanagementService,
+              public dialog: MatDialog,
+              private translate: TranslateService) {
 
   }
 
@@ -84,10 +86,14 @@ export class UserManagementComponent implements OnInit {
 
   getActivationButtonText(isActive) {
     if (isActive) {
-     return (this.translatorService.switch)?"Dezactivare":"Deactivate";
+
+      this.translate.get('userManagement.buttonDeactivate').subscribe((res: string) => this.button = res);
+      return this.button;
 
     } else {
-      return (this.translatorService.switch)?"Activare":"Activate";
+
+     this.translate.get('userManagement.buttonActivate').subscribe((res: string) => this.button = res);
+     return this.button;
 
     }
   }

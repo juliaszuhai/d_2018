@@ -4,7 +4,7 @@ import {NavComponent} from './nav/nav.component';
 import {MatButtonModule, MatCheckboxModule, MatIconModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {AuthenticationModule} from '../authentication/authentication.module';
 import {UserModule} from '../user/user.module';
-import {TranslatorModule} from "../translator/translator.module";
+import {LanguageModule} from "../language/language.module";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../app.module";
 import {HttpClient} from "@angular/common/http";
@@ -32,7 +32,7 @@ import {HttpClient} from "@angular/common/http";
     MatIconModule,
     AuthenticationModule,
     UserModule,
-    TranslatorModule
+    LanguageModule
   ],
   declarations: [NavComponent],
   exports: [NavComponent,

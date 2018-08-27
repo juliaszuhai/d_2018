@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -21,7 +22,8 @@ export class AddBugComponent implements OnInit {
 
   constructor(public dialogRef2: MatDialogRef<AddBugComponent>,
                private bugService: BugListService,
-              private router: Router
+              private router: Router,
+              private translate: TranslateService
               ) {
     this.bugData={
       id: null,

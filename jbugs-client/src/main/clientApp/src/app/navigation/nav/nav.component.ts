@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {Router} from '@angular/router';
-import {TranslatorService} from "../../translator/translator.service";
-import {TranslateService,  TranslatePipe} from "@ngx-translate/core";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({

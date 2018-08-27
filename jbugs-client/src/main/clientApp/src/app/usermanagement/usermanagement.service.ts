@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {UserData} from "./register-user/register-user.component";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Injectable({

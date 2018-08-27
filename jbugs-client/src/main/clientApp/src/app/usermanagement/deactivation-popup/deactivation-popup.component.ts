@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {UserManagementComponent} from "../user-management/user-management.component";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {TranslatorService} from "../../translator/translator.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-deactivation-popup',
@@ -11,7 +11,7 @@ import {TranslatorService} from "../../translator/translator.service";
 export class DeactivationPopupComponent implements OnInit {
 
   constructor(
-    public translatorService: TranslatorService,
+    private translate: TranslateService,
     public dialogRef: MatDialogRef<UserManagementComponent>,
     @Inject(MAT_DIALOG_DATA) public data,) {
   }

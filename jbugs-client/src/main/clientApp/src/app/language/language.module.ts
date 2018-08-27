@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslatorComponent } from './translator.component';
+import { LanguageComponent } from './language.component';
 import {FormsModule} from "@angular/forms";
 import {MatMenuModule, MatIconModule, MatButtonModule} from '@angular/material';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
@@ -27,7 +27,7 @@ import {HttpClient} from "@angular/common/http";
     MatIconModule,
     MatButtonModule
   ],
-  declarations: [TranslatorComponent],
-  exports:[TranslatorComponent]
+  declarations: [LanguageComponent],
+  exports:[LanguageComponent]
 })
-export class TranslatorModule { }
+export class LanguageModule { }

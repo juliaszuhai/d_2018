@@ -4,8 +4,8 @@ import {UserManagementComponent} from "../user-management/user-management.compon
 import {FormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {MyErrorStateMatcher} from "../register-user/register-user.component";
-import {TranslatorService} from "../../translator/translator.service";
 import {PermissionManagementService} from "../../permission-management/permission-management.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-update-user',
@@ -15,7 +15,7 @@ import {PermissionManagementService} from "../../permission-management/permissio
 export class UpdateUserComponent implements OnInit {
 
   constructor(
-    public translatorService: TranslatorService,
+    private translate: TranslateService,
     public dialogRef: MatDialogRef<UserManagementComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     public usermgmt: UsermanagementService,

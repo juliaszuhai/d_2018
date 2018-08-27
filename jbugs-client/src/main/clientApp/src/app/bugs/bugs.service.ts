@@ -6,7 +6,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import * as moment from "moment";
 import _date = moment.unitOfTime._date;
 import {UserData} from "../authentication/authentication.service";
-import {st} from "@angular/core/src/render3";
+import {TranslateService} from "@ngx-translate/core";
 
 
 export interface RelatedUser {
@@ -36,7 +36,8 @@ export class BugListService {
 
   baseURL = 'http://localhost:8080/jbugs/rest';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private translate: TranslateService) {
   }
 
   getBugList(): Observable<BugData> {
