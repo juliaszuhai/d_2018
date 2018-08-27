@@ -3,9 +3,7 @@ package ro.msg.edu.jbugs.bugmanagement.business.control;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
@@ -16,16 +14,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BugPersistenceManagerBeanTest {
 
-    @Mock
+    @InjectMocks
     private BugPersistenceManager bugPersistenceManager;
 
 
@@ -61,6 +56,8 @@ public class BugPersistenceManagerBeanTest {
         bugPersistenceManager.createBug(bug2);
         when(bugPersistenceManager.getAllBugs())
                 .thenReturn(Arrays.asList(bug,bug2));
+
+        assertEquals(Arrays.asList(bug, bug2), bugPersistenceManager.getAllBugs());
         }
 
     @Test
@@ -170,5 +167,6 @@ public class BugPersistenceManagerBeanTest {
         bugPersistenceManager.createBug(bug);
         bugPersistenceManager.createBug(bug2);
         when(bugPersistenceManager.sort(true,true)).thenReturn(Arrays.asList(bug,bug2));
+
     }
 }

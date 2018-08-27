@@ -119,7 +119,6 @@ public class UserManagementController {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
 
         if (userOptional.isPresent()) {
-
             if (getUnifinishedBugsAssignedToUser(username) > 0) {
                 throw new BusinessException(ExceptionCode.USER_HAS_ASSIGNED_BUGS);
             }

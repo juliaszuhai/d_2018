@@ -97,7 +97,7 @@ public class BugManagementTest {
 //        when(userPersistenceManager.getUserById(any(Long.class)))
 //                .thenReturn(Optional.of(userUsed));
 //        when(bugPersistenceManager.getAllBugs())
-//                .thenReturn(Arrays.asList(bug,bug));
+//                .thenReturn(Arrays.asList(new Bug(),new Bug()));
 //        assertEquals(2, bugManagementController.getAllBugs().size());
     }
 

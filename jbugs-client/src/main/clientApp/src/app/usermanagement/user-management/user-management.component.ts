@@ -105,6 +105,11 @@ export class UserManagementComponent implements OnInit {
       .subscribe(
         data => {
           this.getUsers();
+        },
+        error1 => {
+          if (error1.error === "User still has assigned bugs.") {
+            console.log("still has bugs");
+          }
         }
       );
   }
