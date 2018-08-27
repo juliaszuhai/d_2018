@@ -117,7 +117,12 @@ public class UserManagementController {
      */
     public void deactivateUser(String username) throws BusinessException {
         Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
+
         if (userOptional.isPresent()) {
+
+            if (getUnifinishedBugsAssignedToUser(username) > 0) {
+                throw new BusinessException(ExceptionCode.USER_HAS_ASSIGNED_BUGS);
+            }
             User user = userOptional.get();
             user.setActive(false);
             userPersistenceManager.updateUser(user);
@@ -159,8 +164,8 @@ public class UserManagementController {
     public long getUnifinishedBugsAssignedToUser(String username) {
         return getBugsAssignedToUser(username)
                 .stream()
-                .filter(bug -> bug.getStatus().equals(Status.CLOSED) ||
-                        bug.getStatus().equals(Status.FIXED)
+                .filter(bug -> !bug.getStatus().equals(Status.CLOSED) ||
+                        !bug.getStatus().equals(Status.FIXED)
                 )
                 .count();
     }

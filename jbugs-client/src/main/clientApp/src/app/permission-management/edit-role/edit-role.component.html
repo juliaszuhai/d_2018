@@ -1,0 +1,35 @@
+<div class="role-edit">
+
+  <h2>{{this.data.type}}</h2>
+
+  <mat-list *ngFor="let element of this.ownedPermissions">
+    <mat-list-item>{{element.type}}</mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-list>
+
+  <mat-form-field>
+    <mat-select [(value)]="selectedPermission"
+
+    >
+      <div *ngFor="let element of this.allPermissions" class="options">
+        <mat-option
+          value={{element.type}}
+        >{{element.type}}
+        </mat-option>
+      </div>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button
+          color="primary"
+          style="margin:0 10px;"
+          (click)="addPermissionToRole()"
+  >Add Permission
+  </button>
+  <button mat-raised-button
+          color="warn"
+          style="margin:0 10px;"
+          (click)="removePermissionFromRole()"
+  >Remove Permission
+  </button>
+</div>
