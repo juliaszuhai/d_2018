@@ -1,13 +1,10 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
-import {DataSource} from '@angular/cdk/table';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
-import {MatChipsModule} from '@angular/material/chips';
 import {AddBugComponent} from "../add-bug/add-bug.component";
 import {HttpParams} from "@angular/common/http";
 import {TranslatorService} from "../../translator/translator.service";
-import {UpdateUserComponent} from "../../usermanagement/update-user/update-user.component";
 import {UpdateBugComponent} from "../update-bug/update-bug.component";
 import {TranslateService} from "@ngx-translate/core";
 
