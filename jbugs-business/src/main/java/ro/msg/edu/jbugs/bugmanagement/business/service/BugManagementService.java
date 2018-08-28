@@ -68,6 +68,15 @@ public class BugManagementService implements BugManagement {
         return selectedBugs;
     }
 
+//
+//    public List<BugDTO> filterAndSort(List<String> filterArgs, List<Boolean> sortArgs){
+//        Status status = Status.valueOf(filterArgs.get(2));
+//        Severity severity = Severity.valueOf(filterArgs.get(3));
+//
+//        List<BugDTO> bugDTOs = filter(filterArgs.get(0),filterArgs.get(1),status,severity);
+//        return sort(sortArgs.get(0),sortArgs.get(1));
+//
+//    }
 
     @Override
     public List<BugDTO> filter(String title, String description, Status status, Severity severity) {

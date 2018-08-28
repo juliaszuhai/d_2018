@@ -6,10 +6,12 @@ export class ListBugsPipe implements PipeTransform {
 
 
   transform(bugs: BugData[],args) {
+    console.log(args);
     args.forEach(arg => {
+
       bugs.sort((bug1: BugData, bug2: BugData)=> {
         if (bug1[arg.argument] < bug2[arg.argument]){
-          return arg.order == "desc"? -1: 1;
+          return arg.order == "asc" ? -1 : 1;
         }
         else return 0;
       });

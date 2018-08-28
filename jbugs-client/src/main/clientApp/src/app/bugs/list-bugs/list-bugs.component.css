@@ -5,4 +5,30 @@
 
 table {
   width: 100%;
+  text-align: center;
+}
+
+th.mat-header-cell {
+  text-align: center;
+}
+
+.list-bugs-page {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.list-bugs-page .bug-table {
+  width: 70%;
+  min-width: 900px;
+}
+
+.list-bugs-page .bugs-controls {
+  width: 20%;
+  min-width: 200px;
+}
+
+.bug-sorts .mat-checkbox {
+  display: block;
+
 }

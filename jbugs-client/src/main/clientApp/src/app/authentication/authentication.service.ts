@@ -95,7 +95,6 @@ export class AuthenticationService {
     for (let role of userRoles) {
       for (let permission of role.permissions) {
         if (permission.type === permissionString) {
-          console.log(permission.type);
           return true;
         }
       }

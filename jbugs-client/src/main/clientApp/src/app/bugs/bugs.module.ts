@@ -9,7 +9,10 @@ import {
   MatCheckboxModule,
   MatDatepickerModule,
   MatFormFieldModule,
-  MatNativeDateModule
+  MatIconModule,
+  MatInputModule,
+  MatNativeDateModule,
+  MatTableModule
 } from "@angular/material";
 import {MatDialogModule} from '@angular/material/dialog';
 import {BugsPopupComponent} from "./bugs-popup/bugs-popup.component";
@@ -55,13 +58,31 @@ const bugRoutes: Routes = [
     MatFormFieldModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatTableModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule
 
 
 
   ],
   declarations: [ListBugsComponent, BugsPopupComponent, AddBugComponent, ListBugsPipe],
-  exports: [ListBugsComponent, RouterModule, MatButtonModule, MatCheckboxModule, MatDialogModule, BugsPopupComponent, MatDialogModule,
-    MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatSelectModule, ListBugsPipe
+  exports: [
+    RouterModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatDialogModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    ListBugsPipe,
+    MatTableModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule
 
   ],
   entryComponents: [

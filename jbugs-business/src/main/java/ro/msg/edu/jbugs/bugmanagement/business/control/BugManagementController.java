@@ -45,7 +45,7 @@ public class BugManagementController {
     @GET
     @Path("/sort")
     @Produces("application/json")
-    public String filter(@QueryParam("title") boolean title, @QueryParam("version") boolean version) throws JsonProcessingException, BusinessException {
+    public String sort(@QueryParam("title") boolean title, @QueryParam("version") boolean version) throws JsonProcessingException, BusinessException {
         List<BugDTO> allBugs = bugManagement.sort(title, version);
         ObjectMapper mapper = new ObjectMapper();
 

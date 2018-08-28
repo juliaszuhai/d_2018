@@ -1,4 +1,4 @@
-import {Component, OnInit, Pipe} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
 import {MatDialog} from '@angular/material';
 import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
@@ -22,7 +22,7 @@ export class ListBugsComponent implements OnInit {
 
   bugData: BugData;
   relatedUser: RelatedUser;
-  bugList: BugData[];
+  bugList: any;
   listId: number[] = [];
   forExcel: number[] = [];
   sorted: Object[] = [];
@@ -57,6 +57,20 @@ export class ListBugsComponent implements OnInit {
 
   }
 
+
+  displayedColumns: string[] = [
+    'number',
+    'title',
+    'version',
+    'targetDate',
+    'status',
+    'fixedVersion',
+    'severity',
+    'createdBy',
+    'assignedTo',
+    'exportExcel'
+  ];
+
   openDialog(bug: BugData): void {
 
     const dialogRef = this.dialog.open(BugsPopupComponent, {
@@ -73,7 +87,23 @@ export class ListBugsComponent implements OnInit {
     } else {
       this.sorted.splice(this.sorted.indexOf(sortObj), 1);
     }
+    this.sortBugs(this.sorted);
   }
+
+  sortBugs(args) {
+
+    args.forEach(arg => {
+
+      this.bugList.sort((bug1: BugData, bug2: BugData) => {
+        if (bug1[arg.argument] < bug2[arg.argument]) {
+          return arg.order == "desc" ? -1 : 1;
+        }
+        else return 0;
+      });
+    });
+    console.log(this.bugList);
+  }
+
   openUpdateDialog(bug): void {
     const dialogRef = this.dialog.open(UpdateBugComponent, {
       width: '60%',
@@ -95,8 +125,8 @@ export class ListBugsComponent implements OnInit {
     this.bugService.getBugsFromServer().subscribe(
       {
         next: (value: BugData[]) => {
-          console.log('received: ' + JSON.stringify(value));
           this.bugList = value;
+
         }
       }
     );
@@ -152,7 +182,7 @@ export class ListBugsComponent implements OnInit {
     } else {
       this.forExcel.splice(this.forExcel.indexOf(bug.id), 1);
     }
-    this.updateExcelLink()
+    //this.updateExcelLink()
   }
 
   updateExcelLink() {
