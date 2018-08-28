@@ -36,6 +36,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     RecaptchaDirective,
+
   ],
   imports: [
     TranslateModule.forRoot({

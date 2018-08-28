@@ -4,7 +4,7 @@
 </button>
 
 <div align="center" (*ngFor)="ngOnInit()">
-  <table mat-table class="mat-elevation-z8" >
+  <table mat-table   class="mat-elevation-z8" >
     <thead>
     <tr>
       <th>{{ 'bugTable.number' | translate}}</th>
@@ -21,7 +21,7 @@
     </thead>
 
     <tbody>
-    <tr *ngFor="let bug of bugList; let i = index">
+    <tr  *ngFor="let bug of bugList| sortBy : sorted; let i = index ">
       <td >{{i + 1}}</td>
       <td>
         <button class="btn btn-sm"  type="button" (click)="openDialog(bug)">{{bug.title}}
@@ -101,17 +101,17 @@
   <div align="center">
 
     <label>{{ 'bugFilter.title' | translate}}</label>
-    <input type="checkbox" #sortElem (change)="0" >
+    <input type="checkbox" #sortElem (change)="toggleSort('title', sortElem.checked)" >
 
     <label>{{ 'bugFilter.version' | translate}}</label>
-      <input type="checkbox" #sortElem2 (change)="0" >
+      <input type="checkbox" #sortElem2 (change)="toggleSort('version', sortElem2.checked)" >
 
 
-    <button mat-button *ngIf="sortElem.checked || sortElem2.checked" (click)="sort(sortElem.checked,sortElem2.checked)">
-      {{ 'bugFilter.sort' | translate}}
-    </button>
-
-
+    <!--<button mat-button *ngIf="sortElem.checked || sortElem2.checked" (click)="sort(sortElem.checked,sortElem2.checked)">-->
+      <!--{{ 'bugFilter.sort' | translate}}-->
+    <!--</button>-->
+    <!--<button *ngFor=" let bug of bugList | sortBy : [{argument: 'title', order:'asc'} ,{argument: 'version', order: 'asc'}]">{{bug.title }},{{ bug.version}}</button>
+-->
     <!--<mat-chip>One fish</mat-chip>-->
   </div>
 
