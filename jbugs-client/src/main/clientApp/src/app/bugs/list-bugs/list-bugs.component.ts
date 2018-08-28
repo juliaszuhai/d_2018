@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
 import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
 import {AddBugComponent} from "../add-bug/add-bug.component";
 import {HttpParams} from "@angular/common/http";
@@ -22,16 +22,22 @@ export class ListBugsComponent implements OnInit {
 
   bugData: BugData;
   relatedUser: RelatedUser;
-  bugList: any;
+  bugList: MatTableDataSource<BugData[]>;
+
+
   listId: number[] = [];
   forExcel: number[] = [];
   sorted: Object[] = [];
   sortByTitle: Object = {argument: 'title', order:'asc'};
   sortByVersion: Object = {argument: 'version', order: 'asc'};
 
+
+  dummyNumber = 0;
+
   constructor(private bugService: BugListService,
               public dialog: MatDialog,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private changeDetectorRefs: ChangeDetectorRef) {
 
 
     this.bugData = {
@@ -50,8 +56,6 @@ export class ListBugsComponent implements OnInit {
     this.relatedUser = {
       id: 0,
       username: '',
-
-
     };
 
 
@@ -82,27 +86,31 @@ export class ListBugsComponent implements OnInit {
 
   toggleSort(attribute: String, isChecked: boolean) : void {
     let sortObj = attribute=='title'? this.sortByTitle : this.sortByVersion;
+    this.dummyNumber++;
     if(isChecked) {
       this.sorted.push(sortObj);
+      this.sorted = this.sorted.slice(0);
     } else {
       this.sorted.splice(this.sorted.indexOf(sortObj), 1);
     }
-    this.sortBugs(this.sorted);
+    this.sortDataSource();
+
   }
 
-  sortBugs(args) {
-
-    args.forEach(arg => {
-
-      this.bugList.sort((bug1: BugData, bug2: BugData) => {
-        if (bug1[arg.argument] < bug2[arg.argument]) {
-          return arg.order == "desc" ? -1 : 1;
+  sortDataSource() {
+    this.sorted.forEach(arg => {
+      this.bugList = this.bugList.data.sort((bug1: BugData, bug2: BugData) => {
+        if (bug1[arg.argument] > bug2[arg.argument]) {
+          return arg.order == "asc" ? 1 : -1;
+        } else if (bug1[arg.argument] < bug2[arg.argument]) {
+          return arg.order == "asc" ? -1 : 1;
         }
         else return 0;
       });
     });
-    console.log(this.bugList);
   }
+
+
 
   openUpdateDialog(bug): void {
     const dialogRef = this.dialog.open(UpdateBugComponent, {
@@ -124,8 +132,8 @@ export class ListBugsComponent implements OnInit {
 
     this.bugService.getBugsFromServer().subscribe(
       {
-        next: (value: BugData[]) => {
-          this.bugList = value;
+        next: (value: any[]) => {
+          this.bugList = new MatTableDataSource<BugData[]>(value);
 
         }
       }
@@ -137,9 +145,8 @@ export class ListBugsComponent implements OnInit {
   filter(title: string, description: string, status: string, severity: string) {
     this.bugService.filter(title, description, status, severity).subscribe(
       {
-        next: (value: BugData[]) => {
-          console.log('received: ' + JSON.stringify(value));
-          this.bugList = value;
+        next: (value: any[]) => {
+          this.bugList = new MatTableDataSource<BugData[]>(value);
         }
       }
     );

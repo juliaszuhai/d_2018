@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
 import {from, Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {UserData} from "../authentication/authentication.service";
-import {st} from "@angular/core/src/render3";
-import {ResponseContentType} from "@angular/http";
-import { saveAs } from 'file-saver/FileSaver';
+import {saveAs} from 'file-saver/FileSaver';
 import {TranslateService} from "@ngx-translate/core";
 
 
@@ -115,6 +112,7 @@ export class BugListService {
       });
 
   }
+
 
   updateBug(bugData: BugData) {
     return this.http.post(this.baseURL + '/listBugs/updateBug', bugData,
