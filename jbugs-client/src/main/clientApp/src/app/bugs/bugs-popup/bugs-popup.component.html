@@ -1,4 +1,18 @@
+
+
 <p>
+
   {{'bugPopup.description' | translate}}:
   {{data.description}}
+
 </p>
+<button color="primary"
+        mat-raised-button
+        (click)="downloadPdf(data.id)"
+        title="Export bug in pdf"
+        layout-align = "center-end"
+>
+  <i class="material-icons">
+    picture_as_pdf
+  </i>
+</button>

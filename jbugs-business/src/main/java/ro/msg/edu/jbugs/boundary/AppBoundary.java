@@ -6,6 +6,7 @@ import ro.msg.edu.jbugs.bugmanagement.business.control.BugAdditionManager;
 import ro.msg.edu.jbugs.bugmanagement.business.control.BugManagementController;
 import ro.msg.edu.jbugs.bugmanagement.business.control.ExcelGeneratorController;
 import ro.msg.edu.jbugs.bugmanagement.business.control.PdfGeneratorController;
+import ro.msg.edu.jbugs.notificationmanagement.business.control.NotificationManager;
 import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManager;
 import ro.msg.edu.jbugs.usermanagement.business.control.PermissionManager;
 import ro.msg.edu.jbugs.usermanagement.business.control.UserManager;
@@ -35,6 +36,7 @@ public class AppBoundary extends Application {
         classes.add(UserManager.class);
         classes.add(PermissionManager.class);
         classes.add(CorsFilter.class);
+        classes.add(NotificationManager.class);
         return classes;
     }
 }

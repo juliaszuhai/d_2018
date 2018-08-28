@@ -36,19 +36,14 @@
   <div class="jbugs-translator">
     <language-dropdown></language-dropdown>
   </div>
-  <button mat-button [matMenuTriggerFor]="menuNotification" *ngIf="isLoggedIn()">
-    <i class="material-icons">notifications_none</i>
+  <button mat-button  *ngIf="isLoggedIn()" routerLinkActive="active" routerLink="notification">
+    <i class="material-icons" title="Notifications">notifications_none</i>
   </button>
   <button mat-button [matMenuTriggerFor]="menu" *ngIf="isLoggedIn()">
     {{getFirstName()}}
   </button>
 
-  <mat-menu #menuNotification="matMenu">
-    <button mat-menu-item routerLinkActive="active" routerLink="notification">
-       {{'notification.welcome'| translate}}
-    </button>
 
-  </mat-menu>
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLinkActive="active" routerLink="profile">

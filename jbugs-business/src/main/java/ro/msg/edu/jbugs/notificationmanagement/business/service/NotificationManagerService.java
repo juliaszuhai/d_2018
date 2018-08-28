@@ -26,8 +26,12 @@ public class NotificationManagerService {
 	 * @throws BusinessException
 	 */
 	public NotificationDTO createNotification(NotificationDTO notificationDTO) throws BusinessException {
-		Notification notification = NotificationDTOHelper.toEntity(notificationDTO);
-
+//		Notification notification = NotificationDTOHelper.toEntity(notificationDTO);
+		Notification notification= new Notification();
+		notification.setTypeNotification(notificationDTO.getTypeNotification());
+		notification.setMessage(notificationDTO.getMessage());
+		notification.setTargetDate(notificationDTO.getTargetDate());
+		notification.setURLBug(notificationDTO.getURLBug());
 		notificationPersistenceManager.createNotification(notification);
 		return NotificationDTOHelper.fromEntity(notification);
 	}

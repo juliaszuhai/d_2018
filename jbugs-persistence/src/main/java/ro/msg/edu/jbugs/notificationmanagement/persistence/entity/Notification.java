@@ -26,7 +26,8 @@ public class Notification extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private TypeNotification typeNotification;
 
-	@Column(name = "targetDate", nullable = false)
+	@Column(name="targetDate")
+	@Temporal(TemporalType.DATE)
 	private Date targetDate;
 
 	@Column(name = "message", nullable = false)

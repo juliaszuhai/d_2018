@@ -7,12 +7,10 @@ import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.service.BugManagement;
 import ro.msg.edu.jbugs.bugmanagement.business.service.PdfExportService;
+import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
 import javax.ejb.EJB;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,9 +36,9 @@ public class PdfGeneratorController {
      */
     @GET
 //    @Secured("BUG_EXPORT_PDF")
-    @Path("{id}")
+//    @Path("{id}")
     @Produces("application/pdf")
-    public Response getFile(@PathParam("id") Long id) {
+    public Response getFile(@QueryParam("id") Long id) {
         File file = null;
         FileOutputStream fileOutputStream = null;
         String localDir = System.getProperty("user.dir")+"\\BugPdf.pdf";

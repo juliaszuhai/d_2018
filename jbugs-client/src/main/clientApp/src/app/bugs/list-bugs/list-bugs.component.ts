@@ -90,7 +90,8 @@ export class ListBugsComponent implements OnInit {
 
     const dialogRef = this.dialog.open(BugsPopupComponent, {
       width: '250px',
-      data: {description: bug.description}
+      data: {description: bug.description,
+              id: bug.id}
     });
 
   }
