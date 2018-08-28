@@ -12,6 +12,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatNativeDateModule,
+  MatPaginatorModule,
   MatTableModule
 } from "@angular/material";
 import {MatDialogModule} from '@angular/material/dialog';
@@ -61,7 +62,8 @@ const bugRoutes: Routes = [
     MatTableModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule
 
 
 
@@ -82,7 +84,8 @@ const bugRoutes: Routes = [
     MatTableModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule
 
   ],
   entryComponents: [

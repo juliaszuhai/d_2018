@@ -42,8 +42,7 @@
     <div class="bug-sorts">
       <h3>Sort by</h3>
       <mat-checkbox #sortElementTitle (change)="toggleSort('title', sortElementTitle.checked)">Title</mat-checkbox>
-      <mat-checkbox #sortElementVersion (change)="toggleSort('version', sortElementVersion.checked)">Versiune
-      </mat-checkbox>
+
 
     </div>
   </div>
@@ -117,129 +116,10 @@
 
       </tr>
     </table>
-
+    <mat-paginator [length]="length"
+                   [pageSize]="pageSize"
+                   (page)="pageEvent = $event"
+    >
+    </mat-paginator>
   </div>
 </div>
-<!--<div align="center" (*ngFor)="ngOnInit()">-->
-<!--<table mat-table   class="mat-elevation-z8" >-->
-<!--<thead>-->
-<!--<tr>-->
-<!--<th>{{ 'bugTable.number' | translate}}</th>-->
-<!--<th>{{ 'bugTable.title' | translate}}</th>-->
-<!--<th>{{ 'bugTable.version' | translate}}</th>-->
-<!--<th>{{ 'bugTable.targetDate' | translate}}</th>-->
-<!--<th>{{ 'bugTable.status' | translate}}</th>-->
-<!--<th>{{ 'bugTable.fixedVersion' | translate}}</th>-->
-<!--<th>{{ 'bugTable.severity' | translate}}</th>-->
-<!--<th>{{ 'bugTable.createdBy' | translate}}</th>-->
-<!--<th>{{ 'bugTable.assignedTo' | translate}}</th>-->
-<!--<th>{{ 'bugTable.exportExcel' | translate}}</th>-->
-<!--</tr>-->
-<!--</thead>-->
-
-<!--<tbody>-->
-<!--<tr  *ngFor="let bug of bugList| sortBy : sorted; let i = index ">-->
-<!--<td >{{i + 1}}</td>-->
-<!--<td>-->
-<!--<button class="btn btn-sm"  type="button" (click)="openDialog(bug)">{{bug.title}}-->
-<!--</button>-->
-<!--</td>-->
-<!--<td>{{bug.version}}</td>-->
-<!--<td>{{getDate(bug.targetDate).toDateString()}}</td>-->
-<!--<td>{{bug.status}}</td>-->
-<!--<td>{{bug.fixedVersion}}</td>-->
-<!--<td>{{bug.severity}}</td>-->
-<!--<td>{{bug.createdByUser.username}}</td>-->
-<!--<td>{{bug.assignedTo.id}}</td>-->
-<!--<td><input type="checkbox" #excelElem  (change)="onChangeCheck(bug, excelElem.checked)"></td>-->
-
-<!--<div *ngIf="excelElem.checked" >  </div>-->
-
-<!--</tr>-->
-<!--</tbody>-->
-<!--</table>-->
-
-<!--</div>-->
-
-<!--<button (click)="downloadExcel()" >EXCEL</button>-->
-
-
-<!--<div align="center">-->
-<!--<div class="input-label">-->
-<!--<label for="titleInput"></label>-->
-<!--<input type="text"-->
-<!--#titleElement-->
-<!--name="title"-->
-<!--id="titleInput"-->
-<!--class="form-control"-->
-<!--required-->
-<!--matInput placeholder="{{ 'bugFilter.title' | translate}}">-->
-<!--</div>-->
-
-<!--<div class="input-label">-->
-<!--<label for="descriptionInput"></label>-->
-<!--<input type="text"-->
-<!--#descriptionElement-->
-<!--name="description"-->
-<!--id="descriptionInput"-->
-<!--class="form-control"-->
-<!--required-->
-<!--matInput placeholder="{{ 'bugFilter.description' | translate}}">-->
-<!--</div>-->
-
-<!--<div class="input-label">-->
-<!--<label for="statusInput"></label>-->
-<!--<input type="text"-->
-<!--#statusElement-->
-<!--name="status"-->
-<!--id="statusInput"-->
-<!--class="form-control"-->
-<!--required-->
-<!--matInput placeholder="{{ 'bugFilter.status' | translate}}">-->
-<!--</div>-->
-
-<!--<div class="input-label">-->
-<!--<label for="severityInput"></label>-->
-<!--<input type="text"-->
-<!--#severityElement-->
-<!--name="title"-->
-<!--id="severityInput"-->
-<!--class="form-control"-->
-<!--required-->
-<!--matInput placeholder="{{ 'bugFilter.severity'}}">-->
-<!--</div>-->
-
-
-<!--<div align="center">-->
-<!--<button mat-button (click)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">{{'bugFilter.filter' | translate}}</button>-->
-<!--&lt;!&ndash;<mat-chip>One fish</mat-chip>&ndash;&gt;-->
-<!--</div>-->
-
-<!--<div align="center">-->
-
-<!--<label>{{ 'bugFilter.title' | translate}}</label>-->
-<!--<input type="checkbox" #sortElem (change)="toggleSort('title', sortElem.checked)" >-->
-
-<!--<label>{{ 'bugFilter.version' | translate}}</label>-->
-<!--<input type="checkbox" #sortElem2 (change)="toggleSort('version', sortElem2.checked)" >-->
-
-
-<!--&lt;!&ndash;<button mat-button *ngIf="sortElem.checked || sortElem2.checked" (click)="sort(sortElem.checked,sortElem2.checked)">&ndash;&gt;-->
-<!--&lt;!&ndash;{{ 'bugFilter.sort' | translate}}&ndash;&gt;-->
-<!--&lt;!&ndash;</button>&ndash;&gt;-->
-<!--&lt;!&ndash;<button *ngFor=" let bug of bugList | sortBy : [{argument: 'title', order:'asc'} ,{argument: 'version', order: 'asc'}]">{{bug.title }},{{ bug.version}}</button>-->
-<!--&ndash;&gt;-->
-<!--&lt;!&ndash;<mat-chip>One fish</mat-chip>&ndash;&gt;-->
-<!--</div>-->
-
-<!--<button (click)="openUpdateDialog()">-->
-<!--UPDATE-->
-<!--</button>-->
-
-<!--&lt;!&ndash;<button type="submit"&ndash;&gt;-->
-<!--&lt;!&ndash;(click)="getBugsByDescriptionAndSeverity(titleElement.value,severityElement.value)"&ndash;&gt;-->
-<!--&lt;!&ndash;&gt;FindByDescriptionAndSeverity&ndash;&gt;-->
-<!--&lt;!&ndash;</button>&ndash;&gt;-->
-
-<!--</div>-->
-

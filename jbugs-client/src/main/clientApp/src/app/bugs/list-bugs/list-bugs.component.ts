@@ -1,6 +1,6 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
-import {MatDialog, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatPaginator, MatTableDataSource, PageEvent} from '@angular/material';
 import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
 import {AddBugComponent} from "../add-bug/add-bug.component";
 import {HttpParams} from "@angular/common/http";
@@ -32,8 +32,19 @@ export class ListBugsComponent implements OnInit {
   sortByVersion: Object = {argument: 'version', order: 'asc'};
 
 
-  dummyNumber = 0;
+  // MatPaginator Inputs
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 
+  // MatPaginator Output
+  pageEvent: PageEvent;
+
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+  }
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private bugService: BugListService,
               public dialog: MatDialog,
               private translate: TranslateService,
@@ -86,7 +97,7 @@ export class ListBugsComponent implements OnInit {
 
   toggleSort(attribute: String, isChecked: boolean) : void {
     let sortObj = attribute=='title'? this.sortByTitle : this.sortByVersion;
-    this.dummyNumber++;
+
     if(isChecked) {
       this.sorted.push(sortObj);
       this.sorted = this.sorted.slice(0);
@@ -135,6 +146,8 @@ export class ListBugsComponent implements OnInit {
         next: (value: any[]) => {
           this.bugList = new MatTableDataSource<BugData[]>(value);
 
+          this.sortDataSource();
+
         }
       }
     );
@@ -147,6 +160,8 @@ export class ListBugsComponent implements OnInit {
       {
         next: (value: any[]) => {
           this.bugList = new MatTableDataSource<BugData[]>(value);
+
+          this.sortDataSource();
         }
       }
     );
