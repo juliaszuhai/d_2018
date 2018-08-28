@@ -45,9 +45,9 @@ public class BugManagementService implements BugManagement {
         return bugs;*/
         return bugPersistenceManager.getAllBugs()
                 .stream()
-                .map(bug ->{
-                    BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
-                    this.setUsers(bugDTO,bug);
+                .map(bug -> {
+                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
+                    this.setUsers(bugDTO, bug);
                     return bugDTO;
                 })
                 .collect(Collectors.toList());
@@ -56,7 +56,7 @@ public class BugManagementService implements BugManagement {
 
     @Override
     public List<BugDTO> getBugsWithId(List<Long> titles) {
-        List<BugDTO> bugs =this.getAllBugs();
+        List<BugDTO> bugs = this.getAllBugs();
         List<BugDTO> selectedBugs = new ArrayList<>();
         for (int k = 0; k < titles.size(); k++) {
             for (int l = 0; l < bugs.size(); l++) {
@@ -68,27 +68,18 @@ public class BugManagementService implements BugManagement {
         return selectedBugs;
     }
 
-//
-//    public List<BugDTO> filterAndSort(List<String> filterArgs, List<Boolean> sortArgs){
-//        Status status = Status.valueOf(filterArgs.get(2));
-//        Severity severity = Severity.valueOf(filterArgs.get(3));
-//
-//        List<BugDTO> bugDTOs = filter(filterArgs.get(0),filterArgs.get(1),status,severity);
-//        return sort(sortArgs.get(0),sortArgs.get(1));
-//
-//    }
 
     @Override
     public List<BugDTO> filter(String title, String description, Status status, Severity severity) {
-        List<Bug> filteredBugs= bugPersistenceManager.filter(title, description, status, severity)
-                                .stream()
-                                .collect(Collectors.toList());
+        List<Bug> filteredBugs = bugPersistenceManager.filter(title, description, status, severity)
+                .stream()
+                .collect(Collectors.toList());
         return filteredBugs
                 .stream()
-                .map(bug ->{
-                        BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
-                        this.setUsers(bugDTO,bug);
-                        return bugDTO;
+                .map(bug -> {
+                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
+                    this.setUsers(bugDTO, bug);
+                    return bugDTO;
                 })
                 .collect(Collectors.toList());
 
@@ -96,14 +87,14 @@ public class BugManagementService implements BugManagement {
 
     @Override
     public List<BugDTO> sort(boolean title, boolean version) {
-        List<Bug> sorteddBugs= bugPersistenceManager.sort(title, version)
+        List<Bug> sorteddBugs = bugPersistenceManager.sort(title, version)
                 .stream()
                 .collect(Collectors.toList());
         return sorteddBugs
                 .stream()
-                .map(bug ->{
-                    BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
-                    this.setUsers(bugDTO,bug);
+                .map(bug -> {
+                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
+                    this.setUsers(bugDTO, bug);
                     return bugDTO;
                 })
                 .collect(Collectors.toList());
@@ -127,21 +118,21 @@ public class BugManagementService implements BugManagement {
         bug.setStatus(Status.NEW);
 
         Optional<User> userAssigned = userPersistenceManager.getUserByUsername(bugDTO.getAssignedToString());
-        if(userAssigned.isPresent()) {
+        if (userAssigned.isPresent()) {
             bug.setAssignedTo(userAssigned.get());
         } else {
             throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
         }
 
         Optional<User> userCreated = userPersistenceManager.getUserByUsername(bugDTO.getCreatedByUserString());
-        if(userCreated.isPresent()){
+        if (userCreated.isPresent()) {
             bug.setCreatedByUser(userCreated.get());
         } else {
             throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
         }
-            this.isBugValid(bug);
-            bugPersistenceManager.createBug(bug);
-            return bugDTO;
+        this.isBugValid(bug);
+        bugPersistenceManager.createBug(bug);
+        return bugDTO;
 
     }
 
@@ -178,13 +169,58 @@ public class BugManagementService implements BugManagement {
         return true;
     }
 
+
     @Override
-    public BugDTO updateBug(BugDTO bugDTO) {
-        return null;
+    public BugDTO updateBug(BugDTO bugDTO) throws BusinessException {
+        Bug bugAfter = new Bug();
+        Optional<Bug> bugBeforeOpt = bugPersistenceManager.getBugById(bugDTO.getId());
+        if (bugBeforeOpt.isPresent()) {
+            Bug bugBefore = bugBeforeOpt.get();
+
+            bugAfter = BugDTOHelper.updateBugWithDTO(bugBefore, bugDTO);
+            Date date = null;
+            try {
+                date = new java.sql.Date(new SimpleDateFormat("yyyy-mm-dd").parse(bugDTO.getTargetDateString()).getTime());
+            } catch (ParseException e) {
+                throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
+            }
+            bugAfter.setTargetDate(date);
+
+            bugAfter = setUsersFromDTO(bugDTO, bugAfter);
+
+
+            bugPersistenceManager.updateBug(bugAfter);
+            return bugDTO;
+        } else {
+            throw new BusinessException(ExceptionCode.BUG_VALIDATION_EXCEPTION);
+        }
     }
 
     @Override
-    public BugDTO setUsers(BugDTO bugDTO,Bug bug) {
+    public Bug setUsersFromDTO(BugDTO bugDTO, Bug bug) throws BusinessException {
+
+        Optional<User> createdByOp = userPersistenceManager.getUserByUsername(bugDTO.getAssignedToString());
+        if (createdByOp.isPresent()) {
+            User createdByUser = createdByOp.get();
+            bug.setCreatedByUser(createdByUser);
+        } else {
+            throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
+        }
+
+        Optional<User> assignedToUserOp = userPersistenceManager.getUserByUsername(bugDTO.getAssignedToString());
+        if (assignedToUserOp.isPresent()) {
+            User assignedTo = assignedToUserOp.get();
+            bug.setAssignedTo(assignedTo);
+        } else {
+            throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
+        }
+
+
+        return bug;
+    }
+
+    @Override
+    public BugDTO setUsers(BugDTO bugDTO, Bug bug) {
         NameIdDTO createdBy = new NameIdDTO();
 
         createdBy.setId(bug.getCreatedByUser().getId());
@@ -202,8 +238,7 @@ public class BugManagementService implements BugManagement {
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {
         Optional<Bug> bug = bugPersistenceManager.getBugById(id);
-        return BugDTOHelper.fromEntity(bug.orElseThrow(()->new BusinessException(ExceptionCode.BUG_NOT_EXIST)));
-
+        return BugDTOHelper.fromEntity(bug.orElseThrow(() -> new BusinessException(ExceptionCode.BUG_NOT_EXIST)));
 
 
     }

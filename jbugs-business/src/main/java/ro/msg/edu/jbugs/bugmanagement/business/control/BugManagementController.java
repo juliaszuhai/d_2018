@@ -54,10 +54,11 @@ public class BugManagementController {
 
     }
 
+
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    @Path("/updateBug")
+    @Path("/update-bug")
     public Response updateBug(BugDTO bugDTO) {
         try {
             bugManagement.updateBug(bugDTO);
@@ -66,5 +67,4 @@ public class BugManagementController {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
         }
     }
-
 }

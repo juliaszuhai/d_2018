@@ -33,7 +33,11 @@ public class BugPersistenceManager {
     }
 
 
-
+    /**
+     *
+     * @param id
+     * @return:  Optional, containing a bug entity.
+     */
     public Optional<Bug> getBugById(@NotNull Long id){
         TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_ID,Bug.class)
                 .setParameter("id",id);
@@ -44,7 +48,11 @@ public class BugPersistenceManager {
         }
     }
 
-
+    /**
+     * Persists a bug in the database.
+     *
+     * @param bug : bug entity to be created, should not be null
+     */
     public Bug createBug(@NotNull Bug bug) {
         em.persist(bug);
         em.flush();

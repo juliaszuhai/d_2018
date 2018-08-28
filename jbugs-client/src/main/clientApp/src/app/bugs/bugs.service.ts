@@ -115,7 +115,7 @@ export class BugListService {
 
 
   updateBug(bugData: BugData) {
-    return this.http.post(this.baseURL + '/listBugs/updateBug', bugData,
+    return this.http.post(this.baseURL + '/listBugs/update-bug', bugData,
       {
         headers: new HttpHeaders(
           {'Content-Type': 'application/json'}

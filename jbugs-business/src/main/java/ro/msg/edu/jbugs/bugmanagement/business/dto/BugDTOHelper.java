@@ -2,6 +2,8 @@ package ro.msg.edu.jbugs.bugmanagement.business.dto;
 
 
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
@@ -46,6 +48,19 @@ public class BugDTOHelper {
 
         return bugDTO;
 
+    }
+
+    public static Bug updateBugWithDTO(Bug bug, BugDTO bugDTO){
+        bug.setId(bugDTO.getId());
+        bug.setTitle(bugDTO.getTitle());
+        bug.setDescription(bugDTO.getDescription());
+        bug.setVersion(bugDTO.getVersion());
+        bug.setFixedVersion(bugDTO.getFixedVersion());
+       // bug.setTargetDate(bugDTO.getTargetDate());
+        bug.setStatus(Status.valueOf(bugDTO.getStatusString()));
+        bug.setSeverity(Severity.valueOf(bugDTO.getSeverityString()));
+
+        return bug;
     }
 
     /*public static Bug toEntity(BugDTO bugDTO) throws BusinessException {

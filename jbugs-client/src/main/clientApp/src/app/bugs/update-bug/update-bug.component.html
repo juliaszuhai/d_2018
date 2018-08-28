@@ -1,6 +1,6 @@
-<h3>{{(this.translatorService.json|async)?.bugManagement.updateBug}}</h3>
+<h3>{{'bugManagement.updateBug'| translate}}</h3>
 <mat-tab-group>
-  <mat-tab label="Update User Info">
+  <mat-tab label="{{'userManagement.tabUpdateInfo'| translate}}">
     <div class="update-user-form">
 
 
@@ -13,100 +13,77 @@
         <mat-form-field>
           <input
             matInput
-            #descriptionControl="ngModel"
-            #descriptionElement
-            name="description"
+            #firstNameControl="ngModel"
+            #firstNameElement
+            name="firstName"
             required
-            [(ngModel)]="data.description"
-            placeholder="{{(this.translatorService.json|async)?.bugManagement.description}}">
+            [(ngModel)]="data.firstName"
+            placeholder="{{'userManagement.firstName'| translate}}">
         </mat-form-field>
         <br>
         <mat-form-field>
           <input matInput
-                 #fixedVersionControl="ngModel"
-                 #fixedVersionElement
-                 name="fixedVersion"
+                 #lastNameControl="ngModel"
+                 #lastNameElement
+                 name="lastName"
                  required
-                 [(ngModel)]="data.fixedVersion"
-                 placeholder="{{(this.translatorService.json|async)?.bugManagement.fixedVersion}}">
+                 [(ngModel)]="data.lastName"
+                 placeholder="{{'userManagement.lastName'| translate}}">
         </mat-form-field>
         <br>
         <mat-form-field>
           <input type="password"
-                 #titleElement
-                 name="title"
+                 #passwordElement
+                 name="password"
                  matInput
-                 [(ngModel)]="data.title"
-                 placeholder="{{(this.translatorService.json|async)?.bugManagement.title}}">
+                 [(ngModel)]="data.password"
+                 [formControl]="passwordFormControl"
+                 [errorStateMatcher]="matcher"
+                 placeholder="{{'userManagement.password'| translate}}">
+
+          <mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPasswordErrorMessage()}}</mat-error>
         </mat-form-field>
         <br>
         <mat-form-field>
           <input
-            #versionElement
-            name="version"
+            #emailElement
+            name="email"
             matInput
-            [(ngModel)]="data.version"
-            placeholder="{{(this.translatorService.json|async)?.bugManagement.version}}">
+            [(ngModel)]="data.email"
+            [formControl]="emailFormControl"
+            [errorStateMatcher]="matcher"
+            placeholder="{{'userManagement.email'| translate}}">
+          <mat-error *ngIf="emailFormControl.invalid">{{getEmailErrorMessages()}}</mat-error>
         </mat-form-field>
         <br>
         <mat-form-field>
           <input
-            #statusControl="ngModel"
-            #statusElement
-            name="status"
+            #phoneControl="ngModel"
+            #phoneElement
+            name="phone"
             matInput
             required
-            [(ngModel)]="data.status"
-            placeholder="{{(this.translatorService.json|async)?.bugManagement.status}}">
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            #severityControl="ngModel"
-            #severityElement
-            name="severity"
-            matInput
-            required
-            [(ngModel)]="data.severity"
-            placeholder="{{(this.translatorService.json|async)?.bugManagement.severity}}">
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            #assignedToControl="ngModel"
-            #assignedToElement
-            name="assignedTo"
-            matInput
-            required
-            [(ngModel)]="data.assignedTo"
-            placeholder="{{(this.translatorService.json|async)?.bugManagement.assignedTo}}">
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            #createdByUserControl="ngModel"
-            #createdByUserElement
-            name="createdByUser"
-            matInput
-            required
-            [(ngModel)]="data.createdByUser"
-            placeholder="{{(this.translatorService.json|async)?.bugManagement.createdByUser}}">
+            [(ngModel)]="data.phoneNumber"
+            placeholder="{{'userManagement.phoneNumber'| translate}}">
         </mat-form-field>
         <br>
-        <button type="submit" mat-button>{{(this.translatorService.json|async)?.userManagement.buttonSubmit}}</button>
+        <button type="submit" mat-button>{{'userManagement.buttonSubmit'| translate}}</button>
       </form>
       <div class="form-info">
 
-        {{(this.translatorService.json|async)?.userManagementErrorMsg.updateUserNoChange}}.<br>
-        {{(this.translatorService.json|async)?.userManagementErrorMsg.passwordRequirements}}.:
+        {{'userManagementErrorMsg.updateUserNoChange'| translate}}.<br>
+        {{'userManagementErrorMsg.passwordRequirements'| translate}}.:
         <ul>
-          <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqLength}}.</li>
-          <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqLetters}}.</li>
-          <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqSpecial}}.</li>
-          <li>{{(this.translatorService.json|async)?.userManagementErrorMsg.passwordReqDigit}}.</li>
+          <li>{{'userManagementErrorMsg.passwordReqLength'| translate}}.</li>
+          <li>{{'userManagementErrorMsg.passwordReqLetters'| translate}}.</li>
+          <li>{{'userManagementErrorMsg.passwordReqSpecial'| translate}}.</li>
+          <li>{{'userManagementErrorMsg.passwordReqDigit'| translate}}.</li>
         </ul>
-        {{(this.translatorService.json|async)?.userManagementErrorMsg.emailRequirement}}.
+        {{'userManagementErrorMsg.emailRequirement'| translate}}.
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Update user Roles">
+  <mat-tab label="{{'userManagement.tabUpdateRoles'| translate}}">
 
     <mat-list *ngFor="let element of this.userRoles">
       <mat-list-item>{{element.type}}</mat-list-item>
@@ -132,13 +109,13 @@
             style="margin:0 10px;"
             (click)="addRoleToUser()
 "
-    >Add Role
+    >{{'userManagement.buttonAddRole'| translate}}
     </button>
     <button mat-raised-button
             color="warn"
             style="margin:0 10px;"
             (click)="removeRoleFromUser()"
-    >Remove Role
+    >{{'userManagement.buttonRemoveRole'| translate}}
     </button>
 
   </mat-tab>

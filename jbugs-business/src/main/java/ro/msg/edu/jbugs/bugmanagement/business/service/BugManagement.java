@@ -56,6 +56,8 @@ public interface BugManagement {
     BugDTO updateBug(BugDTO bugDTO) throws BusinessException;
 
     BugDTO setUsers(BugDTO bugDTO,Bug bug);
+
+    Bug setUsersFromDTO(BugDTO bugDTO, Bug bug) throws BusinessException;
 }
 
 
