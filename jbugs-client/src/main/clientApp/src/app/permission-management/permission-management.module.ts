@@ -19,9 +19,14 @@ import {EditRoleComponent} from "./edit-role/edit-role.component";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../app.module";
 import {HttpClient} from "@angular/common/http";
+import {PermissionGuard} from "../authentication/permission.guard";
 
 const permissionRoutes: Routes = [
-  {path: 'roles-and-permissions', component: RolesAndPermissionsViewComponent, canActivate: [LoginguardGuard]},
+  {
+    path: 'roles-and-permissions',
+    component: RolesAndPermissionsViewComponent,
+    canActivate: [LoginguardGuard, PermissionGuard]
+  },
 ];
 
 

@@ -21,12 +21,13 @@ export class NavComponent implements OnInit {
   }
 
   public isLoggedIn() {
-    if (!this.authService.isLoggedIn()) {
 
-    }
     return this.authService.isLoggedIn();
   }
 
+  public hasPermission(perm) {
+    return this.authService.userHasPermission(perm);
+  }
 
   logout() {
     this.authService.logout();

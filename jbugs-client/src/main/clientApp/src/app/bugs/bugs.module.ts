@@ -19,11 +19,12 @@ import {MatSelectModule} from '@angular/material/select';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../app.module";
 import {HttpClient} from "@angular/common/http";
+import {BugsGuard} from "../authentication/bugs.guard";
 import {ListBugsPipe} from "./list-bugs/list-bugs-pipe";
 
 
 const bugRoutes: Routes = [
-  {path: 'bugs', component: ListBugsComponent, canActivate: [LoginguardGuard]},
+  {path: 'bugs', component: ListBugsComponent, canActivate: [LoginguardGuard, BugsGuard]},
   // {path: 'add-bug', component: AddBugComponent, canActivate: [LoginguardGuard]}
 ];
 

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.service.PermissionManagementService;
 import ro.msg.edu.jbugs.usermanagement.business.service.UserManagementService;
+import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -21,6 +22,7 @@ public class PermissionManager {
     //TODO : fix request types.
 
     @GET
+    @Secured("USER_MANAGEMENT")
     @Produces("application/json")
     @Path("/add-permission-to-role")
     public Response addPermissionToRole(@QueryParam("permissionType") String permissionType,
@@ -33,6 +35,7 @@ public class PermissionManager {
     }
 
     @GET
+    @Secured("USER_MANAGEMENT")
     @Produces("application/json")
     @Path("/revoke-permission-from-role")
     public Response revokePermissionFromRole(@QueryParam("permissionType") String permissionType,
@@ -45,6 +48,7 @@ public class PermissionManager {
     }
 
     @GET
+    @Secured("USER_MANAGEMENT")
     @Produces("application/json")
     @Path("/add-role-to-user")
     public Response addRoleToUser(@QueryParam("username") String username,
@@ -58,6 +62,7 @@ public class PermissionManager {
     }
 
     @GET
+    @Secured("USER_MANAGEMENT")
     @Produces("application/json")
     @Path("/revoke-role-from-user")
     public Response revokeRoleFromUser(@QueryParam("username") String username,
@@ -72,6 +77,7 @@ public class PermissionManager {
 
 
     @GET
+    @Secured("USER_MANAGEMENT")
     @Path("/get-all-permissions")
     @Produces("application/json")
     public Response getAllPermissions() {
@@ -82,6 +88,7 @@ public class PermissionManager {
 
 
     @GET
+    @Secured("USER_MANAGEMENT")
     @Path("/get-all-roles")
     @Produces("application/json")
     public Response getAllRoles() {
@@ -91,6 +98,7 @@ public class PermissionManager {
     }
 
     @GET
+    @Secured("USER_MANAGEMENT")
     @Path("/get-permissions-for-role")
     @Produces("application/json")
     @Consumes("application/json")

@@ -27,10 +27,7 @@ public class BugManagementController {
     public String getAllBugs() throws JsonProcessingException {
         List<BugDTO> allBugs = bugManagement.getAllBugs();
         ObjectMapper mapper = new ObjectMapper();
-
         return mapper.writeValueAsString(allBugs);
-
-
     }
 
     @GET

@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
 import * as moment from 'moment';
+import {now} from 'moment';
 import {tap} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Router} from '@angular/router';
-import {now} from 'moment';
 import {TranslateService} from "@ngx-translate/core";
 
 export interface UserLoginData {
@@ -75,6 +74,7 @@ export class AuthenticationService {
     localStorage.setItem('email', decodedToken.email);
     localStorage.setItem('phone', decodedToken.phone);
     localStorage.setItem('expires_at', decodedToken.exp);
+    localStorage.setItem('roles', decodedToken.role);
   }
 
   public isLoggedIn() {
@@ -83,6 +83,24 @@ export class AuthenticationService {
       return false;
     }
     return this.getExpiration().isAfter(now());
+  }
+
+  public getRolesOfUser() {
+    let roles = localStorage['roles'];
+    return JSON.parse(roles);
+  }
+
+  public userHasPermission(permissionString) {
+    let userRoles = this.getRolesOfUser();
+    for (let role of userRoles) {
+      for (let permission of role.permissions) {
+        if (permission.type === permissionString) {
+          console.log(permission.type);
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   isLoggedOut() {
@@ -97,6 +115,7 @@ export class AuthenticationService {
     localStorage.removeItem('lastName');
     localStorage.removeItem('email');
     localStorage.removeItem('phone');
+    localStorage.removeItem('roles');
   }
 
   getExpiration() {
