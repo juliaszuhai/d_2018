@@ -1,6 +1,5 @@
 package ro.msg.edu.jbugs.usermanagement.persistence.dao;
 
-import ro.msg.edu.jbugs.usermanagement.persistence.entity.Notification;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.Role;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
@@ -149,11 +148,7 @@ public class UserPersistenceManager {
         }
     }
 
-    public List<Notification> getNotificationByUsername(@NotNull String username){
-        return  em.createNamedQuery(User.GET_NOTIFICATIONS_BY_USERNAME,Notification.class)
-                .setParameter("username",username).getResultList();
 
-    }
 
 
 }
