@@ -31,7 +31,8 @@ public class BugDTOHelper {
         bugDTO.setFixedVersion(bug.getFixedVersion());
         bugDTO.setSeverity(bug.getSeverity());
 
-        NameIdDTO createdBy = new NameIdDTO();
+
+        /*NameIdDTO createdBy = new NameIdDTO();
 
         createdBy.setId(bug.getCreatedByUser().getId());
         createdBy.setUsername(bug.getCreatedByUser().getUsername());
@@ -41,7 +42,7 @@ public class BugDTOHelper {
 
         assignedTo.setId(bug.getAssignedTo().getId());
         assignedTo.setUsername(bug.getAssignedTo().getUsername());
-        bugDTO.setAssignedTo(assignedTo);
+        bugDTO.setAssignedTo(assignedTo);*/
 
         return bugDTO;
 

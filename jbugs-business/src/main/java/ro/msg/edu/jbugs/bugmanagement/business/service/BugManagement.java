@@ -1,6 +1,7 @@
 package ro.msg.edu.jbugs.bugmanagement.business.service;
 
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
@@ -54,6 +55,7 @@ public interface BugManagement {
 
     BugDTO updateBug(BugDTO bugDTO) throws BusinessException;
 
+    BugDTO setUsers(BugDTO bugDTO,Bug bug);
 }
 
 

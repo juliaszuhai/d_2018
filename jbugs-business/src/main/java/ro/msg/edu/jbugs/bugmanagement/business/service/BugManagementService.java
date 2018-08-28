@@ -2,6 +2,7 @@ package ro.msg.edu.jbugs.bugmanagement.business.service;
 
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
@@ -34,17 +35,28 @@ public class BugManagementService implements BugManagement {
 
     @Override
     public List<BugDTO> getAllBugs() {
+        /*List<BugDTO> bugs=new ArrayList<BugDTO>();
+        for(Bug b:bugPersistenceManager.getAllBugs())
+        {
+            BugDTO bug=BugDTOHelper.fromEntity(b);
+            this.setUsers(bug,b);
+            bugs.add(bug);
+        }
+        return bugs;*/
         return bugPersistenceManager.getAllBugs()
                 .stream()
-                .map(BugDTOHelper::fromEntity)
+                .map(bug ->{
+                    BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
+                    this.setUsers(bugDTO,bug);
+                    return bugDTO;
+                })
                 .collect(Collectors.toList());
+
     }
 
     @Override
     public List<BugDTO> getBugsWithId(List<Long> titles) {
-        List<BugDTO> bugs = bugPersistenceManager.getAllBugs().stream()
-                .map(BugDTOHelper::fromEntity)
-                .collect(Collectors.toList());
+        List<BugDTO> bugs =this.getAllBugs();
         List<BugDTO> selectedBugs = new ArrayList<>();
         for (int k = 0; k < titles.size(); k++) {
             for (int l = 0; l < bugs.size(); l++) {
@@ -59,17 +71,32 @@ public class BugManagementService implements BugManagement {
 
     @Override
     public List<BugDTO> filter(String title, String description, Status status, Severity severity) {
-        return bugPersistenceManager.filter(title, description, status, severity)
+        List<Bug> filteredBugs= bugPersistenceManager.filter(title, description, status, severity)
+                                .stream()
+                                .collect(Collectors.toList());
+        return filteredBugs
                 .stream()
-                .map(BugDTOHelper::fromEntity)
+                .map(bug ->{
+                        BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
+                        this.setUsers(bugDTO,bug);
+                        return bugDTO;
+                })
                 .collect(Collectors.toList());
+
     }
 
     @Override
     public List<BugDTO> sort(boolean title, boolean version) {
-        return bugPersistenceManager.sort(title, version)
+        List<Bug> sorteddBugs= bugPersistenceManager.sort(title, version)
                 .stream()
-                .map(BugDTOHelper::fromEntity)
+                .collect(Collectors.toList());
+        return sorteddBugs
+                .stream()
+                .map(bug ->{
+                    BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
+                    this.setUsers(bugDTO,bug);
+                    return bugDTO;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -145,6 +172,22 @@ public class BugManagementService implements BugManagement {
     @Override
     public BugDTO updateBug(BugDTO bugDTO) {
         return null;
+    }
+
+    @Override
+    public BugDTO setUsers(BugDTO bugDTO,Bug bug) {
+        NameIdDTO createdBy = new NameIdDTO();
+
+        createdBy.setId(bug.getCreatedByUser().getId());
+        createdBy.setUsername(bug.getCreatedByUser().getUsername());
+        bugDTO.setCreatedByUser(createdBy);
+
+        NameIdDTO assignedTo = new NameIdDTO();
+
+        assignedTo.setId(bug.getAssignedTo().getId());
+        assignedTo.setUsername(bug.getAssignedTo().getUsername());
+        bugDTO.setAssignedTo(assignedTo);
+        return bugDTO;
     }
 
     @Override

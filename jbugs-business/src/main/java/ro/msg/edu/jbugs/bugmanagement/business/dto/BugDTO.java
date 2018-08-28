@@ -145,4 +145,26 @@ public class BugDTO {
     public void setId(Long id) {
         this.id = id;
     }
+
+
+    @Override
+    public String toString() {
+        return "BugDTO{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", version='" + version + '\'' +
+                ", targetDate=" + targetDate +
+                ", status=" + status +
+                ", fixedVersion='" + fixedVersion + '\'' +
+                ", severity=" + severity +
+                ", createdByUser=" + createdByUser +
+                ", assignedTo=" + assignedTo +
+                ", targetDateString='" + targetDateString + '\'' +
+                ", statusString='" + statusString + '\'' +
+                ", severityString='" + severityString + '\'' +
+                ", createdByUserString='" + createdByUserString + '\'' +
+                ", assignedToString='" + assignedToString + '\'' +
+                '}';
+    }
 }

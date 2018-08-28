@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
@@ -16,6 +17,7 @@ import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
@@ -38,43 +40,45 @@ public class BugManagementTest {
     private BugManagementService bugManagementController;
 
 
-//    @Test
-//    public void createBug_ExpectedOK() {
-//        User userUsed = new User();
-//        userUsed.setId(1L);
-//        userUsed.setUsername("ionion");
-//        when(userPersistenceManager.getUserById(any(Long.class)))
-//                .thenReturn(Optional.of(userUsed));
-//        BugDTO bugDTO = new BugDTO();
-//        bugDTO.setTitle("ceva");
-//        bugDTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
-//        bugDTO.setVersion("1aa.2bb.3cc");
-//        bugDTO.setFixedVersion("1.2.3");
-//        NameIdDTO user= new NameIdDTO();
-//        user.setId(1L);
-//        user.setUsername("ionion");
-//        bugDTO.setCreatedByUser(user);
-//        bugDTO.setAssignedTo(user);
-//        BugDTO bug2DTO = new BugDTO();
-//        bug2DTO.setTitle("ceva22");
-//        bug2DTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
-//        bug2DTO.setVersion("1aa.2bb.3cc");
-//        bug2DTO.setFixedVersion("1.2.3");
-//        bug2DTO.setCreatedByUser(user);
-//        bug2DTO.setAssignedTo(user);
-//        when(bugPersistenceManager.createBug(any(Bug.class)))
-//                .thenReturn(new Bug());
-//        when(bugPersistenceManager.createBug(any(Bug.class)))
-//                .thenReturn(new Bug());
-//        try {
-//            assertEquals(bugDTO, bugManagementController.createBug(bugDTO));
-//            assertEquals(bug2DTO, bugManagementController.createBug(bug2DTO));
-//        } catch (BusinessException e) {
-//            fail("Should not reach this point");
-//        }
-//
-//
-//    }
+    @Test
+    public void createBug_ExpectedOK() {
+        User userUsed = new User();
+        userUsed.setId(1L);
+        userUsed.setUsername("ionion");
+        when(userPersistenceManager.getUserByUsername(any(String.class)))
+                .thenReturn(Optional.of(userUsed));
+        BugDTO bugDTO = new BugDTO();
+        bugDTO.setTitle("ceva");
+        bugDTO.setTargetDateString("2018-12-25");
+        bugDTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
+        bugDTO.setVersion("1aa.2bb.3cc");
+        bugDTO.setFixedVersion("1.2.3");
+        NameIdDTO user= new NameIdDTO();
+        user.setId(1L);
+        user.setUsername("ionion");
+        bugDTO.setCreatedByUser(user);
+        bugDTO.setAssignedTo(user);
+        BugDTO bug2DTO = new BugDTO();
+        bug2DTO.setTitle("ceva22");
+        bug2DTO.setTargetDateString("2018-12-25");
+        bug2DTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
+        bug2DTO.setVersion("1aa.2bb.3cc");
+        bug2DTO.setFixedVersion("1.2.3");
+        bug2DTO.setCreatedByUser(user);
+        bug2DTO.setAssignedTo(user);
+        when(bugPersistenceManager.createBug(any(Bug.class)))
+                .thenReturn(new Bug());
+        when(bugPersistenceManager.createBug(any(Bug.class)))
+                .thenReturn(new Bug());
+        try {
+            assertEquals(bugDTO, bugManagementController.createBug(bugDTO));
+            assertEquals(bug2DTO, bugManagementController.createBug(bug2DTO));
+        } catch (BusinessException e) {
+            fail("Should not reach this point");
+        }
+
+
+    }
 
     @Test
     public void getAllBugs_ExpectedOK() {
@@ -82,17 +86,42 @@ public class BugManagementTest {
         userUsed.setId(1L);
         userUsed.setUsername("ionion");
         Bug bug=new Bug();
+        bug.setId(1L);
         bug.setAssignedTo(userUsed);
         bug.setCreatedByUser(userUsed);
         when(userPersistenceManager.getUserById(any(Long.class)))
-                .thenReturn(Optional.of(userUsed));
+                .thenReturn(Optional.of(new User()));
         when(bugPersistenceManager.getAllBugs())
                 .thenReturn(Arrays.asList(bug,bug));
         assertEquals(2, bugManagementController.getAllBugs().size());
     }
 
+
     @Test
-    public void getBugsWithId_ExpectedException() {
+    public void getBugsWithId() {
+        User userUsed= new User();
+        userUsed.setId(1L);
+        userUsed.setUsername("ionion");
+        Bug bug=new Bug();
+        bug.setId(1L);
+        bug.setAssignedTo(userUsed);
+        bug.setCreatedByUser(userUsed);
+        Bug bug2=new Bug();
+        bug2.setId(2L);
+        bug2.setAssignedTo(userUsed);
+        bug2.setCreatedByUser(userUsed);
+        when(userPersistenceManager.getUserById(any(Long.class)))
+                .thenReturn(Optional.of(new User()));
+        when(bugPersistenceManager.createBug(bug)).thenReturn(bug);
+        when(bugPersistenceManager.getAllBugs())
+                .thenReturn(Arrays.asList(bug,bug2));
+        ArrayList<Long> titles=new ArrayList<>();
+        titles.add(1L);
+        assertEquals(1,bugManagementController.getBugsWithId(titles).size());
+    }
+
+    @Test
+    public void getBugWithId_ExpectedException() {
 
         when(bugPersistenceManager.getBugById(any(Long.class))).thenReturn(Optional.empty());
         try {
@@ -110,22 +139,25 @@ public class BugManagementTest {
         userUsed.setId(1L);
         userUsed.setUsername("ionion");
         Bug bug=new Bug();
+        bug.setId(1L);
         bug.setTitle("ceva");
         bug.setVersion("1.2.3");
         bug.setAssignedTo(userUsed);
         bug.setCreatedByUser(userUsed);
         Bug bug2=new Bug();
+        bug2.setId(2L);
         bug2.setTitle("ceva2");
         bug2.setVersion("1.2.3");
         bug2.setAssignedTo(userUsed);
         bug2.setCreatedByUser(userUsed);
         when(bugPersistenceManager.sort(any(boolean.class),any(boolean.class)))
                 .thenReturn(Arrays.asList(bug,bug2));
-        /*try {
-            assertEquals(Arrays.asList(),bugManagementController.sort(true, true));
-        } catch (BusinessException e) {
-            fail("Shouldn't reach this point");
-        }*/
+        BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
+        bugManagementController.setUsers(bugDTO,bug);
+        BugDTO bugDTO2=BugDTOHelper.fromEntity(bug2);
+        bugManagementController.setUsers(bugDTO2,bug2);
+        assertEquals(bugDTO.getId(),bugManagementController.sort(true, true).get(0).getId());
+        assertEquals(bugDTO2.getId(),bugManagementController.sort(true, true).get(1).getId());
     }
 
 
@@ -135,25 +167,20 @@ public class BugManagementTest {
         userUsed.setId(1L);
         userUsed.setUsername("ionion");
         when(userPersistenceManager.createUser(userUsed)).thenReturn(userUsed);
-        BugDTO bug=new BugDTO();
+        Bug bug=new Bug();
         bug.setTitle("ceva");
         bug.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
         bug.setVersion("1aa.2bb.3cc");
         bug.setFixedVersion("1.2.3");
         bug.setSeverity(Severity.HIGH);
         bug.setStatus(Status.IN_PROGRESS);
-        NameIdDTO user= new NameIdDTO();
-        user.setId(1L);
-        user.setUsername("ionion");
-        bug.setAssignedTo(user);
-        bug.setCreatedByUser(user);
-        when(bugPersistenceManager.filter(any(String.class),any(String.class),any(Status.class),any(Severity.class))).thenReturn( Arrays.asList());
-        /*try {
-            assertEquals(Arrays.asList(bug),bugManagementController.filter("ceva","A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha",Status.IN_PROGRESS,Severity.HIGH));
-        }catch(BusinessException e)
-        {
-            fail("Should not reach this point");
-        }*/
+        bug.setAssignedTo(userUsed);
+        bug.setCreatedByUser(userUsed);
+        when(bugPersistenceManager.filter(any(String.class),any(String.class),any(Status.class),any(Severity.class))).thenReturn( Arrays.asList(bug));
+        BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
+        bugManagementController.setUsers(bugDTO,bug);
+        assertEquals(bugDTO.getId(),bugManagementController.filter("ceva","A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha",Status.IN_PROGRESS,Severity.HIGH).get(0).getId());
+
     }
 
     @Test
