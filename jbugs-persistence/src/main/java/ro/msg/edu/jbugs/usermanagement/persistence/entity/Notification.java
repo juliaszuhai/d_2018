@@ -3,6 +3,8 @@ package ro.msg.edu.jbugs.usermanagement.persistence.entity;
 import javax.persistence.*;
 import java.util.Date;
 
+import static javax.persistence.TemporalType.DATE;
+
 @Entity
 @Table(name = "notification")
 public class Notification extends BaseEntity {
@@ -10,13 +12,13 @@ public class Notification extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TypeNotification typeNotification;
 
-    @Column(name = "targetDate", nullable = false)
+    @Temporal(DATE)
     private Date targetDate;
 
     @Column(name = "message", nullable = false)
     private String message;
 
-    @Column(name = "URLBug", nullable = false)
+    @Column(name = "URLBug")
     private String URLBug;
 
     public TypeNotification getTypeNotification() {

@@ -26,6 +26,8 @@
       <!--{{(translatorService.json| async)?.header.roles_and_permissions}}-->
       {{'header.roles_and_permissions' | translate}}
     </button>
+
+
   </mat-menu>
 
   <span class="fill-space"></span>
@@ -34,9 +36,20 @@
   <div class="jbugs-translator">
     <language-dropdown></language-dropdown>
   </div>
+  <button mat-button [matMenuTriggerFor]="menuNotification" *ngIf="isLoggedIn()">
+    <i class="material-icons">notifications_none</i>
+  </button>
   <button mat-button [matMenuTriggerFor]="menu" *ngIf="isLoggedIn()">
     {{getFirstName()}}
   </button>
+
+  <mat-menu #menuNotification="matMenu">
+    <button mat-menu-item routerLinkActive="active" routerLink="notification">
+       {{'notification.welcome'| translate}}
+    </button>
+
+  </mat-menu>
+
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLinkActive="active" routerLink="profile">
       <i class="material-icons">account_circle</i>

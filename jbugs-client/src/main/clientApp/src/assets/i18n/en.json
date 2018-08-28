@@ -7,6 +7,19 @@
     "inputPassword": "Input your password here..."
   },
 
+  "notification": {
+    "welcome": "WELCOME_NEW_USER",
+    "userUpdate": "USER_UPDATED",
+    "bugUpdate": "BUG_UPDATED",
+    "bugClosed":"BUG_CLOSED",
+    "bugStatusUpdate": "BUG_STATUS_UPDATED",
+    "userDeactivate": "USER_DEACTIVATED",
+    "urlBug": "URL bug",
+    "message":"Message",
+    "date": "Send date",
+    "typeNotification": "Type notification"
+  },
+
   "loginErrors": {
     "usernameErrorLength": "Username must be at least 6 characters",
     "passwordErrorIntro": "Password must contain:",
@@ -29,6 +42,7 @@
     "profile": "Profile",
     "manage": "Manager",
     "roles_and_permissions": "Roles and Permissions"
+
   },
 
   "profileWindow": {

@@ -17,8 +17,10 @@ import {UsermanagementModule} from "./usermanagement/usermanagement.module";
 import {PermissionManagementModule} from "./permission-management/permission-management.module";
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {NotificationModule} from "./notification/notification.module";
 import {PermissionGuard} from "./authentication/permission.guard";
 import {BugsGuard} from "./authentication/bugs.guard";
+
 
 
 const appRoutes: Routes = [
@@ -66,7 +68,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     BugsModule,
     MatTableModule,
     UsermanagementModule,
-    PermissionManagementModule
+    PermissionManagementModule,
+    NotificationModule
   ],
   providers: [LoginguardGuard, PermissionGuard, BugsGuard],
 

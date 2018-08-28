@@ -7,6 +7,19 @@
     "inputPassword": "Inserati parola aici..."
   },
 
+  "notification": {
+    "welcome": "BINE_AI_VENIT_UTILIZATOR_NOU",
+    "userUpdate": "USER_UPDATAT",
+    "bugUpdate": "BUG_UPDATAT",
+    "bugClosed":"BUG_CLOSED",
+    "bugStatusUpdate": "BUG_STATUS_UPDATED",
+    "userDeactivate": "USER_DEACTIVATED",
+    "urlBug": "URL bug",
+    "message":"Mesaj",
+    "date": "Data trimiterii",
+    "typeNotification": "Tipul notificarii"
+  },
+
   "loginErrors": {
     "usernameErrorLength": "Numele de utilizator trebuie sa fie de minim 6 caractere lungime",
     "passwordErrorIntro": "Parola trebuie sa contina:",
