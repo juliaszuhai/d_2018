@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
-import {DateAdapter, DateAdapter, MatDialog, MatPaginator, MatTableDataSource, PageEvent} from '@angular/material';
+import {MatDialog, MatPaginator, MatTableDataSource, PageEvent} from '@angular/material';
 import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
 import {AddBugComponent} from "../add-bug/add-bug.component";
 import {HttpParams} from "@angular/common/http";
@@ -8,7 +8,6 @@ import {TranslateService} from "@ngx-translate/core";
 import {UpdateBugComponent} from "../update-bug/update-bug.component";
 import {ListBugsPipe} from "./list-bugs-pipe";
 import {ActivatedRoute} from "@angular/router";
-import {DatePipe} from "@angular/common";
 import {DateFormat} from "../update-bug/date-format";
 
 @Component({
@@ -98,7 +97,7 @@ export class ListBugsComponent implements OnInit {
   openDialog(bug: BugData): void {
 
     const dialogRef = this.dialog.open(BugsPopupComponent, {
-      width: '250px',
+      width: '75%',
       data: {
         description: bug.description,
         id: bug.id

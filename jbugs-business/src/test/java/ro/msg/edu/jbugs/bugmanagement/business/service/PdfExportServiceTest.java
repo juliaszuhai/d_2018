@@ -1,9 +1,24 @@
 package ro.msg.edu.jbugs.bugmanagement.business.service;
 
-//@RunWith(MockitoJUnitRunner.class)
+import com.itextpdf.text.Document;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.runners.MockitoJUnitRunner;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
+import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
+
+import java.util.Date;
+
+import static org.junit.Assert.fail;
+
+@RunWith(MockitoJUnitRunner.class)
 public class PdfExportServiceTest {
 
-    /*@InjectMocks
+    @InjectMocks
     PdfExportService pdfExportService;
 
 
@@ -33,5 +48,5 @@ public class PdfExportServiceTest {
 
     @Test
     public void getCell() {
-    }*/
+    }
 }

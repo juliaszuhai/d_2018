@@ -129,8 +129,7 @@ public class UserManagementServiceTest {
 
         when(userPersistenceManager.getUserByUsername(any(String.class)))
                 .thenReturn(Optional.empty());
-		when(notificationPersistenceManager.createNotification(any(Notification.class)))
-				.thenReturn(new Notification());
+
 
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("Cristi");
@@ -138,7 +137,11 @@ public class UserManagementServiceTest {
         userDTO.setEmail("dinamo@msggroup.com");
         userDTO.setPhoneNumber("0747046000");
         userDTO.setPassword("IloveSteaua");
+
+        when(notificationPersistenceManager.createNotification(any(Notification.class)))
+                .thenReturn(new Notification());
         try {
+
             UserDTO createdUser = userManagementController.createUser(userDTO);
             assertEquals(userDTO.getFirstName(), createdUser.getFirstName());
             assertEquals(userDTO.getLastName(), createdUser.getLastName());

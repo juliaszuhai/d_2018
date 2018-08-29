@@ -43,7 +43,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   goToBug(id){
-    this.router.navigate(['/filterBugById', id.id);
+    this.router.navigate(['/filterBugById', id]);
   }
 
   viewMessage(element): void {

@@ -11,6 +11,7 @@ import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.text.ParseException;
@@ -78,8 +79,8 @@ public class UserManager {
 
 	@POST
 	@Path("/register-user")
-	@Consumes("application/json")
-	@Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
 	public Response registerUser(final UserDTO userDTO) {
 
 		try {
