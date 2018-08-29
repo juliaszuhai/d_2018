@@ -22,6 +22,7 @@ export class AddBugComponent implements OnInit {
   error: boolean;
   errorMessage: string;
 
+
   constructor(public dialogRef2: MatDialogRef<AddBugComponent>,
                private bugService: BugListService,
               private router: Router,
@@ -42,6 +43,7 @@ export class AddBugComponent implements OnInit {
     }
     this.error = false;
     this.errorMessage = '';
+
   }
 
   ngOnInit() {
@@ -98,9 +100,9 @@ export class AddBugComponent implements OnInit {
         this.attachments[i] = {
           bugDTO: this.bugData,
           blob: new Uint8Array(),
-          extension:file.name.substring(file.name.lastIndexOf('.') + 1).toUpperCase()
+          extension:file.name.substring(file.name.lastIndexOf('.',0) + 1).toUpperCase()
         }
-        reader[i].onload = (e) =>{
+        reader[i].onload = (event) => {
           this.attachments[i].blob = reader[i].result;
         }
         reader[i].readAsArrayBuffer(file);

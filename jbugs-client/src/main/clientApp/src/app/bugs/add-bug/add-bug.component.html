@@ -94,8 +94,8 @@
 
         <div class="form-group">
           <label for="attachmentInput">{{'addBug.attachment' | translate}}</label>
-          <input #attachmentInput  type="file" id="attachmentInput" name="file" [(ngModel)]="this.attachments[this.attachments.length]" required
-                 (change)="parseFile($event)" accept=".jpg,.pdf,.doc,.odf,.xls,.txt" multiple>
+          <input #attachmentInput  type="file" id="attachmentInput" name="file"  required
+                 (change)="parseFile($event)" accept=".png,.jpg,.pdf,.doc,.odf,.xls,.txt" multiple>
           <div *ngIf="this.filesUploaded.length>1">
             <div *ngFor="let file of this.filesUploaded">
               {{file}}
@@ -110,6 +110,7 @@
             mat-raised-button
             style="margin:30px 0">
       {{'addBug.buttonAddBug' | translate}}
+
     </button>
   </form>
 </div>
