@@ -27,7 +27,6 @@ public class Notification extends BaseEntity {
 	private TypeNotification typeNotification;
 
 	@Column(name = "dateSent", nullable = false)
-	@Temporal(TemporalType.DATE)
 	private Date dateSent;
 
 	@Column(name = "message", nullable = false)

@@ -55,7 +55,7 @@ public class User extends BaseEntity {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Role> roles;
 
-    @OneToMany(targetEntity=Notification.class)
+    @OneToMany(targetEntity = Notification.class, cascade = CascadeType.PERSIST)
     private List<Notification> notifications;
 
 

@@ -5,6 +5,8 @@ import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTO;
 import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTOHelper;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.dao.NotificationPersistenceManager;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
+import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
+import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -16,10 +18,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Stateless
-public class NotificationManagerService {
+public class NotificationManagementService {
 
 	@EJB
 	private NotificationPersistenceManager notificationPersistenceManager;
+
+	@EJB
+	private UserPersistenceManager userPersistenceManager;
 
 
 	/**
@@ -37,6 +42,10 @@ public class NotificationManagerService {
 		notification.setDateSent(getToday());
 		notification.setURLBug(notificationDTO.getURLBug());
 		notificationPersistenceManager.createNotification(notification);
+		if (notification.getTypeNotification() == TypeNotification.WELCOME_NEW_USER)
+			userPersistenceManager.createNotifications(notification);
+		else
+			userPersistenceManager.addNotification(notification);
 		return NotificationDTOHelper.fromEntity(notification);
 	}
 
@@ -48,7 +57,7 @@ public class NotificationManagerService {
 	}
 
 	public Date getToday() throws ParseException {
-		DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
+		DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
 
 		Date today = new Date();
 

@@ -3,7 +3,7 @@ package ro.msg.edu.jbugs.notificationmanagement.business.control;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTO;
-import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagerService;
+import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagementService;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -16,7 +16,7 @@ import java.util.List;
 public class NotificationManager {
 
 	@EJB
-	private NotificationManagerService notificationManagerService;
+	private NotificationManagementService notificationManagerService;
 
 
 	@POST
