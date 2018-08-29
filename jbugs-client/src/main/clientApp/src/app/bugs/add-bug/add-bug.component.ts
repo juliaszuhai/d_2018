@@ -1,9 +1,8 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {Attachment, BugData, BugListService, RelatedUser} from "../bugs.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Component, OnInit} from '@angular/core';
+import {Attachment, BugData, BugListService} from "../bugs.service";
+import {MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
-
 
 
 @Component({
@@ -14,8 +13,8 @@ import {TranslateService} from "@ngx-translate/core";
 export class AddBugComponent implements OnInit {
 
   bugData: BugData;
-  severities: string[]=[
-    "CRITICAL","HIGH","MEDIUM","LOW"
+  severities: string[] = [
+    "CRITICAL", "HIGH", "MEDIUM", "LOW"
   ];
   filesUploaded: string[] = [];
   attachments: Attachment[] = [];
@@ -24,21 +23,22 @@ export class AddBugComponent implements OnInit {
 
 
   constructor(public dialogRef2: MatDialogRef<AddBugComponent>,
-               private bugService: BugListService,
+              private bugService: BugListService,
               private router: Router,
               private translate: TranslateService
-              ) {
-    this.bugData={
+  ) {
+    this.bugData = {
       id: null,
-      title:'',
-      description:'',
-      version:'',
-      fixedVersion:'',
+      title: '',
+      description: '',
+      version: '',
+      fixedVersion: '',
       targetDate: new Date(''),
-      status:'NEW',
-      severity:'',
-      createdByUser: {id:4,username:bugService.getLoggedUserName()},
-      assignedTo: {id:4,username:''}
+      status: 'NEW',
+      severity: '',
+      createdByUser: {id: 4, username: bugService.getLoggedUserName()},
+      assignedTo: {id: 4, username: ''},
+      attachments: []
 
     }
     this.error = false;
@@ -54,7 +54,7 @@ export class AddBugComponent implements OnInit {
     return this.error;
   }
 
-  getMessage(){
+  getMessage() {
     return this.errorMessage;
   }
 
@@ -72,6 +72,7 @@ export class AddBugComponent implements OnInit {
   }
 
   addBugForm() {
+
     this.bugService.validateBug(this.bugData, this.attachments)
       .subscribe(
         data => {
@@ -80,17 +81,20 @@ export class AddBugComponent implements OnInit {
         },
         err => {
           this.error = true;
-          if(err.valueOf().error.value=='DESCRIPTION_TOO_SHORT') {
+          if (err.valueOf().error.value == 'DESCRIPTION_TOO_SHORT') {
             this.errorMessage = "Description is too short. Write more";
-          } else if(err.valueOf().error.value=='VER'){
-            this.errorMessage = "Version syntax is incorrect"
+          } else if (err.valueOf().error.value == 'VERSION_NOT_VALID') {
+            this.errorMessage = "Version syntax is incorrect";
+          }
+          else {
+            this.errorMessage = "nu merge";
           }
         }
       );
   }
 
   parseFile($event) {
-    let reader : FileReader[] = [];
+    let reader = [];
     let eventTarget = <HTMLInputElement>event.target;
     if (eventTarget.files && eventTarget.files.length > 0) {
       for (let i = 0; i < eventTarget.files.length; i++) {
@@ -100,14 +104,19 @@ export class AddBugComponent implements OnInit {
         this.attachments[i] = {
           bugDTO: this.bugData,
           blob: new Uint8Array(),
-          extension:file.name.substring(file.name.lastIndexOf('.',0) + 1).toUpperCase()
+          extension: file.name.substring(file.name.lastIndexOf('.') + 1).toUpperCase()
         }
-        reader[i].onload = (event) => {
-          this.attachments[i].blob = reader[i].result;
-        }
+        reader[i].onload = ((file: any) => {
+          return (e: Event) => {
+            var arrayBuffer = file.result;
+            var bytes = new Uint8Array(arrayBuffer);
+            this.attachments[i].blob = bytes;
+          }
+        })(file)
         reader[i].readAsArrayBuffer(file);
       }
     }
 
   }
 }
+

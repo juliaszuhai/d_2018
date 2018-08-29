@@ -7,7 +7,8 @@ public enum ExceptionCode {
     DESCRIPTION_TOO_SHORT(4003,"Bug description is too short.Write more"),
     VERSION_NOT_VALID(4004,"Version is not valid"),
     COULD_NOT_CREATE_BUG(4005,"Can't create bug"),
-    BUG_VALIDATION_EXCEPTION(4006, "Bug not valid");
+    BUG_VALIDATION_EXCEPTION(4006, "Bug not valid"),
+    SOMETHING_WRONG_WITH_ATTACHMENT(4007, "Something wrong with attachment");
     int id;
     String message;
 

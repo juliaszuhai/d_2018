@@ -1,5 +1,6 @@
 package ro.msg.edu.jbugs.bugmanagement.business.dto;
 
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Attachment;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 
@@ -22,6 +23,7 @@ public class BugDTO {
     private String severityString;
     private String createdByUserString;
     private String assignedToString;
+    private Attachment[] attachments;
 
 
     public String getCreatedByUserString() {
@@ -64,7 +66,13 @@ public class BugDTO {
         this.targetDateString = targetDateString;
     }
 
+    public Attachment[] getAttachments() {
+        return attachments;
+    }
 
+    public void setAttachments(Attachment[] attachments) {
+        this.attachments = attachments;
+    }
 
     public String getTitle() {
         return title;

@@ -26,6 +26,7 @@ export interface BugData {
   severity: string;
   createdByUser: RelatedUser;
   assignedTo: RelatedUser;
+  attachments: Attachment[];
 }
 
 const bugs: BugData[] = [];
@@ -87,6 +88,7 @@ export class BugListService {
     bug.targetDateString = bug.targetDate.toISOString().slice(0,10);
     bug.assignedToString=bug.assignedTo.username;
     bug.createdByUserString=bug.createdByUser.username;
+    bug.attachments = JSON.stringify(attachments);
     return this.http.post(this.baseURL + '/add-bug',
       bug,
       {

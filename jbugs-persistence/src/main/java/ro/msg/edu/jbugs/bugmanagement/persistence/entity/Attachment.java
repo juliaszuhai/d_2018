@@ -21,6 +21,12 @@ public class Attachment extends BaseEntity {
     @Column(name = "attachment", nullable = true)
     private Blob attachment;
 
+    @Column(name = "name", nullable = true)
+    private String name;
+
+    @Column(name = "extension", nullable = true)
+    private String extension;
+
 
     public Blob getAttachment() {
         return attachment;
@@ -31,4 +37,19 @@ public class Attachment extends BaseEntity {
     }
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
 }

@@ -139,8 +139,23 @@ public class BugManagementService implements BugManagement {
         } else {
             throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
         }
+
         this.isBugValid(bug);
         bugPersistenceManager.createBug(bug);
+        if (bugDTO.getAttachments().length > 0) {
+            for (int i = 0; i < bugDTO.getAttachments().length; i++) {
+                try {
+                    Attachment attachment = new Attachment();
+                    Blob blob = new javax.sql.rowset.serial.SerialBlob(bugDTO.getAttachments()[i].getAttachment());
+                    attachment.setAttachment(blob);
+                    attachment.setName(bugDTO.getAttachments()[i].getName());
+                    attachment.setExtension(bugDTO.getAttachments()[i].getExtension());
+                    bugPersistenceManager.addAttachmentToBug(bug, attachment);
+                } catch (SQLException e) {
+                    throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
+                }
+            }
+        }
         return bugDTO;
 
     }

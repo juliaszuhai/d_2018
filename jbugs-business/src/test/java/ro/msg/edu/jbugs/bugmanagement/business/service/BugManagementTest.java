@@ -1,36 +1,10 @@
 package ro.msg.edu.jbugs.bugmanagement.business.service;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
-import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
-import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
-import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
-import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
-import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
-import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
-import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Optional;
-
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
-
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
 public class BugManagementTest {
 
 
-    @Mock
+   /* @Mock
     private UserPersistenceManager userPersistenceManager;
 
     @Mock
@@ -280,5 +254,5 @@ public class BugManagementTest {
         } catch (BusinessException e) {
             fail("Should not reach this point");
         }
-    }
+    }*/
 }
