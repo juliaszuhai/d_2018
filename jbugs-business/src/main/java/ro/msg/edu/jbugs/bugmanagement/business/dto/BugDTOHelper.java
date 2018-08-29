@@ -17,7 +17,6 @@ public class BugDTOHelper {
     public static BugDTO fromEntity(Bug bug) {
 
         BugDTO bugDTO = new BugDTO();
-
         bugDTO.setId(bug.getId());
         bugDTO.setTitle(bug.getTitle());
         bugDTO.setDescription(bug.getDescription());
@@ -37,7 +36,6 @@ public class BugDTOHelper {
         bug.setDescription(bugDTO.getDescription());
         bug.setVersion(bugDTO.getVersion());
         bug.setFixedVersion(bugDTO.getFixedVersion());
-       // bug.setTargetDate(bugDTO.getTargetDate());
         bug.setStatus(Status.valueOf(bugDTO.getStatusString()));
         bug.setSeverity(Severity.valueOf(bugDTO.getSeverityString()));
 

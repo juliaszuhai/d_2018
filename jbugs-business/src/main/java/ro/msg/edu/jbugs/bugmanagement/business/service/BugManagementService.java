@@ -67,10 +67,7 @@ public class BugManagementService implements BugManagement {
 
     @Override
     public List<BugDTO> filter(String title, String description, Status status, Severity severity) {
-        List<Bug> filteredBugs = bugPersistenceManager.filter(title, description, status, severity)
-                .stream()
-                .collect(Collectors.toList());
-        return filteredBugs
+        return bugPersistenceManager.filter(title, description, status, severity)
                 .stream()
                 .map(bug ->{
                         BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
@@ -79,14 +76,12 @@ public class BugManagementService implements BugManagement {
                 })
                 .collect(Collectors.toList());
 
+
     }
 
     @Override
     public List<BugDTO> sort(boolean title, boolean version) {
-        List<Bug> sorteddBugs = bugPersistenceManager.sort(title, version)
-                .stream()
-                .collect(Collectors.toList());
-        return sorteddBugs
+        return bugPersistenceManager.sort(title, version)
                 .stream()
                 .map(bug ->{
                     BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
@@ -94,6 +89,7 @@ public class BugManagementService implements BugManagement {
                     return bugDTO;
                 })
                 .collect(Collectors.toList());
+
     }
 
 

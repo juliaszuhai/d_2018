@@ -111,7 +111,7 @@ export class ListBugsComponent implements OnInit {
 
   sortDataSource() {
     this.sorted.forEach(arg => {
-      this.bugList = this.bugList.data.sort((bug1: BugData, bug2: BugData) => {
+      this.bugList = this.bugList.data.sort(function (bug1: BugData, bug2: BugData) {
         if (bug1[arg.argument] > bug2[arg.argument]) {
           return arg.order == "asc" ? 1 : -1;
         } else if (bug1[arg.argument] < bug2[arg.argument]) {
