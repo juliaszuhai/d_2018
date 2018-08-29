@@ -177,4 +177,21 @@ public class BugPersistenceManager {
         em.merge(bug);
     }
 
+    /**
+     * Count the bags that have a certain status
+     *
+     * @param status
+     * @return: number of bugs that have the specified status
+     */
+
+    public Optional<Long> countBugsByStatus(@NotNull Status status) {
+        TypedQuery<Long> q = em.createNamedQuery(Bug.COUNT_BUG_BY_STATUS, Long.class);
+        q.setParameter("status", status);
+        try {
+            return Optional.of(q.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
+    }
+
 }

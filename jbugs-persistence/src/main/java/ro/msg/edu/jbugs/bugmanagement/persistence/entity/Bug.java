@@ -17,8 +17,7 @@ import java.util.Objects;
                 @NamedQuery(name = Bug.GET_BUG_BY_ID, query = "SELECT b FROM Bug b WHERE b.id=:id"),
                 @NamedQuery(name = Bug.GET_BUG_BY_STATUS, query = "SELECT b FROM Bug b WHERE b.status=:status"),
                 @NamedQuery(name = Bug.GET_BUG_BY_SEVERITY, query = "SELECT b FROM Bug b WHERE b.severity=:severity"),
-
-
+                @NamedQuery(name = Bug.COUNT_BUG_BY_STATUS, query = "SELECT count(b.id) FROM Bug b WHERE b.status=:status"),
 
         }
 )
@@ -33,7 +32,7 @@ public class Bug extends BaseEntity  {
     public static final String GET_BUG_BY_ID="get_Bug_By_Id";
     public static final String GET_BUG_BY_STATUS="get_Bug_By_Status";
     public static final String GET_BUG_BY_SEVERITY="get_Bug_By_Severity";
-
+    public static final String COUNT_BUG_BY_STATUS = "count_Bug_By_Status";
 
     @Column(name = "title", length = MAX_STRING_LENGTH, nullable = false)
     private String title;

@@ -137,5 +137,13 @@ export class BugListService {
       })
   }
 
+  countBugsByStatus(status) {
+
+    const params = new HttpParams()
+      .set('status', status);
+    console.log(status);
+    return this.http.get<number>(this.baseURL + '/list-bugs/countBugByStatus', {params: params});
+  }
+
 
 }

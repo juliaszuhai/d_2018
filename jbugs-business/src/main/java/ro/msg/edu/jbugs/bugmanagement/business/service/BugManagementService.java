@@ -325,4 +325,14 @@ public class BugManagementService implements BugManagement {
 
     }
 
+    @Override
+    public Long countBugsByStatus(Status status) throws BusinessException {
+        Optional<Long> optionalNumberOfBug = bugPersistenceManager.countBugsByStatus(status);
+        if (optionalNumberOfBug.isPresent()) {
+            Long numberOfBugByStatus = optionalNumberOfBug.get();
+            return numberOfBugByStatus;
+        } else {
+            throw new BusinessException(ExceptionCode.STATUS_INVALID);
+        }
+    }
 }

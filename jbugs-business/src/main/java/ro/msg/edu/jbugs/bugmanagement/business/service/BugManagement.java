@@ -67,6 +67,14 @@ public interface BugManagement {
     Bug setUsers(BugDTO bugDTO, Bug bug) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 
     List<BugDTO> getFilteredAndSortedBugs(List<String> filterArgs, Integer index, Integer amount, boolean sortByTitle, boolean sortBySeverity,Long id);
+
+    /**
+     * Count the bags that have a certain status
+     *
+     * @param status
+     * @return: number of bugs that have the specified status
+     */
+    Long countBugsByStatus(Status status) throws BusinessException;
 }
 
 
