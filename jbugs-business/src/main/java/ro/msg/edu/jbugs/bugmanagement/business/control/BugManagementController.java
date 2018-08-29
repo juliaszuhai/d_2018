@@ -14,7 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/listBugs")
+@Path("/list-bugs")
 public class BugManagementController {
 
     @EJB
@@ -34,8 +34,13 @@ public class BugManagementController {
     @Secured("BUG_MANAGEMENT")
     @Path("/getByFilter")
     @Produces("application/json")
-    public String filter(@QueryParam("title") String title, @QueryParam("description") String description, @QueryParam("status") Status status, @QueryParam("severity") Severity severity) throws JsonProcessingException, BusinessException {
-        List<BugDTO> allBugs = bugManagement.filter(title, description, status, severity);
+    public String filter(@QueryParam("title") String title,
+                         @QueryParam("description") String description,
+                         @QueryParam("status") Status status,
+                         @QueryParam("severity") Severity severity,
+                         @QueryParam("index") int index,
+                         @QueryParam("amount") int amount) throws JsonProcessingException, BusinessException {
+        List<BugDTO> allBugs = bugManagement.filter(title, description, status, severity, index, amount);
         ObjectMapper mapper = new ObjectMapper();
 
         return mapper.writeValueAsString(allBugs);
@@ -52,6 +57,21 @@ public class BugManagementController {
         return mapper.writeValueAsString(allBugs);
 
 
+    }
+
+
+    @GET
+    @Path("/sort-and-filter")
+    @Produces("application/json")
+    public Response sortAndFilter(@QueryParam("filterCriteria") List<String> filters,
+                                  @QueryParam("index") Integer index,
+                                  @QueryParam("amount") Integer amount,
+                                  @QueryParam("sortByTitle") boolean sortByTitle,
+                                  @QueryParam("sortBySeverity") boolean sortBySeverity) {
+        return Response.ok(
+                bugManagement.getFilteredAndSortedBugs(filters, index, amount, sortByTitle, sortBySeverity)
+        )
+                .build();
     }
 
 

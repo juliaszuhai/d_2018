@@ -51,13 +51,13 @@ export class BugListService {
 
 
   getBugsFromServer(): Observable<BugData[]> {
-    return this.http.get<BugData[]>(this.baseURL + '/listBugs', {
+    return this.http.get<BugData[]>(this.baseURL + '/list-bugs', {
       // params: new HttpParams().set('dummyParam', 'dummyvalue')
     });
   }
 
 
-  filter(title: string, description: string, status: string, severity: string): Observable<BugData[]> {
+  filter(title: string, description: string, status: string, severity: string, index, amount): Observable<BugData[]> {
     let params = new HttpParams();
 
     if (title) {
@@ -72,9 +72,10 @@ export class BugListService {
     if (severity) {
       params = params.append('severity', severity.toUpperCase());
     }
+    params = params.append('index', index);
+    params = params.append('amount', amount);
 
-
-    return this.http.get<BugData[]>(this.baseURL + '/listBugs/getByFilter', {params: params});
+    return this.http.get<BugData[]>(this.baseURL + '/list-bugs/getByFilter', {params: params});
   }
 
   validateBug(bug,attachments : Attachment[]) {
@@ -102,7 +103,7 @@ export class BugListService {
     }
 
 
-    return this.http.get<BugData[]>(this.baseURL + '/listBugs/sort', {params: params});
+    return this.http.get<BugData[]>(this.baseURL + '/list-bugs/sort', {params: params});
   }
 
   excel(ids:number[]) {
@@ -120,7 +121,7 @@ export class BugListService {
 
 
   updateBug(bugData: BugData) {
-    return this.http.post(this.baseURL + '/listBugs/update-bug', bugData,
+    return this.http.post(this.baseURL + '/list-bugs/update-bug', bugData,
       {
         headers: new HttpHeaders(
           {'Content-Type': 'application/json'}

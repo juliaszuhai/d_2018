@@ -7,7 +7,9 @@
 
     <div class="filters">
       <h3>Filter</h3>
-      <form onsubmit="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">
+      <form
+        #filterForm
+        onsubmit="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">
         <mat-form-field>
           <input
             matInput
@@ -116,9 +118,10 @@
 
       </tr>
     </table>
-    <mat-paginator [length]="length"
-                   [pageSize]="pageSize"
-                   (page)="pageEvent = $event"
+    <mat-paginator
+      [length]="length"
+      [pageSize]="pageSize"
+      (page)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value,$event.pageIndex*$event.pageSize,$event.pageSize)"
     >
     </mat-paginator>
   </div>

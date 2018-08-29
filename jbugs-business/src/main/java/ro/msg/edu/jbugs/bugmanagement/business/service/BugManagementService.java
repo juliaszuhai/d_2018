@@ -20,10 +20,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -66,16 +63,37 @@ public class BugManagementService implements BugManagement {
 
 
     @Override
-    public List<BugDTO> filter(String title, String description, Status status, Severity severity) {
-        return bugPersistenceManager.filter(title, description, status, severity)
-                .stream()
-                .map(bug ->{
-                        BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
-                        this.setUsersDTO(bugDTO,bug);
-                        return bugDTO;
-                })
-                .collect(Collectors.toList());
+    public List<BugDTO> getFilteredAndSortedBugs(List<String> filterArgs, Integer index, Integer amount, boolean sortByTitle, boolean sortBySeverity) {
+        Status status = null;
+        if (filterArgs.get(2) != null) {
+            status = Status.valueOf(filterArgs.get(2));
+        }
+        Severity severity = null;
+        if (filterArgs.get(3) != null) {
+            severity = Severity.valueOf(filterArgs.get(3));
+        }
 
+        List<BugDTO> bugDTOList = filter(filterArgs.get(0), filterArgs.get(1), status, severity, index, amount);
+        if (sortByTitle) {
+            bugDTOList.sort(Comparator.comparing(BugDTO::getTitle));
+        } else if (sortBySeverity) {
+            bugDTOList.sort(Comparator.comparing(BugDTO::getSeverity));
+        }
+        return bugDTOList;
+    }
+
+
+    @Override
+    public List<BugDTO> filter(String title, String description, Status status, Severity severity, int index, int amount) {
+        List<Bug> bugList = bugPersistenceManager.filter(title, description, status, severity);
+        return bugList.stream()
+                .map(bug -> {
+                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
+                    this.setUsers(bugDTO, bug);
+                    return bugDTO;
+                })
+                .collect(Collectors.toList())
+                .subList(index, (index + amount) > bugList.size() ? bugList.size() : (index + amount));
 
     }
 
