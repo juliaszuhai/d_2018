@@ -47,8 +47,8 @@ public class Notification extends BaseEntity {
 		return dateSent;
 	}
 
-	public void setDateSent(Date targetDate) {
-		this.dateSent = targetDate;
+	public void setDateSent(Date dateSent) {
+		this.dateSent = dateSent;
 	}
 
 	public String getMessage() {
