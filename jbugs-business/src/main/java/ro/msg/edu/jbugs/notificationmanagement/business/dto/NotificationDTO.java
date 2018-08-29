@@ -8,7 +8,7 @@ public class NotificationDTO {
 
 	private Long id;
 	private Long URLBug;
-	private String message;
+	private Long message;
 	private Date dateSent;
 	private TypeNotification typeNotification;
 
@@ -29,11 +29,11 @@ public class NotificationDTO {
 		this.URLBug = URLBug;
 	}
 
-	public String getMessage() {
+	public Long getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
+	public void setMessage(Long message) {
 		this.message = message;
 	}
 

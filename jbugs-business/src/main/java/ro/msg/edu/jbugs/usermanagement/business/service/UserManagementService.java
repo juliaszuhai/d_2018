@@ -4,10 +4,7 @@ import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
-import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTO;
-import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTOHelper;
 import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagementService;
-import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
@@ -42,6 +39,7 @@ public class UserManagementService {
 
 	/**
 	 * Creates a user entity using a user DTO.
+	 * Also creates the notification message and type to be sent to the new user.
 	 *
 	 * @param userDTO user information
 	 * @return : the user DTO of the created entity
@@ -55,15 +53,15 @@ public class UserManagementService {
 		user.setActive(true);
 		user.setPassword(Encryptor.encrypt(userDTO.getPassword()));
 
-		String notificationMessage = "Welcome, " + userDTO.getFirstName();
-		NotificationDTO notificationDTO = new NotificationDTO();
-		notificationDTO.setMessage(notificationMessage);
-		notificationDTO.setTypeNotification(TypeNotification.WELCOME_NEW_USER);
+//
+//		NotificationDTO notificationDTO = new NotificationDTO();
+//		notificationDTO.setMessage(2);
+//		notificationDTO.setTypeNotification(TypeNotification.WELCOME_NEW_USER);
 
 
 		userPersistenceManager.createUser(user);
-		NotificationDTO notification = notificationManagerService.createNotification(notificationDTO);
-		user.getNotifications().add(NotificationDTOHelper.toEntity(notification));
+		/*NotificationDTO notification = notificationManagerService.createNotification(notificationDTO);
+		user.getNotifications().add(NotificationDTOHelper.toEntity(notification));*/
 
 		return UserDTOHelper.fromEntity(user);
 	}
@@ -324,6 +322,7 @@ public class UserManagementService {
 	/**
 	 * Updates the user with the contents of the given DTO. If the name of the user has changed it will also
 	 * change the username.
+	 * Also creates the notification message and type to be sent to both users.
 	 *
 	 * @param userDTO
 	 * @return
@@ -341,6 +340,9 @@ public class UserManagementService {
 			}
 			User userAfter = UserDTOHelper.updateEntityWithDTO(userBefore, userDTO);
 
+			/*NotificationDTO notificationDTO = new NotificationDTO();
+			notificationDTO.setMessage("User updated");
+			notificationDTO.setTypeNotification(TypeNotification.WELCOME_NEW_USER);*/
 			userPersistenceManager.updateUser(userAfter);
 			return userDTO;
 		} else {
