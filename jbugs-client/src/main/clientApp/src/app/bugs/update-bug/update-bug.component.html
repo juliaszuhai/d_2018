@@ -59,9 +59,13 @@
             name="targetDate"
             matInput
             required
-            [(ngModel)]="data.targetDateString"
-            placeholder="{{'bugTable.targetDate'| translate}}">
+            [(ngModel)]="data.targetDate"
+            placeholder="{{'bugTable.targetDate'| translate}}"
+            [matDatepicker]="targetDate">
         </mat-form-field>
+        <mat-datepicker-toggle [for]="targetDate"></mat-datepicker-toggle>
+        <mat-datepicker #targetDate></mat-datepicker>
+
         <br>
         <mat-form-field>
           <input

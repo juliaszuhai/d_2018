@@ -40,6 +40,9 @@ export class UpdateBugComponent implements OnInit {
 
   submitUpdateBug() {
     console.log(this.data);
+    //this.data.targetDateString = this.data.targetDate.toISOString().slice(0,10);
+    //console.log("fuuuck you" + this.data.targetDate)
+
     this.bugmngmt.updateBug(this.data).subscribe(
       data => {
         this.dialogRef.close();

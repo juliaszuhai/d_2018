@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {ListBugsComponent} from "./list-bugs/list-bugs.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -65,7 +65,8 @@ const bugRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
-    MatTabsModule
+    MatTabsModule,
+
 
 
 

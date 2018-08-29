@@ -36,6 +36,7 @@ public class BugDTOHelper {
         bug.setDescription(bugDTO.getDescription());
         bug.setVersion(bugDTO.getVersion());
         bug.setFixedVersion(bugDTO.getFixedVersion());
+        bug.setTargetDate(bugDTO.getTargetDate());
         bug.setStatus(Status.valueOf(bugDTO.getStatusString()));
         bug.setSeverity(Severity.valueOf(bugDTO.getSeverityString()));
 

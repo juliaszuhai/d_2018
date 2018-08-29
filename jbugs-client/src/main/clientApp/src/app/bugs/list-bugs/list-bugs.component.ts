@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
-import {MatDialog, MatPaginator, MatTableDataSource, PageEvent} from '@angular/material';
+import {DateAdapter, DateAdapter, MatDialog, MatPaginator, MatTableDataSource, PageEvent} from '@angular/material';
 import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
 import {AddBugComponent} from "../add-bug/add-bug.component";
 import {HttpParams} from "@angular/common/http";
@@ -8,6 +8,8 @@ import {TranslateService} from "@ngx-translate/core";
 import {UpdateBugComponent} from "../update-bug/update-bug.component";
 import {ListBugsPipe} from "./list-bugs-pipe";
 import {ActivatedRoute} from "@angular/router";
+import {DatePipe} from "@angular/common";
+import {DateFormat} from "../update-bug/date-format";
 
 @Component({
   selector: 'app-list-bugs',
@@ -56,7 +58,6 @@ export class ListBugsComponent implements OnInit {
               private changeDetectorRefs: ChangeDetectorRef,
               private route: ActivatedRoute) {
 
-
     this.bugData = {
       id: null,
       title: '',
@@ -67,7 +68,8 @@ export class ListBugsComponent implements OnInit {
       fixedVersion: '',
       severity: '',
       createdByUser: null,
-      assignedTo: null
+      assignedTo: null,
+      attachments: []
     };
 
     this.relatedUser = {
@@ -141,7 +143,7 @@ export class ListBugsComponent implements OnInit {
         description: bug.description,
         fixedVersion: bug.fixedVersion,
         version: bug.version,
-        targetDateString: bug.targetDate,
+        targetDate: bug.targetDate,
         statusString: bug.status,
         severityString: bug.severity,
         assignedToString: bug.assignedTo.username,
@@ -165,7 +167,6 @@ export class ListBugsComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.bugService.getBugsFromServer().subscribe(
       {
         next: (value: any[]) => {
@@ -255,8 +256,8 @@ export class ListBugsComponent implements OnInit {
 
   getDate(d) {
 
-    const correctSec = d * 1000;
-    var expiresAt = new Date(correctSec);
+
+    var expiresAt = new Date(d);
 
     return expiresAt
   }

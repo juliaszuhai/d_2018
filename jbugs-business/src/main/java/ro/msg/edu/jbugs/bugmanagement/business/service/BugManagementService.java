@@ -202,17 +202,9 @@ public class BugManagementService implements BugManagement {
             Bug bugBefore = bugBeforeOpt.get();
 
             Bug bugAfter = BugDTOHelper.updateBugWithDTO(bugBefore, bugDTO);
-            Date date = null;
-            try {
-                date = new java.sql.Date(new SimpleDateFormat("yyyy-mm-dd").parse(bugDTO.getTargetDateString()).getTime());
-            } catch (ParseException e) {
-                throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
-            }
-            bugAfter.setTargetDate(date);
+            bugAfter = setUsersFromDTO(bugDTO, bugBefore);
 
-            bugAfter = setUsersFromDTO(bugDTO, bugAfter);
-
-
+            this.isBugValid(bugAfter);
             bugPersistenceManager.updateBug(bugAfter);
             return bugDTO;
         } else {
@@ -230,7 +222,7 @@ public class BugManagementService implements BugManagement {
     @Override
     public Bug setUsersFromDTO(BugDTO bugDTO, Bug bug) throws BusinessException {
 
-        Optional<User> createdByOp = userPersistenceManager.getUserByUsername(bugDTO.getAssignedToString());
+        Optional<User> createdByOp = userPersistenceManager.getUserByUsername(bugDTO.getCreatedByUserString());
         if (createdByOp.isPresent()) {
             User createdByUser = createdByOp.get();
             bug.setCreatedByUser(createdByUser);
