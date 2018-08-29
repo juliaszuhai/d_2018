@@ -8,6 +8,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
+import ro.msg.edu.jbugs.notificationmanagement.persistence.dao.NotificationPersistenceManager;
+import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
@@ -37,6 +39,9 @@ public class UserManagementServiceTest {
 
     @Mock
     private BugPersistenceManager bugPersistenceManager;
+
+	@Mock
+	private NotificationPersistenceManager notificationPersistenceManager;
 
     @Test
     public void testGenerateUsername_ExpectedOK() {
@@ -123,6 +128,8 @@ public class UserManagementServiceTest {
 
         when(userPersistenceManager.getUserByUsername(any(String.class)))
                 .thenReturn(Optional.empty());
+		when(notificationPersistenceManager.createNotification(any(Notification.class)))
+				.thenReturn(new Notification());
 
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("Cristi");
