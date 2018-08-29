@@ -10,9 +10,10 @@ public class NotificationDTO {
 	private String URLBug;
 	private String message;
 	private Date targetDate;
+	private String targetDateString;
 	private TypeNotification typeNotification;
-	/*private String targetDateString;
-	private String typeNotificationString;*/
+
+	private String typeNotificationString;
 
 	public Long getId() {
 		return id;
@@ -54,7 +55,7 @@ public class NotificationDTO {
 		this.typeNotification = typeNotification;
 	}
 
-	/*public String getTargetDateString() {
+	public String getTargetDateString() {
 		return targetDateString;
 	}
 
@@ -68,5 +69,5 @@ public class NotificationDTO {
 
 	public void setTypeNotificationString(String typeNotificationString) {
 		this.typeNotificationString = typeNotificationString;
-	}*/
+	}
 }
