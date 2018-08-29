@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {NotificationData, NotificationService} from "../notification.service";
-import {EditRoleComponent} from "../../permission-management/edit-role/edit-role.component";
+import {NotificationService} from "../notification.service";
 import {MatDialog} from "@angular/material";
 import {NotificationMessageComponent} from "./notification-message/notification-message.component";
+import {ActivatedRoute, Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-view-notifications',
@@ -20,7 +21,8 @@ export class NotificationsComponent implements OnInit {
   ]
 
   constructor(private notificationService: NotificationService,
-              public dialog: MatDialog,) {
+              public dialog: MatDialog,private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -38,6 +40,10 @@ export class NotificationsComponent implements OnInit {
           console.log(this.notifications);
         }
       )
+  }
+
+  goToBug(id){
+    this.router.navigate(['/filterBugById', id.id);
   }
 
   viewMessage(element): void {

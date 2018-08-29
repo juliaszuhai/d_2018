@@ -38,9 +38,9 @@ public class BugManagementService implements BugManagement {
     public List<BugDTO> getAllBugs() {
         return bugPersistenceManager.getAllBugs()
                 .stream()
-                .map(bug ->{
-                    BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
-                    this.setUsersDTO(bugDTO,bug);
+                .map(bug -> {
+                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
+                    this.setUsersDTO(bugDTO, bug);
                     return bugDTO;
                 })
                 .collect(Collectors.toList());
@@ -62,8 +62,7 @@ public class BugManagementService implements BugManagement {
     }
 
 
-    @Override
-    public List<BugDTO> getFilteredAndSortedBugs(List<String> filterArgs, Integer index, Integer amount, boolean sortByTitle, boolean sortBySeverity) {
+    public List<BugDTO> getFilteredAndSortedBugs(List<String> filterArgs, Integer index, Integer amount, boolean sortByTitle, boolean sortBySeverity,Long id) {
         Status status = null;
         if (filterArgs.get(2) != null) {
             status = Status.valueOf(filterArgs.get(2));
@@ -73,7 +72,7 @@ public class BugManagementService implements BugManagement {
             severity = Severity.valueOf(filterArgs.get(3));
         }
 
-        List<BugDTO> bugDTOList = filter(filterArgs.get(0), filterArgs.get(1), status, severity, index, amount);
+        List<BugDTO> bugDTOList = filter(filterArgs.get(0), filterArgs.get(1), status, severity, index, amount,id);
         if (sortByTitle) {
             bugDTOList.sort(Comparator.comparing(BugDTO::getTitle));
         } else if (sortBySeverity) {
@@ -84,8 +83,8 @@ public class BugManagementService implements BugManagement {
 
 
     @Override
-    public List<BugDTO> filter(String title, String description, Status status, Severity severity, int index, int amount) {
-        List<Bug> bugList = bugPersistenceManager.filter(title, description, status, severity);
+    public List<BugDTO> filter(String title, String description, Status status, Severity severity, int index, int amount,Long id) {
+        List<Bug> bugList = bugPersistenceManager.filter(title, description, status, severity,id);
         return bugList.stream()
                 .map(bug -> {
                     BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
@@ -94,16 +93,15 @@ public class BugManagementService implements BugManagement {
                 })
                 .collect(Collectors.toList())
                 .subList(index, (index + amount) > bugList.size() ? bugList.size() : (index + amount));
-
     }
 
     @Override
     public List<BugDTO> sort(boolean title, boolean version) {
         return bugPersistenceManager.sort(title, version)
                 .stream()
-                .map(bug ->{
-                    BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
-                    this.setUsersDTO(bugDTO,bug);
+                .map(bug -> {
+                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
+                    this.setUsersDTO(bugDTO, bug);
                     return bugDTO;
                 })
                 .collect(Collectors.toList());
@@ -230,7 +228,7 @@ public class BugManagementService implements BugManagement {
     }
 
     @Override
-    public BugDTO setUsersDTO(BugDTO bugDTO,Bug bug) {
+    public BugDTO setUsersDTO(BugDTO bugDTO, Bug bug) {
         NameIdDTO createdBy = new NameIdDTO();
 
         createdBy.setId(bug.getCreatedByUser().getId());
@@ -271,13 +269,13 @@ public class BugManagementService implements BugManagement {
     @Override
     public BugDTO createBugWithAttachment(BugDTO bugDTO, byte[] bytes) throws BusinessException, ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException {
         try {
-            Attachment attachment=new Attachment();
-            Blob blob= new javax.sql.rowset.serial.SerialBlob(bytes);
+            Attachment attachment = new Attachment();
+            Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
             attachment.setAttachment(blob);
-            BugDTO bugDTOCreated=this.createBug(bugDTO);
-            Bug bugCreated=BugDTOHelper.toEntity(bugDTOCreated);
-            this.setUsers(bugDTOCreated,bugCreated);
-            bugPersistenceManager.addAttachmentToBug(bugCreated,attachment);
+            BugDTO bugDTOCreated = this.createBug(bugDTO);
+            Bug bugCreated = BugDTOHelper.toEntity(bugDTOCreated);
+            this.setUsers(bugDTOCreated, bugCreated);
+            bugPersistenceManager.addAttachmentToBug(bugCreated, attachment);
             return bugDTO;
 
         } catch (BusinessException e) {
@@ -295,9 +293,9 @@ public class BugManagementService implements BugManagement {
     @Override
     public BugDTO addAttachmentToBug(BugDTO bugDTO, Attachment attachment) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException {
         try {
-            Bug bug=BugDTOHelper.toEntity(bugDTO);
-            this.setUsers(bugDTO,bug);
-            bugPersistenceManager.addAttachmentToBug(bug,attachment);
+            Bug bug = BugDTOHelper.toEntity(bugDTO);
+            this.setUsers(bugDTO, bug);
+            bugPersistenceManager.addAttachmentToBug(bug, attachment);
             return bugDTO;
         } catch (ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException e) {
             throw e;

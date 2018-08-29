@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NotificationsComponent} from './notifications/notifications.component';
 import {RouterModule, Routes} from "@angular/router";
-import {NotificationService} from "./notification.service";
 import {MatTableModule} from "../../../node_modules/@angular/material/table";
 import {
   MatButtonModule,
@@ -19,14 +18,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../app.module";
 import {HttpClient} from "../../../node_modules/@angular/common/http";
-import { NotificationMessageComponent } from './notifications/notification-message/notification-message.component';
-import {RolesAndPermissionsViewComponent} from "../permission-management/roles-and-permissions-view/roles-and-permissions-view.component";
+import {NotificationMessageComponent} from './notifications/notification-message/notification-message.component';
 import {LoginguardGuard} from "../authentication/loginguard.guard";
-import {RegisterUserComponent} from "../usermanagement/register-user/register-user.component";
-import {UpdateUserComponent} from "../usermanagement/update-user/update-user.component";
-import {DeactivationPopupComponent} from "../usermanagement/deactivation-popup/deactivation-popup.component";
+import {ListBugsComponent} from "../bugs/list-bugs/list-bugs.component";
+
 const notificationRoutes: Routes = [
   {path: 'notification', component: NotificationsComponent, canActivate: [LoginguardGuard]},
+  {path: 'filterBugById/:id', component: ListBugsComponent, canActivate: [LoginguardGuard]},
 ];
 @NgModule({
 

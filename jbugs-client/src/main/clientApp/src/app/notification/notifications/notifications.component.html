@@ -1,7 +1,12 @@
 <table mat-table [dataSource]="notifications" class="mat-elevation-z8">
   <ng-container matColumnDef="URLBug">
     <th mat-header-cell *matHeaderCellDef> {{'notification.urlBug'| translate}}</th>
-    <td mat-cell *matCellDef="let element"> {{element.URLBug}}</td>
+    <td mat-cell *matCellDef="let element">
+      <button color="primary"
+              mat-stroked-button
+              (click)="goToBug(element)"
+      >{{element.URLBug}}</button>
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="message">

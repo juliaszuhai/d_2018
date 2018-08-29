@@ -7,6 +7,7 @@ import {HttpParams} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {UpdateBugComponent} from "../update-bug/update-bug.component";
 import {ListBugsPipe} from "./list-bugs-pipe";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-list-bugs',
@@ -28,7 +29,7 @@ export class ListBugsComponent implements OnInit {
   listId: number[] = [];
   forExcel: number[] = [];
   sorted: Object[] = [];
-  sortByTitle: Object = {argument: 'title', order:'asc'};
+  sortByTitle: Object = {argument: 'title', order: 'asc'};
   sortByVersion: Object = {argument: 'version', order: 'asc'};
 
   @ViewChild('filterForm') filterForm;
@@ -46,12 +47,12 @@ export class ListBugsComponent implements OnInit {
     this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
   }
 
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private bugService: BugListService,
               public dialog: MatDialog,
               private translate: TranslateService,
-              private changeDetectorRefs: ChangeDetectorRef) {
+              private changeDetectorRefs: ChangeDetectorRef,
+              private route: ActivatedRoute) {
 
 
     this.bugData = {
@@ -93,16 +94,18 @@ export class ListBugsComponent implements OnInit {
 
     const dialogRef = this.dialog.open(BugsPopupComponent, {
       width: '250px',
-      data: {description: bug.description,
-              id: bug.id}
+      data: {
+        description: bug.description,
+        id: bug.id
+      }
     });
 
   }
 
-  toggleSort(attribute: String, isChecked: boolean) : void {
-    let sortObj = attribute=='title'? this.sortByTitle : this.sortByVersion;
+  toggleSort(attribute: String, isChecked: boolean): void {
+    let sortObj = attribute == 'title' ? this.sortByTitle : this.sortByVersion;
 
-    if(isChecked) {
+    if (isChecked) {
       this.sorted.push(sortObj);
       this.sorted = this.sorted.slice(0);
     } else {
@@ -124,7 +127,6 @@ export class ListBugsComponent implements OnInit {
       });
     });
   }
-
 
 
   openUpdateDialog(bug): void {
@@ -155,12 +157,23 @@ export class ListBugsComponent implements OnInit {
         }
       }
     );
+    this.sub = this.route.params.subscribe(params => {
+      this.id = +params['id'];
+    });
+    console.log(this.id);
+
+    this.filter(this.bugData.title,this.bugData.description,this.bugData.status,this.bugData.severity,0,1,this.id);
+
 
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
-  filter(title: string, description: string, status: string, severity: string, pageIndex = 0, pageSize = this.pageSize) {
-    this.bugService.filter(title, description, status, severity, pageIndex, pageSize).subscribe(
+
+  filter(title: string, description: string, status: string, severity: string, pageIndex = 0, pageSize = this.pageSize, id:number) {
+    this.bugService.filter(title, description, status, severity, pageIndex, pageSize,id).subscribe(
       {
         next: (value: any[]) => {
           this.bugList = new MatTableDataSource<BugData[]>(value);
@@ -199,7 +212,6 @@ export class ListBugsComponent implements OnInit {
   //     else return 0;
   //   });
   // }
-
 
 
   onChangeCheck(bug: BugData, checked: boolean) {

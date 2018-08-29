@@ -53,9 +53,9 @@ public class PdfExportService {
         table.addCell(getCell("Severity", PdfPCell.ALIGN_CENTER, BaseColor.LIGHT_GRAY));
         table.addCell(getCell(bugDTO.getSeverity().toString(), PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
         table.addCell(getCell("Created by", PdfPCell.ALIGN_CENTER, BaseColor.LIGHT_GRAY));
-//        table.addCell(getCell(bugDTO.getCreatedByUser().toString(), PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
+        table.addCell(getCell(bugDTO.getCreatedByUserString(), PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
         table.addCell(getCell("Assigned to", PdfPCell.ALIGN_CENTER, BaseColor.LIGHT_GRAY));
-//        table.addCell(getCell(bugDTO.getAssignedTo().toString(), PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
+        table.addCell(getCell(bugDTO.getAssignedToString(), PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
         try {
             document.add(table);
         } catch (DocumentException e) {

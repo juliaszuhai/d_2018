@@ -57,7 +57,7 @@ export class BugListService {
   }
 
 
-  filter(title: string, description: string, status: string, severity: string, index, amount): Observable<BugData[]> {
+  filter(title: string, description: string, status: string, severity: string, index, amount,id:number): Observable<BugData[]> {
     let params = new HttpParams();
 
     if (title) {
@@ -75,7 +75,12 @@ export class BugListService {
     params = params.append('index', index);
     params = params.append('amount', amount);
 
-    return this.http.get<BugData[]>(this.baseURL + '/list-bugs/getByFilter', {params: params});
+    if (id) {
+      console.log(id);
+      params = params.append('id', id.toString());
+    }
+
+     return this.http.get<BugData[]>(this.baseURL + '/list-bugs/getByFilter', {params: params});
   }
 
   validateBug(bug,attachments : Attachment[]) {

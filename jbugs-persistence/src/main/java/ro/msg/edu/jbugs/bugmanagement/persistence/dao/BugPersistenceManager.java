@@ -1,10 +1,15 @@
 package ro.msg.edu.jbugs.bugmanagement.persistence.dao;
 
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.*;
-import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Attachment;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 
 import javax.ejb.Stateless;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
@@ -95,7 +100,7 @@ public class BugPersistenceManager {
      * @param severity
      * @return: List of Bugs, filtered by the given parameters.
      */
-    public List<Bug> filter(String title, String description, Status status, Severity severity) {
+    public List<Bug> filter(String title, String description, Status status, Severity severity, Long id) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Bug> cq = builder.createQuery(Bug.class);
         Metamodel metamodel = em.getMetamodel();
@@ -122,6 +127,10 @@ public class BugPersistenceManager {
         if (severity != null) {
             result.add(builder.equal(root.get("severity"), severity));
 
+        }
+
+        if(id != null){
+            result.add(builder.equal(root.get("id"), id));
         }
         if (!result.isEmpty()) {
             cq.where(result.toArray(new Predicate[0]));

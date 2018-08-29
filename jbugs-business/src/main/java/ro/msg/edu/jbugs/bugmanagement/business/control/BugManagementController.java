@@ -39,8 +39,9 @@ public class BugManagementController {
                          @QueryParam("status") Status status,
                          @QueryParam("severity") Severity severity,
                          @QueryParam("index") int index,
-                         @QueryParam("amount") int amount) throws JsonProcessingException, BusinessException {
-        List<BugDTO> allBugs = bugManagement.filter(title, description, status, severity, index, amount);
+                         @QueryParam("amount") int amount,
+                         @QueryParam("id") Long id) throws JsonProcessingException, BusinessException {
+        List<BugDTO> allBugs = bugManagement.filter(title, description, status, severity, index, amount,id);
         ObjectMapper mapper = new ObjectMapper();
 
         return mapper.writeValueAsString(allBugs);
