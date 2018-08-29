@@ -89,7 +89,7 @@ public class BugManagementService implements BugManagement {
         return bugList.stream()
                 .map(bug -> {
                     BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
-                    this.setUsers(bugDTO, bug);
+                    this.setUsersDTO(bugDTO, bug);
                     return bugDTO;
                 })
                 .collect(Collectors.toList())

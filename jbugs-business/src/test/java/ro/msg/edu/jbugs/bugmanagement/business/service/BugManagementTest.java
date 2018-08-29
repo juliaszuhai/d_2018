@@ -179,7 +179,7 @@ public class BugManagementTest {
         when(bugPersistenceManager.filter(any(String.class),any(String.class),any(Status.class),any(Severity.class))).thenReturn( Arrays.asList(bug));
         BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
         bugManagementController.setUsersDTO(bugDTO,bug);
-        assertEquals(bugDTO.getId(),bugManagementController.filter("ceva","A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha",Status.IN_PROGRESS,Severity.HIGH,1, 25).get(0).getId());
+        assertEquals(bugDTO.getId(), bugManagementController.filter("ceva", "A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha", Status.IN_PROGRESS, Severity.HIGH, 0, 25).get(0).getId());
 
     }
 
