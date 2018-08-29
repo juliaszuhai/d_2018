@@ -57,7 +57,6 @@ public interface BugManagement {
 
     Bug setUsersFromDTO(BugDTO bugDTO, Bug bug) throws BusinessException;
 
-    List<BugDTO> getFilteredAndSortedBugs(List<String> filterArgs, Integer index, Integer amount, boolean sortByTitle, boolean sortBySeverity);
 
     BugDTO setUsersDTO(BugDTO bugDTO,Bug bug);
 
@@ -66,6 +65,8 @@ public interface BugManagement {
     BugDTO addAttachmentToBug(BugDTO bugDTO, Attachment attachment) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 
     Bug setUsers(BugDTO bugDTO, Bug bug) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
+
+    List<BugDTO> getFilteredAndSortedBugs(List<String> filterArgs, Integer index, Integer amount, boolean sortByTitle, boolean sortBySeverity,Long id);
 }
 
 

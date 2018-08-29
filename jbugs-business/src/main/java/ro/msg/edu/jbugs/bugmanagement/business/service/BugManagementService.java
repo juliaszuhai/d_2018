@@ -62,6 +62,7 @@ public class BugManagementService implements BugManagement {
     }
 
 
+    @Override
     public List<BugDTO> getFilteredAndSortedBugs(List<String> filterArgs, Integer index, Integer amount, boolean sortByTitle, boolean sortBySeverity,Long id) {
         Status status = null;
         if (filterArgs.get(2) != null) {

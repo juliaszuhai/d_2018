@@ -33,7 +33,8 @@ export class ListBugsComponent implements OnInit {
   sortByVersion: Object = {argument: 'version', order: 'asc'};
 
   @ViewChild('filterForm') filterForm;
-
+  id: number;
+  private sub: any;
   // MatPaginator Inputs
   pageSize = 10;
   length = 100;
@@ -48,6 +49,7 @@ export class ListBugsComponent implements OnInit {
   }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(private bugService: BugListService,
               public dialog: MatDialog,
               private translate: TranslateService,
@@ -161,9 +163,9 @@ export class ListBugsComponent implements OnInit {
       this.id = +params['id'];
     });
     console.log(this.id);
-
-    this.filter(this.bugData.title,this.bugData.description,this.bugData.status,this.bugData.severity,0,1,this.id);
-
+    if (this.id) {
+      this.filter(this.bugData.title, this.bugData.description, this.bugData.status, this.bugData.severity, 0, 1, this.id);
+    }
 
   }
 
@@ -172,8 +174,8 @@ export class ListBugsComponent implements OnInit {
   }
 
 
-  filter(title: string, description: string, status: string, severity: string, pageIndex = 0, pageSize = this.pageSize, id:number) {
-    this.bugService.filter(title, description, status, severity, pageIndex, pageSize,id).subscribe(
+  filter(title: string, description: string, status: string, severity: string, pageIndex = 0, pageSize = this.pageSize, id: number) {
+    this.bugService.filter(title, description, status, severity, pageIndex, pageSize, id).subscribe(
       {
         next: (value: any[]) => {
           this.bugList = new MatTableDataSource<BugData[]>(value);

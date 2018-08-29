@@ -69,9 +69,7 @@ public class BugManagementController {
                                   @QueryParam("amount") Integer amount,
                                   @QueryParam("sortByTitle") boolean sortByTitle,
                                   @QueryParam("sortBySeverity") boolean sortBySeverity) {
-        return Response.ok(
-                bugManagement.getFilteredAndSortedBugs(filters, index, amount, sortByTitle, sortBySeverity)
-        )
+        return Response.ok()
                 .build();
     }
 
