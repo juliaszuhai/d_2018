@@ -2,14 +2,15 @@ package ro.msg.edu.jbugs.notificationmanagement.business.control;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTO;
 import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagerService;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.text.ParseException;
 import java.util.List;
+
 
 @Path("/notifications")
 public class NotificationManager {
@@ -24,9 +25,10 @@ public class NotificationManager {
 	@Produces("application/json")
 	public Response createNotification(final NotificationDTO notificationDTO) {
 		try {
+
 			notificationManagerService.createNotification(notificationDTO);
 			return Response.status(Response.Status.CREATED).build();
-		} catch (BusinessException e) {
+		} catch (ParseException e) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 	}
@@ -40,4 +42,6 @@ public class NotificationManager {
 
 		return mapper.writeValueAsString(allNotifications);
 	}
+
+
 }

@@ -4,6 +4,9 @@ import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
+import ro.msg.edu.jbugs.notificationmanagement.persistence.dao.NotificationPersistenceManager;
+import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
+import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
@@ -34,6 +37,9 @@ public class UserManagementService {
     @EJB
     private BugPersistenceManager bugPersistenceManager;
 
+    @EJB
+    private NotificationPersistenceManager notificationPersistenceManager;
+
     /**
      * Creates a user entity using a user DTO.
      *
@@ -48,7 +54,15 @@ public class UserManagementService {
         user.setUsername(generateUsername(userDTO.getFirstName(), userDTO.getLastName()));
         user.setActive(true);
         user.setPassword(Encryptor.encrypt(userDTO.getPassword()));
+
+        String notificationMessage = "Welcome, " + userDTO.getFirstName();
+        Notification notification = new Notification();
+        notification.setMessage(notificationMessage);
+        notification.setTypeNotification(TypeNotification.WELCOME_NEW_USER);
+
+
         userPersistenceManager.createUser(user);
+        notificationPersistenceManager.createNotification(notification);
 
         return UserDTOHelper.fromEntity(user);
     }

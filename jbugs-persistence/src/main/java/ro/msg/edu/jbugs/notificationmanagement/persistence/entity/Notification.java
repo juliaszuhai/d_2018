@@ -26,9 +26,9 @@ public class Notification extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private TypeNotification typeNotification;
 
-	@Column(name = "targetDate", nullable = false)
+	@Column(name = "dateSent", nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Date targetDate;
+	private Date dateSent;
 
 	@Column(name = "message", nullable = false)
 	private String message;
@@ -44,12 +44,12 @@ public class Notification extends BaseEntity {
 		this.typeNotification = typeNotification;
 	}
 
-	public Date getTargetDate() {
-		return targetDate;
+	public Date getDateSent() {
+		return dateSent;
 	}
 
-	public void setTargetDate(Date targetDate) {
-		this.targetDate = targetDate;
+	public void setDateSent(Date targetDate) {
+		this.dateSent = targetDate;
 	}
 
 	public String getMessage() {
@@ -75,7 +75,7 @@ public class Notification extends BaseEntity {
 		if (!super.equals(o)) return false;
 		Notification that = (Notification) o;
 		return typeNotification == that.typeNotification &&
-				Objects.equals(targetDate, that.targetDate) &&
+				Objects.equals(dateSent, that.dateSent) &&
 				Objects.equals(message, that.message) &&
 				Objects.equals(URLBug, that.URLBug);
 	}
@@ -83,14 +83,14 @@ public class Notification extends BaseEntity {
 	@Override
 	public int hashCode() {
 
-		return Objects.hash(super.hashCode(), typeNotification, targetDate, message, URLBug);
+		return Objects.hash(super.hashCode(), typeNotification, dateSent, message, URLBug);
 	}
 
 	@Override
 	public String toString() {
 		return "Notification{" +
 				"typeNotification=" + typeNotification +
-				", targetDate=" + targetDate +
+				", targetDate=" + dateSent +
 				", message='" + message + '\'' +
 				", URLBug='" + URLBug + '\'' +
 				", id=" + id +

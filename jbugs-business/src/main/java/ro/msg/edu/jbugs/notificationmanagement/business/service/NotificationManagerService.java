@@ -9,6 +9,7 @@ import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -28,19 +29,12 @@ public class NotificationManagerService {
 	 * @return the DTO of the created entity
 	 * @throws BusinessException
 	 */
-	public NotificationDTO createNotification(NotificationDTO notificationDTO) throws BusinessException {
-//		Notification notification = NotificationDTOHelper.toEntity(notificationDTO);
-		Notification notification= new Notification();
+	public NotificationDTO createNotification(NotificationDTO notificationDTO) throws ParseException {
+		Notification notification = NotificationDTOHelper.toEntity(notificationDTO);
+
 		notification.setTypeNotification(notificationDTO.getTypeNotification());
 		notification.setMessage(notificationDTO.getMessage());
-		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			Date date = java.sql.Date.valueOf(notificationDTO.getTargetDateString());
-			notification.setTargetDate(date);
-		} catch (Exception p) {
-
-		}
-
+		notification.setDateSent(getToday());
 		notification.setURLBug(notificationDTO.getURLBug());
 		notificationPersistenceManager.createNotification(notification);
 		return NotificationDTOHelper.fromEntity(notification);
@@ -51,6 +45,14 @@ public class NotificationManagerService {
 				.stream()
 				.map(NotificationDTOHelper::fromEntity)
 				.collect(Collectors.toList());
+	}
+
+	public Date getToday() throws ParseException {
+		DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
+
+		Date today = new Date();
+
+		return formatter.parse(formatter.format(today));
 	}
 
 
