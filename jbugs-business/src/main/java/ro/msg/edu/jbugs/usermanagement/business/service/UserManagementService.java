@@ -333,9 +333,7 @@ public class UserManagementService {
             }
             User userAfter = UserDTOHelper.updateEntityWithDTO(userBefore, userDTO);
 
-			/*NotificationDTO notificationDTO = new NotificationDTO();
-			notificationDTO.setMessage("User updated");
-			notificationDTO.setTypeNotification(TypeNotification.WELCOME_NEW_USER);*/
+			
             userPersistenceManager.updateUser(userAfter);
             return userDTO;
         } else {
