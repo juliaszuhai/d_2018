@@ -12,7 +12,7 @@ public class NotificationDTOHelper {
 		NotificationDTO notificationDTO = new NotificationDTO();
 
 		notificationDTO.setId(notification.getId());
-		notificationDTO.setUrlBug(notification.getURLBug());
+        notificationDTO.setUrlBug(notification.getUrlBug());
 		notificationDTO.setMessage(notification.getMessage());
 		notificationDTO.setDateSent(notification.getDateSent());
 		notificationDTO.setTypeNotification(notification.getTypeNotification());
@@ -25,7 +25,7 @@ public class NotificationDTOHelper {
 
 		notification.setMessage(notificationDTO.getMessage());
 		notification.setDateSent(notificationDTO.getDateSent());
-		notification.setURLBug(notificationDTO.getUrlBug());
+        notification.setUrlBug(notificationDTO.getUrlBug());
 		notification.setTypeNotification(notificationDTO.getTypeNotification());
 
 		return notification;
