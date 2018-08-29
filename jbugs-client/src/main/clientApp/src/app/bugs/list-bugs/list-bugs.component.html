@@ -104,9 +104,23 @@
         <td mat-cell *matCellDef="let element"> {{element.assignedTo.username}}</td>
       </ng-container>
 
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef> {{'bugTable.edit'| translate}}</th>
+        <td mat-cell *matCellDef="let element">
+          <button color="primary"
+                  mat-raised-button
+                  (click)="openUpdateDialog(element)"
+          >
+            <i class="material-icons">edit</i>
+          </button>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="exportExcel">
         <th mat-header-cell *matHeaderCellDef>
-          <button mat-raised-button color="primary" (click)="downloadExcel()">Export Excel</button>
+          <button mat-raised-button color="primary" (click)="downloadExcel()"> <i class="material-icons">
+            file_download
+          </i>Export Excel</button>
         </th>
         <td mat-cell *matCellDef="let element">
           <mat-checkbox #excelElem (change)="onChangeCheck(element, excelElem.checked)"></mat-checkbox>

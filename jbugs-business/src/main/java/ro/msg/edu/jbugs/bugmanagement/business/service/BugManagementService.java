@@ -181,12 +181,12 @@ public class BugManagementService implements BugManagement {
 
     @Override
     public BugDTO updateBug(BugDTO bugDTO) throws BusinessException {
-        Bug bugAfter = new Bug();
+
         Optional<Bug> bugBeforeOpt = bugPersistenceManager.getBugById(bugDTO.getId());
         if (bugBeforeOpt.isPresent()) {
             Bug bugBefore = bugBeforeOpt.get();
 
-            bugAfter = BugDTOHelper.updateBugWithDTO(bugBefore, bugDTO);
+            Bug bugAfter = BugDTOHelper.updateBugWithDTO(bugBefore, bugDTO);
             Date date = null;
             try {
                 date = new java.sql.Date(new SimpleDateFormat("yyyy-mm-dd").parse(bugDTO.getTargetDateString()).getTime());
@@ -205,6 +205,13 @@ public class BugManagementService implements BugManagement {
         }
     }
 
+    /**
+     *
+     * @param bugDTO
+     * @param bug
+     * @return: a Bug with attributes (createdByUser, assignedToUser) set properly.
+     * @throws BusinessException
+     */
     @Override
     public Bug setUsersFromDTO(BugDTO bugDTO, Bug bug) throws BusinessException {
 
@@ -305,8 +312,15 @@ public class BugManagementService implements BugManagement {
 
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {
-        Optional<Bug> bug = bugPersistenceManager.getBugById(id);
-        return BugDTOHelper.fromEntity(bug.orElseThrow(() -> new BusinessException(ExceptionCode.BUG_NOT_EXIST)));
+        Optional<Bug> bugOptional = bugPersistenceManager.getBugById(id);
+        Bug bug=new Bug();
+        if(bugOptional.isPresent()){
+            bug=bugOptional.get();
+        }
+        else {
+            throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
+        }
+        return setUsersDTO(BugDTOHelper.fromEntity(bug),bug);
 
 
     }

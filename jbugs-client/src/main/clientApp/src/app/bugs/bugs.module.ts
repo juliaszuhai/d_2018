@@ -13,7 +13,7 @@ import {
   MatInputModule,
   MatNativeDateModule,
   MatPaginatorModule,
-  MatTableModule
+  MatTableModule, MatTabsModule
 } from "@angular/material";
 import {MatDialogModule} from '@angular/material/dialog';
 import {BugsPopupComponent} from "./bugs-popup/bugs-popup.component";
@@ -25,6 +25,7 @@ import {HttpLoaderFactory} from "../app.module";
 import {HttpClient} from "@angular/common/http";
 import {BugsGuard} from "../authentication/bugs.guard";
 import {ListBugsPipe} from "./list-bugs/list-bugs-pipe";
+import {UpdateBugComponent} from "./update-bug/update-bug.component";
 
 
 const bugRoutes: Routes = [
@@ -63,12 +64,13 @@ const bugRoutes: Routes = [
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTabsModule
 
 
 
   ],
-  declarations: [ListBugsComponent, BugsPopupComponent, AddBugComponent, ListBugsPipe],
+  declarations: [ListBugsComponent, BugsPopupComponent, AddBugComponent, ListBugsPipe, UpdateBugComponent],
   exports: [
     RouterModule,
     MatButtonModule,
@@ -85,12 +87,14 @@ const bugRoutes: Routes = [
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTabsModule
 
   ],
   entryComponents: [
     BugsPopupComponent,
-    AddBugComponent
+    AddBugComponent,
+    UpdateBugComponent
   ]
 })
 export class BugsModule {

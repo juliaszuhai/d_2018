@@ -1,11 +1,9 @@
-<h3>{{'bugManagement.updateBug'| translate}}</h3>
-<mat-tab-group>
-  <mat-tab label="{{'userManagement.tabUpdateInfo'| translate}}">
-    <div class="update-user-form">
+<h3>{{'bugTable.updateBug'| translate}}</h3>
+    <div class="update-bug-form">
 
 
       <form
-        (ngSubmit)="submitUpdate()"
+        (ngSubmit)="submitUpdateBug()"
         #updateForm="ngForm"
         #formElement
       >
@@ -13,110 +11,104 @@
         <mat-form-field>
           <input
             matInput
-            #firstNameControl="ngModel"
-            #firstNameElement
-            name="firstName"
+            #titleControl="ngModel"
+            #titlelement
+            name="title"
             required
-            [(ngModel)]="data.firstName"
-            placeholder="{{'userManagement.firstName'| translate}}">
+            [(ngModel)]="data.title"
+            placeholder="{{'bugTable.title'| translate}}">
         </mat-form-field>
         <br>
         <mat-form-field>
           <input matInput
-                 #lastNameControl="ngModel"
-                 #lastNameElement
-                 name="lastName"
+                 #descriptionControl="ngModel"
+                 #descriptionElement
+                 name="description"
                  required
-                 [(ngModel)]="data.lastName"
-                 placeholder="{{'userManagement.lastName'| translate}}">
+                 [(ngModel)]="data.description"
+                 [ngClass]="{form_invalid: !validateDescription(), form_valid:validateDescription()}"
+                 placeholder="{{'bugTable.description'| translate}}">
         </mat-form-field>
         <br>
         <mat-form-field>
-          <input type="password"
-                 #passwordElement
-                 name="password"
+          <input #fixedVersionControl="ngModel"
+            #fixedVersionElement
+                 name="fixedVersion"
                  matInput
-                 [(ngModel)]="data.password"
-                 [formControl]="passwordFormControl"
-                 [errorStateMatcher]="matcher"
-                 placeholder="{{'userManagement.password'| translate}}">
-
-          <mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPasswordErrorMessage()}}</mat-error>
+                 required
+                 [(ngModel)]="data.fixedVersion"
+                 placeholder="{{'bugTable.fixedVersion'| translate}}">
         </mat-form-field>
         <br>
         <mat-form-field>
           <input
-            #emailElement
-            name="email"
-            matInput
-            [(ngModel)]="data.email"
-            [formControl]="emailFormControl"
-            [errorStateMatcher]="matcher"
-            placeholder="{{'userManagement.email'| translate}}">
-          <mat-error *ngIf="emailFormControl.invalid">{{getEmailErrorMessages()}}</mat-error>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <input
-            #phoneControl="ngModel"
-            #phoneElement
-            name="phone"
+            #versionControl="ngModel"
+            #versionElement
+            name="version"
             matInput
             required
-            [(ngModel)]="data.phoneNumber"
-            placeholder="{{'userManagement.phoneNumber'| translate}}">
+            [(ngModel)]="data.version"
+            [ngClass]="{form_invalid: !validateVersion(), form_valid:validateVersion()}"
+            placeholder="{{'bugTable.version'| translate}}">
         </mat-form-field>
         <br>
-        <button type="submit" mat-button>{{'userManagement.buttonSubmit'| translate}}</button>
+        <mat-form-field>
+          <input
+            #targetDateControl="ngModel"
+            #targetDateElement
+            name="targetDate"
+            matInput
+            required
+            [(ngModel)]="data.targetDateString"
+            placeholder="{{'bugTable.targetDate'| translate}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input
+            #statusControl="ngModel"
+            #statusElement
+            name="status"
+            matInput
+            required
+            [(ngModel)]="data.statusString"
+            placeholder="{{'bugTable.status'| translate}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input
+            #severityControl="ngModel"
+            #severityElement
+            name="severity"
+            matInput
+            required
+            [(ngModel)]="data.severityString"
+            placeholder="{{'bugTable.severity'| translate}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input
+            #assignedToStringControl="ngModel"
+            #assignedToStringElement
+            name="assignedToString"
+            matInput
+            required
+            [(ngModel)]="data.assignedToString"
+            placeholder="{{'bugTable.assignedTo'| translate}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input
+            #createdByUserStringControl="ngModel"
+            #createdByUserSTringElement
+            name="createdByUserString"
+            matInput
+            required
+            [(ngModel)]="data.createdByUserString"
+            placeholder="{{'bugTable.createdBy'| translate}}">
+        </mat-form-field>
+        <br>
+        <button type="submit" mat-button>{{'bugTable.buttonSubmit'| translate}}</button>
       </form>
-      <div class="form-info">
 
-        {{'userManagementErrorMsg.updateUserNoChange'| translate}}.<br>
-        {{'userManagementErrorMsg.passwordRequirements'| translate}}.:
-        <ul>
-          <li>{{'userManagementErrorMsg.passwordReqLength'| translate}}.</li>
-          <li>{{'userManagementErrorMsg.passwordReqLetters'| translate}}.</li>
-          <li>{{'userManagementErrorMsg.passwordReqSpecial'| translate}}.</li>
-          <li>{{'userManagementErrorMsg.passwordReqDigit'| translate}}.</li>
-        </ul>
-        {{'userManagementErrorMsg.emailRequirement'| translate}}.
-      </div>
     </div>
-  </mat-tab>
-  <mat-tab label="{{'userManagement.tabUpdateRoles'| translate}}">
 
-    <mat-list *ngFor="let element of this.userRoles">
-      <mat-list-item>{{element.type}}</mat-list-item>
-      <mat-divider></mat-divider>
-    </mat-list>
-
-    <br>
-    <mat-form-field>
-      <mat-select [(value)]="selectedrole"
-
-      >
-        <div *ngFor="let element of this.allRoles" class="options">
-          <mat-option
-            value={{element.type}}
-          >{{element.type}}
-          </mat-option>
-        </div>
-      </mat-select>
-    </mat-form-field>
-
-    <button mat-raised-button
-            color="primary"
-            style="margin:0 10px;"
-            (click)="addRoleToUser()
-"
-    >{{'userManagement.buttonAddRole'| translate}}
-    </button>
-    <button mat-raised-button
-            color="warn"
-            style="margin:0 10px;"
-            (click)="removeRoleFromUser()"
-    >{{'userManagement.buttonRemoveRole'| translate}}
-    </button>
-
-  </mat-tab>
-</mat-tab-group>

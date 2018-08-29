@@ -91,7 +91,11 @@
     "severity": "Severity",
     "createdBy": "Created By User",
     "assignedTo": "Assigned To",
-    "exportExcel": "Export Excel"
+    "exportExcel": "Export Excel",
+    "buttonSubmit": "Submit",
+    "edit": "Edit",
+    "buttonEdit": "Edit Bug",
+    "updateBug" : "Update Bug"
   },
 
   "bugFilter": {

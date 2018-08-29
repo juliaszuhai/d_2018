@@ -89,6 +89,7 @@ export class ListBugsComponent implements OnInit {
     'severity',
     'createdBy',
     'assignedTo',
+    'edit',
     'exportExcel'
   ];
 
@@ -135,16 +136,32 @@ export class ListBugsComponent implements OnInit {
     const dialogRef = this.dialog.open(UpdateBugComponent, {
       width: '60%',
       data: {
+        id: bug.id,
+        title: bug.title,
         description: bug.description,
         fixedVersion: bug.fixedVersion,
         version: bug.version,
-        targetDate: bug.targetDate,
-        status: bug.status,
-        severity: bug.severity,
-        assignedTo: bug.assignedTo,
-        createdByUser: bug.createdByUser
+        targetDateString: bug.targetDate,
+        statusString: bug.status,
+        severityString: bug.severity,
+        assignedToString: bug.assignedTo.username,
+        createdByUserString: bug.createdByUser.username
       }
-    })
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      this.bugService.getBugsFromServer().subscribe(
+        {
+          next: (value: any[]) => {
+            this.bugList = new MatTableDataSource<BugData[]>(value);
+
+            this.sortDataSource();
+
+          }
+        }
+      );
+    });
   }
 
   ngOnInit() {

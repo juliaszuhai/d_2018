@@ -90,7 +90,11 @@
     "severity": "Severitate",
     "createdBy": "Creat de catre",
     "assignedTo": "Responsabil",
-    "exportExcel": "Exportare Excel"
+    "exportExcel": "Exportare Excel",
+    "buttonSubmit": "Confirma",
+    "edit": "Editare",
+    "buttonEdit": "Editare Bug",
+    "updateBug" : "Editare Bug"
   },
 
   "bugFilter": {

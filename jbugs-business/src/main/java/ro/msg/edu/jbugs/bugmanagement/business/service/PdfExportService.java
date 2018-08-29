@@ -4,6 +4,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
 
@@ -53,9 +54,9 @@ public class PdfExportService {
         table.addCell(getCell("Severity", PdfPCell.ALIGN_CENTER, BaseColor.LIGHT_GRAY));
         table.addCell(getCell(bugDTO.getSeverity().toString(), PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
         table.addCell(getCell("Created by", PdfPCell.ALIGN_CENTER, BaseColor.LIGHT_GRAY));
-        table.addCell(getCell(bugDTO.getCreatedByUserString(), PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
+        table.addCell(getCell(bugDTO.getCreatedByUser().getUsername(), PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
         table.addCell(getCell("Assigned to", PdfPCell.ALIGN_CENTER, BaseColor.LIGHT_GRAY));
-        table.addCell(getCell(bugDTO.getAssignedToString(), PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
+        table.addCell(getCell(bugDTO.getAssignedTo().getUsername(), PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
         try {
             document.add(table);
         } catch (DocumentException e) {
