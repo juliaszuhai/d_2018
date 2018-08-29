@@ -14,7 +14,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import java.text.ParseException;
 import java.util.List;
 
 @Path("/manage-users")
@@ -90,8 +89,6 @@ public class UserManager {
 			return Response.status(Response.Status.CREATED).build();
 		} catch (BusinessException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
-		} catch (ParseException e) {
-			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 	}
 

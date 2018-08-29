@@ -17,7 +17,7 @@ export class NotificationsComponent implements OnInit {
     'typeNotification',
     'targetDate',
     'message',
-    'URLBug'
+    'urlBug'
   ]
 
   constructor(private notificationService: NotificationService,

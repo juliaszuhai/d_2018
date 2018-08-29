@@ -7,8 +7,8 @@ import java.util.Date;
 public class NotificationDTO {
 
 	private Long id;
-	private Long URLBug;
-	private Long message;
+	private Long urlBug;
+	private String message;
 	private Date dateSent;
 	private TypeNotification typeNotification;
 
@@ -21,19 +21,19 @@ public class NotificationDTO {
 		this.id = id;
 	}
 
-	public Long getURLBug() {
-		return URLBug;
+	public Long getUrlBug() {
+		return urlBug;
 	}
 
-	public void setURLBug(Long URLBug) {
-		this.URLBug = URLBug;
+	public void setUrlBug(Long urlBug) {
+		this.urlBug = urlBug;
 	}
 
-	public Long getMessage() {
+	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(Long message) {
+	public void setMessage(String message) {
 		this.message = message;
 	}
 

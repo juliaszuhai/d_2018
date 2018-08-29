@@ -17,7 +17,6 @@ import ro.msg.edu.jbugs.usermanagement.business.utils.Encryptor;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -147,7 +146,7 @@ public class UserManagementServiceTest {
             assertEquals(userDTO.getLastName(), createdUser.getLastName());
             assertEquals(userDTO.getEmail(), createdUser.getEmail());
             assertEquals("borcec", createdUser.getUsername());
-        } catch (ParseException | BusinessException e) {
+        } catch (BusinessException e) {
             fail("Should not reach this point");
         }
     }
@@ -171,8 +170,6 @@ public class UserManagementServiceTest {
             fail("Shouldn't reach this point");
         } catch (BusinessException e) {
             assertEquals(ExceptionCode.USER_VALIDATION_EXCEPTION, e.getExceptionCode());
-        } catch (ParseException e) {
-            fail("Shouldn't reach this point");
         }
 
     }
@@ -196,8 +193,6 @@ public class UserManagementServiceTest {
             fail("Shouldn't reach this point");
         } catch (BusinessException e) {
             assertEquals(ExceptionCode.EMAIL_EXISTS_ALREADY, e.getExceptionCode());
-        } catch (ParseException e) {
-            fail("Shouldn't reach this point");
         }
     }
 

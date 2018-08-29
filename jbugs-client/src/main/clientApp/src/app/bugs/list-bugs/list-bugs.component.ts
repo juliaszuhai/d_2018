@@ -8,7 +8,8 @@ import {TranslateService} from "@ngx-translate/core";
 import {UpdateBugComponent} from "../update-bug/update-bug.component";
 import {ListBugsPipe} from "./list-bugs-pipe";
 import {ActivatedRoute} from "@angular/router";
-import {DateFormat} from "../update-bug/date-format";
+
+// import {DateFormat} from "../update-bug/date-format";
 
 @Component({
   selector: 'app-list-bugs',
@@ -120,16 +121,16 @@ export class ListBugsComponent implements OnInit {
   }
 
   sortDataSource() {
-    this.sorted.forEach(arg => {
-      this.bugList = this.bugList.data.sort(function (bug1: BugData, bug2: BugData) {
-        if (bug1[arg.argument] > bug2[arg.argument]) {
-          return arg.order == "asc" ? 1 : -1;
-        } else if (bug1[arg.argument] < bug2[arg.argument]) {
-          return arg.order == "asc" ? -1 : 1;
-        }
-        else return 0;
-      });
-    });
+    // this.sorted.forEach(arg => {
+    //   this.bugList = this.bugList.data.sort(function (bug1: BugData, bug2: BugData) {
+    //     if (bug1[arg.argument] > bug2[arg.argument]) {
+    //       return arg.order == "asc" ? 1 : -1;
+    //     } else if (bug1[arg.argument] < bug2[arg.argument]) {
+    //       return arg.order == "asc" ? -1 : 1;
+    //     }
+    //     else return 0;
+    //   });
+    // });
   }
 
 

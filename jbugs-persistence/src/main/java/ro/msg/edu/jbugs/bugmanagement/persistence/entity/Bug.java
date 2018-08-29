@@ -1,9 +1,9 @@
 package ro.msg.edu.jbugs.bugmanagement.persistence.entity;
 
-import ro.msg.edu.jbugs.usermanagement.persistence.entity.*;
+import ro.msg.edu.jbugs.usermanagement.persistence.entity.BaseEntity;
+import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
+
 import javax.persistence.*;
-import java.sql.Blob;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;

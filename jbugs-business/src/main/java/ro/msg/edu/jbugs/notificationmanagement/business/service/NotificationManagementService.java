@@ -39,7 +39,7 @@ public class NotificationManagementService {
 		notification.setTypeNotification(notificationDTO.getTypeNotification());
 		notification.setMessage(notificationDTO.getMessage());
 		notification.setDateSent(getToday());
-		notification.setURLBug(notificationDTO.getURLBug());
+		notification.setURLBug(notificationDTO.getUrlBug());
 
 		return NotificationDTOHelper.fromEntity(notification);
 	}

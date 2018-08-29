@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "../../../node_modules/@angular/common/http";
 
 export interface NotificationData {
-  URLBug: string,
+  urlBug: string,
   message: string,
   targetDate: string,
   typeNotification: string;

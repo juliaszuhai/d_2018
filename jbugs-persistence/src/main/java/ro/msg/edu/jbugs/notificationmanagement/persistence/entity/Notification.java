@@ -30,7 +30,7 @@ public class Notification extends BaseEntity {
 	private Date dateSent;
 
 	@Column(name = "message", nullable = false)
-	private Long message;
+	private String message;
 
 	@Column(name = "URLBug")
 	private Long URLBug;
@@ -51,11 +51,11 @@ public class Notification extends BaseEntity {
 		this.dateSent = dateSent;
 	}
 
-	public Long getMessage() {
+	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(Long message) {
+	public void setMessage(String message) {
 		this.message = message;
 	}
 

@@ -3,6 +3,7 @@ package ro.msg.edu.jbugs.bugmanagement.persistence.entity;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.BaseEntity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Blob;
 @Entity
 @Table(name = "attachments")
@@ -12,14 +13,14 @@ import java.sql.Blob;
                 @NamedQuery(name = Attachment.GET_ATTACHMENTS_FOR_BUG,query="SELECT a FROM Attachment a INNER JOIN Bug b ON b.id=:id"),
         }
 )
-public class Attachment extends BaseEntity {
+public class Attachment extends BaseEntity implements Serializable {
 
     @Transient
-    public final static String GET_ALL_ATTACHMENTS = "get_All_Attachments";
-    public final static String GET_ATTACHMENTS_FOR_BUG="get_Attachments_For_Bug";
+    public static final String GET_ALL_ATTACHMENTS = "get_All_Attachments";
+    public static final String GET_ATTACHMENTS_FOR_BUG = "get_Attachments_For_Bug";
 
     @Column(name = "attachment", nullable = true)
-    private Blob attachment;
+    private Blob attachmentFile;
 
     @Column(name = "name", nullable = true)
     private String name;
@@ -28,12 +29,12 @@ public class Attachment extends BaseEntity {
     private String extension;
 
 
-    public Blob getAttachment() {
-        return attachment;
+    public Blob getAttachmentFile() {
+        return attachmentFile;
     }
 
-    public void setAttachment(Blob attachment) {
-        this.attachment = attachment;
+    public void setAttachmentFile(Blob attachmentFile) {
+        this.attachmentFile = attachmentFile;
     }
 
 

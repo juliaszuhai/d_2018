@@ -8,7 +8,8 @@ public enum ExceptionCode {
     VERSION_NOT_VALID(4004,"Version is not valid"),
     COULD_NOT_CREATE_BUG(4005,"Can't create bug"),
     BUG_VALIDATION_EXCEPTION(4006, "Bug not valid"),
-    SOMETHING_WRONG_WITH_ATTACHMENT(4007, "Something wrong with attachment");
+    USER_NOT_EXIST(4007, "User not exist"),
+    SOMETHING_WRONG_WITH_ATTACHMENT(4008, "Something wrong with attachment");
     int id;
     String message;
 

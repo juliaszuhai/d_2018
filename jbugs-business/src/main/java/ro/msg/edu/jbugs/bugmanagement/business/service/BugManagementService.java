@@ -15,7 +15,6 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.sql.rowset.serial.SerialException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -146,8 +145,8 @@ public class BugManagementService implements BugManagement {
             for (int i = 0; i < bugDTO.getAttachments().length; i++) {
                 try {
                     Attachment attachment = new Attachment();
-                    Blob blob = new javax.sql.rowset.serial.SerialBlob(bugDTO.getAttachments()[i].getAttachment());
-                    attachment.setAttachment(blob);
+                    Blob blob = new javax.sql.rowset.serial.SerialBlob(bugDTO.getAttachments()[i].getAttachmentFile());
+                    attachment.setAttachmentFile(blob);
                     attachment.setName(bugDTO.getAttachments()[i].getName());
                     attachment.setExtension(bugDTO.getAttachments()[i].getExtension());
                     bugPersistenceManager.addAttachmentToBug(bug, attachment);
@@ -202,9 +201,9 @@ public class BugManagementService implements BugManagement {
             Bug bugBefore = bugBeforeOpt.get();
 
             Bug bugAfter = BugDTOHelper.updateBugWithDTO(bugBefore, bugDTO);
-            bugAfter = setUsersFromDTO(bugDTO, bugBefore);
+            Bug bugAfterSetUser = setUsersFromDTO(bugDTO, bugBefore);
 
-            this.isBugValid(bugAfter);
+            this.isBugValid(bugAfterSetUser);
             bugPersistenceManager.updateBug(bugAfter);
             return bugDTO;
         } else {
@@ -266,7 +265,7 @@ public class BugManagementService implements BugManagement {
             User createdByUser = createdByOp.get();
             bug.setCreatedByUser(createdByUser);
         } else {
-            throw new ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException(ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode.UNKNOWN_EXCEPTION);
+            throw new ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException(ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode.USER_NOT_EXIST);
         }
 
         Long assignedToId = bugDTO.getAssignedTo().getId();
@@ -286,20 +285,14 @@ public class BugManagementService implements BugManagement {
         try {
             Attachment attachment = new Attachment();
             Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-            attachment.setAttachment(blob);
+            attachment.setAttachmentFile(blob);
             BugDTO bugDTOCreated = this.createBug(bugDTO);
             Bug bugCreated = BugDTOHelper.toEntity(bugDTOCreated);
             this.setUsers(bugDTOCreated, bugCreated);
             bugPersistenceManager.addAttachmentToBug(bugCreated, attachment);
             return bugDTO;
 
-        } catch (BusinessException e) {
-            throw e;
-        } catch (ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException e) {
-            throw e;
-        } catch (SerialException e) {
-            throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
-        } catch (SQLException e) {
+        } catch (BusinessException | SQLException e) {
             throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
         }
 
@@ -313,14 +306,14 @@ public class BugManagementService implements BugManagement {
             bugPersistenceManager.addAttachmentToBug(bug, attachment);
             return bugDTO;
         } catch (ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException e) {
-            throw e;
+            throw new ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException();
         }
     }
 
     @Override
     public BugDTO getBugById(Long id) throws BusinessException {
         Optional<Bug> bugOptional = bugPersistenceManager.getBugById(id);
-        Bug bug=new Bug();
+        Bug bug;
         if(bugOptional.isPresent()){
             bug=bugOptional.get();
         }
