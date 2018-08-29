@@ -9,7 +9,6 @@ import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -36,9 +35,9 @@ public class NotificationManagerService {
 		notification.setMessage(notificationDTO.getMessage());
 		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			Date date = dateFormatter.parse(notificationDTO.getTargetDateString());
+			Date date = java.sql.Date.valueOf(notificationDTO.getTargetDateString());
 			notification.setTargetDate(date);
-		} catch (ParseException p) {
+		} catch (Exception p) {
 
 		}
 

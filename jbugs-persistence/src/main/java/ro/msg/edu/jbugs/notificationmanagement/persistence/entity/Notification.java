@@ -26,15 +26,15 @@ public class Notification extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private TypeNotification typeNotification;
 
-	@Column(name="targetDate")
+	@Column(name = "targetDate", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date targetDate;
 
 	@Column(name = "message", nullable = false)
 	private String message;
 
-	@Column(name = "URLBug", nullable = false)
-	private String URLBug;
+	@Column(name = "URLBug")
+	private Long URLBug;
 
 	public TypeNotification getTypeNotification() {
 		return typeNotification;
@@ -60,11 +60,11 @@ public class Notification extends BaseEntity {
 		this.message = message;
 	}
 
-	public String getURLBug() {
+	public Long getURLBug() {
 		return URLBug;
 	}
 
-	public void setURLBug(String URLBug) {
+	public void setURLBug(Long URLBug) {
 		this.URLBug = URLBug;
 	}
 

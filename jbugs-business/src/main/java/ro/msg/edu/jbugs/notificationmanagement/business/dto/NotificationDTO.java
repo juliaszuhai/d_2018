@@ -7,12 +7,11 @@ import java.util.Date;
 public class NotificationDTO {
 
 	private Long id;
-	private String URLBug;
+	private Long URLBug;
 	private String message;
 	private Date targetDate;
 	private String targetDateString;
 	private TypeNotification typeNotification;
-
 	private String typeNotificationString;
 
 	public Long getId() {
@@ -23,11 +22,11 @@ public class NotificationDTO {
 		this.id = id;
 	}
 
-	public String getURLBug() {
+	public Long getURLBug() {
 		return URLBug;
 	}
 
-	public void setURLBug(String URLBug) {
+	public void setURLBug(Long URLBug) {
 		this.URLBug = URLBug;
 	}
 
