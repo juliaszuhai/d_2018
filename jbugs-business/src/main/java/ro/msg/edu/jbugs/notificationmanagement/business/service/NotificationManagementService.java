@@ -5,7 +5,6 @@ import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTO;
 import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTOHelper;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.dao.NotificationPersistenceManager;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
-import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 
 import javax.ejb.EJB;
@@ -41,11 +40,7 @@ public class NotificationManagementService {
 		notification.setMessage(notificationDTO.getMessage());
 		notification.setDateSent(getToday());
 		notification.setURLBug(notificationDTO.getURLBug());
-		notificationPersistenceManager.createNotification(notification);
-		if (notification.getTypeNotification() == TypeNotification.WELCOME_NEW_USER)
-			userPersistenceManager.createNotifications(notification);
-		else
-			userPersistenceManager.addNotification(notification);
+
 		return NotificationDTOHelper.fromEntity(notification);
 	}
 

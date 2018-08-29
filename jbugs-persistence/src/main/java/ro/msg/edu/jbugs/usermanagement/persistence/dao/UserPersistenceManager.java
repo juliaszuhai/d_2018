@@ -1,6 +1,5 @@
 package ro.msg.edu.jbugs.usermanagement.persistence.dao;
 
-import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.Role;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
@@ -149,26 +148,7 @@ public class UserPersistenceManager {
 		}
 	}
 
-	/**
-	 * Creates Notifications
-	 *
-	 * @param notification
-	 */
-	public void createNotifications(Notification notification) {
-		em.persist(notification);
 
-	}
-
-	/**
-	 * Adds a notification to User's List<Notification>
-	 *
-	 * @param notification
-	 * @return notification that was added
-	 */
-	public Notification addNotification(Notification notification) {
-		em.merge(notification);
-		return notification;
-	}
 
 
 }
