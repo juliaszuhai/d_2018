@@ -6,6 +6,7 @@ import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Attachment;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
@@ -14,6 +15,9 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.sql.rowset.serial.SerialException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,19 +39,11 @@ public class BugManagementService implements BugManagement {
 
     @Override
     public List<BugDTO> getAllBugs() {
-        /*List<BugDTO> bugs=new ArrayList<BugDTO>();
-        for(Bug b:bugPersistenceManager.getAllBugs())
-        {
-            BugDTO bug=BugDTOHelper.fromEntity(b);
-            this.setUsers(bug,b);
-            bugs.add(bug);
-        }
-        return bugs;*/
         return bugPersistenceManager.getAllBugs()
                 .stream()
-                .map(bug -> {
-                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
-                    this.setUsers(bugDTO, bug);
+                .map(bug ->{
+                    BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
+                    this.setUsersDTO(bugDTO,bug);
                     return bugDTO;
                 })
                 .collect(Collectors.toList());
@@ -76,10 +72,10 @@ public class BugManagementService implements BugManagement {
                 .collect(Collectors.toList());
         return filteredBugs
                 .stream()
-                .map(bug -> {
-                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
-                    this.setUsers(bugDTO, bug);
-                    return bugDTO;
+                .map(bug ->{
+                        BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
+                        this.setUsersDTO(bugDTO,bug);
+                        return bugDTO;
                 })
                 .collect(Collectors.toList());
 
@@ -92,9 +88,9 @@ public class BugManagementService implements BugManagement {
                 .collect(Collectors.toList());
         return sorteddBugs
                 .stream()
-                .map(bug -> {
-                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
-                    this.setUsers(bugDTO, bug);
+                .map(bug ->{
+                    BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
+                    this.setUsersDTO(bugDTO,bug);
                     return bugDTO;
                 })
                 .collect(Collectors.toList());
@@ -220,7 +216,7 @@ public class BugManagementService implements BugManagement {
     }
 
     @Override
-    public BugDTO setUsers(BugDTO bugDTO, Bug bug) {
+    public BugDTO setUsersDTO(BugDTO bugDTO,Bug bug) {
         NameIdDTO createdBy = new NameIdDTO();
 
         createdBy.setId(bug.getCreatedByUser().getId());
@@ -233,6 +229,65 @@ public class BugManagementService implements BugManagement {
         assignedTo.setUsername(bug.getAssignedTo().getUsername());
         bugDTO.setAssignedTo(assignedTo);
         return bugDTO;
+    }
+
+    public Bug setUsers(BugDTO bugDTO, Bug bug) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException {
+
+        Long createByUserId = bugDTO.getCreatedByUser().getId();
+        Optional<User> createdByOp = userPersistenceManager.getUserById(createByUserId);
+        if (createdByOp.isPresent()) {
+            User createdByUser = createdByOp.get();
+            bug.setCreatedByUser(createdByUser);
+        } else {
+            throw new ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException(ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode.UNKNOWN_EXCEPTION);
+        }
+
+        Long assignedToId = bugDTO.getAssignedTo().getId();
+        Optional<User> assignedToUserOp = userPersistenceManager.getUserById(assignedToId);
+        if (assignedToUserOp.isPresent()) {
+            User assignedTo = assignedToUserOp.get();
+            bug.setAssignedTo(assignedTo);
+        } else {
+            throw new ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException(ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode.UNKNOWN_EXCEPTION);
+        }
+        return bug;
+    }
+
+
+    @Override
+    public BugDTO createBugWithAttachment(BugDTO bugDTO, byte[] bytes) throws BusinessException, ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException {
+        try {
+            Attachment attachment=new Attachment();
+            Blob blob= new javax.sql.rowset.serial.SerialBlob(bytes);
+            attachment.setAttachment(blob);
+            BugDTO bugDTOCreated=this.createBug(bugDTO);
+            Bug bugCreated=BugDTOHelper.toEntity(bugDTOCreated);
+            this.setUsers(bugDTOCreated,bugCreated);
+            bugPersistenceManager.addAttachmentToBug(bugCreated,attachment);
+            return bugDTO;
+
+        } catch (BusinessException e) {
+            throw e;
+        } catch (ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException e) {
+            throw e;
+        } catch (SerialException e) {
+            throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
+        } catch (SQLException e) {
+            throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
+        }
+
+    }
+
+    @Override
+    public BugDTO addAttachmentToBug(BugDTO bugDTO, Attachment attachment) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException {
+        try {
+            Bug bug=BugDTOHelper.toEntity(bugDTO);
+            this.setUsers(bugDTO,bug);
+            bugPersistenceManager.addAttachmentToBug(bug,attachment);
+            return bugDTO;
+        } catch (ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException e) {
+            throw e;
+        }
     }
 
     @Override

@@ -32,6 +32,19 @@ public class BugPersistenceManager {
         return q.getResultList();
     }
 
+    public List<Attachment> getAllAttachments()
+    {
+        TypedQuery<Attachment> q= em.createNamedQuery(Attachment.GET_ALL_ATTACHMENTS,Attachment.class);
+        return q.getResultList();
+    }
+
+
+    public List<Attachment> getAttachmentsForBug(@NotNull Long id)
+    {
+        TypedQuery<Attachment> q= em.createNamedQuery(Attachment.GET_ATTACHMENTS_FOR_BUG,Attachment.class).setParameter("id", id);
+        return q.getResultList();
+    }
+
 
     /**
      *
@@ -57,6 +70,22 @@ public class BugPersistenceManager {
         em.persist(bug);
         em.flush();
         return bug;
+    }
+
+    public Bug createBugWithAttachment(@NotNull Bug bug, @NotNull Attachment attachment)
+    {
+        bug.getAttachments().add(attachment);
+        em.persist(attachment);
+        em.persist(bug);
+        return bug;
+    }
+
+
+    public Attachment addAttachmentToBug(@NotNull Bug bug, @NotNull Attachment attachment)
+    {
+        bug.getAttachments().add(attachment);
+        em.merge(bug);
+        return attachment;
     }
 
     /**

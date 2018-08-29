@@ -1,122 +1,122 @@
-<!--<h3>{{'userManagement.updateUser'| translate}}</h3>-->
-<!--<mat-tab-group>-->
-  <!--<mat-tab label="{{'userManagement.tabUpdateInfo'| translate}}">-->
-    <!--<div class="update-user-form">-->
+<h3>{{'userManagement.updateUser'| translate}}</h3>
+<mat-tab-group>
+  <mat-tab label="{{'userManagement.tabUpdateInfo'| translate}}">
+    <div class="update-user-form">
 
 
-      <!--<form-->
-        <!--(ngSubmit)="submitUpdate()"-->
-        <!--#updateForm="ngForm"-->
-        <!--#formElement-->
-      <!--&gt;-->
+      <form
+        (ngSubmit)="submitUpdate()"
+        #updateForm="ngForm"
+        #formElement
+      >
 
-        <!--<mat-form-field>-->
-          <!--<input-->
-            <!--matInput-->
-            <!--#firstNameControl="ngModel"-->
-            <!--#firstNameElement-->
-            <!--name="firstName"-->
-            <!--required-->
-            <!--[(ngModel)]="data.firstName"-->
-            <!--placeholder="{{'userManagement.firstName'| translate}}">-->
-        <!--</mat-form-field>-->
-        <!--<br>-->
-        <!--<mat-form-field>-->
-          <!--<input matInput-->
-                 <!--#lastNameControl="ngModel"-->
-                 <!--#lastNameElement-->
-                 <!--name="lastName"-->
-                 <!--required-->
-                 <!--[(ngModel)]="data.lastName"-->
-                 <!--placeholder="{{'userManagement.lastName'| translate}}">-->
-        <!--</mat-form-field>-->
-        <!--<br>-->
-        <!--<mat-form-field>-->
-          <!--<input type="password"-->
-                 <!--#passwordElement-->
-                 <!--name="password"-->
-                 <!--matInput-->
-                 <!--[(ngModel)]="data.password"-->
-                 <!--[formControl]="passwordFormControl"-->
-                 <!--[errorStateMatcher]="matcher"-->
-                 <!--placeholder="{{'userManagement.password'| translate}}">-->
+        <mat-form-field>
+          <input
+            matInput
+            #firstNameControl="ngModel"
+            #firstNameElement
+            name="firstName"
+            required
+            [(ngModel)]="data.firstName"
+            placeholder="{{'userManagement.firstName'| translate}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput
+                 #lastNameControl="ngModel"
+                 #lastNameElement
+                 name="lastName"
+                 required
+                 [(ngModel)]="data.lastName"
+                 placeholder="{{'userManagement.lastName'| translate}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input type="password"
+                 #passwordElement
+                 name="password"
+                 matInput
+                 [(ngModel)]="data.password"
+                 [formControl]="passwordFormControl"
+                 [errorStateMatcher]="matcher"
+                 placeholder="{{'userManagement.password'| translate}}">
 
-          <!--<mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPasswordErrorMessage()}}</mat-error>-->
-        <!--</mat-form-field>-->
-        <!--<br>-->
-        <!--<mat-form-field>-->
-          <!--<input-->
-            <!--#emailElement-->
-            <!--name="email"-->
-            <!--matInput-->
-            <!--[(ngModel)]="data.email"-->
-            <!--[formControl]="emailFormControl"-->
-            <!--[errorStateMatcher]="matcher"-->
-            <!--placeholder="{{'userManagement.email'| translate}}">-->
-          <!--<mat-error *ngIf="emailFormControl.invalid">{{getEmailErrorMessages()}}</mat-error>-->
-        <!--</mat-form-field>-->
-        <!--<br>-->
-        <!--<mat-form-field>-->
-          <!--<input-->
-            <!--#phoneControl="ngModel"-->
-            <!--#phoneElement-->
-            <!--name="phone"-->
-            <!--matInput-->
-            <!--required-->
-            <!--[(ngModel)]="data.phoneNumber"-->
-            <!--placeholder="{{'userManagement.phoneNumber'| translate}}">-->
-        <!--</mat-form-field>-->
-        <!--<br>-->
-        <!--<button type="submit" mat-button>{{'userManagement.buttonSubmit'| translate}}</button>-->
-      <!--</form>-->
-      <!--<div class="form-info">-->
+          <mat-error *ngIf="passwordFormControl.hasError('passwordInvalid')">{{getPasswordErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input
+            #emailElement
+            name="email"
+            matInput
+            [(ngModel)]="data.email"
+            [formControl]="emailFormControl"
+            [errorStateMatcher]="matcher"
+            placeholder="{{'userManagement.email'| translate}}">
+          <mat-error *ngIf="emailFormControl.invalid">{{getEmailErrorMessages()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input
+            #phoneControl="ngModel"
+            #phoneElement
+            name="phone"
+            matInput
+            required
+            [(ngModel)]="data.phoneNumber"
+            placeholder="{{'userManagement.phoneNumber'| translate}}">
+        </mat-form-field>
+        <br>
+        <button type="submit" mat-button>{{'userManagement.buttonSubmit'| translate}}</button>
+      </form>
+      <div class="form-info">
 
-        <!--{{'userManagementErrorMsg.updateUserNoChange'| translate}}.<br>-->
-        <!--{{'userManagementErrorMsg.passwordRequirements'| translate}}.:-->
-        <!--<ul>-->
-          <!--<li>{{'userManagementErrorMsg.passwordReqLength'| translate}}.</li>-->
-          <!--<li>{{'userManagementErrorMsg.passwordReqLetters'| translate}}.</li>-->
-          <!--<li>{{'userManagementErrorMsg.passwordReqSpecial'| translate}}.</li>-->
-          <!--<li>{{'userManagementErrorMsg.passwordReqDigit'| translate}}.</li>-->
-        <!--</ul>-->
-        <!--{{'userManagementErrorMsg.emailRequirement'| translate}}.-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</mat-tab>-->
-  <!--<mat-tab label="{{'userManagement.tabUpdateRoles'| translate}}">-->
+        {{'userManagementErrorMsg.updateUserNoChange'| translate}}.<br>
+        {{'userManagementErrorMsg.passwordRequirements'| translate}}.:
+        <ul>
+          <li>{{'userManagementErrorMsg.passwordReqLength'| translate}}.</li>
+          <li>{{'userManagementErrorMsg.passwordReqLetters'| translate}}.</li>
+          <li>{{'userManagementErrorMsg.passwordReqSpecial'| translate}}.</li>
+          <li>{{'userManagementErrorMsg.passwordReqDigit'| translate}}.</li>
+        </ul>
+        {{'userManagementErrorMsg.emailRequirement'| translate}}.
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="{{'userManagement.tabUpdateRoles'| translate}}">
 
-    <!--<mat-list *ngFor="let element of this.userRoles">-->
-      <!--<mat-list-item>{{element.type}}</mat-list-item>-->
-      <!--<mat-divider></mat-divider>-->
-    <!--</mat-list>-->
+    <mat-list *ngFor="let element of this.userRoles">
+      <mat-list-item>{{element.type}}</mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
 
-    <!--<br>-->
-    <!--<mat-form-field>-->
-      <!--<mat-select [(value)]="selectedrole"-->
+    <br>
+    <mat-form-field>
+      <mat-select [(value)]="selectedrole"
 
-      <!--&gt;-->
-        <!--<div *ngFor="let element of this.allRoles" class="options">-->
-          <!--<mat-option-->
-            <!--value={{element.type}}-->
-          <!--&gt;{{element.type}}-->
-          <!--</mat-option>-->
-        <!--</div>-->
-      <!--</mat-select>-->
-    <!--</mat-form-field>-->
+      >
+        <div *ngFor="let element of this.allRoles" class="options">
+          <mat-option
+            value={{element.type}}
+          >{{element.type}}
+          </mat-option>
+        </div>
+      </mat-select>
+    </mat-form-field>
 
-    <!--<button mat-raised-button-->
-            <!--color="primary"-->
-            <!--style="margin:0 10px;"-->
-            <!--(click)="addRoleToUser()-->
-<!--"-->
-    <!--&gt;{{'userManagement.buttonAddRole'| translate}}-->
-    <!--</button>-->
-    <!--<button mat-raised-button-->
-            <!--color="warn"-->
-            <!--style="margin:0 10px;"-->
-            <!--(click)="removeRoleFromUser()"-->
-    <!--&gt;{{'userManagement.buttonRemoveRole'| translate}}-->
-    <!--</button>-->
+    <button mat-raised-button
+            color="primary"
+            style="margin:0 10px;"
+            (click)="addRoleToUser()
+"
+    >{{'userManagement.buttonAddRole'| translate}}
+    </button>
+    <button mat-raised-button
+            color="warn"
+            style="margin:0 10px;"
+            (click)="removeRoleFromUser()"
+    >{{'userManagement.buttonRemoveRole'| translate}}
+    </button>
 
-  <!--</mat-tab>-->
-<!--</mat-tab-group>-->
+  </mat-tab>
+</mat-tab-group>

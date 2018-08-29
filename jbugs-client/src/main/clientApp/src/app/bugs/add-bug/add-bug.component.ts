@@ -1,8 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {BugData, BugListService, RelatedUser} from "../bugs.service";
+import {Attachment, BugData, BugListService, RelatedUser} from "../bugs.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
+
 
 
 @Component({
@@ -16,7 +17,8 @@ export class AddBugComponent implements OnInit {
   severities: string[]=[
     "CRITICAL","HIGH","MEDIUM","LOW"
   ];
-
+  filesUploaded: string[] = [];
+  attachments: Attachment[] = [];
   error: boolean;
   errorMessage: string;
 
@@ -68,7 +70,7 @@ export class AddBugComponent implements OnInit {
   }
 
   addBugForm() {
-    this.bugService.validateBug(this.bugData)
+    this.bugService.validateBug(this.bugData, this.attachments)
       .subscribe(
         data => {
           this.error = false;
@@ -83,5 +85,27 @@ export class AddBugComponent implements OnInit {
           }
         }
       );
+  }
+
+  parseFile($event) {
+    let reader : FileReader[] = [];
+    let eventTarget = <HTMLInputElement>event.target;
+    if (eventTarget.files && eventTarget.files.length > 0) {
+      for (let i = 0; i < eventTarget.files.length; i++) {
+        let file = eventTarget.files[i];
+        reader[i] = new FileReader();
+        this.filesUploaded[i] = file.name;
+        this.attachments[i] = {
+          bugDTO: this.bugData,
+          blob: new Uint8Array(),
+          extension:file.name.substring(file.name.lastIndexOf('.') + 1).toUpperCase()
+        }
+        reader[i].onload = (e) =>{
+          this.attachments[i].blob = reader[i].result;
+        }
+        reader[i].readAsArrayBuffer(file);
+      }
+    }
+
   }
 }

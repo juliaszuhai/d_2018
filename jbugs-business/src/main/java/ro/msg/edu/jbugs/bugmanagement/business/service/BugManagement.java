@@ -3,6 +3,7 @@ package ro.msg.edu.jbugs.bugmanagement.business.service;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Attachment;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
@@ -55,9 +56,15 @@ public interface BugManagement {
 
     BugDTO updateBug(BugDTO bugDTO) throws BusinessException;
 
-    BugDTO setUsers(BugDTO bugDTO,Bug bug);
-
     Bug setUsersFromDTO(BugDTO bugDTO, Bug bug) throws BusinessException;
+
+    BugDTO setUsersDTO(BugDTO bugDTO,Bug bug);
+
+    BugDTO createBugWithAttachment(BugDTO bugDTO, byte[] bytes) throws BusinessException, ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
+
+    BugDTO addAttachmentToBug(BugDTO bugDTO, Attachment attachment) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
+
+    Bug setUsers(BugDTO bugDTO, Bug bug) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 }
 
 

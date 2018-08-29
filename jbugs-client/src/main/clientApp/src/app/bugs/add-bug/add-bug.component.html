@@ -92,6 +92,18 @@
                  required>
         </div>
 
+        <div class="form-group">
+          <label for="attachmentInput">{{'addBug.attachment' | translate}}</label>
+          <input #attachmentInput  type="file" id="attachmentInput" name="file" [(ngModel)]="this.attachments[this.attachments.length]" required
+                 (change)="parseFile($event)" accept=".jpg,.pdf,.doc,.odf,.xls,.txt" multiple>
+          <div *ngIf="this.filesUploaded.length>1">
+            <div *ngFor="let file of this.filesUploaded">
+              {{file}}
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </fieldset>
     <button color="primary"

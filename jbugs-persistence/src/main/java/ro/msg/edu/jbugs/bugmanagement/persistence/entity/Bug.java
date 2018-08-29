@@ -2,7 +2,10 @@ package ro.msg.edu.jbugs.bugmanagement.persistence.entity;
 
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.*;
 import javax.persistence.*;
+import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -62,6 +65,10 @@ public class Bug extends BaseEntity  {
     @ManyToOne
     @JoinColumn(name="assignedTo")
     private User assignedTo;
+
+    @OneToMany(targetEntity=Attachment.class)
+    private List<Attachment> attachments;
+
 
     public String getTitle() {
         return title;
@@ -133,6 +140,15 @@ public class Bug extends BaseEntity  {
 
     public void setAssignedTo(User assignedTo) {
         this.assignedTo = assignedTo;
+    }
+
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
     }
 
     @Override

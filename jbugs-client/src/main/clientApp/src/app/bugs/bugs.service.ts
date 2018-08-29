@@ -9,6 +9,11 @@ export interface RelatedUser {
   id: number;
   username: string;
 }
+export interface Attachment{
+  bugDTO: BugData;
+  blob: Uint8Array;
+  extension: string;
+}
 
 export interface BugData {
   id: number;
@@ -72,7 +77,7 @@ export class BugListService {
     return this.http.get<BugData[]>(this.baseURL + '/listBugs/getByFilter', {params: params});
   }
 
-  validateBug(bug) {
+  validateBug(bug,attachments : Attachment[]) {
     bug.targetDateString = bug.targetDate.toISOString().slice(0,10);
     bug.assignedToString=bug.assignedTo.username;
     bug.createdByUserString=bug.createdByUser.username;

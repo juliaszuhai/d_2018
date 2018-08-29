@@ -153,9 +153,9 @@ public class BugManagementTest {
         when(bugPersistenceManager.sort(any(boolean.class),any(boolean.class)))
                 .thenReturn(Arrays.asList(bug,bug2));
         BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
-        bugManagementController.setUsers(bugDTO,bug);
+        bugManagementController.setUsersDTO(bugDTO,bug);
         BugDTO bugDTO2=BugDTOHelper.fromEntity(bug2);
-        bugManagementController.setUsers(bugDTO2,bug2);
+        bugManagementController.setUsersDTO(bugDTO2,bug2);
         assertEquals(bugDTO.getId(),bugManagementController.sort(true, true).get(0).getId());
         assertEquals(bugDTO2.getId(),bugManagementController.sort(true, true).get(1).getId());
     }
@@ -178,7 +178,7 @@ public class BugManagementTest {
         bug.setCreatedByUser(userUsed);
         when(bugPersistenceManager.filter(any(String.class),any(String.class),any(Status.class),any(Severity.class))).thenReturn( Arrays.asList(bug));
         BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
-        bugManagementController.setUsers(bugDTO,bug);
+        bugManagementController.setUsersDTO(bugDTO,bug);
         assertEquals(bugDTO.getId(),bugManagementController.filter("ceva","A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha",Status.IN_PROGRESS,Severity.HIGH).get(0).getId());
 
     }

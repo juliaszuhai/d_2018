@@ -71,7 +71,8 @@
     "LOW": "LOW",
     "assignedTo": "Assigned",
     "inputAssignedTo": "Input the name here...",
-    "buttonAddBug": "Add Bug"
+    "buttonAddBug": "Add Bug",
+    "attachment":"Add attachments"
 
   },
 

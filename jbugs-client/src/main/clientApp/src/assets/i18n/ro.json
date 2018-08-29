@@ -70,7 +70,8 @@
     "LOW": "MICA",
     "assignedTo": "Responsabil",
     "inputAssignedTo": "Inserati numele aici...",
-    "buttonAddBug": "Adaugare Bug"
+    "buttonAddBug": "Adaugare Bug",
+    "attachment":"Adauga atasamente"
 
   },
 

@@ -63,7 +63,8 @@ public class BugDTOHelper {
         return bug;
     }
 
-    /*public static Bug toEntity(BugDTO bugDTO) throws BusinessException {
+
+    public static Bug toEntity(BugDTO bugDTO) {
         Bug bug = new Bug();
 
         bug.setId(bugDTO.getId());
@@ -74,29 +75,8 @@ public class BugDTOHelper {
         bug.setFixedVersion(bugDTO.getFixedVersion());
         bug.setSeverity(bugDTO.getSeverity());
 
-
-        Long createByUserId = bugDTO.getCreatedByUser().getId();
-        Optional<User> createdByOp = userPersistenceManager.getUserById(createByUserId);
-        if (createdByOp.isPresent()) {
-            User createdByUser = createdByOp.get();
-            bug.setCreatedByUser(createdByUser);
-        } else {
-            throw new BusinessException(ExceptionCode.UNKNOWN_EXCEPTION);
-        }
-
-
-        Long assignedToId = bugDTO.getAssignedTo().getId();
-        Optional<User> assignedToUserOp = userPersistenceManager.getUserById(assignedToId);
-        if (assignedToUserOp.isPresent()) {
-            User assignedTo = assignedToUserOp.get();
-            bug.setAssignedTo(assignedTo);
-        } else {
-            throw new BusinessException(ExceptionCode.UNKNOWN_EXCEPTION);
-        }
-
-
         return bug;
-    }*/
+    }
 
 
 
