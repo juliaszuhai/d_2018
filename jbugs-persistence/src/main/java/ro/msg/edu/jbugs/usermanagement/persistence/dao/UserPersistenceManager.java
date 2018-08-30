@@ -108,28 +108,6 @@ public class UserPersistenceManager {
 		em.remove(role);
 	}
 
-	/**
-	 * Updates a role in the database using the given Role entity.
-	 *
-	 * @param role : role entity to be updated, should not be null
-	 * @return : returns the updated role entity
-	 */
-	public Role updateRole(Role role) {
-		em.merge(role);
-		return role;
-	}
-
-
-	/**
-	 * Get a list of all roles stored in the database.
-	 *
-	 * @return : List of Roles, empty if there are no roles in the database.
-	 */
-	public List<Role> getAllRoles() {
-		TypedQuery<Role> q = em.createNamedQuery(Role.GET_ALL_ROLES, Role.class);
-		return q.getResultList();
-	}
-
 
 	/**
 	 * Returns a user entity with the matching email wrapped in an optional.
