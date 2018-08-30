@@ -2,6 +2,11 @@ package ro.msg.edu.jbugs.notificationmanagement.business.dto;
 
 import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class NotificationDTOHelper {
 
 	private NotificationDTOHelper() {
@@ -13,20 +18,24 @@ public class NotificationDTOHelper {
 
 		notificationDTO.setId(notification.getId());
         notificationDTO.setUrlBug(notification.getUrlBug());
-		notificationDTO.setMessage(notification.getMessage());
 		notificationDTO.setDateSent(notification.getDateSent());
 		notificationDTO.setTypeNotification(notification.getTypeNotification());
 
 		return notificationDTO;
 	}
 
-	public static Notification toEntity(NotificationDTO notificationDTO) {
+	public static Notification toEntity(NotificationDTO notificationDTO) throws ParseException {
 		Notification notification = new Notification();
+		DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
 
-		notification.setMessage(notificationDTO.getMessage());
 		notification.setDateSent(notificationDTO.getDateSent());
         notification.setUrlBug(notificationDTO.getUrlBug());
 		notification.setTypeNotification(notificationDTO.getTypeNotification());
+		notification.setTypeNotification(notificationDTO.getTypeNotification());
+		notification.setDateSent(formatter.parse(formatter.format(new Date())));
+		notification.setUrlBug(notificationDTO.getUrlBug());
+		notification.setOldData(notificationDTO.getOldData());
+		notification.setNewData(notificationDTO.getNewData());
 
 		return notification;
 	}

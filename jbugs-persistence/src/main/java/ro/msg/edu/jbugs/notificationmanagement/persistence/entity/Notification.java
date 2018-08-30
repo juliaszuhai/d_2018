@@ -29,8 +29,6 @@ public class Notification extends BaseEntity {
 	@Column(name = "dateSent", nullable = false)
 	private Date dateSent;
 
-	@Column(name = "message", nullable = false)
-	private String message;
 
 	@Column(name = "urlBug")
 	private Long urlBug;
@@ -58,13 +56,6 @@ public class Notification extends BaseEntity {
 		this.dateSent = dateSent;
 	}
 
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
 
 	public Long getUrlBug() {
 		return urlBug;
@@ -98,7 +89,6 @@ public class Notification extends BaseEntity {
 		Notification that = (Notification) o;
 		return typeNotification == that.typeNotification &&
 				Objects.equals(dateSent, that.dateSent) &&
-				Objects.equals(message, that.message) &&
 				Objects.equals(urlBug, that.urlBug) &&
 				Objects.equals(oldData, that.oldData) &&
 				Objects.equals(newData, that.newData);
@@ -107,7 +97,7 @@ public class Notification extends BaseEntity {
 	@Override
 	public int hashCode() {
 
-		return Objects.hash(super.hashCode(), typeNotification, dateSent, message, urlBug, oldData, newData);
+		return Objects.hash(super.hashCode(), typeNotification, dateSent, urlBug, oldData, newData);
 	}
 
 	@Override
@@ -115,7 +105,6 @@ public class Notification extends BaseEntity {
 		return "Notification{" +
 				"typeNotification=" + typeNotification +
 				", dateSent=" + dateSent +
-				", message='" + message + '\'' +
 				", urlBug=" + urlBug +
 				", oldData='" + oldData + '\'' +
 				", newData='" + newData + '\'' +

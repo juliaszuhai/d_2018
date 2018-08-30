@@ -171,7 +171,9 @@ public class BugManagementService implements BugManagement {
 
             this.isBugValid(bugAfterSetUser);
             bugPersistenceManager.updateBug(bugAfter);
-            return bugDTO;
+
+
+			return bugDTO;
         } else {
             throw new BusinessException(ExceptionCode.BUG_VALIDATION_EXCEPTION);
         }

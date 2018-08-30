@@ -148,10 +148,10 @@
     "buttonRemovePermission": "Remove Permission"
   },
   "notifications": {
-    "welcomeNewUser": "Welcome",
+    "welcomeNewUser": "Welcome, ",
     "userUpdated": "The following User details have been modified",
     "userDeleted": "The following User account has been deactivated",
-    "bugUpdatedNew": "The following Bug is NEW",
+    "bugNew": "The following Bug is NEW",
     "bugUpdated": "The following Bug details have been changed",
     "bugClosed": "This Bug has been CLOSED",
     "bugStatusUpdate": "This Bug Status has been changed"

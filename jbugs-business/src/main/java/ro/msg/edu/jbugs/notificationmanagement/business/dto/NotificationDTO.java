@@ -8,9 +8,10 @@ public class NotificationDTO {
 
 	private Long id;
 	private Long urlBug;
-	private String message;
 	private Date dateSent;
 	private TypeNotification typeNotification;
+	private String oldData;
+	private String newData;
 
 
 	public Long getId() {
@@ -29,13 +30,6 @@ public class NotificationDTO {
 		this.urlBug = urlBug;
 	}
 
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
 
 	public Date getDateSent() {
 		return dateSent;
@@ -51,6 +45,22 @@ public class NotificationDTO {
 
 	public void setTypeNotification(TypeNotification typeNotification) {
 		this.typeNotification = typeNotification;
+	}
+
+	public String getOldData() {
+		return oldData;
+	}
+
+	public void setOldData(String oldData) {
+		this.oldData = oldData;
+	}
+
+	public String getNewData() {
+		return newData;
+	}
+
+	public void setNewData(String newData) {
+		this.newData = newData;
 	}
 }
 
