@@ -8,13 +8,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
-import ro.msg.edu.jbugs.notificationmanagement.persistence.dao.NotificationPersistenceManager;
-import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.usermanagement.business.utils.Encryptor;
+import ro.msg.edu.jbugs.usermanagement.persistence.dao.PermissionPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
+import ro.msg.edu.jbugs.usermanagement.persistence.entity.Role;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import java.util.ArrayList;
@@ -41,7 +41,9 @@ public class UserManagementServiceTest {
     private BugPersistenceManager bugPersistenceManager;
 
 	@Mock
-	private NotificationPersistenceManager notificationPersistenceManager;
+    private PermissionPersistenceManager permissionPersistenceManager;
+
+
 
     @Test
     public void testGenerateUsername_ExpectedOK() {
@@ -137,8 +139,12 @@ public class UserManagementServiceTest {
         userDTO.setPhoneNumber("0747046000");
         userDTO.setPassword("IloveSteaua");
 
-        when(notificationPersistenceManager.createNotification(any(Notification.class)))
-                .thenReturn(new Notification());
+//        try {
+//            when(NotificationDTOHelper.toEntity(any(NotificationDTO.class)))
+//                    .thenReturn(new Notification());
+//        } catch (ParseException e) {
+//            fail("shouldn't reach this");
+//        }
         try {
 
             UserDTO createdUser = userManagementController.createUser(userDTO);
@@ -204,6 +210,8 @@ public class UserManagementServiceTest {
         when(bugPersistenceManager.getAllBugs())
                 .thenReturn(new ArrayList<>());
 
+        when(permissionPersistenceManager.getRoleByType(any(String.class)))
+                .thenReturn(Optional.of(new Role()));
         try {
             userManagementController.deactivateUser("dorel");
         } catch (BusinessException e) {

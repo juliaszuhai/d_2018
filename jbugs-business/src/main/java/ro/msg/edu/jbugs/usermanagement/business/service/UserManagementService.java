@@ -70,8 +70,8 @@ public class UserManagementService {
 
 		try {
 			user.getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
-		} catch (ParseException e) {
-
+		} catch (ParseException | NullPointerException e) {
+			log.catching(e);
 		}
 
 
@@ -163,7 +163,7 @@ public class UserManagementService {
 		)).forEach(admin -> {
 			try {
 				admin.getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
-			} catch (ParseException e) {
+			} catch (ParseException | NullPointerException e) {
 				log.catching(e);
 			}
 		});
