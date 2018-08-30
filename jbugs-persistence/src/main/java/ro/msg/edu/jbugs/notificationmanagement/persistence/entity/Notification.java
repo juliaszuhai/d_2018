@@ -35,6 +35,13 @@ public class Notification extends BaseEntity {
 	@Column(name = "urlBug")
 	private Long urlBug;
 
+	@Column(name = "oldData")
+	private String oldData;
+
+	@Column(name = "newData")
+	private String newData;
+
+
 	public TypeNotification getTypeNotification() {
 		return typeNotification;
 	}
@@ -67,6 +74,22 @@ public class Notification extends BaseEntity {
 		this.urlBug = URLBug;
 	}
 
+	public String getOldData() {
+		return oldData;
+	}
+
+	public void setOldData(String oldData) {
+		this.oldData = oldData;
+	}
+
+	public String getNewData() {
+		return newData;
+	}
+
+	public void setNewData(String newData) {
+		this.newData = newData;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -76,23 +99,26 @@ public class Notification extends BaseEntity {
 		return typeNotification == that.typeNotification &&
 				Objects.equals(dateSent, that.dateSent) &&
 				Objects.equals(message, that.message) &&
-				Objects.equals(urlBug, that.urlBug);
+				Objects.equals(urlBug, that.urlBug) &&
+				Objects.equals(oldData, that.oldData) &&
+				Objects.equals(newData, that.newData);
 	}
 
 	@Override
 	public int hashCode() {
 
-		return Objects.hash(super.hashCode(), typeNotification, dateSent, message, urlBug);
+		return Objects.hash(super.hashCode(), typeNotification, dateSent, message, urlBug, oldData, newData);
 	}
 
 	@Override
 	public String toString() {
 		return "Notification{" +
 				"typeNotification=" + typeNotification +
-				", targetDate=" + dateSent +
+				", dateSent=" + dateSent +
 				", message='" + message + '\'' +
-				", URLBug='" + urlBug + '\'' +
-				", id=" + id +
+				", urlBug=" + urlBug +
+				", oldData='" + oldData + '\'' +
+				", newData='" + newData + '\'' +
 				'}';
 	}
 }
