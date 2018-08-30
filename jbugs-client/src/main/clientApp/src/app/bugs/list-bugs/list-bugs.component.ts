@@ -175,7 +175,7 @@ export class ListBugsComponent implements OnInit {
         next: (value: any[]) => {
           console.log(value);
           this.bugList = new MatTableDataSource<BugData[]>(value['filteredList']);
-
+          this.length = value['actualListSize'];
           this.sortDataSource();
         }
       }
