@@ -27,7 +27,7 @@ public class NotificationDTOHelper {
 	public static Notification toEntity(NotificationDTO notificationDTO) throws ParseException {
 		Notification notification = new Notification();
 		DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
-
+		notification.setId(notificationDTO.getId());
 		notification.setDateSent(notificationDTO.getDateSent());
         notification.setUrlBug(notificationDTO.getUrlBug());
 		notification.setTypeNotification(notificationDTO.getTypeNotification());
