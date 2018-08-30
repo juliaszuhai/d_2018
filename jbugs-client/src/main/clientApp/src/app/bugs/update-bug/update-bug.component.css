@@ -2,5 +2,17 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
-  padding: 5% 0;
+
+}
+
+mat-form-field {
+  max-width: 250px;
+}
+
+.update-bug-form .update-form {
+  width: 70%;
+}
+
+.update-bug-form .form-info {
+  width: 25%;
 }

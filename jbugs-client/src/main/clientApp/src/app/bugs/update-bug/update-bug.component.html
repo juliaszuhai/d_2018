@@ -6,6 +6,7 @@
     (ngSubmit)="submitUpdateBug()"
     #updateForm="ngForm"
     #formElement
+    class="update-form"
   >
 
     <mat-form-field>
@@ -19,17 +20,16 @@
     </mat-form-field>
     <br>
     <mat-form-field>
-      <input matInput
-             #descriptionElement
-             name="description"
-             [formControl]="descriptionFormControl"
-             [(ngModel)]="data.description"
-             [errorStateMatcher]="matcher"
-             placeholder="{{'bugTable.description'| translate}}">
+      <textarea matInput=""
+                #descriptionElement
+                name="description"
+                [formControl]="descriptionFormControl"
+                [(ngModel)]="data.description"
+                placeholder="{{'bugTable.description'| translate}}">
 
       <mat-error *ngIf="descriptionFormControl.hasError('descriptionInvalid')">{{getDescriptionErrorMessage()}}
       </mat-error>
-
+      </textarea>
     </mat-form-field>
     <br>
     <mat-form-field>

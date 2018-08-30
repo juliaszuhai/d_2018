@@ -20,7 +20,6 @@ export class PermissionGuard implements CanActivate {
 
         return true;
       } else {
-        console.log("hellow");
         this.router.navigate(['/profile'], {
           queryParams: {
             return: state.url
