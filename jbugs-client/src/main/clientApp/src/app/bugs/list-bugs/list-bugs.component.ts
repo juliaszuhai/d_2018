@@ -149,17 +149,7 @@ export class ListBugsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
-      this.bugService.getBugsFromServer().subscribe(
-        {
-          next: (value: any[]) => {
-            this.bugList = new MatTableDataSource<BugData[]>(value);
-
-            this.sortDataSource();
-
-          }
-        }
-      );
+      this.filter(this.bugData.title, this.bugData.description, this.bugData.status, this.bugData.severity, this.pageIndex, this.pageSize, this.id);
     });
   }
 
@@ -170,6 +160,7 @@ export class ListBugsComponent implements OnInit {
 
 
   filter(title: string, description: string, status: string, severity: string, pageIndex = 0, pageSize = this.pageSize, id: number) {
+    this.pageIndex = pageIndex;
     this.bugService.filter(title, description, status, severity, pageIndex, pageSize, id).subscribe(
       {
         next: (value: any[]) => {
