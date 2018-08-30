@@ -30,7 +30,8 @@ public class BugAdditionManager {
             return Response.status(Response.Status.CREATED).build();
 
         } catch (ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getExceptionCode().getMessage()).build();
             }
 
     }

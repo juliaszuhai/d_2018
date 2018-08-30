@@ -1,9 +1,9 @@
 package ro.msg.edu.jbugs.bugmanagement.business.service;
 
+import javafx.util.Pair;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.FilterDTO;
-import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
@@ -43,7 +43,6 @@ public class BugManagementService implements BugManagement {
                 .stream()
                 .map(bug -> {
                     BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
-                    this.setUsersDTO(bugDTO, bug);
                     return bugDTO;
                 })
                 .collect(Collectors.toList());
@@ -65,26 +64,15 @@ public class BugManagementService implements BugManagement {
     }
 
 
-
     @Override
     public FilterDTO filter(String title, String description, Status status, Severity severity, int index, int amount, Long id) {
-        List<Bug> bugList = bugPersistenceManager.filter(title, description, status, severity, id);
+        Pair<Long, List<Bug>> filterPair = bugPersistenceManager.filter(title, description, status, severity, id, index, amount);
         FilterDTO filtered = new FilterDTO();
-        filtered.setActualListSize(bugList.size());
-        filtered.setFilteredList(
-                bugList.stream()
-                        .map(bug -> {
-                            BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
-                            this.setUsersDTO(bugDTO, bug);
-                            return bugDTO;
-                        })
-                        .collect(Collectors.toList())
-                        .subList(index, (index + amount) > bugList.size() ? bugList.size() : (index + amount))
-        );
+
+        filtered.setFilteredList(BugDTOHelper.fromBugList(filterPair.getValue()));
+        filtered.setActualListSize(filterPair.getKey());
         return filtered;
     }
-
-
 
 
     public BugDTO createBug(BugDTO bugDTO) throws BusinessException {
@@ -218,21 +206,7 @@ public class BugManagementService implements BugManagement {
         return bug;
     }
 
-    @Override
-    public BugDTO setUsersDTO(BugDTO bugDTO, Bug bug) {
-        NameIdDTO createdBy = new NameIdDTO();
 
-        createdBy.setId(bug.getCreatedByUser().getId());
-        createdBy.setUsername(bug.getCreatedByUser().getUsername());
-        bugDTO.setCreatedByUser(createdBy);
-
-        NameIdDTO assignedTo = new NameIdDTO();
-
-        assignedTo.setId(bug.getAssignedTo().getId());
-        assignedTo.setUsername(bug.getAssignedTo().getUsername());
-        bugDTO.setAssignedTo(assignedTo);
-        return bugDTO;
-    }
 
     public Bug setUsers(BugDTO bugDTO, Bug bug) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException {
 
@@ -296,7 +270,7 @@ public class BugManagementService implements BugManagement {
         } else {
             throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
         }
-        return setUsersDTO(BugDTOHelper.fromEntity(bug), bug);
+        return BugDTOHelper.fromEntity(bug);
 
 
     }

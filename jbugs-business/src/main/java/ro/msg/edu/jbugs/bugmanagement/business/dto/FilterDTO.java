@@ -6,7 +6,7 @@ public class FilterDTO {
 
 
     private List<BugDTO> filteredList;
-    private Integer actualListSize;
+    private Long actualListSize;
 
     public List<BugDTO> getFilteredList() {
         return filteredList;
@@ -16,11 +16,11 @@ public class FilterDTO {
         this.filteredList = filteredList;
     }
 
-    public Integer getActualListSize() {
+    public Long getActualListSize() {
         return actualListSize;
     }
 
-    public void setActualListSize(Integer actualListSize) {
+    public void setActualListSize(Long actualListSize) {
         this.actualListSize = actualListSize;
     }
 }

@@ -1,5 +1,6 @@
 package ro.msg.edu.jbugs.bugmanagement.persistence.dao;
 
+import javafx.util.Pair;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Attachment;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
@@ -103,14 +104,28 @@ public class BugPersistenceManager {
      * @param severity
      * @return: List of Bugs, filtered by the given parameters.
      */
-    public List<Bug> filter(String title, String description, Status status, Severity severity, Long id) {
+    public Pair<Long, List<Bug>> filter(String title, String description, Status status, Severity severity, Long id, int index, int amount) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Bug> cq = builder.createQuery(Bug.class);
+        CriteriaQuery<Bug> criteriaQuery = builder.createQuery(Bug.class);
+        CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
         Metamodel metamodel = em.getMetamodel();
 
         EntityType<Bug> entityType = metamodel.entity(Bug.class);
-        Root<Bug> root = cq.from(entityType);
+        Root<Bug> root = criteriaQuery.from(entityType);
 
+        buildFilterCriteria(title, description, status, severity, id, builder, criteriaQuery, root);
+
+        TypedQuery<Bug> query = em.createQuery(criteriaQuery);
+        countCriteria.select(builder.count(criteriaQuery.from(Bug.class)));
+        TypedQuery<Long> countQuery = em.createQuery(countCriteria);
+        query.setFirstResult(index);
+        query.setMaxResults(amount);
+
+
+        return new Pair<Long, List<Bug>>(countQuery.getSingleResult(), query.getResultList());
+    }
+
+    private void buildFilterCriteria(String title, String description, Status status, Severity severity, Long id, CriteriaBuilder builder, CriteriaQuery<Bug> criteriaQuery, Root<Bug> root) {
         List<Predicate> result = new ArrayList<>();
 
         if (description != null) {
@@ -119,7 +134,6 @@ public class BugPersistenceManager {
 
         if (title != null) {
             result.add(builder.equal(root.get("title"), title));
-
         }
 
         if (status != null) {
@@ -136,10 +150,8 @@ public class BugPersistenceManager {
             result.add(builder.equal(root.get("id"), id));
         }
         if (!result.isEmpty()) {
-            cq.where(result.toArray(new Predicate[0]));
+            criteriaQuery.where(result.toArray(new Predicate[0]));
         }
-
-        return em.createQuery(cq).getResultList();
     }
 
     /**

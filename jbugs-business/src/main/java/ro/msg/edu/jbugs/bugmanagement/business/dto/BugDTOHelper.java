@@ -5,6 +5,9 @@ import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class BugDTOHelper {
 
@@ -25,10 +28,28 @@ public class BugDTOHelper {
         bugDTO.setStatus(bug.getStatus());
         bugDTO.setFixedVersion(bug.getFixedVersion());
         bugDTO.setSeverity(bug.getSeverity());
+        NameIdDTO createdBy = new NameIdDTO();
 
+        createdBy.setId(bug.getCreatedByUser().getId());
+        createdBy.setUsername(bug.getCreatedByUser().getUsername());
+        bugDTO.setCreatedByUser(createdBy);
+
+        NameIdDTO assignedTo = new NameIdDTO();
+
+        assignedTo.setId(bug.getAssignedTo().getId());
+        assignedTo.setUsername(bug.getAssignedTo().getUsername());
+        bugDTO.setAssignedTo(assignedTo);
         return bugDTO;
 
     }
+
+    public static List<BugDTO> fromBugList(List<Bug> bugList) {
+        return bugList
+                .stream()
+                .map(BugDTOHelper::fromEntity)
+                .collect(Collectors.toList());
+    }
+
 
     public static Bug updateBugWithDTO(Bug bug, BugDTO bugDTO){
         bug.setId(bugDTO.getId());

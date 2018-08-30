@@ -1,5 +1,6 @@
 package ro.msg.edu.jbugs.bugmanagement.business.service;
 
+import javafx.util.Pair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,10 +18,7 @@ import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -147,9 +145,8 @@ public class BugManagementTest {
         bug.setAssignedTo(userUsed);
         bug.setCreatedByUser(userUsed);
         bug.setId(1L);
-        when(bugPersistenceManager.filter(any(String.class),any(String.class),any(Status.class),any(Severity.class),any(Long.class))).thenReturn( Arrays.asList(bug));
+        when(bugPersistenceManager.filter(any(String.class), any(String.class), any(Status.class), any(Severity.class), any(Long.class), 1, 10)).thenReturn(new Pair<Long, List<Bug>>(1L, new ArrayList<Bug>()));
         BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
-        bugManagementController.setUsersDTO(bugDTO,bug);
         assertEquals(1, bugManagementController.filter("ceva", "A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha", Status.IN_PROGRESS, Severity.HIGH, 0, 25, 1L).getFilteredList().size());
 
     }

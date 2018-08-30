@@ -74,7 +74,7 @@ export class RegisterUserComponent implements OnInit {
     }
     return {
       emaildomainerror: {
-        emai: control.value
+        email: control.value
       }
     }
   }

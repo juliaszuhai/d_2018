@@ -54,7 +54,6 @@ public interface BugManagement {
     Bug setUsersFromDTO(BugDTO bugDTO, Bug bug) throws BusinessException;
 
 
-    BugDTO setUsersDTO(BugDTO bugDTO,Bug bug);
 
     BugDTO createBugWithAttachment(BugDTO bugDTO, byte[] bytes) throws BusinessException, ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 
