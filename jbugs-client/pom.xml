@@ -31,7 +31,11 @@
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
 			<version>${jackson.jaxrs.json.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-multipart</artifactId>
+			<version>2.17</version>
+		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>

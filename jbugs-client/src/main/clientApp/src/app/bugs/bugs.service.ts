@@ -9,11 +9,7 @@ export interface RelatedUser {
   id: number;
   username: string;
 }
-export interface Attachment{
-  bugDTO: BugData;
-  blob: Uint8Array;
-  extension: string;
-}
+
 
 export interface BugData {
   id: number;
@@ -26,7 +22,8 @@ export interface BugData {
   severity: string;
   createdByUser: RelatedUser;
   assignedTo: RelatedUser;
-  attachments: Attachment[];
+  fileName: string;
+
 }
 
 const bugs: BugData[] = [];
@@ -45,6 +42,7 @@ export class BugListService {
   getBugList(): Observable<BugData> {
     return from(bugs);
   }
+
 
   getLoggedUserName():string{
     return localStorage.getItem("id_token");
@@ -84,19 +82,35 @@ export class BugListService {
      return this.http.get<BugData[]>(this.baseURL + '/list-bugs/getByFilter', {params: params});
   }
 
-  validateBug(bug,attachments : Attachment[]) {
+  addFile(value, attachment: File) {
+    const body = new FormData();
+    body.append("attachment", attachment);
+    console.log(body.get("attachment"));
+    body.append("id", value);
+    console.log(body.get("id"));
+    return this.http.post(this.baseURL + '/bug-management/add-file',
+      body,
+      {
+        headers: new HttpHeaders(
+
+        )
+      });
+
+  }
+
+  validateBug(bug) {
     bug.targetDateString = bug.targetDate.toISOString().slice(0,10);
     bug.assignedToString=bug.assignedTo.username;
     bug.createdByUserString=bug.createdByUser.username;
-    bug.attachments = JSON.stringify(attachments);
-    return this.http.post(this.baseURL + '/add-bug',
+    return this.http.post(this.baseURL + '/bug-management/add-bug',
       bug,
       {
         headers: new HttpHeaders(
           {'Content-Type': 'application/json'}
         )
-      });
+      })
   }
+
 
 
   sort(title, version): Observable<BugData[]> {

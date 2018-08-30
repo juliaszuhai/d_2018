@@ -109,15 +109,6 @@
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
 			<version>${jackson.jaxrs.json.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.glassfish.jersey.media</groupId>
-			<artifactId>jersey-media-json-jackson</artifactId>
-			<scope>runtime</scope>
-
-			<version>${jackson.jaxrs.json.glassfish.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
@@ -128,6 +119,16 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>1.4.1</version>
+					<configuration>
+						<rules>
+							<dependencyConvergence/>
+						</rules>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.sonarsource.scanner.maven</groupId>
 					<artifactId>sonar-maven-plugin</artifactId>

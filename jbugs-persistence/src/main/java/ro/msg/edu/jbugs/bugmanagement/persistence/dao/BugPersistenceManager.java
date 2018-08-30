@@ -81,15 +81,6 @@ public class BugPersistenceManager {
         return bug;
     }
 
-    public Bug createBugWithAttachment(@NotNull Bug bug, @NotNull Attachment attachment)
-    {
-        bug.getAttachments().add(attachment);
-        em.persist(attachment);
-        em.persist(bug);
-        return bug;
-    }
-
-
     public Attachment addAttachmentToBug(@NotNull Bug bug, @NotNull Attachment attachment)
     {
         bug.getAttachments().add(attachment);
@@ -179,4 +170,28 @@ public class BugPersistenceManager {
         }
     }
 
+    public void addAttachment(Attachment attachment) {
+        em.persist(attachment);
+        em.flush();
+    }
+
+
+    public Optional<Attachment> getAttachmentForName(String name) {
+        TypedQuery<Attachment> q = em.createNamedQuery(Attachment.GET_ATTACHMENT_FOR_NAME, Attachment.class);
+        q.setParameter("name", name);
+        try {
+            return Optional.of(q.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
+    }
+
+    public void createBugWithAttachment(Bug bug, Attachment attachment) {
+        List<Attachment> attachments = new ArrayList<Attachment>();
+        attachments.add(attachment);
+        bug.setAttachments(attachments);
+        em.persist(bug);
+        em.flush();
+
+    }
 }

@@ -1,6 +1,5 @@
 package ro.msg.edu.jbugs.bugmanagement.business.service;
 
-import com.google.gson.Gson;
 import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,21 +13,18 @@ import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Attachment;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
-import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTO;
-import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTOHelper;
-import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
 import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.sql.Blob;
+import javax.sql.rowset.serial.SerialException;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -83,30 +79,25 @@ public class BugManagementService implements BugManagement {
 	}
 
 
-	public BugDTO createBug(BugDTO bugDTO) throws BusinessException {
+	public Bug createBug(BugDTO bugDTO) throws BusinessException {
 		Bug bug = new Bug();
-		Date date = null;
-		try {
-			date = new java.sql.Date(new SimpleDateFormat("yyyy-mm-dd").parse(bugDTO.getTargetDateString()).getTime());
-		} catch (ParseException e) {
-			throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
-		}
+
 		bug.setTitle(bugDTO.getTitle());
 		bug.setDescription(bugDTO.getDescription());
 		bug.setVersion(bugDTO.getVersion());
 		bug.setFixedVersion(bugDTO.getFixedVersion());
-		bug.setTargetDate(date);
+		bug.setTargetDate(bugDTO.getTargetDate());
 		bug.setSeverity(bugDTO.getSeverity());
 		bug.setStatus(Status.NEW);
 
-		Optional<User> userAssigned = userPersistenceManager.getUserByUsername(bugDTO.getAssignedToString());
+		Optional<User> userAssigned = userPersistenceManager.getUserByUsername(bugDTO.getAssignedTo().getUsername());
 		if (userAssigned.isPresent()) {
 			bug.setAssignedTo(userAssigned.get());
 		} else {
 			throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
 		}
 
-		Optional<User> userCreated = userPersistenceManager.getUserByUsername(bugDTO.getCreatedByUserString());
+		Optional<User> userCreated = userPersistenceManager.getUserByUsername(bugDTO.getCreatedByUser().getUsername());
 		if (userCreated.isPresent()) {
 			bug.setCreatedByUser(userCreated.get());
 		} else {
@@ -115,33 +106,7 @@ public class BugManagementService implements BugManagement {
 
 		this.isBugValid(bug);
 		bugPersistenceManager.createBug(bug);
-
-		NotificationDTO notificationDTO = new NotificationDTO();
-		notificationDTO.setTypeNotification(TypeNotification.BUG_CREATED);
-		notificationDTO.setNewData((new Gson().toJson(bug)));
-
-		try {
-			userCreated.get().getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
-			userAssigned.get().getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
-		} catch (ParseException | NullPointerException e) {
-			log.catching(e);
-		}
-
-		if (bugDTO.getAttachments().length > 0) {
-			for (int i = 0; i < bugDTO.getAttachments().length; i++) {
-				try {
-					Attachment attachment = new Attachment();
-					Blob blob = new javax.sql.rowset.serial.SerialBlob(bugDTO.getAttachments()[i].getAttachmentFile());
-					attachment.setAttachmentFile(blob);
-					attachment.setName(bugDTO.getAttachments()[i].getName());
-					attachment.setExtension(bugDTO.getAttachments()[i].getExtension());
-					bugPersistenceManager.addAttachmentToBug(bug, attachment);
-				} catch (SQLException e) {
-					throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
-				}
-			}
-		}
-		return bugDTO;
+		return bug;
 
 	}
 
@@ -270,36 +235,6 @@ public class BugManagementService implements BugManagement {
 
 
 	@Override
-	public BugDTO createBugWithAttachment(BugDTO bugDTO, byte[] bytes) throws BusinessException, ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException {
-		try {
-			Attachment attachment = new Attachment();
-			Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-			attachment.setAttachmentFile(blob);
-			BugDTO bugDTOCreated = this.createBug(bugDTO);
-			Bug bugCreated = BugDTOHelper.toEntity(bugDTOCreated);
-			this.setUsers(bugDTOCreated, bugCreated);
-			bugPersistenceManager.addAttachmentToBug(bugCreated, attachment);
-			return bugDTO;
-
-		} catch (BusinessException | SQLException e) {
-			throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
-		}
-
-	}
-
-	@Override
-	public BugDTO addAttachmentToBug(BugDTO bugDTO, Attachment attachment) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException {
-		try {
-			Bug bug = BugDTOHelper.toEntity(bugDTO);
-			this.setUsers(bugDTO, bug);
-			bugPersistenceManager.addAttachmentToBug(bug, attachment);
-			return bugDTO;
-		} catch (ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException e) {
-			throw new ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException();
-		}
-	}
-
-	@Override
 	public BugDTO getBugById(Long id) throws BusinessException {
 		Optional<Bug> bugOptional = bugPersistenceManager.getBugById(id);
 		Bug bug;
@@ -320,6 +255,29 @@ public class BugManagementService implements BugManagement {
 			return optionalNumberOfBug.get();
 		} else {
 			throw new BusinessException(ExceptionCode.STATUS_INVALID);
+		}
+	}
+
+	@Override
+	public void addFileToBug(File file, Long bugId) throws BusinessException {
+		Optional<Bug> optBug = this.bugPersistenceManager.getBugById(bugId);
+		if (optBug.isPresent()) {
+			try {
+				Bug bug = optBug.get();
+				byte[] byteFile = Files.readAllBytes(file.toPath());
+				Attachment attachment = new Attachment();
+				attachment.setAttachmentFile(new javax.sql.rowset.serial.SerialBlob(byteFile));
+				attachment.setName(file.getName());
+				this.bugPersistenceManager.addAttachment(attachment);
+				this.bugPersistenceManager.addAttachmentToBug(bug, attachment);
+			} catch (IOException e) {
+				throw new BusinessException(ExceptionCode.SOMETHING_WRONG_WITH_ATTACHMENT);
+			} catch (SerialException e) {
+				throw new BusinessException(ExceptionCode.SOMETHING_WRONG_WITH_ATTACHMENT);
+			} catch (SQLException e) {
+				throw new BusinessException(ExceptionCode.SOMETHING_WRONG_WITH_ATTACHMENT);
+			}
+
 		}
 	}
 }

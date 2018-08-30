@@ -2,6 +2,7 @@ package ro.msg.edu.jbugs.boundary;
 
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import ro.msg.edu.jbugs.bugmanagement.business.control.BugAdditionManager;
 import ro.msg.edu.jbugs.bugmanagement.business.control.BugManagementController;
 import ro.msg.edu.jbugs.bugmanagement.business.control.ExcelGeneratorController;
@@ -37,6 +38,7 @@ public class AppBoundary extends Application {
         classes.add(PermissionManager.class);
         classes.add(CorsFilter.class);
         classes.add(NotificationManager.class);
+        classes.add(MultiPartFeature.class);
         return classes;
     }
 }

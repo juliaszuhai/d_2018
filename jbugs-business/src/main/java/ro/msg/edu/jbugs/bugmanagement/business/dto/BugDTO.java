@@ -1,6 +1,5 @@
 package ro.msg.edu.jbugs.bugmanagement.business.dto;
 
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Attachment;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 
@@ -18,28 +17,20 @@ public class BugDTO {
     private Severity severity;
     private NameIdDTO createdByUser;
     private NameIdDTO assignedTo;
+    private String attachments;
     private String targetDateString;
     private String statusString;
     private String severityString;
     private String createdByUserString;
     private String assignedToString;
-    private Attachment[] attachments;
 
 
-    public String getCreatedByUserString() {
-        return createdByUserString;
+    public String getTargetDateString() {
+        return targetDateString;
     }
 
-    public void setCreatedByUserString(String createdByUserString) {
-        this.createdByUserString = createdByUserString;
-    }
-
-    public String getAssignedToString() {
-        return assignedToString;
-    }
-
-    public void setAssignedToString(String assignedToString) {
-        this.assignedToString = assignedToString;
+    public void setTargetDateString(String targetDateString) {
+        this.targetDateString = targetDateString;
     }
 
     public String getStatusString() {
@@ -58,19 +49,27 @@ public class BugDTO {
         this.severityString = severityString;
     }
 
-    public String getTargetDateString() {
-        return targetDateString;
+    public String getCreatedByUserString() {
+        return createdByUserString;
     }
 
-    public void setTargetDateString(String targetDateString) {
-        this.targetDateString = targetDateString;
+    public void setCreatedByUserString(String createdByUserString) {
+        this.createdByUserString = createdByUserString;
     }
 
-    public Attachment[] getAttachments() {
+    public String getAssignedToString() {
+        return assignedToString;
+    }
+
+    public void setAssignedToString(String assignedToString) {
+        this.assignedToString = assignedToString;
+    }
+
+    public String getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(Attachment[] attachments) {
+    public void setAttachments(String attachments) {
         this.attachments = attachments;
     }
 
@@ -168,11 +167,6 @@ public class BugDTO {
                 ", severity=" + severity +
                 ", createdByUser=" + createdByUser +
                 ", assignedTo=" + assignedTo +
-                ", targetDateString='" + targetDateString + '\'' +
-                ", statusString='" + statusString + '\'' +
-                ", severityString='" + severityString + '\'' +
-                ", createdByUserString='" + createdByUserString + '\'' +
-                ", assignedToString='" + assignedToString + '\'' +
                 '}';
     }
 }

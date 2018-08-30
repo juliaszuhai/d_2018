@@ -3,11 +3,11 @@ package ro.msg.edu.jbugs.bugmanagement.business.service;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.FilterDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Attachment;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -34,7 +34,7 @@ public interface BugManagement {
     BugDTO getBugById(Long id) throws BusinessException;
 
 
-    BugDTO createBug(BugDTO bugDTO) throws BusinessException;
+    Bug createBug(BugDTO bugDTO) throws BusinessException;
 
     boolean isBugValid(Bug bug) throws BusinessException;
 
@@ -54,11 +54,6 @@ public interface BugManagement {
     Bug setUsersFromDTO(BugDTO bugDTO, Bug bug) throws BusinessException;
 
 
-
-    BugDTO createBugWithAttachment(BugDTO bugDTO, byte[] bytes) throws BusinessException, ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
-
-    BugDTO addAttachmentToBug(BugDTO bugDTO, Attachment attachment) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
-
     Bug setUsers(BugDTO bugDTO, Bug bug) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 
 
@@ -69,6 +64,8 @@ public interface BugManagement {
      * @return: number of bugs that have the specified status
      */
     Long countBugsByStatus(Status status) throws BusinessException;
+
+    void addFileToBug(File file, Long bugId) throws BusinessException;
 }
 
 

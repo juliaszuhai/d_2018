@@ -11,6 +11,7 @@ import java.sql.Blob;
         {
                 @NamedQuery(name = Attachment.GET_ALL_ATTACHMENTS, query = "SELECT a FROM Attachment a"),
                 @NamedQuery(name = Attachment.GET_ATTACHMENTS_FOR_BUG,query="SELECT a FROM Attachment a INNER JOIN Bug b ON b.id=:id"),
+                @NamedQuery(name = Attachment.GET_ATTACHMENT_FOR_NAME, query = "SELECT a FROM Attachment a WHERE a.name=:name"),
         }
 )
 public class Attachment extends BaseEntity implements Serializable {
@@ -18,6 +19,7 @@ public class Attachment extends BaseEntity implements Serializable {
     @Transient
     public static final String GET_ALL_ATTACHMENTS = "get_All_Attachments";
     public static final String GET_ATTACHMENTS_FOR_BUG = "get_Attachments_For_Bug";
+    public static final String GET_ATTACHMENT_FOR_NAME = "get_Attachment_For_Name";
 
     @Column(name = "attachment", nullable = true)
     private Blob attachmentFile;

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Attachment, BugData, BugListService} from "../bugs.service";
+import {BugData, BugListService} from "../bugs.service";
 import {MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
@@ -16,8 +16,8 @@ export class AddBugComponent implements OnInit {
   severities: string[] = [
     "CRITICAL", "HIGH", "MEDIUM", "LOW"
   ];
-  filesUploaded: string[] = [];
-  attachments: Attachment[] = [];
+  fileUploaded: string;
+  attachment: File;
   error: boolean;
   errorMessage: string;
 
@@ -38,7 +38,7 @@ export class AddBugComponent implements OnInit {
       severity: '',
       createdByUser: {id: 4, username: bugService.getLoggedUserName()},
       assignedTo: {id: 4, username: ''},
-      attachments: []
+      fileName: ''
 
     }
     this.error = false;
@@ -72,12 +72,16 @@ export class AddBugComponent implements OnInit {
   }
 
   addBugForm() {
-
-    this.bugService.validateBug(this.bugData, this.attachments)
+    this.bugService.validateBug(this.bugData)
       .subscribe(
         data => {
-          this.error = false;
-          this.router.navigate([`/bugs`]);
+          if (this.attachment != null)
+            this.bugService.addFile(data, this.attachment).subscribe(
+              data => {
+                this.error = false;
+              }
+            )
+
         },
         err => {
           this.error = true;
@@ -94,28 +98,8 @@ export class AddBugComponent implements OnInit {
   }
 
   parseFile($event) {
-    let reader = [];
     let eventTarget = <HTMLInputElement>event.target;
-    if (eventTarget.files && eventTarget.files.length > 0) {
-      for (let i = 0; i < eventTarget.files.length; i++) {
-        let file = eventTarget.files[i];
-        reader[i] = new FileReader();
-        this.filesUploaded[i] = file.name;
-        this.attachments[i] = {
-          bugDTO: this.bugData,
-          blob: new Uint8Array(),
-          extension: file.name.substring(file.name.lastIndexOf('.') + 1).toUpperCase()
-        }
-        reader[i].onload = ((file: any) => {
-          return (e: Event) => {
-            var arrayBuffer = file.result;
-            var bytes = new Uint8Array(arrayBuffer);
-            this.attachments[i].blob = bytes;
-          }
-        })(file)
-        reader[i].readAsArrayBuffer(file);
-      }
-    }
+    this.attachment = eventTarget.files[0];
 
   }
 }

@@ -2,7 +2,6 @@ package ro.msg.edu.jbugs.bugmanagement.business.dto;
 
 
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
-import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,8 +56,8 @@ public class BugDTOHelper {
         bug.setVersion(bugDTO.getVersion());
         bug.setFixedVersion(bugDTO.getFixedVersion());
         bug.setTargetDate(bugDTO.getTargetDate());
-//        bug.setStatus(Status.valueOf(bugDTO.getStatusString()));
-        bug.setSeverity(Severity.valueOf(bugDTO.getSeverityString()));
+        bug.setStatus(bugDTO.getStatus());
+        bug.setSeverity(bugDTO.getSeverity());
 
         return bug;
     }
