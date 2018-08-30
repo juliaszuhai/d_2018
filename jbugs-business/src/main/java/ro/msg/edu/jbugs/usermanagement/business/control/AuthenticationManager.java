@@ -67,6 +67,7 @@ public class AuthenticationManager {
                     .withExpiresAt(out)
                     .withClaim("firstName", user.getFirstName())
                     .withClaim("lastName", user.getLastName())
+					.withClaim("username", user.getUsername())
                     .withClaim("email", user.getEmail())
                     .withClaim("phone", user.getPhoneNumber())
                     .withClaim("role", rolesJson)

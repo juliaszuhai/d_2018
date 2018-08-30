@@ -140,6 +140,7 @@ public class UserManagementService {
 
 	/**
 	 * Deactivates a user, removing them the ability to login, but keeping their bugs, comments, etc.
+	 * Additionally creates the specific notification.
 	 *
 	 * @param username
 	 */
@@ -157,6 +158,13 @@ public class UserManagementService {
 		notifyAllUsersWithRole(notificationDTO, "ADM");
 	}
 
+	/**
+	 * Notifies all users wirh a specific role
+	 *
+	 * @param notificationDTO
+	 * @param roleType
+	 * @throws BusinessException
+	 */
 	private void notifyAllUsersWithRole(NotificationDTO notificationDTO, String roleType) throws BusinessException {
 		getAllUsersWithRole(permissionPersistenceManager.getRoleByType(roleType).orElseThrow(
 				() -> new BusinessException(ExceptionCode.ROLE_DOESNT_EXIST)
@@ -365,13 +373,18 @@ public class UserManagementService {
 	 * @return
 	 * @throws BusinessException
 	 */
-	public UserDTO updateUser(UserDTO userDTO) throws BusinessException {
+	public UserDTO updateUser(UserDTO userDTO, String requester) throws BusinessException {
 
 		Optional<User> userBeforeOptional = userPersistenceManager.getUserByUsername(userDTO.getUsername());
+		Optional<User> userRequesterOptional = userPersistenceManager.getUserByUsername(requester);
 		if (userBeforeOptional.isPresent()) {
 			User userBefore = userBeforeOptional.get();
 			normalizeUserDTO(userDTO);
 			validateUserForUpdate(userDTO);
+			User userRequester = userRequesterOptional.get();
+
+
+
 			if (usernameShouldChange(userBefore, userDTO)) {
 				userDTO.setUsername(generateUsername(userDTO.getFirstName(), userDTO.getLastName()));
 			}
@@ -379,6 +392,18 @@ public class UserManagementService {
 
 
 			userPersistenceManager.updateUser(userAfter);
+
+			NotificationDTO notificationDTO = new NotificationDTO();
+			notificationDTO.setTypeNotification(TypeNotification.USER_UPDATED);
+			notificationDTO.setOldData((new Gson().toJson(userBefore)));
+			notificationDTO.setNewData((new Gson().toJson(userAfter)));
+
+			try {
+				userRequester.getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
+				userAfter.getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
+			} catch (ParseException | NullPointerException e) {
+				log.catching(e);
+			}
 			return userDTO;
 		} else {
 			throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);

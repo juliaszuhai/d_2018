@@ -1,6 +1,7 @@
 package ro.msg.edu.jbugs.usermanagement.business.control;
 
 
+import com.auth0.jwt.JWT;
 import com.google.gson.Gson;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
@@ -10,10 +11,7 @@ import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 @Path("/manage-users")
@@ -66,13 +64,21 @@ public class UserManager {
 	@Consumes("application/json")
 	@Produces("application/json")
 	@Path("/update-user")
-	public Response updateUser(UserDTO userDTO) {
+	public Response updateUser(UserDTO userDTO, @Context HttpHeaders headers) {
 		try {
-			userManagementController.updateUser(userDTO);
+
+			userManagementController.updateUser(userDTO, getRequester(headers));
 			return Response.ok().build();
 		} catch (BusinessException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
 		}
+	}
+
+	private String getRequester(@Context HttpHeaders headers) {
+		String authorizationHeader = headers.getRequestHeader("authorization").get(0);
+		String token = authorizationHeader.substring("Bearer".length()).trim();
+		String requesterUsername = JWT.decode(token).getClaim("username").asString();
+		return requesterUsername;
 	}
 
 
