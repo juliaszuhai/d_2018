@@ -2,7 +2,6 @@ package ro.msg.edu.jbugs.bugmanagement.business.control;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.FilterDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
@@ -70,13 +69,13 @@ public class BugManagementController {
     }
 
     @GET
-    @Secured("BUG_MANAGEMENT")
+//    @Secured("BUG_MANAGEMENT")
     @Path("/countBugByStatus")
     @Produces("application/json")
     public Response countBugByStatus(@QueryParam("status") Status status) {
         try {
             Long numberOfBug = bugManagement.countBugsByStatus(status);
-            return Response.ok(new Gson().toJson(numberOfBug)).build();
+            return Response.ok(numberOfBug.toString()).build();
         } catch (BusinessException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
         }
