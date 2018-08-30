@@ -20,19 +20,6 @@ public class NotificationManager {
 	private NotificationManagementService notificationManagerService;
 
 
-	/*@POST
-	@Path("/create-notification")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response createNotification(final NotificationDTO notificationDTO) {
-		try {
-
-			return Response.status(Response.Status.CREATED).build();
-		} catch (ParseException e) {
-			return Response.status(Response.Status.UNAUTHORIZED).build();
-		}
-	}*/
-
 	@GET
 	@Produces("application/json")
 	@Consumes("application/x-www-form-urlencoded")

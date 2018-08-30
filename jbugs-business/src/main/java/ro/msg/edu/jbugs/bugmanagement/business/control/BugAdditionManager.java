@@ -9,6 +9,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 
@@ -24,7 +26,7 @@ public class BugAdditionManager {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Response addBug(final BugDTO bugDTO) {
+	public Response addBug(final BugDTO bugDTO, @Context HttpHeaders headers) {
         try {
             bugManagement.createBug(bugDTO);
             return Response.status(Response.Status.CREATED).build();
@@ -42,7 +44,7 @@ public class BugAdditionManager {
     @Path("/with-attachment")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response addBugWithAttachment(final BugDTO bugDTO) {
+    public Response addBugWithAttachment(final BugDTO bugDTO,  @Context HttpHeaders headers) {
         try {
             bugManagement.createBugWithAttachment();
             return Response.status(Response.Status.CREATED).build();
