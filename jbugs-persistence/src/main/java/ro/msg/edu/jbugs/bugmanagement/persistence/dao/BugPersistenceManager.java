@@ -135,6 +135,7 @@ public class BugPersistenceManager {
         if (!result.isEmpty()) {
             cq.where(result.toArray(new Predicate[0]));
         }
+
         return em.createQuery(cq).getResultList();
     }
 

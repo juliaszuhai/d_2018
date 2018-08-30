@@ -53,7 +53,7 @@ public class ExcelGeneratorController {
     /**
      * The method generates the Excel file and lets you download it.
      *  TODO : O clasa de service, sau in controller existent o metoda care va fi apelata aici
-     *
+     *  TODO : De scurtat clasa, abstractizat parti, etc. Daca are mai mult de 15
      * @param titles - list of selected titles
      * @return - response
      */

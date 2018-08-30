@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {BugData, BugListService, RelatedUser} from "../bugs.service";
-import {MatDialog, MatPaginator, MatTableDataSource, PageEvent} from '@angular/material';
+import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
 import {BugsPopupComponent} from "../bugs-popup/bugs-popup.component";
 import {AddBugComponent} from "../add-bug/add-bug.component";
 import {HttpParams} from "@angular/common/http";
@@ -23,7 +23,7 @@ export class ListBugsComponent implements OnInit {
 
   selectedTitles: string;
 
-  bugData: BugData;
+  bugData;
   relatedUser: RelatedUser;
   bugList: MatTableDataSource<BugData[]>;
 
@@ -39,12 +39,11 @@ export class ListBugsComponent implements OnInit {
   private sub: any;
   // MatPaginator Inputs
   pageSize = 10;
-  length = 100;
+  length = 14;
   pageIndex = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
-  // MatPaginator Output
-  pageEvent: PageEvent;
+
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
@@ -166,26 +165,6 @@ export class ListBugsComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.bugService.getBugsFromServer().subscribe(
-      {
-        next: (value: any[]) => {
-          this.bugList = new MatTableDataSource<BugData[]>(value);
-
-          this.sortDataSource();
-
-        }
-      }
-    );
-    this.sub = this.route.params.subscribe(params => {
-      this.id = +params['id'];
-    });
-    console.log(this.id);
-    if (this.id) {
-      this.filter(this.bugData.title, this.bugData.description, this.bugData.status, this.bugData.severity, 0, 1, this.id);
-    }
-
-  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -204,34 +183,7 @@ export class ListBugsComponent implements OnInit {
     );
   }
 
-  // sort(title, version) {
-  //   this.bugService.sort(title, version).subscribe(
-  //     {
-  //       next: (value: BugData[]) => {
-  //         console.log('received: ' + JSON.stringify(value));
-  //         this.bugList = value;
-  //       }
-  //     }
-  //   );
-  // }
 
-  // sort(title, version) {
-  //   this.bugList.sort(function (bug1: BugData, bug2: BugData) {
-  //     if (bug1.title < bug2.title ) return -1;
-  //     else if (bug1.title > bug2.title ) return 1;
-  //     else return 0;
-  //   });
-  //
-  //
-  // }
-
-  // sort(args) {
-  //   this.bugList.sort(function (bug1: BugData, bug2: BugData) {
-  //     if (bug1[args] < bug2[args]) return -1;
-  //     else if (bug1[args] > bug2[args]) return 1;
-  //     else return 0;
-  //   });
-  // }
 
 
   onChangeCheck(bug: BugData, checked: boolean) {
@@ -240,7 +192,7 @@ export class ListBugsComponent implements OnInit {
     } else {
       this.forExcel.splice(this.forExcel.indexOf(bug.id), 1);
     }
-    //this.updateExcelLink()
+
   }
 
   updateExcelLink() {
@@ -268,5 +220,27 @@ export class ListBugsComponent implements OnInit {
       width: '700px',
       data: {bugService: this.bugService}
     });
+  }
+
+  ngOnInit() {
+
+    this.filter(this.bugData.title, this.bugData.description, this.bugData.status, this.bugData.severity, 0, this.pageSize, this.id);
+    // this.bugService.getBugsFromServer().subscribe(
+    //   {
+    //     next: (value: any[]) => {
+    //       this.bugList = new MatTableDataSource<BugData[]>(value);
+    //
+    //       this.sortDataSource();
+    //
+    //     }
+    //   }
+    // );
+    this.sub = this.route.params.subscribe(params => {
+      this.id = +params['id'];
+    });
+    if (this.id) {
+      this.filter(this.bugData.title, this.bugData.description, this.bugData.status, this.bugData.severity, 0, 1, this.id);
+    }
+
   }
 }

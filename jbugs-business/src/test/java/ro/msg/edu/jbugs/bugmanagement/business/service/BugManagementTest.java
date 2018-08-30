@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
@@ -39,45 +40,41 @@ public class BugManagementTest {
     private BugManagementService bugManagementController;
 
 
-//    @Test
-//    public void createBug_ExpectedOK() {
-//        User userUsed = new User();
-//        userUsed.setId(1L);
-//        userUsed.setUsername("ionion");
-//        when(userPersistenceManager.getUserByUsername(any(String.class)))
-//                .thenReturn(Optional.of(userUsed));
-//        BugDTO bugDTO = new BugDTO();
-//        bugDTO.setTitle("ceva");
-//        bugDTO.setTargetDateString("2018-12-25");
-//        bugDTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
-//        bugDTO.setVersion("1aa.2bb.3cc");
-//        bugDTO.setFixedVersion("1.2.3");
-//        NameIdDTO user= new NameIdDTO();
-//        user.setId(1L);
-//        user.setUsername("ionion");
-//        bugDTO.setCreatedByUser(user);
-//        bugDTO.setAssignedTo(user);
-//        BugDTO bug2DTO = new BugDTO();
-//        bug2DTO.setTitle("ceva22");
-//        bug2DTO.setTargetDateString("2018-12-25");
-//        bug2DTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
-//        bug2DTO.setVersion("1aa.2bb.3cc");
-//        bug2DTO.setFixedVersion("1.2.3");
-//        bug2DTO.setCreatedByUser(user);
-//        bug2DTO.setAssignedTo(user);
-//        when(bugPersistenceManager.createBug(any(Bug.class)))
-//                .thenReturn(new Bug());
-//        when(bugPersistenceManager.createBug(any(Bug.class)))
-//                .thenReturn(new Bug());
+    @Test
+    public void createBug_ExpectedOK() {
+        User userUsed = new User();
+        userUsed.setId(1L);
+        userUsed.setUsername("ionion");
+        when(userPersistenceManager.getUserByUsername(any(String.class)))
+                .thenReturn(Optional.of(userUsed));
+        BugDTO bugDTO = new BugDTO();
+        bugDTO.setTitle("ceva");
+        bugDTO.setTargetDateString("2018-12-25");
+        bugDTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
+        bugDTO.setVersion("1aa.2bb.3cc");
+        bugDTO.setFixedVersion("1.2.3");
+        NameIdDTO user = new NameIdDTO();
+        user.setId(1L);
+        user.setUsername("ionion");
+        bugDTO.setCreatedByUser(user);
+        bugDTO.setAssignedTo(user);
+        BugDTO bug2DTO = new BugDTO();
+        bug2DTO.setTitle("ceva22");
+        bug2DTO.setTargetDateString("2018-12-25");
+        bug2DTO.setDescription("A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha");
+        bug2DTO.setVersion("1aa.2bb.3cc");
+        bug2DTO.setFixedVersion("1.2.3");
+        bug2DTO.setCreatedByUser(user);
+        bug2DTO.setAssignedTo(user);
+        when(bugPersistenceManager.createBug(any(Bug.class)))
+                .thenReturn(new Bug());
 //        try {
-//            assertEquals(bugDTO, bugManagementController.createBug(bugDTO));
-//            assertEquals(bug2DTO, bugManagementController.createBug(bug2DTO));
+//            //assertEquals(bugDTO, bugManagementController.createBug(bugDTO));
+//           // assertEquals(bug2DTO, bugManagementController.createBug(bug2DTO));
 //        } catch (BusinessException e) {
 //            fail("Should not reach this point");
 //        }
-//
-//
-//    }
+    }
 
     @Test
     public void getAllBugs_ExpectedOK() {
