@@ -166,14 +166,31 @@ public class BugManagementService implements BugManagement {
         if (bugBeforeOpt.isPresent()) {
             Bug bugBefore = bugBeforeOpt.get();
 
+
             Bug bugAfter = BugDTOHelper.updateBugWithDTO(bugBefore, bugDTO);
-            Bug bugAfterSetUser = setUsersFromDTO(bugDTO, bugBefore);
 
-            this.isBugValid(bugAfterSetUser);
-            bugPersistenceManager.updateBug(bugAfter);
+            bugAfter = setUsersFromDTO(bugDTO, bugAfter);
+
+            List<Integer> succesors = bugBefore.getStatus().getSuccesors();
+            System.out.println("vai" + succesors);
 
 
-			return bugDTO;
+            Integer val = Status.valueOf(bugDTO.getStatusString()).getValue();
+            System.out.println("caca" + val);
+
+
+            if (succesors.contains(val)) {
+                bugAfter.setStatus(Status.valueOf(bugDTO.getStatusString()));
+                this.isBugValid(bugAfter);
+                bugPersistenceManager.updateBug(bugAfter);
+
+            } else {
+                throw new BusinessException(ExceptionCode.STATUS_INCORRECT_EXCEPTION);
+            }
+
+//            this.isBugValid(bugAfter);
+//            bugPersistenceManager.updateBug(bugAfter);
+            return bugDTO;
         } else {
             throw new BusinessException(ExceptionCode.BUG_VALIDATION_EXCEPTION);
         }
@@ -207,7 +224,6 @@ public class BugManagementService implements BugManagement {
 
         return bug;
     }
-
 
 
     public Bug setUsers(BugDTO bugDTO, Bug bug) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException {

@@ -56,7 +56,7 @@ public class BugManagementController {
 
 
     @POST
-    @Secured("BUG_MANAGEMENT")
+    // @Secured("BUG_MANAGEMENT")
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/update-bug")

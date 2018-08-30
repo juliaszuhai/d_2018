@@ -10,6 +10,7 @@ public enum ExceptionCode {
     BUG_VALIDATION_EXCEPTION(4006, "Bug not valid"),
     USER_NOT_EXIST(4007, "User not exist"),
     SOMETHING_WRONG_WITH_ATTACHMENT(4008, "Something wrong with attachment"),
+    STATUS_INCORRECT_EXCEPTION(4010, "The status is incorrect"),
     STATUS_INVALID(4009, "Status is invalid");
     int id;
     String message;
