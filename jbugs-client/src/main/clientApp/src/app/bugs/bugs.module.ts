@@ -25,7 +25,6 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../app.module";
 import {HttpClient} from "@angular/common/http";
 import {BugsGuard} from "../authentication/bugs.guard";
-import {ListBugsPipe} from "./list-bugs/list-bugs-pipe";
 import {UpdateBugComponent} from "./update-bug/update-bug.component";
 import {StatisticOnBugStatusComponent} from './statistic-on-bug-status/statistic-on-bug-status.component';
 import {ChartsModule} from 'ng2-charts';
@@ -74,7 +73,7 @@ const bugRoutes: Routes = [
 
 
   ],
-  declarations: [ListBugsComponent, BugsPopupComponent, AddBugComponent, ListBugsPipe, UpdateBugComponent, StatisticOnBugStatusComponent],
+  declarations: [ListBugsComponent, BugsPopupComponent, AddBugComponent, UpdateBugComponent, StatisticOnBugStatusComponent],
   exports: [
     RouterModule,
     MatButtonModule,
@@ -86,7 +85,6 @@ const bugRoutes: Routes = [
     MatFormFieldModule,
     MatNativeDateModule,
     MatSelectModule,
-    ListBugsPipe,
     MatTableModule,
     MatIconModule,
     MatFormFieldModule,

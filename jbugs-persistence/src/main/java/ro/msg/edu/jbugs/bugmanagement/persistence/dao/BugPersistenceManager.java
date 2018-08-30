@@ -10,7 +10,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 import javax.validation.constraints.NotNull;
@@ -134,37 +137,6 @@ public class BugPersistenceManager {
         }
         if (!result.isEmpty()) {
             cq.where(result.toArray(new Predicate[0]));
-        }
-
-        return em.createQuery(cq).getResultList();
-    }
-
-    /**
-     * @param title
-     * @param version
-     * @return: List of bugs, sorted by given parameters.
-     */
-    public List<Bug> sort(boolean title, boolean version){
-
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Bug> cq = builder.createQuery(Bug.class);
-        Metamodel metamodel = em.getMetamodel();
-
-        EntityType<Bug> entityType = metamodel.entity(Bug.class);
-        Root<Bug> root = cq.from(entityType);
-
-        List<Order> result = new ArrayList<>();
-
-        if(title){
-            result.add(builder.asc(root.get("title")));
-        }
-
-        if(version){
-            result.add(builder.asc(root.get("version")));
-        }
-
-        if(!result.isEmpty()){
-            cq.orderBy(result);
         }
 
         return em.createQuery(cq).getResultList();

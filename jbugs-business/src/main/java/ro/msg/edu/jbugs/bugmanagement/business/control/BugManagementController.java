@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.FilterDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.service.BugManagement;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
@@ -42,37 +43,16 @@ public class BugManagementController {
                          @QueryParam("index") int index,
                          @QueryParam("amount") int amount,
                          @QueryParam("id") Long id) throws JsonProcessingException, BusinessException {
-        List<BugDTO> allBugs = bugManagement.filter(title, description, status, severity, index, amount,id);
+        FilterDTO allBugs = bugManagement.filter(title, description, status, severity, index, amount, id);
         ObjectMapper mapper = new ObjectMapper();
 
         return mapper.writeValueAsString(allBugs);
 
     }
 
-    @GET
-    @Path("/sort")
-    @Produces("application/json")
-    public String sort(@QueryParam("title") boolean title, @QueryParam("version") boolean version) throws JsonProcessingException, BusinessException {
-        List<BugDTO> allBugs = bugManagement.sort(title, version);
-        ObjectMapper mapper = new ObjectMapper();
-
-        return mapper.writeValueAsString(allBugs);
 
 
-    }
 
-
-    @GET
-    @Path("/sort-and-filter")
-    @Produces("application/json")
-    public Response sortAndFilter(@QueryParam("filterCriteria") List<String> filters,
-                                  @QueryParam("index") Integer index,
-                                  @QueryParam("amount") Integer amount,
-                                  @QueryParam("sortByTitle") boolean sortByTitle,
-                                  @QueryParam("sortBySeverity") boolean sortBySeverity) {
-        return Response.ok()
-                .build();
-    }
 
 
     @POST
@@ -93,7 +73,7 @@ public class BugManagementController {
     @Secured("BUG_MANAGEMENT")
     @Path("/countBugByStatus")
     @Produces("application/json")
-    public Response countBugByStatus(@QueryParam("status") Status status) throws BusinessException {
+    public Response countBugByStatus(@QueryParam("status") Status status) {
         try {
             Long numberOfBug = bugManagement.countBugsByStatus(status);
             return Response.ok(new Gson().toJson(numberOfBug)).build();

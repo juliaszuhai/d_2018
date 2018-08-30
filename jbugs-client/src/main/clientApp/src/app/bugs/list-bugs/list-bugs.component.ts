@@ -6,7 +6,6 @@ import {AddBugComponent} from "../add-bug/add-bug.component";
 import {HttpParams} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {UpdateBugComponent} from "../update-bug/update-bug.component";
-import {ListBugsPipe} from "./list-bugs-pipe";
 import {ActivatedRoute} from "@angular/router";
 
 // import {DateFormat} from "../update-bug/date-format";
@@ -15,7 +14,6 @@ import {ActivatedRoute} from "@angular/router";
   selector: 'app-list-bugs',
   templateUrl: './list-bugs.component.html',
   styleUrls: ['./list-bugs.component.css'],
-  providers: [ListBugsPipe]
 })
 
 
@@ -175,6 +173,7 @@ export class ListBugsComponent implements OnInit {
     this.bugService.filter(title, description, status, severity, pageIndex, pageSize, id).subscribe(
       {
         next: (value: any[]) => {
+          console.log(value);
           this.bugList = new MatTableDataSource<BugData[]>(value);
 
           this.sortDataSource();
@@ -208,10 +207,10 @@ export class ListBugsComponent implements OnInit {
 
   getDate(d) {
 
+    //Ce scop are metoda?
 
-    var expiresAt = new Date(d);
 
-    return expiresAt
+    return new Date(d);
   }
 
 
@@ -225,16 +224,6 @@ export class ListBugsComponent implements OnInit {
   ngOnInit() {
 
     this.filter(this.bugData.title, this.bugData.description, this.bugData.status, this.bugData.severity, 0, this.pageSize, this.id);
-    // this.bugService.getBugsFromServer().subscribe(
-    //   {
-    //     next: (value: any[]) => {
-    //       this.bugList = new MatTableDataSource<BugData[]>(value);
-    //
-    //       this.sortDataSource();
-    //
-    //     }
-    //   }
-    // );
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
     });

@@ -1,6 +1,7 @@
 package ro.msg.edu.jbugs.bugmanagement.business.service;
 
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.FilterDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Attachment;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
@@ -35,17 +36,12 @@ public interface BugManagement {
 
     BugDTO createBug(BugDTO bugDTO) throws BusinessException;
 
-    /**
-     * @return a list of DTOs containing information about bugs, sorted by different parameters
-     */
-    List<BugDTO> sort(boolean title, boolean version) throws BusinessException;
-
     boolean isBugValid(Bug bug) throws BusinessException;
 
     /**
      * @return a list of DTOs containing information about bugs, filtered by different parameters
      */
-    List<BugDTO> filter(String title, String description, Status status, Severity severity, int index, int amount,Long id) throws BusinessException;
+    FilterDTO filter(String title, String description, Status status, Severity severity, int index, int amount, Long id) throws BusinessException;
 
 
     boolean validateDescription(String description) throws BusinessException;
@@ -66,7 +62,6 @@ public interface BugManagement {
 
     Bug setUsers(BugDTO bugDTO, Bug bug) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 
-    List<BugDTO> getFilteredAndSortedBugs(List<String> filterArgs, Integer index, Integer amount, boolean sortByTitle, boolean sortBySeverity,Long id);
 
     /**
      * Count the bags that have a certain status

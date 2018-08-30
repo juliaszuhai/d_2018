@@ -2,6 +2,7 @@ package ro.msg.edu.jbugs.bugmanagement.business.service;
 
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.FilterDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
@@ -19,7 +20,10 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -61,52 +65,26 @@ public class BugManagementService implements BugManagement {
     }
 
 
-    @Override
-    public List<BugDTO> getFilteredAndSortedBugs(List<String> filterArgs, Integer index, Integer amount, boolean sortByTitle, boolean sortBySeverity,Long id) {
-        Status status = null;
-        if (filterArgs.get(2) != null) {
-            status = Status.valueOf(filterArgs.get(2));
-        }
-        Severity severity = null;
-        if (filterArgs.get(3) != null) {
-            severity = Severity.valueOf(filterArgs.get(3));
-        }
 
-        List<BugDTO> bugDTOList = filter(filterArgs.get(0), filterArgs.get(1), status, severity, index, amount,id);
-        if (sortByTitle) {
-            bugDTOList.sort(Comparator.comparing(BugDTO::getTitle));
-        } else if (sortBySeverity) {
-            bugDTOList.sort(Comparator.comparing(BugDTO::getSeverity));
-        }
-        return bugDTOList;
+    @Override
+    public FilterDTO filter(String title, String description, Status status, Severity severity, int index, int amount, Long id) {
+        List<Bug> bugList = bugPersistenceManager.filter(title, description, status, severity, id);
+        FilterDTO filtered = new FilterDTO();
+        filtered.setActualListSize(bugList.size());
+        filtered.setFilteredList(
+                bugList.stream()
+                        .map(bug -> {
+                            BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
+                            this.setUsersDTO(bugDTO, bug);
+                            return bugDTO;
+                        })
+                        .collect(Collectors.toList())
+                        .subList(index, (index + amount) > bugList.size() ? bugList.size() : (index + amount))
+        );
+        return filtered;
     }
 
 
-    @Override
-    public List<BugDTO> filter(String title, String description, Status status, Severity severity, int index, int amount,Long id) {
-        List<Bug> bugList = bugPersistenceManager.filter(title, description, status, severity,id);
-        return bugList.stream()
-                .map(bug -> {
-                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
-                    this.setUsersDTO(bugDTO, bug);
-                    return bugDTO;
-                })
-                .collect(Collectors.toList())
-                .subList(index, (index + amount) > bugList.size() ? bugList.size() : (index + amount));
-    }
-
-    @Override
-    public List<BugDTO> sort(boolean title, boolean version) {
-        return bugPersistenceManager.sort(title, version)
-                .stream()
-                .map(bug -> {
-                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
-                    this.setUsersDTO(bugDTO, bug);
-                    return bugDTO;
-                })
-                .collect(Collectors.toList());
-
-    }
 
 
     public BugDTO createBug(BugDTO bugDTO) throws BusinessException {
@@ -212,11 +190,10 @@ public class BugManagementService implements BugManagement {
     }
 
     /**
-     *
      * @param bugDTO
      * @param bug
-     * @return: a Bug with attributes (createdByUser, assignedToUser) set properly.
      * @throws BusinessException
+     * @return: a Bug with attributes (createdByUser, assignedToUser) set properly.
      */
     @Override
     public Bug setUsersFromDTO(BugDTO bugDTO, Bug bug) throws BusinessException {
@@ -314,13 +291,12 @@ public class BugManagementService implements BugManagement {
     public BugDTO getBugById(Long id) throws BusinessException {
         Optional<Bug> bugOptional = bugPersistenceManager.getBugById(id);
         Bug bug;
-        if(bugOptional.isPresent()){
-            bug=bugOptional.get();
-        }
-        else {
+        if (bugOptional.isPresent()) {
+            bug = bugOptional.get();
+        } else {
             throw new BusinessException(ExceptionCode.BUG_NOT_EXIST);
         }
-        return setUsersDTO(BugDTOHelper.fromEntity(bug),bug);
+        return setUsersDTO(BugDTOHelper.fromEntity(bug), bug);
 
 
     }
@@ -329,8 +305,7 @@ public class BugManagementService implements BugManagement {
     public Long countBugsByStatus(Status status) throws BusinessException {
         Optional<Long> optionalNumberOfBug = bugPersistenceManager.countBugsByStatus(status);
         if (optionalNumberOfBug.isPresent()) {
-            Long numberOfBugByStatus = optionalNumberOfBug.get();
-            return numberOfBugByStatus;
+            return optionalNumberOfBug.get();
         } else {
             throw new BusinessException(ExceptionCode.STATUS_INVALID);
         }

@@ -129,32 +129,7 @@ public class BugManagementTest {
 
     }
 
-    @Test
-    public void sort() {
-        User userUsed= new User();
-        userUsed.setId(1L);
-        userUsed.setUsername("ionion");
-        Bug bug=new Bug();
-        bug.setId(1L);
-        bug.setTitle("ceva");
-        bug.setVersion("1.2.3");
-        bug.setAssignedTo(userUsed);
-        bug.setCreatedByUser(userUsed);
-        Bug bug2=new Bug();
-        bug2.setId(2L);
-        bug2.setTitle("ceva2");
-        bug2.setVersion("1.2.3");
-        bug2.setAssignedTo(userUsed);
-        bug2.setCreatedByUser(userUsed);
-        when(bugPersistenceManager.sort(any(boolean.class),any(boolean.class)))
-                .thenReturn(Arrays.asList(bug,bug2));
-        BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
-        bugManagementController.setUsersDTO(bugDTO,bug);
-        BugDTO bugDTO2=BugDTOHelper.fromEntity(bug2);
-        bugManagementController.setUsersDTO(bugDTO2,bug2);
-        assertEquals(bugDTO.getId(),bugManagementController.sort(true, true).get(0).getId());
-        assertEquals(bugDTO2.getId(),bugManagementController.sort(true, true).get(1).getId());
-    }
+
 
 
     @Test
@@ -175,7 +150,7 @@ public class BugManagementTest {
         when(bugPersistenceManager.filter(any(String.class),any(String.class),any(Status.class),any(Severity.class),any(Long.class))).thenReturn( Arrays.asList(bug));
         BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
         bugManagementController.setUsersDTO(bugDTO,bug);
-        assertEquals(bugDTO.getId(),bugManagementController.filter("ceva","A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha",Status.IN_PROGRESS,Severity.HIGH,0,25,1L).get(0).getId());
+        assertEquals(1, bugManagementController.filter("ceva", "A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha", Status.IN_PROGRESS, Severity.HIGH, 0, 25, 1L).getFilteredList().size());
 
     }
 
