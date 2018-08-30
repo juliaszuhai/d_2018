@@ -128,7 +128,6 @@ export class BugListService {
 
 
   updateBug(bugData) {
-    // bugData.targetDateString = bugData.targetDate.toISOString().slice(0,10);
     return this.http.post(this.baseURL + '/list-bugs/update-bug', bugData,
       {
         headers: new HttpHeaders(

@@ -75,6 +75,7 @@
     "number": "#",
     "title": "Title",
     "version": "Version",
+    "description": "Description",
     "targetDate": "Target Date",
     "status": "Status",
     "fixedVersion": "Fixed Version",
@@ -126,6 +127,12 @@
     "passwordReqSpecial": "a special character",
     "passwordReqDigit": "a digit",
     "userHasTasks": "This User still has bugs assigned"
+  },
+  "bugUpdateErrorMessage": {
+    "constraints": "The following are required: ",
+    "description": "Description must contain at least 250 characters",
+    "version": "The versions must be fixed like the following pattern :'digit.digit.digit'",
+    "date": "You must select the target date from the date picker bellow"
   },
   "textFieldValidation": {
     "required": "This field is required",

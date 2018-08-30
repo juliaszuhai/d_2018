@@ -1,118 +1,132 @@
 <h3>{{'bugTable.updateBug'| translate}}</h3>
-    <div class="update-bug-form">
+<div class="update-bug-form">
 
 
-      <form
-        (ngSubmit)="submitUpdateBug()"
-        #updateForm="ngForm"
-        #formElement
-      >
+  <form
+    (ngSubmit)="submitUpdateBug()"
+    #updateForm="ngForm"
+    #formElement
+  >
 
-        <mat-form-field>
-          <input
-            matInput
-            #titleControl="ngModel"
-            #titlelement
-            name="title"
-            required
-            [(ngModel)]="data.title"
-            placeholder="{{'bugTable.title'| translate}}">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <input matInput
-                 #descriptionControl="ngModel"
-                 #descriptionElement
-                 name="description"
-                 required
-                 [(ngModel)]="data.description"
-                 [ngClass]="{form_invalid: !validateDescription(), form_valid:validateDescription()}"
-                 placeholder="{{'bugTable.description'| translate}}">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <input #fixedVersionControl="ngModel"
-            #fixedVersionElement
-                 name="fixedVersion"
-                 matInput
-                 required
-                 [(ngModel)]="data.fixedVersion"
-                 placeholder="{{'bugTable.fixedVersion'| translate}}">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <input
-            #versionControl="ngModel"
-            #versionElement
-            name="version"
-            matInput
-            required
-            [(ngModel)]="data.version"
-            [ngClass]="{form_invalid: !validateVersion(), form_valid:validateVersion()}"
-            placeholder="{{'bugTable.version'| translate}}">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <input
-            #targetDateControl="ngModel"
-            #targetDateElement
-            name="targetDate"
-            matInput
-            required
-            [(ngModel)]="data.targetDate"
-            placeholder="{{'bugTable.targetDate'| translate}}"
-            [matDatepicker]="targetDate">
-        </mat-form-field>
-        <mat-datepicker-toggle [for]="targetDate"></mat-datepicker-toggle>
-        <mat-datepicker #targetDate></mat-datepicker>
+    <mat-form-field>
+      <input
+        matInput
+        #titleControl="ngModel"
+        #titlelement
+        name="title"
+        [(ngModel)]="data.title"
+        placeholder="{{'bugTable.title'| translate}}">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput
+             #descriptionElement
+             name="description"
+             [formControl]="descriptionFormControl"
+             [(ngModel)]="data.description"
+             [errorStateMatcher]="matcher"
+             placeholder="{{'bugTable.description'| translate}}">
 
-        <br>
-        <mat-form-field>
-          <input
-            #statusControl="ngModel"
-            #statusElement
-            name="status"
-            matInput
-            required
-            [(ngModel)]="data.statusString"
-            placeholder="{{'bugTable.status'| translate}}">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <input
-            #severityControl="ngModel"
-            #severityElement
-            name="severity"
-            matInput
-            required
-            [(ngModel)]="data.severityString"
-            placeholder="{{'bugTable.severity'| translate}}">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <input
-            #assignedToStringControl="ngModel"
-            #assignedToStringElement
-            name="assignedToString"
-            matInput
-            required
-            [(ngModel)]="data.assignedToString"
-            placeholder="{{'bugTable.assignedTo'| translate}}">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <input
-            #createdByUserStringControl="ngModel"
-            #createdByUserSTringElement
-            name="createdByUserString"
-            matInput
-            required
-            [(ngModel)]="data.createdByUserString"
-            placeholder="{{'bugTable.createdBy'| translate}}">
-        </mat-form-field>
-        <br>
-        <button type="submit" mat-button>{{'bugTable.buttonSubmit'| translate}}</button>
-      </form>
+      <mat-error *ngIf="descriptionFormControl.hasError('descriptionInvalid')">{{getDescriptionErrorMessage()}}
+      </mat-error>
 
-    </div>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input
+        #fixedVersionElement
+        name="fixedVersion"
+        matInput
+        [formControl]="fixedVersionFormControl"
+        [errorStateMatcher]="matcher"
+        [(ngModel)]="data.fixedVersion"
+        placeholder="{{'bugTable.fixedVersion'| translate}}">
+      <mat-error *ngIf="fixedVersionFormControl.hasError('versionInvalid')">{{getFixedVersionErrorMessage()}}
+      </mat-error>
+
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input
+        #versionElement
+        name="version"
+        matInput
+        [(ngModel)]="data.version"
+        [formControl]="versionFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="{{'bugTable.version'| translate}}">
+      <mat-error *ngIf="versionFormControl.hasError('versionInvalid')">{{getVersionErrorMessage()}}</mat-error>
+
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input
+        #targetDateElement
+        name="targetDate"
+        matInput
+        required
+        [errorStateMatcher]="matcher"
+        [(ngModel)]="data.targetDate"
+        placeholder="{{'bugTable.targetDate'| translate}}"
+        [matDatepicker]="targetDate">
+
+    </mat-form-field>
+    <mat-datepicker-toggle [for]="targetDate"></mat-datepicker-toggle>
+    <mat-datepicker #targetDate></mat-datepicker>
+
+    <br>
+    <mat-form-field>
+      <input
+        #statusControl="ngModel"
+        #statusElement
+        name="status"
+        matInput
+        [(ngModel)]="data.statusString"
+        placeholder="{{'bugTable.status'| translate}}">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input
+        #severityControl="ngModel"
+        #severityElement
+        name="severity"
+        matInput
+        [(ngModel)]="data.severityString"
+        placeholder="{{'bugTable.severity'| translate}}">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input
+        #assignedToStringControl="ngModel"
+        #assignedToStringElement
+        name="assignedToString"
+        matInput
+        [(ngModel)]="data.assignedToString"
+        placeholder="{{'bugTable.assignedTo'| translate}}">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input
+        #createdByUserStringControl="ngModel"
+        #createdByUserSTringElement
+        name="createdByUserString"
+        matInput
+        [(ngModel)]="data.createdByUserString"
+        placeholder="{{'bugTable.createdBy'| translate}}">
+    </mat-form-field>
+    <br>
+    <button type="submit" mat-button>{{'bugTable.buttonSubmit'| translate}}</button>
+  </form>
+
+  <div class="form-info">
+
+    {{'bugUpdateErrorMessage.constraints'| translate}}
+    <ul>
+      <li>{{'bugUpdateErrorMessage.description'| translate}}.</li>
+      <li>{{'bugUpdateErrorMessage.version'| translate}}.</li>
+      <li>{{'bugUpdateErrorMessage.date'| translate}}.</li>
+    </ul>
+  </div>
+
+</div>
 

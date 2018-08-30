@@ -84,6 +84,7 @@
     "number": "#",
     "title": "Titlu",
     "version": "Versiune",
+    "description": "Descriere",
     "targetDate": "Data Limita",
     "status": "Stadiu",
     "fixedVersion": "Versiune Fixata",
@@ -139,6 +140,12 @@
     "passwordReqSpecial": "un caracter special",
     "passwordReqDigit": "o cifra",
     "userHasTasks": "Acest utilizator inca este responsabil de bugg-uri"
+  },
+  "bugUpdateErrorMessage": {
+    "constraints": "Urmatoarele constrangeri sunt necesare: ",
+    "description": "Descrierea trebuie sa contina cel putin 250 de caractere",
+    "version": "Versiunea trebuie data conform urmatorului sablon :'cifre.cifre.cifre'",
+    "date": "Data trebuie selectata din selectorul aflat mai jos"
   },
   "textFieldValidation": {
     "required": "Acest camp este obligatoriu",

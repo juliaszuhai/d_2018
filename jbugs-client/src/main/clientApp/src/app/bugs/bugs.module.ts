@@ -72,6 +72,7 @@ const bugRoutes: Routes = [
 
 
 
+
   ],
   declarations: [ListBugsComponent, BugsPopupComponent, AddBugComponent, UpdateBugComponent, StatisticOnBugStatusComponent],
   exports: [
@@ -90,7 +91,8 @@ const bugRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
-    MatTabsModule
+    MatTabsModule,
+
 
   ],
   entryComponents: [

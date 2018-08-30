@@ -1,9 +1,21 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {BugData, BugListService} from "../bugs.service";
+import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {BugListService} from "../bugs.service";
 import {ListBugsComponent} from "../list-bugs/list-bugs.component";
 import {TranslateService} from "@ngx-translate/core";
-import {MatDialog, MatPaginator, MatTableDataSource, PageEvent} from '@angular/material';
+import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+
+  constructor() {
+  }
+
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 
 @Component({
@@ -13,62 +25,130 @@ import {MatDialog, MatPaginator, MatTableDataSource, PageEvent} from '@angular/m
 })
 export class UpdateBugComponent implements OnInit {
 
-  bugData: BugData;
-  severities: string[]=[
-    "CRITICAL","HIGH","MEDIUM","LOW"
-  ];
-  satus: string[] =[
-    "NEW","IN_PROGRESS","FIXED","CLOSED","REJECTED","INFO_NEEDED"
-  ];
-  error: boolean;
-  errorMessage: string;
-
-  constructor(  private translate: TranslateService,
-               public dialogRef: MatDialogRef<ListBugsComponent>,
-               @Inject(MAT_DIALOG_DATA) public data,
-               public bugmngmt: BugListService
-               //public permissionmngmt: PermissionManagementService
-  ) {
-    this.error = false;
-    this.errorMessage = '';
-  }
-
+  descriptionErrorMessage: string;
+  fixedVersionErrorMessage: string;
+  versionErrorMessage: string;
+  matcher = new MyErrorStateMatcher();
 
 
   ngOnInit() {
   }
 
+  descriptionFormControl = new FormControl('', [
+    Validators.required,
+    this.validateDescription
+  ]);
+  fixedVersionFormControl = new FormControl('', [
+    Validators.required,
+    this.validateVersion
+  ]);
+  versionFormControl = new FormControl('', [
+    Validators.required,
+    this.validateVersion
+  ]);
+
+  constructor(private translate: TranslateService,
+              public dialogRef: MatDialogRef<ListBugsComponent>,
+              @Inject(MAT_DIALOG_DATA) public data,
+              public bugmngmt: BugListService
+  ) {
+
+  }
+
   submitUpdateBug() {
     console.log(this.data);
-    //this.data.targetDateString = this.data.targetDate.toISOString().slice(0,10);
-    //console.log("fuuuck you" + this.data.targetDate)
 
     this.bugmngmt.updateBug(this.data).subscribe(
       data => {
         this.dialogRef.close();
       }, error => {
-        //console.log("Update error:" + error)
-        if(error.valueOf().error.value=='DESCRIPTION_TOO_SHORT') {
-          this.errorMessage = "Description is too short. Write more";
-        } else if(error.valueOf().error.value=='VER'){
-          this.errorMessage = "Version syntax is incorrect"
-        }
+        console.log("Update error:" + error)
       }
     );
 
   }
 
-  validateDescription() {
-    return this.data.description.length >= 250;
+  validateDescription(control: FormControl) {
+    if (control.value === null ||
+      control.value === undefined ||
+      control.value === '') {
+      return null;
+    }
+
+    if (control.value.toString().length >= 250) {
+      return null;
+    }
+    return {
+      descriptionInvalid: {
+        description: control.value
+      }
+    }
   }
 
-  validateVersion() {
+  // validateDate(control: FormControl) {
+  //   const regex = new RegExp('([0-9]+)/([0-9]+)/([0-9]+)');
+  //
+  //   if (control.value === null ||
+  //     control.value === undefined ||
+  //     control.value === '') {
+  //     return null;
+  //   }
+  //
+  //   if (regex.test(control.value)) {
+  //     return null;
+  //   }
+  //   return {
+  //     dateInvalid: {
+  //       date: control.value
+  //     }
+  //   }
+  //
+  // }
+
+  validateVersion(control: FormControl) {
     const regex = new RegExp('([a-zA-Z0-9]+).([a-zA-Z0-9]+).([a-zA-Z0-9]+)');
-    return regex.test(this.data.version);
+    if (control.value === null ||
+      control.value === undefined ||
+      control.value === '') {
+      return null;
+    }
+    if (regex.test(control.value)) {
+      return null;
+    }
+    return {
+      versionInvalid: {
+        version: control.value
+      }
+    }
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  getDescriptionErrorMessage() {
+    this.descriptionFormControl.hasError('descriptionInvalid') ? (this.translate.get('Invalid Description').subscribe((res: string) => this.descriptionErrorMessage = res)) :
+      '';
+    return this.descriptionErrorMessage;
+  }
+
+  getVersionErrorMessage() {
+    this.versionFormControl.hasError('versionInvalid') ? (this.translate.get('Invalid Version').subscribe((res: string) => this.versionErrorMessage = res)) :
+      '';
+    return this.versionErrorMessage;
+  }
+
+  getFixedVersionErrorMessage() {
+    this.fixedVersionFormControl.hasError('versionInvalid') ? (this.translate.get('Invalid Version').subscribe((res: string) => this.fixedVersionErrorMessage = res)) :
+      '';
+    return this.fixedVersionErrorMessage;
+  }
+
+  // getDateErrorMessage(){
+  //   this.dateFormControl.hasError('required') ? (this.translate.get('textFieldValidation.required').subscribe((res: string) => this.dateErrorMessage = res)) :
+  //     this.dateFormControl.hasError('dateInvalid') ? (this.translate.get('textFieldValidation.invalidDate').subscribe((res: string) => this.dateErrorMessage = res)) :
+  //       '';
+  //
+  //   return this.dateErrorMessage;
+  // }
 }
