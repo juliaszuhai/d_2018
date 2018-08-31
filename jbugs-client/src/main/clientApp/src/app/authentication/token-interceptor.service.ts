@@ -4,6 +4,7 @@ import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {AuthenticationService} from './authentication.service';
 import {Router} from '@angular/router';
+import {MatSnackBar} from "@angular/material";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   tokenField = 'token';
 
-  constructor(public auth: AuthenticationService, private router: Router) {
+  constructor(public auth: AuthenticationService, private router: Router, public snackBar: MatSnackBar) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -29,28 +30,23 @@ export class TokenInterceptorService implements HttpInterceptor {
      */
     return next.handle(request).pipe(catchError((error, caught) => {
       // intercept the respons error and displace it to the console
-      console.log(error);
-      this.handleAuthError(error);
+      // console.log(error);;
+      this.handleError(error);
       return of(error);
     }) as any);
   }
 
-  private handleAuthError(err: HttpErrorResponse): Observable<any> {
-    if (err.status === 403) {
-      console.log('handled error ' + err.status);
-      this.router.navigate([`/login`]);
-
-      throw err;
-    } else if (err.status === 401) {
-      console.log('handled error ' + err.status);
-      this.router.navigate([`/login`]);
-
-      throw err;
-    } else if (err.status === 302) {
-
-    } else {
-      console.log('something went really wrong: ' + err.status);
-    }
-    throw err;
+  openSnackBar(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 5000,
+    })
   }
+
+  private handleError(err: HttpErrorResponse) {
+    console.log('snackbar: ' + err.error);
+
+    this.openSnackBar(err.error);
+
+  }
+
 }

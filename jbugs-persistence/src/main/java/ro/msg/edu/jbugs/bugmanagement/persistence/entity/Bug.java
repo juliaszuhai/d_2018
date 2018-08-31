@@ -43,7 +43,7 @@ public class Bug extends BaseEntity  {
     @Column(name = "version", length = MAX_STRING_LENGTH, nullable = false)
     private String version;
 
-    @Column(name = "targetDate", nullable = false)
+    @Column(name = "targetDate")
     private Date targetDate;
 
     @Column(name = "status", nullable = false)

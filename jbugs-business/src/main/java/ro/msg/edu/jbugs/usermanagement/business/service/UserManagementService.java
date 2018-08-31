@@ -138,8 +138,6 @@ public class UserManagementService {
 		User user = userOptional.orElseThrow(() -> new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
 		user.setActive(false);
 		userPersistenceManager.updateUser(user);
-
-
 		notificationManagementService.sendNotification(TypeNotification.USER_DEACTIVATED, UserDTOHelper.fromEntity(user), null, getAllUsersWithRole(permissionPersistenceManager.getRoleByType("ADM").get()));
 	}
 
@@ -156,7 +154,7 @@ public class UserManagementService {
 	}
 
 	/**
-	 * Activates a user, granting them the ability to login. asdf
+     * Activates a user, granting them the ability to login.
 	 *
 	 * @param username
 	 */

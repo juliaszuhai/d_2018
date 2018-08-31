@@ -34,9 +34,9 @@ public class BugAdditionManager {
     public Response addBug(final BugDTO bugDTO) {
         try {
             Bug addedBug = bugManagement.createBug(bugDTO);
-            return Response.ok(new Gson().toJson(((Bug) addedBug).getId())).build();
+            return Response.ok(new Gson().toJson(addedBug.getId())).build();
         } catch (ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getExceptionCode().getMessage()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getExceptionCode()).build();
         }
 
     }
@@ -52,7 +52,7 @@ public class BugAdditionManager {
             bugManagement.addFileToBug(attachment, fileName, id);
             return Response.status(Response.Status.CREATED).build();
         } catch (BusinessException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getExceptionCode().getMessage()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getExceptionCode()).build();
         }
 
 

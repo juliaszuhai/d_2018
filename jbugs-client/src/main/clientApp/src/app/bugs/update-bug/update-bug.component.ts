@@ -74,9 +74,11 @@ export class UpdateBugComponent implements OnInit {
     this.bugmngmt.getStatusSuccessors(this.data.id).subscribe(
       value => {
         this.successorsList = value;
+        if (this.successorsList.indexOf("CLOSED") > -1) {
+          this.successorsList.splice(this.successorsList.indexOf("CLOSED"), 1);
+        }
       }
     )
-    console.log(this.successorsList);
   }
 
   validateDescription(control: FormControl) {

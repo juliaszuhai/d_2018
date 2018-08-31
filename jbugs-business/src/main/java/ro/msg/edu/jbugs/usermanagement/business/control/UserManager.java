@@ -54,7 +54,7 @@ public class UserManager {
 			return Response.ok().build();
 		} catch (BusinessException e) {
 			if (e.getExceptionCode() == ExceptionCode.USER_HAS_ASSIGNED_BUGS) {
-				return Response.status(Response.Status.NOT_FOUND).entity(e.getExceptionCode().getMessage()).build();
+				return Response.status(Response.Status.FOUND).entity(e.getExceptionCode().getMessage()).build();
 			}
 			return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
 		}

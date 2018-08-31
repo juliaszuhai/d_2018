@@ -6,7 +6,14 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
 import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatToolbarModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatMenuModule,
+  MatSnackBarModule,
+  MatTableModule,
+  MatToolbarModule
+} from '@angular/material';
 import {AuthenticationModule} from './authentication/authentication.module';
 import {NavigationModule} from './navigation/navigation.module';
 import {UserModule} from './user/user.module';
@@ -20,7 +27,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {NotificationModule} from "./notification/notification.module";
 import {PermissionGuard} from "./authentication/permission.guard";
 import {BugsGuard} from "./authentication/bugs.guard";
-
+import {ErrorViewComponent} from './error-view/error-view.component';
 
 
 const appRoutes: Routes = [
@@ -40,6 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     RecaptchaDirective,
+    ErrorViewComponent,
 
   ],
   imports: [
@@ -58,6 +66,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     BrowserModule,
     FormsModule,
+    MatSnackBarModule,
     HttpClientModule,
     JwtModule,
     RouterModule.forRoot(appRoutes),
@@ -71,15 +80,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     PermissionManagementModule,
     NotificationModule
   ],
-  providers: [LoginguardGuard, PermissionGuard, BugsGuard],
+  providers: [LoginguardGuard,
+    PermissionGuard,
+    BugsGuard,
+  ],
 
   bootstrap: [AppComponent],
   exports: [
     MatButtonModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatToolbarModule
-  ]
+    MatToolbarModule,
+    MatSnackBarModule
+  ],
 })
 export class AppModule {
 }
