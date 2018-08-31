@@ -11,7 +11,9 @@ public enum ExceptionCode {
     USER_NOT_EXIST(4007, "User not exist"),
     SOMETHING_WRONG_WITH_ATTACHMENT(4008, "Something wrong with attachment"),
     STATUS_INCORRECT_EXCEPTION(4010, "The status is incorrect"),
-    STATUS_INVALID(4009, "Status is invalid");
+    STATUS_INVALID(4009, "Status is invalid"),
+    COULD_NOT_EXPORT_ATTACHMENT(4010, "Could not recreate file"),
+    ATTACHMENT_DOES_NOT_EXIST(4011, "Attachment does not exist");
     int id;
     String message;
 

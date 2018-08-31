@@ -21,11 +21,8 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.sql.rowset.serial.SerialException;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -278,20 +275,46 @@ public class BugManagementService implements BugManagement {
 				Bug bug = optBug.get();
 				byte[] byteFile = Files.readAllBytes(file.toPath());
 				Attachment attachment = new Attachment();
-				attachment.setAttachmentFile(new javax.sql.rowset.serial.SerialBlob(byteFile));
+				attachment.setAttachmentFile(byteFile);
 				attachment.setName(file.getName());
 				this.bugPersistenceManager.addAttachment(attachment);
-				this.bugPersistenceManager.addAttachmentToBug(bug, attachment);
+				this.bugPersistenceManager.createBugWithAttachment(bug, attachment);
 			} catch (IOException e) {
-				throw new BusinessException(ExceptionCode.SOMETHING_WRONG_WITH_ATTACHMENT);
-			} catch (SerialException e) {
-				throw new BusinessException(ExceptionCode.SOMETHING_WRONG_WITH_ATTACHMENT);
-			} catch (SQLException e) {
 				throw new BusinessException(ExceptionCode.SOMETHING_WRONG_WITH_ATTACHMENT);
 			}
 
 		}
 	}
+
+	@Override
+	public List<File> getAttachmentForBug(Long bugId) throws BusinessException {
+		// attachments=bugPersistenceManager.getAttachmentsForBug(bugId);
+		Optional<Bug> bug = bugPersistenceManager.getBugById(bugId);
+		bug.orElseThrow(() -> new BusinessException(ExceptionCode.BUG_NOT_EXIST));
+		List<Attachment> attachments = bug.get().getAttachments();
+		List<File> files = new ArrayList<File>();
+		for (int i = 0; i < attachments.size(); i++) {
+			try {
+				File f = new File(attachments.get(i).getName());
+				byte[] blob = attachments.get(i).getAttachmentFile();
+				ByteArrayInputStream bis = new ByteArrayInputStream(blob);
+				OutputStream out = new FileOutputStream(f);
+				out.write(blob);
+				out.close();
+				files.add(f);
+			} catch (FileNotFoundException e) {
+				throw new BusinessException(ExceptionCode.COULD_NOT_EXPORT_ATTACHMENT);
+			} catch (IOException e) {
+				throw new BusinessException(ExceptionCode.COULD_NOT_EXPORT_ATTACHMENT);
+			}
+		}
+		if (files.size() < 1) {
+			throw new BusinessException(ExceptionCode.ATTACHMENT_DOES_NOT_EXIST);
+		}
+
+		return files;
+	}
+
 
 //	@Override
 //	public List<Integer> getStatusSuccessor(Long id) throws BusinessException {
@@ -327,3 +350,4 @@ public class BugManagementService implements BugManagement {
 		return statuses;
 	}
 }
+

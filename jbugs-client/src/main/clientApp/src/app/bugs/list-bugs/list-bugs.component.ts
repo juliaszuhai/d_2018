@@ -66,7 +66,7 @@ export class ListBugsComponent implements OnInit {
       severity: '',
       createdByUser: null,
       assignedTo: null,
-      attachments: []
+      fileName: '',
     };
 
     this.relatedUser = {

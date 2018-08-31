@@ -25,6 +25,7 @@ description: string;
     console.log(id);
     this.bugPopupService.getPdf(id);
 
+
   }
 
   onNoClick(): void {
@@ -34,4 +35,7 @@ description: string;
   ngOnInit() {
   }
 
+  downloadAttachment(id: number | any, data) {
+    this.bugPopupService.getFile(id);
+  }
 }

@@ -50,7 +50,7 @@ public class BugPersistenceManager {
 
     public List<Attachment> getAttachmentsForBug(@NotNull Long id)
     {
-        TypedQuery<Attachment> q= em.createNamedQuery(Attachment.GET_ATTACHMENTS_FOR_BUG,Attachment.class).setParameter("id", id);
+        TypedQuery<Attachment> q = em.createNamedQuery(Attachment.GET_ATTACHMENTS_FOR_BUG, Attachment.class).setParameter("bugId", id);
         return q.getResultList();
     }
 
@@ -81,12 +81,6 @@ public class BugPersistenceManager {
         return bug;
     }
 
-    public Attachment addAttachmentToBug(@NotNull Bug bug, @NotNull Attachment attachment)
-    {
-        bug.getAttachments().add(attachment);
-        em.merge(bug);
-        return attachment;
-    }
 
     /**
      * @param title

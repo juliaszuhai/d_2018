@@ -16,3 +16,17 @@
     picture_as_pdf
   </i>
 </button>
+<br>
+<div>
+  <h3>Attachment:</h3>
+  <button color="primary"
+          mat-raised-button
+          (click)="downloadAttachment(data.id)"
+          title="Export bug in pdf"
+          layout-align="center-end"
+  >
+    <i class="material-icons">
+      cloud_download
+    </i>
+  </button>
+</div>

@@ -38,7 +38,7 @@ export class AddBugComponent implements OnInit {
       severity: '',
       createdByUser: {id: 4, username: bugService.getLoggedUserName()},
       assignedTo: {id: 4, username: ''},
-      fileName: ''
+      fileName: null
 
     }
     this.error = false;
@@ -100,6 +100,8 @@ export class AddBugComponent implements OnInit {
   parseFile($event) {
     let eventTarget = <HTMLInputElement>event.target;
     this.attachment = eventTarget.files[0];
+    this.bugData.fileName = this.attachment.name;
+    //alert(this.attachment.name);
 
   }
 }

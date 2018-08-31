@@ -12,7 +12,9 @@ import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.File;
 import java.util.List;
 
 @Path("/list-bugs")
@@ -50,10 +52,6 @@ public class BugManagementController {
     }
 
 
-
-
-
-
     @POST
     @Secured("BUG_MANAGEMENT")
     @Consumes("application/json")
@@ -79,9 +77,28 @@ public class BugManagementController {
         } catch (BusinessException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
         }
-
-
     }
+
+    @GET
+    @Path("/get-attachment")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response getAttachmentsForBug(@QueryParam("bugId") Long bugId) {
+        try {
+            List<File> files = bugManagement.getAttachmentForBug(bugId);
+            for (int i = 0; i < files.size(); i++) {
+                Response.ResponseBuilder response = Response.ok(files.get(i), MediaType.APPLICATION_OCTET_STREAM);
+                response.header("Content-Disposition",
+                        "attachment; filename=" + files.get(i).getName() + "");
+                return response.build();
+            }
+            return Response.status(Response.Status.OK).build();
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+        }
+    }
+
+
+
 
 
     @GET

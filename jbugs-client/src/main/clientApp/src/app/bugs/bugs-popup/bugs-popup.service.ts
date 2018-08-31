@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "../../../../node_modules/@angular/common/http";
 import {saveAs} from 'file-saver/FileSaver';
+import {BugData} from "../bugs.service";
 
 @Injectable({
   providedIn: 'root'
@@ -25,4 +26,14 @@ export class BugsPopupService {
 
   }
 
+  getFile(id: number, data: BugData) {
+    const params = new HttpParams().set('bugId', id.toString());
+    const headers = new HttpHeaders();
+    headers.append('accept', 'application/octet-stream');
+    return this.http.get(this.baseURL + '/list-bugs/get-attachment', {params: params, responseType: 'blob'})
+      .subscribe(res => {
+        let filename = data.fileName;
+        saveAs(res, filename);
+      });
+  }
 }

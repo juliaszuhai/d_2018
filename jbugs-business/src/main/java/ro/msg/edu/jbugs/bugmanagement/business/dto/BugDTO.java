@@ -17,13 +17,21 @@ public class BugDTO {
     private Severity severity;
     private NameIdDTO createdByUser;
     private NameIdDTO assignedTo;
-    private String attachments;
+    private String fileName;
     private String targetDateString;
     private String statusString;
     private String severityString;
     private String createdByUserString;
     private String assignedToString;
 
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public String getTargetDateString() {
         return targetDateString;
@@ -63,14 +71,6 @@ public class BugDTO {
 
     public void setAssignedToString(String assignedToString) {
         this.assignedToString = assignedToString;
-    }
-
-    public String getAttachments() {
-        return attachments;
-    }
-
-    public void setAttachments(String attachments) {
-        this.attachments = attachments;
     }
 
     public String getTitle() {
