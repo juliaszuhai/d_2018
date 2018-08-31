@@ -106,13 +106,7 @@ public class BugManagementController {
     @Path("/get-status-successors")
     @Produces("application/json")
     public String getStatusSuccessors(@QueryParam("id") Long id) throws BusinessException, JsonProcessingException {
-//        try {
-////            List<Status> successors=bugManagement.getStatusSuccessor(id);
-//            bugManagement.getStatusSuccessor(id);
-//            return Response.ok().build();
-//        } catch (BusinessException e) {
-//            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
-//        }
+
         List<Status> allBugs = bugManagement.getStatusSuccessor(id);
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(allBugs);
