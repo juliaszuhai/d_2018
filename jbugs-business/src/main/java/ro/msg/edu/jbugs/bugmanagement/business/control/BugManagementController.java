@@ -55,7 +55,7 @@ public class BugManagementController {
 
 
     @POST
-    // @Secured("BUG_MANAGEMENT")
+    @Secured("BUG_MANAGEMENT")
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/update-bug")
@@ -69,7 +69,7 @@ public class BugManagementController {
     }
 
     @GET
-//    @Secured("BUG_MANAGEMENT")
+    @Secured("BUG_MANAGEMENT")
     @Path("/countBugByStatus")
     @Produces("application/json")
     public Response countBugByStatus(@QueryParam("status") Status status) {

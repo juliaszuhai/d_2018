@@ -155,7 +155,7 @@ public class BugManagementService implements BugManagement {
 
 			Bug bugAfter = BugDTOHelper.updateBugWithDTO(bugBefore, bugDTO);
 
-			bugAfter = setUsersFromDTO(bugDTO, bugAfter);
+			bugAfter = setUsersFromDTO(bugDTO, bugBefore);
 
 			List<Integer> succesors = bugBefore.getStatus().getSuccesors();
 			System.out.println("vai" + succesors);
