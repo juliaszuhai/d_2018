@@ -66,6 +66,8 @@ public interface BugManagement {
     Long countBugsByStatus(Status status) throws BusinessException;
 
     void addFileToBug(File file, Long bugId) throws BusinessException;
+
+    List<Status> getStatusSuccessor(Long id) throws BusinessException;
 }
 
 

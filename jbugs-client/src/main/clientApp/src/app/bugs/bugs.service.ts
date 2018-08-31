@@ -158,5 +158,11 @@ export class BugListService {
     return this.http.get<number>(this.baseURL + '/list-bugs/countBugByStatus', {params: params});
   }
 
+  getStatusSuccessors(id) {
+    let params = new HttpParams();
+    params = params.set('id', id);
+    return this.http.get<number>(this.baseURL + '/list-bugs/get-status-successors', {params: params});
+
+  }
 
 }

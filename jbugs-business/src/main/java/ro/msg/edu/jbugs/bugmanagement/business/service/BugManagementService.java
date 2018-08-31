@@ -292,4 +292,38 @@ public class BugManagementService implements BugManagement {
 
 		}
 	}
+
+//	@Override
+//	public List<Integer> getStatusSuccessor(Long id) throws BusinessException {
+//		Optional<Bug> bugOptional = bugPersistenceManager.getBugById(id);
+//		bugOptional.orElseThrow(()-> new BusinessException(ExceptionCode.BUG_NOT_EXIST));
+//		return bugOptional.get().getStatus().getSuccesors();
+//	}
+
+	@Override
+	public List<Status> getStatusSuccessor(Long id) throws BusinessException {
+		Optional<Bug> bugOptional = bugPersistenceManager.getBugById(id);
+		bugOptional.orElseThrow(() -> new BusinessException(ExceptionCode.BUG_NOT_EXIST));
+		return convertStatus(bugOptional.get().getStatus().getSuccesors());
+	}
+
+	private List<Status> convertStatus(List<Integer> values) {
+		List<Status> statuses = new ArrayList<>();
+		values.forEach(value -> {
+			if (value == 1) {
+				statuses.add(Status.NEW);
+			} else if (value == 2) {
+				statuses.add(Status.IN_PROGRESS);
+			} else if (value == 3) {
+				statuses.add(Status.FIXED);
+			} else if (value == 4) {
+				statuses.add(Status.CLOSED);
+			} else if (value == 5) {
+				statuses.add(Status.REJECTED);
+			} else if (value == 6) {
+				statuses.add(Status.INFO_NEEDED);
+			}
+		});
+		return statuses;
+	}
 }

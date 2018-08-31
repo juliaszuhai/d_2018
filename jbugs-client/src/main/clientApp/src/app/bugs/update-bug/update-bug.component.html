@@ -76,13 +76,18 @@
 
     <br>
     <mat-form-field>
-      <input
-        #statusControl="ngModel"
-        #statusElement
-        name="status"
-        matInput
-        [(ngModel)]="data.statusString"
-        placeholder="{{'bugTable.status'| translate}}">
+      <!--<input-->
+      <!--#statusControl="ngModel"-->
+      <!--#statusElement-->
+      <!--name="status"-->
+      <!--matInput-->
+      <!--[(ngModel)]="data.statusString"-->
+      <!--placeholder="{{'bugTable.status'| translate}}">-->
+      <mat-select [(value)]="data.statusString">
+        <mat-option *ngFor="let status of successorsList" [value]="status">
+          {{status}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <br>
     <mat-form-field>

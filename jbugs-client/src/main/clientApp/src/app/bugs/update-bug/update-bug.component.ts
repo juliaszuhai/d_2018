@@ -29,9 +29,11 @@ export class UpdateBugComponent implements OnInit {
   fixedVersionErrorMessage: string;
   versionErrorMessage: string;
   matcher = new MyErrorStateMatcher();
+  successorsList;
 
 
   ngOnInit() {
+    this.getStatusSuccessor();
   }
 
   descriptionFormControl = new FormControl('', [
@@ -66,6 +68,15 @@ export class UpdateBugComponent implements OnInit {
       }
     );
 
+  }
+
+  getStatusSuccessor() {
+    this.bugmngmt.getStatusSuccessors(this.data.id).subscribe(
+      value => {
+        this.successorsList = value;
+      }
+    )
+    console.log(this.successorsList);
   }
 
   validateDescription(control: FormControl) {
