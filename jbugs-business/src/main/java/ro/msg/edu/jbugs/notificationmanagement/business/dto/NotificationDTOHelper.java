@@ -20,7 +20,7 @@ public class NotificationDTOHelper {
         notificationDTO.setUrlBug(notification.getUrlBug());
 		notificationDTO.setDateSent(notification.getDateSent());
 		notificationDTO.setTypeNotification(notification.getTypeNotification());
-
+		notificationDTO.setRead(notification.getRead());
 		return notificationDTO;
 	}
 
@@ -36,6 +36,7 @@ public class NotificationDTOHelper {
 		notification.setUrlBug(notificationDTO.getUrlBug());
 		notification.setOldData(notificationDTO.getOldData());
 		notification.setNewData(notificationDTO.getNewData());
+		notification.setRead(notificationDTO.isRead());
 
 		return notification;
 	}

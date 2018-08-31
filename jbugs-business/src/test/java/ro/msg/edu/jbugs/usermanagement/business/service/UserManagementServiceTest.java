@@ -136,7 +136,11 @@ public class UserManagementServiceTest {
         when(userPersistenceManager.getUserByUsername(any(String.class)))
                 .thenReturn(Optional.empty());
 
-        doNothing().when(notificationManagementService).sendNotification(any(TypeNotification.class), any(Object.class), any(Object.class), any(List.class));
+        doNothing().when(notificationManagementService).sendNotification(
+                any(TypeNotification.class),
+                any(Object.class),
+                any(Object.class),
+                any(List.class));
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("Cristi");
         userDTO.setLastName("Borcea");

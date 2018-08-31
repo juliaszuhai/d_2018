@@ -12,7 +12,15 @@ public class NotificationDTO {
 	private TypeNotification typeNotification;
 	private String oldData;
 	private String newData;
+    private boolean isRead;
 
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
 
 	public Long getId() {
 		return id;

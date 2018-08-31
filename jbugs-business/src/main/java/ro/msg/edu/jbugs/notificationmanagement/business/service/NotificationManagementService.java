@@ -35,7 +35,9 @@ public class NotificationManagementService {
     //TODO comentariu javadoc
     public void sendNotification(TypeNotification typeNotification, Object newData, Object oldData, List<User> sendTo) {
         NotificationDTO notificationDTO = new NotificationDTO();
+        notificationDTO.setRead(false);
         notificationDTO.setTypeNotification(typeNotification);
+
         notificationDTO.setNewData((new Gson().toJson(newData)));
         if (oldData != null)
             notificationDTO.setOldData((new Gson().toJson(oldData)));

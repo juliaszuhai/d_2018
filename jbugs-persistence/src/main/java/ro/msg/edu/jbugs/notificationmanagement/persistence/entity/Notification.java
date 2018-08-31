@@ -22,7 +22,6 @@ public class Notification extends BaseEntity {
 	@Transient
 	public static final String GET_ALL_NOTIFICATIONS = "get_All_Notifications";
 	public static final String GET_NOTIFICATION_BY_TYPE = "get_Notification_By_Type";
-	public static final String GET_NOTIFICATIONS_FOR_USER = "get_Notifications_For_User";
 	public static final String GET_NOTIFICATION_BY_ID = "get_Notification_By_Id";
 	public static final String DELETE_NOTIFICATION_BY_ID = "delete_Notification_By_Id";
 	public static final String DELETE_EXPIRED_NOTIFICATIONS = "delete_expired_notifications";
@@ -33,8 +32,8 @@ public class Notification extends BaseEntity {
 	@Column(name = "dateSent", nullable = false)
 	private Date dateSent;
 
-	@Column(name = "read")
-	private Boolean read;
+	@Column(name = "isRead", nullable = false)
+	private Boolean isRead;
 
 	@Column(name = "urlBug")
 	private Long urlBug;
@@ -85,6 +84,15 @@ public class Notification extends BaseEntity {
 
 	public void setNewData(String newData) {
 		this.newData = newData;
+	}
+
+
+	public Boolean getRead() {
+		return isRead;
+	}
+
+	public void setRead(Boolean read) {
+		isRead = read;
 	}
 
 	@Override
