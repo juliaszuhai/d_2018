@@ -272,7 +272,7 @@ public class BugManagementService implements BugManagement {
 	}
 
 	@Override
-	public void addFileToBug(File file, Long bugId) throws BusinessException {
+    public void addFileToBug(File file, String fileName, Long bugId) throws BusinessException {
 		Optional<Bug> optBug = this.bugPersistenceManager.getBugById(bugId);
 		if (optBug.isPresent()) {
 			try {
@@ -280,7 +280,7 @@ public class BugManagementService implements BugManagement {
 				byte[] byteFile = Files.readAllBytes(file.toPath());
 				Attachment attachment = new Attachment();
 				attachment.setAttachmentFile(byteFile);
-				attachment.setName(file.getName());
+                attachment.setName(fileName);
 				this.bugPersistenceManager.addAttachment(attachment);
 				this.bugPersistenceManager.createBugWithAttachment(bug, attachment);
 			} catch (IOException e) {

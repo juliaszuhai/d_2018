@@ -76,7 +76,7 @@ export class AddBugComponent implements OnInit {
       .subscribe(
         data => {
           if (this.attachment != null)
-            this.bugService.addFile(data, this.attachment).subscribe(
+            this.bugService.addFile(data, this.attachment.name, this.attachment).subscribe(
               data => {
                 this.error = false;
               }

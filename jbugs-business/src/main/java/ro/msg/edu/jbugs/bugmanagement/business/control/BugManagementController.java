@@ -24,7 +24,7 @@ public class BugManagementController {
     private BugManagement bugManagement;
 
     @GET
-    @Secured("BUG_MANAGEMENT")
+    //@Secured("BUG_MANAGEMENT")
     @Produces("application/json")
     @Consumes("application/x-www-form-urlencoded")
     public String getAllBugs() throws JsonProcessingException {
@@ -34,7 +34,7 @@ public class BugManagementController {
     }
 
     @GET
-    @Secured("BUG_MANAGEMENT")
+    //@Secured("BUG_MANAGEMENT")
     @Path("/getByFilter")
     @Produces("application/json")
     public String filter(@QueryParam("title") String title,

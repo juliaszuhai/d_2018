@@ -46,9 +46,10 @@ public class BugAdditionManager {
     @Path("/add-file")
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     public Response addFile(@FormDataParam("id") Long id,
+                            @FormDataParam("fileName") String fileName,
                             @FormDataParam("attachment") File attachment) {
         try {
-            bugManagement.addFileToBug(attachment, id);
+            bugManagement.addFileToBug(attachment, fileName, id);
             return Response.status(Response.Status.CREATED).build();
         } catch (BusinessException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getExceptionCode().getMessage()).build();

@@ -38,6 +38,10 @@ public class BugDTOHelper {
         assignedTo.setId(bug.getAssignedTo().getId());
         assignedTo.setUsername(bug.getAssignedTo().getUsername());
         bugDTO.setAssignedTo(assignedTo);
+        if (bug.getAttachments().size() > 0) {
+            bugDTO.setFileName(bug.getAttachments().get(0).getName());
+        }
+
         return bugDTO;
 
     }
@@ -74,6 +78,7 @@ public class BugDTOHelper {
         bug.setStatus(bugDTO.getStatus());
         bug.setFixedVersion(bugDTO.getFixedVersion());
         bug.setSeverity(bugDTO.getSeverity());
+
 
         return bug;
     }

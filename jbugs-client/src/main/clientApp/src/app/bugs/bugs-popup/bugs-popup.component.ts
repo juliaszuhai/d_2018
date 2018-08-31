@@ -35,7 +35,10 @@ description: string;
   ngOnInit() {
   }
 
-  downloadAttachment(id: number | any, data) {
-    this.bugPopupService.getFile(id);
+  downloadAttachment(id: number | any, fileName: string) {
+    this.bugPopupService.getFile(id, fileName);
+    console.log(fileName);
+
+
   }
 }

@@ -17,13 +17,12 @@ public class BugDTO {
     private Severity severity;
     private NameIdDTO createdByUser;
     private NameIdDTO assignedTo;
-    private String fileName;
     private String targetDateString;
     private String statusString;
     private String severityString;
     private String createdByUserString;
     private String assignedToString;
-
+    private String fileName;
 
     public String getFileName() {
         return fileName;

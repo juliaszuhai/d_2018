@@ -98,7 +98,8 @@ export class ListBugsComponent implements OnInit {
       width: '75%',
       data: {
         description: bug.description,
-        id: bug.id
+        id: bug.id,
+        fileName: bug.fileName
       }
     });
 
@@ -166,6 +167,7 @@ export class ListBugsComponent implements OnInit {
         next: (value: any[]) => {
           console.log(value);
           this.bugList = new MatTableDataSource<BugData[]>(value['filteredList']);
+          console.log(value['filteredList'].fileName)
           this.length = value['actualListSize'];
           this.sortDataSource();
         }
@@ -221,6 +223,7 @@ export class ListBugsComponent implements OnInit {
     if (this.id) {
       this.filter(this.bugData.title, this.bugData.description, this.bugData.status, this.bugData.severity, 0, 1, this.id);
     }
+
 
   }
 }

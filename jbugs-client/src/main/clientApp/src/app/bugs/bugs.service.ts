@@ -82,12 +82,14 @@ export class BugListService {
      return this.http.get<BugData[]>(this.baseURL + '/list-bugs/getByFilter', {params: params});
   }
 
-  addFile(value, attachment: File) {
+  addFile(value, fileName: string, attachment: File) {
     const body = new FormData();
     body.append("attachment", attachment);
     console.log(body.get("attachment"));
     body.append("id", value);
     console.log(body.get("id"));
+    body.append("fileName", fileName);
+    console.log(body.get("fileName"));
     return this.http.post(this.baseURL + '/bug-management/add-file',
       body,
       {

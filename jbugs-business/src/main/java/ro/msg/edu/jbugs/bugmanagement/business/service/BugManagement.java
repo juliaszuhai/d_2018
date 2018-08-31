@@ -65,7 +65,7 @@ public interface BugManagement {
      */
     Long countBugsByStatus(Status status) throws BusinessException;
 
-    void addFileToBug(File file, Long bugId) throws BusinessException;
+    void addFileToBug(File file, String fileName, Long bugId) throws BusinessException;
 
     List<File> getAttachmentForBug(Long bugId) throws BusinessException;
 
