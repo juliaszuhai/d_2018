@@ -102,8 +102,8 @@ export class BugListService {
 
   validateBug(bug) {
     bug.targetDateString = bug.targetDate.toISOString().slice(0,10);
-    bug.assignedToString=bug.assignedTo.username;
-    bug.createdByUserString=bug.createdByUser.username;
+    bug.assignedToString = bug.assignedTo.username;
+    bug.createdByUserString = bug.createdByUser.username;
     return this.http.post(this.baseURL + '/bug-management/add-bug',
       bug,
       {

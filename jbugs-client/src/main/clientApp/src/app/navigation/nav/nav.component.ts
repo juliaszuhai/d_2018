@@ -37,7 +37,6 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
 
-    //this.translatorService.getTranslationObservable(0);
 
   }
 

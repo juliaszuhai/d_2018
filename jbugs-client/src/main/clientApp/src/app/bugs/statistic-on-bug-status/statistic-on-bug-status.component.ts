@@ -12,14 +12,6 @@ export class StatisticOnBugStatusComponent implements OnInit {
   @ViewChild('baseChart')
   element: ElementRef;
 
-  labelNew: string;
-  labelProgress: string;
-  labelFixed: string;
-  labelClosed: string;
-  labelRejected: string;
-  labelInfo: string;
-
-
   public doughnutChartLabels: string[] = [];
   public doughnutChartData: number[] = [];
   public doughnutChartType: string = 'doughnut';
