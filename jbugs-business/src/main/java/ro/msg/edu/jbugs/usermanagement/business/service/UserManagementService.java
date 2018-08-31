@@ -62,7 +62,7 @@ public class UserManagementService {
 		userPersistenceManager.createUser(user);
 
 		receivers.add(user);
-		notificationManagementService.sendNotification(TypeNotification.WELCOME_NEW_USER, user, null, receivers);
+		notificationManagementService.sendNotification(TypeNotification.WELCOME_NEW_USER, UserDTOHelper.fromEntity(user), null, receivers);
 
 		return UserDTOHelper.fromEntity(user);
 	}
@@ -146,7 +146,7 @@ public class UserManagementService {
 		userPersistenceManager.updateUser(user);
 
 
-		notificationManagementService.sendNotification(TypeNotification.USER_DEACTIVATED, user, null, getAllUsersWithRole(permissionPersistenceManager.getRoleByType("ADM").get()));
+		notificationManagementService.sendNotification(TypeNotification.USER_DEACTIVATED, UserDTOHelper.fromEntity(user), null, getAllUsersWithRole(permissionPersistenceManager.getRoleByType("ADM").get()));
 	}
 
 
@@ -368,7 +368,7 @@ public class UserManagementService {
 
 			receivers.add(userAfter);
 			receivers.add(userRequester);
-			notificationManagementService.sendNotification(TypeNotification.USER_UPDATED, userAfter, userBefore, receivers);
+			notificationManagementService.sendNotification(TypeNotification.USER_UPDATED, UserDTOHelper.fromEntity(userAfter), UserDTOHelper.fromEntity(userBefore), receivers);
 
 
 			return userDTO;

@@ -111,7 +111,7 @@ public class BugManagementService implements BugManagement {
 
 		this.isBugValid(bug);
 		bugPersistenceManager.createBug(bug);
-		notificationManagementService.sendNotification(TypeNotification.BUG_CREATED, bug, null, receivers);
+		notificationManagementService.sendNotification(TypeNotification.BUG_CREATED, BugDTOHelper.fromEntity(bug), null, receivers);
 
 		return bug;
 
@@ -178,7 +178,7 @@ public class BugManagementService implements BugManagement {
 				receivers.add(bugAfter.getAssignedTo());
 				receivers.add(bugAfter.getCreatedByUser());
 				bugPersistenceManager.updateBug(bugAfter);
-				notificationManagementService.sendNotification(TypeNotification.BUG_UPDATED, bugAfter, bugBefore, receivers);
+				notificationManagementService.sendNotification(TypeNotification.BUG_UPDATED, BugDTOHelper.fromEntity(bugAfter), BugDTOHelper.fromEntity(bugBefore), receivers);
 
 
 
