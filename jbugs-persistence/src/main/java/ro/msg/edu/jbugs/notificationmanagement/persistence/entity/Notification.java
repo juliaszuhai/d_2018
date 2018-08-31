@@ -33,6 +33,8 @@ public class Notification extends BaseEntity {
 	@Column(name = "dateSent", nullable = false)
 	private Date dateSent;
 
+	@Column(name = "read")
+	private Boolean read;
 
 	@Column(name = "urlBug")
 	private Long urlBug;

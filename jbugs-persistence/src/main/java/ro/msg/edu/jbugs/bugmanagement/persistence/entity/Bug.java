@@ -65,9 +65,9 @@ public class Bug extends BaseEntity  {
     @JoinColumn(name="assignedTo")
     private User assignedTo;
 
-    @OneToMany(targetEntity=Attachment.class)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bugID")
     private List<Attachment> attachments;
-
 
     public String getTitle() {
         return title;

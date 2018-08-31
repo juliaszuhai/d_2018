@@ -1,11 +1,12 @@
 package ro.msg.edu.jbugs.notificationmanagement.persistence.dao;
 
 import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
-import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.Stateless;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import java.util.*;
 
 @Stateless
@@ -17,17 +18,7 @@ public class NotificationPersistenceManager {
     @PersistenceContext(unitName = "jbugs-persistence")
     private EntityManager em;
 
-    /**
-     * Get a list of all notifications for a specific user.
-     *
-     * @param id
-     * @return : List of Notification, empty if there are none
-     */
-    public List<Notification> getAllNotificationsByUserId(@NotNull Long id) {
-        return em.createNamedQuery(User.GET_NOTIFICATIONS_BY_USERID, Notification.class)
-                .setParameter("id", id).getResultList();
 
-    }
 
     /**
      * Get a list of all notifications stored in database.
@@ -39,38 +30,11 @@ public class NotificationPersistenceManager {
         return q.getResultList();
     }
 
-    public Optional<Notification> getNotificationById(@NotNull Long id) {
-        TypedQuery<Notification> q = em.createNamedQuery(Notification.GET_NOTIFICATION_BY_ID, Notification.class)
-                .setParameter("id", id);
-        try {
-            return Optional.of(q.getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
-    }
-
-    public Notification createNotification(@NotNull Notification notification) {
-        em.persist(notification);
-        em.flush();
-        return notification;
-
-    }
 
     /**
-     * Delete the notification by id
-     *
-     * @param id: of the notification
-     * @return boolean
+     * Executes a query which deletes all Notifications older than 30 days
+     * @return number of deleted entries
      */
-    public Boolean deleteNotificationById(@NotNull Long id) {
-        TypedQuery<Notification> namedQuery = em.createNamedQuery(Notification.DELETE_NOTIFICATION_BY_ID, Notification.class);
-        int idDeletedNotification = namedQuery
-                .setParameter("id", id)
-                .executeUpdate();
-        em.flush();
-        return idDeletedNotification > 0;
-    }
-
     public Integer deleteExpiredNotifications() {
         Calendar calendar = new GregorianCalendar();
         calendar.setTimeZone(TimeZone.getTimeZone("UTC+2"));//Munich time
