@@ -158,7 +158,7 @@ public class BugManagementService implements BugManagement {
 		Optional<Bug> bugBeforeOpt = bugPersistenceManager.getBugById(bugDTO.getId());
 		if (bugBeforeOpt.isPresent()) {
 			Bug bugBefore = bugBeforeOpt.get();
-
+			List<User> receivers = new ArrayList<>();
 
 			Bug bugAfter = BugDTOHelper.updateBugWithDTO(bugBefore, bugDTO);
 
@@ -175,7 +175,11 @@ public class BugManagementService implements BugManagement {
 			if (succesors.contains(val)) {
 				bugAfter.setStatus(Status.valueOf(bugDTO.getStatusString()));
 				this.isBugValid(bugAfter);
+				receivers.add(bugAfter.getAssignedTo());
+				receivers.add(bugAfter.getCreatedByUser());
 				bugPersistenceManager.updateBug(bugAfter);
+				notificationManagementService.sendNotification(TypeNotification.BUG_UPDATED, bugAfter, bugBefore, receivers);
+
 
 
 			} else {
