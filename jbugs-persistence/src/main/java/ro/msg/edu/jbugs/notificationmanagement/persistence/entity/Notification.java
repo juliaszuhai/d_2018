@@ -38,10 +38,10 @@ public class Notification extends BaseEntity {
 	@Column(name = "urlBug")
 	private Long urlBug;
 
-	@Column(name = "oldData", length = 3000)
+    @Column(name = "oldData", length = 30000)
 	private String oldData;
 
-	@Column(name = "newData", length = 3000)
+    @Column(name = "newData", length = 30000)
 	private String newData;
 
 
