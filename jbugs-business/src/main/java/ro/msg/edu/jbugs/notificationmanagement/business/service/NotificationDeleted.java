@@ -14,7 +14,7 @@ public class NotificationDeleted {
     /**
      * Activate a programatic timer that deletes the notifications that are older than 30 days
      */
-    @Schedule(second = "5", minute = "*", hour = "*")
+    @Schedule(second = "*", minute = "*", hour = "23")
     public void deleteNotification() {
 
         notificationManagementService.deleteExpiredNotifications();
