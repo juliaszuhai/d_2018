@@ -13,7 +13,8 @@ import java.util.Objects;
 				@NamedQuery(name = Notification.GET_ALL_NOTIFICATIONS, query = "SELECT n FROM Notification n"),
 				@NamedQuery(name = Notification.GET_NOTIFICATION_BY_TYPE, query = "SELECT n FROM Notification n WHERE n.typeNotification=:type"),
 				@NamedQuery(name = Notification.GET_NOTIFICATION_BY_ID, query = "SELECT n FROM Notification n WHERE n.id=:id"),
-				@NamedQuery(name = Notification.DELETE_NOTIFICATION_BY_ID, query = "DELETE FROM Notification n WHERE n.id=:id")
+				@NamedQuery(name = Notification.DELETE_NOTIFICATION_BY_ID, query = "DELETE FROM Notification n WHERE n.id=:id"),
+				@NamedQuery(name = Notification.DELETE_EXPIRED_NOTIFICATIONS, query = "DELETE FROM Notification n WHERE n.dateSent<:dateExpires")
 		}
 )
 public class Notification extends BaseEntity {
@@ -24,6 +25,7 @@ public class Notification extends BaseEntity {
 	public static final String GET_NOTIFICATIONS_FOR_USER = "get_Notifications_For_User";
 	public static final String GET_NOTIFICATION_BY_ID = "get_Notification_By_Id";
 	public static final String DELETE_NOTIFICATION_BY_ID = "delete_Notification_By_Id";
+	public static final String DELETE_EXPIRED_NOTIFICATIONS = "delete_expired_notifications";
 
 	@Enumerated(EnumType.STRING)
 	private TypeNotification typeNotification;

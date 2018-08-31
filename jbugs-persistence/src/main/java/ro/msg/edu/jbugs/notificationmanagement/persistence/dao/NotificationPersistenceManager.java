@@ -4,18 +4,15 @@ import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Stateless
 public class NotificationPersistenceManager {
 
     private static final long serialVersionUID = 1L;
+    public static final int DAYS_UNTIL_NOTIFICATION_DELETE = 30;
 
     @PersistenceContext(unitName = "jbugs-persistence")
     private EntityManager em;
@@ -72,6 +69,18 @@ public class NotificationPersistenceManager {
                 .executeUpdate();
         em.flush();
         return idDeletedNotification > 0;
+    }
+
+    public Integer deleteExpiredNotifications() {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTimeZone(TimeZone.getTimeZone("UTC+2"));//Munich time
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DATE, -DAYS_UNTIL_NOTIFICATION_DELETE);//substract the number of days to look back
+        Date dateToLookBackAfter = calendar.getTime();
+        TypedQuery<Notification> dateExpires = em.createNamedQuery(Notification.DELETE_EXPIRED_NOTIFICATIONS, Notification.class)
+                .setParameter("dateExpires", dateToLookBackAfter, TemporalType.DATE);
+
+        return dateExpires.executeUpdate();
     }
 
 }

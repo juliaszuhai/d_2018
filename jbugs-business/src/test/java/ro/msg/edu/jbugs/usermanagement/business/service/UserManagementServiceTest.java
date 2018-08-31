@@ -8,6 +8,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
+import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagementService;
+import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
@@ -42,6 +44,9 @@ public class UserManagementServiceTest {
 
 	@Mock
     private PermissionPersistenceManager permissionPersistenceManager;
+
+    @Mock
+    private NotificationManagementService notificationManagementService;
 
 
 
@@ -131,7 +136,7 @@ public class UserManagementServiceTest {
         when(userPersistenceManager.getUserByUsername(any(String.class)))
                 .thenReturn(Optional.empty());
 
-
+        doNothing().when(notificationManagementService).sendNotification(any(TypeNotification.class), any(Object.class), any(Object.class), any(List.class));
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("Cristi");
         userDTO.setLastName("Borcea");
@@ -139,12 +144,6 @@ public class UserManagementServiceTest {
         userDTO.setPhoneNumber("0747046000");
         userDTO.setPassword("IloveSteaua");
 
-//        try {
-//            when(NotificationDTOHelper.toEntity(any(NotificationDTO.class)))
-//                    .thenReturn(new Notification());
-//        } catch (ParseException e) {
-//            fail("shouldn't reach this");
-//        }
         try {
 
             UserDTO createdUser = userManagementController.createUser(userDTO);
