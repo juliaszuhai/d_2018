@@ -44,7 +44,7 @@ public class AuthenticationManager {
             String token = issueToken(user);
             return Response.ok("{\"token\": \""+token+"\"}").build();
         } catch(BusinessException e){
-            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
+            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode()).build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }

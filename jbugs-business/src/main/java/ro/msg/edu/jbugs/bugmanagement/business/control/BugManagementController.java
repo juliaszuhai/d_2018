@@ -62,7 +62,7 @@ public class BugManagementController {
             bugManagement.updateBug(bugDTO);
             return Response.ok().build();
         } catch (BusinessException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
         }
     }
 
@@ -75,7 +75,7 @@ public class BugManagementController {
             Long numberOfBug = bugManagement.countBugsByStatus(status);
             return Response.ok(numberOfBug.toString()).build();
         } catch (BusinessException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
         }
     }
 
@@ -93,7 +93,7 @@ public class BugManagementController {
             }
             return Response.status(Response.Status.OK).build();
         } catch (BusinessException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
         }
     }
 

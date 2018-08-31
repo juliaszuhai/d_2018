@@ -25,6 +25,7 @@
                 name="description"
                 [formControl]="descriptionFormControl"
                 [(ngModel)]="data.description"
+                [errorStateMatcher]="matcher"
                 placeholder="{{'bugTable.description'| translate}}">
 
       <mat-error *ngIf="descriptionFormControl.hasError('descriptionInvalid')">{{getDescriptionErrorMessage()}}
@@ -83,7 +84,7 @@
       <!--matInput-->
       <!--[(ngModel)]="data.statusString"-->
       <!--placeholder="{{'bugTable.status'| translate}}">-->
-      <mat-select [(value)]="data.statusString">
+      <mat-select [(value)]="data.statusString" placeholder="Status" [disabled]="successorsList.length<1">
         <mat-option *ngFor="let status of successorsList" [value]="status">
           {{status}}
         </mat-option>

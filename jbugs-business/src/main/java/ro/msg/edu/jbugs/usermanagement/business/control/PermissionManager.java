@@ -68,7 +68,7 @@ public class PermissionManager {
 			permissionManagementController.addRoleToUser(roleType, username, getRequester(headers));
 			return Response.ok().build();
 		} catch (BusinessException e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
 		}
 	}
 
@@ -83,7 +83,7 @@ public class PermissionManager {
 			permissionManagementController.revokeRoleFromUser(roleType, username, getRequester(headers));
 			return Response.ok().build();
 		} catch (BusinessException e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
 		}
 	}
 
@@ -121,7 +121,7 @@ public class PermissionManager {
 							permissionManagementController.getPermissionsByRole(roleType)))
 					.build();
 		} catch (BusinessException e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
 		}
 	}
 

@@ -149,7 +149,7 @@ export class ListBugsComponent implements OnInit {
         description: bug.description,
         fixedVersion: bug.fixedVersion,
         version: bug.version,
-        targetDate: bug.targetDate,
+        targetDate: new Date(bug.targetDate),
         statusString: bug.status,
         severityString: bug.severity,
         assignedToString: bug.assignedTo.username,
