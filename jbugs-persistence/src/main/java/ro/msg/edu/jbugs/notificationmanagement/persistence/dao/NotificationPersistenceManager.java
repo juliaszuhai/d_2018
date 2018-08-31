@@ -71,10 +71,7 @@ public class NotificationPersistenceManager {
                 .setParameter("id", id)
                 .executeUpdate();
         em.flush();
-        if (idDeletedNotification > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return idDeletedNotification > 0;
     }
+
 }

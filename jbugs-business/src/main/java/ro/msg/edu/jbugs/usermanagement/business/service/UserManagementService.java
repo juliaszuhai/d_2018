@@ -89,11 +89,11 @@ public class UserManagementService {
 		if (!isValidForCreation(userDTO)) {
 			throw new BusinessException(ExceptionCode.USER_VALIDATION_EXCEPTION);
 		}
+
 		//validate if email already exists
 		if (userPersistenceManager.getUserByEmail(userDTO.getEmail()).isPresent()) {
 			throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
 		}
-
 
 	}
 

@@ -4,6 +4,7 @@ package ro.msg.edu.jbugs.usermanagement.persistence.entity;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.Notification;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,8 +56,9 @@ public class User extends BaseEntity {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Role> roles;
 
-    @OneToMany(targetEntity = Notification.class, cascade = CascadeType.ALL)
-    private List<Notification> notifications;
+    @OneToMany
+    @JoinColumn(name = "UserID")
+    private List<Notification> notifications = new ArrayList<>();
 
 
     public User() {

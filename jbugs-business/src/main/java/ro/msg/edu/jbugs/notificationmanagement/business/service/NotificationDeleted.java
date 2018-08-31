@@ -5,7 +5,6 @@ import ro.msg.edu.jbugs.notificationmanagement.persistence.dao.NotificationPersi
 import ro.msg.edu.jbugs.usermanagement.business.service.UserManagementService;
 
 import javax.ejb.EJB;
-import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -27,7 +26,7 @@ public class NotificationDeleted {
     /**
      * Activate a programatic timer that deletes the notifications that are older than 30 days
      */
-    @Schedule(second = "*", minute = "*", hour = "24")
+    //@Schedule(second = "*", minute = "*", hour = "24")
     public void deleteNotification() {
 
         List<NotificationDTO> notificationExpired = getNotificationWithDateExpired();
@@ -35,8 +34,8 @@ public class NotificationDeleted {
         if (!notificationExpired.isEmpty()) {
             notificationExpired.forEach(notification ->
             {
-                notificationManagementService.deleteNotificationFromUsers(notification);
-                notificationPersistenceManager.deleteNotificationById(notification.getId());
+                //notificationManagementService.deleteNotificationFromUsers(notification);
+                //notificationPersistenceManager.deleteNotificationById(notification.getId());
 
             });
 

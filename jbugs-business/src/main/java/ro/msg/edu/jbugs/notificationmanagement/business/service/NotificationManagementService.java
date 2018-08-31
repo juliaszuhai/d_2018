@@ -1,8 +1,12 @@
 package ro.msg.edu.jbugs.notificationmanagement.business.service;
 
+
 import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTO;
 import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTOHelper;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.dao.NotificationPersistenceManager;
+import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
+import ro.msg.edu.jbugs.usermanagement.business.service.UserManagementService;
+import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -19,6 +23,8 @@ public class NotificationManagementService {
     @EJB
     private UserPersistenceManager userPersistenceManager;
 
+    @EJB
+    private UserManagementService userManagementService;
 
     public List<NotificationDTO> getAllNotifications() {
         return notificationPersistenceManager.getAllNotifications()
@@ -36,7 +42,7 @@ public class NotificationManagementService {
         userPersistenceManager.getAllUsers().forEach(user ->
         {
             try {
-                userManagementController.getUserForUsername(user.getUsername()).getNotifications().remove(NotificationDTOHelper.toEntity(notificationDTO));
+                userManagementService.getUserForUsername(user.getUsername()).getNotifications().remove(NotificationDTOHelper.toEntity(notificationDTO));
             } catch (BusinessException e) {
                 e.printStackTrace();
             } catch (ParseException e) {

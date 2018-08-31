@@ -41,7 +41,7 @@ public class UserManager {
 			userManagementController.activateUser(username);
 			return Response.ok().build();
 		} catch (BusinessException e) {
-			return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
+			return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.getExceptionCode().getMessage()).build();
 		}
 	}
 
