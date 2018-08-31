@@ -2,12 +2,15 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "../../../node_modules/@angular/common/http";
 
 export interface NotificationData {
+  dateSent: string,
+  newData,
+  oldData,
   urlBug: string,
-  message: string,
-  targetDate: string,
+  UserID: number,
   typeNotification: string;
 
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +24,6 @@ export class NotificationService {
 
     const params = new HttpParams()
       .set('username', username);
-    return this.http.get(this.baseURL + '/manage-users/get-notification-of-user', {params});
+    return this.http.get<NotificationData[]>(this.baseURL + '/manage-users/get-notification-of-user', {params});
   }
 }

@@ -11,7 +11,8 @@ export interface UserData {
   lastName: string,
   password: string,
   email: string,
-  phoneNumber: string;
+  phoneNumber: string,
+  username: string;
 }
 
 

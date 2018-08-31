@@ -1,5 +1,6 @@
 package ro.msg.edu.jbugs.notificationmanagement.business.service;
 
+
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

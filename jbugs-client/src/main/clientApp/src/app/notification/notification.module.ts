@@ -5,6 +5,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {MatTableModule} from "../../../node_modules/@angular/material/table";
 import {
   MatButtonModule,
+  MatCardModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -55,7 +57,9 @@ const notificationRoutes: Routes = [
     MatIconModule,
     MatTabsModule,
     MatListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
+    MatExpansionModule
   ],
   declarations: [NotificationsComponent,
 

@@ -8,14 +8,16 @@
   },
 
   "notification": {
-    "welcome": "BINE_AI_VENIT_UTILIZATOR_NOU",
-    "userUpdate": "USER_UPDATAT",
-    "bugUpdate": "BUG_UPDATAT",
-    "bugClosed":"BUG_CLOSED",
-    "bugStatusUpdate": "BUG_STATUS_UPDATED",
-    "userDeactivate": "USER_DEACTIVATED",
+    "welcome": "Bine ai venit utilizator nou",
+    "welcomeMessage": "Bun venit pe JBUG, ",
+    "userUpdate": "User updatat",
+    "bugUpdate": "Bug updatat",
+    "bugCreated": "Bug creat",
+    "bugClosed": "Bug inchis",
+    "bugStatusUpdate": "Statusul bug-ului a fost updatat",
+    "userDeactivate": "User dezactivat",
     "urlBug": "URL bug",
-    "message":"Mesaj",
+    "message": "Vizualizeaza mesajul",
     "date": "Data trimiterii",
     "typeNotification": "Tipul notificarii"
   },

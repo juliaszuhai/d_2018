@@ -7,14 +7,15 @@
     "inputPassword": "Input your password here..."
   },
   "notification": {
-    "welcome": "WELCOME_NEW_USER",
-    "userUpdate": "USER_UPDATED",
-    "bugUpdate": "BUG_UPDATED",
-    "bugClosed": "BUG_CLOSED",
-    "bugStatusUpdate": "BUG_STATUS_UPDATED",
-    "userDeactivate": "USER_DEACTIVATED",
+    "welcome": "Welcome New user",
+    "welcomeMessage": "Welcome on JBUG, ",
+    "userUpdate": "User Update",
+    "bugUpdate": "Bug Updated",
+    "bugCreated": "Bug Created",
+    "bugStatusUpdate": "Bug Status Updated",
+    "userDeactivate": "User Deactivate",
     "urlBug": "URL bug",
-    "message": "Message",
+    "message": "Show your message",
     "date": "Send date",
     "typeNotification": "Type notification"
   },

@@ -37,12 +37,12 @@ public class BugAdditionManager {
             return Response.ok(new Gson().toJson(((Bug) addedBug).getId())).build();
         } catch (ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getExceptionCode().getMessage()).build();
-            }
+        }
 
     }
 
 
-	@POST
+    @POST
     @Path("/add-file")
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     public Response addFile(@FormDataParam("id") Long id,
@@ -58,24 +58,5 @@ public class BugAdditionManager {
     }
 
 
-
-
-
-    /*@POST
-    @Path("/with-attachment")
-    @Consumes("application/json")
-    @Produces("application/json")
-    public Response addBugWithAttachment(final BugDTO bugDTO) {
-        try {
-            bugManagement.createBugWithAttachment();
-            return Response.status(Response.Status.CREATED).build();
-
-        } catch (ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException e) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        } catch (BusinessException e) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
-
-    }*/
 }
 
