@@ -102,7 +102,6 @@ public class UserManagementService {
 		return userDTO.getFirstName() != null
 				&& userDTO.getLastName() != null
 				&& userDTO.getEmail() != null
-				&& userDTO.getPassword() != null
 				&& isValidEmail(userDTO.getEmail())
 				&& isValidPhoneNumber(userDTO.getPhoneNumber());
 	}
