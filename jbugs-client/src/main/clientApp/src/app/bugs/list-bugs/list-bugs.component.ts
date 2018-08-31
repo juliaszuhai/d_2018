@@ -98,6 +98,14 @@ export class ListBugsComponent implements OnInit {
       width: '75%',
       data: {
         description: bug.description,
+        title: bug.title,
+        version: bug.version,
+        fixedVersion: bug.fixedVersion,
+        status: bug.status,
+        severity: bug.severity,
+        createdBy: bug.createdByUser.username,
+        assignedTo: bug.assignedTo.username,
+        targetDate: this.getDate(bug.targetDate).toDateString(),
         id: bug.id,
         fileName: bug.fileName
       }
@@ -119,16 +127,16 @@ export class ListBugsComponent implements OnInit {
   }
 
   sortDataSource() {
-    // this.sorted.forEach(arg => {
-    //   this.bugList = this.bugList.data.sort(function (bug1: BugData, bug2: BugData) {
-    //     if (bug1[arg.argument] > bug2[arg.argument]) {
-    //       return arg.order == "asc" ? 1 : -1;
-    //     } else if (bug1[arg.argument] < bug2[arg.argument]) {
-    //       return arg.order == "asc" ? -1 : 1;
-    //     }
-    //     else return 0;
-    //   });
-    // });
+    this.sorted.forEach(arg => {
+      this.bugList = this.bugList.data.sort(function (bug1: BugData, bug2: BugData) {
+        if (bug1[arg.argument] > bug2[arg.argument]) {
+          return arg.order == "asc" ? 1 : -1;
+        } else if (bug1[arg.argument] < bug2[arg.argument]) {
+          return arg.order == "asc" ? -1 : 1;
+        }
+        else return 0;
+      });
+    });
   }
 
 
@@ -167,7 +175,6 @@ export class ListBugsComponent implements OnInit {
         next: (value: any[]) => {
           console.log(value);
           this.bugList = new MatTableDataSource<BugData[]>(value['filteredList']);
-          console.log(value['filteredList'].fileName)
           this.length = value['actualListSize'];
           this.sortDataSource();
         }

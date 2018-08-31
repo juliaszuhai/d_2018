@@ -1,32 +1,56 @@
+<div class="bug-popup-info">
+  <div class="left-side">
+    <h2>{{data.title}}</h2>
+    <p>{{data.description}}</p>
 
+    <div class="bug-users">
+      <div class="bug-prop created-by">
+        <span class="bug-prop-label">Created By: </span> <span>{{data.createdBy}}</span>
+      </div>
+      <div class="bug-prop assigned-to">
+        <span class="bug-prop-label">Assigned To: </span> <span>{{data.assignedTo}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="right-side">
+    <div class="bug-prop version">
+      <span class="bug-prop-label">Version: </span> <span> {{data.version}}</span>
+    </div>
+    <div class="bug-prop fixed-version">
+      <span class="bug-prop-label">Fixed In Version: </span> <span> {{data.fixedVersion}}</span>
+    </div>
+    <div class="bug-prop status">
+      <span class="bug-prop-label">Status: </span> <span> {{data.status}}</span>
+    </div>
+    <div class="bug-prop severity">
+      <span class="bug-prop-label">Severity: </span> <span> {{data.severity}}</span>
+    </div>
+    <div class="bug-prop target-date">
+      <span class="bug-prop-label">Deadline: </span> <span> {{data.targetDate}}</span>
+    </div>
+    <div class="bug-prop export">
+      <button color="primary"
+              mat-raised-button
+              (click)="downloadPdf(data.id)"
+              title="Export bug in pdf"
+              layout-align="center-end"
+      >
+        <i class="material-icons">
+          picture_as_pdf
+        </i>
+      </button>
+    </div>
+    <div>
+      <button color="primary"
+              mat-raised-button
+              (click)="downloadAttachment(data.id,data.fileName)"
+              title="Export bug in pdf"
+              layout-align="center-end"
+      >
+        <i class="material-icons">
+          cloud_download
+        </i>
+      </button>
+  </div>
 
-<p>
-
-  {{'bugPopup.description' | translate}}:
-  {{data.description}}
-
-</p>
-<button color="primary"
-        mat-raised-button
-        (click)="downloadPdf(data.id)"
-        title="Export bug in pdf"
-        layout-align = "center-end"
->
-  <i class="material-icons">
-    picture_as_pdf
-  </i>
-</button>
-<br>
-<div>
-  <h3>Attachment:</h3>
-  <button color="primary"
-          mat-raised-button
-          (click)="downloadAttachment(data.id,data.fileName)"
-          title="Export bug in pdf"
-          layout-align="center-end"
-  >
-    <i class="material-icons">
-      cloud_download
-    </i>
-  </button>
 </div>

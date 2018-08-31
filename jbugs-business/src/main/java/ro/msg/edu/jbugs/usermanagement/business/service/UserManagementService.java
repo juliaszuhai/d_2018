@@ -137,11 +137,6 @@ public class UserManagementService {
 		Optional<User> userOptional = userPersistenceManager.getUserByUsername(username);
 		User user = userOptional.orElseThrow(() -> new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
 		user.setActive(false);
-
-
-		/*NotificationDTO notificationDTO = new NotificationDTO();
-		notificationDTO.setTypeNotification(TypeNotification.USER_DEACTIVATED);
-		notificationDTO.setNewData((new Gson().toJson(user)));*/
 		userPersistenceManager.updateUser(user);
 
 

@@ -1,0 +1,28 @@
+.bug-popup-info {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.bug-popup-info .left-side {
+  width: 70%;
+}
+
+.bug-popup-info .right-side {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  padding: 20px 0;
+}
+
+.bug-users {
+  margin: 20px 0;
+}
+
+.bug-prop {
+  margin: 5px 0;
+}
+
+.bug-prop-label {
+  font-weight: 700;
+}
