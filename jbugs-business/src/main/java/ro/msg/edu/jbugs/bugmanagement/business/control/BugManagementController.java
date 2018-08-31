@@ -85,7 +85,7 @@ public class BugManagementController {
 
 
     @GET
-    //@Secured("BUG_MANAGEMENT")
+    @Secured("BUG_MANAGEMENT")
     @Path("/get-status-successors")
     @Produces("application/json")
     public String getStatusSuccessors(@QueryParam("id") Long id) throws BusinessException, JsonProcessingException {
