@@ -73,8 +73,7 @@
     "assignedTo": "Responsabil",
     "inputAssignedTo": "Inserati numele aici...",
     "buttonAddBug": "Adaugare Bug",
-    "attachment":"Adauga atasamente"
-
+    "attachment": "Adauga atasamente"
   },
 
   "bugPopup": {
@@ -109,7 +108,15 @@
     "sort": "Sortare",
     "filter": "Filtrare"
   },
-
+  "statistics": {
+    "statistics": "Statistici",
+    "new": "Nou",
+    "inProgress": "In Desfasurare",
+    "fixed": "Rezolvat",
+    "closed": "Inchis",
+    "rejected": "Refuzat",
+    "infoNeeded": "Trebuie detalii"
+  },
   "userManagement": {
     "buttonAddUser": "Adauga Utilizator",
     "firstName": "Prenume",

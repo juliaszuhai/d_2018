@@ -87,7 +87,7 @@
     "buttonSubmit": "Submit",
     "edit": "Edit",
     "buttonEdit": "Edit Bug",
-    "updateBug" : "Update Bug"
+    "updateBug": "Update Bug"
   },
   "bugFilter": {
     "title": "Title",
@@ -97,6 +97,15 @@
     "version": "Version",
     "sort": "Sort",
     "filter": "Filter"
+  },
+  "statistics": {
+    "statistics": "Statistics",
+    "new": "New",
+    "inProgress": "In Progress",
+    "fixed": "Fixed",
+    "closed": "Closed",
+    "rejected": "Rejected",
+    "infoNeeded": "Info Needed"
   },
   "userManagement": {
     "buttonAddUser": "Add User",

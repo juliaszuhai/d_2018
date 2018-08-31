@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BugListService} from "../bugs.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-statistic-on-bug-status',
@@ -11,15 +12,37 @@ export class StatisticOnBugStatusComponent implements OnInit {
   @ViewChild('baseChart')
   element: ElementRef;
 
-  public doughnutChartLabels: string[] = ['NEW', 'IN_PROGRESS', 'FIXED', 'CLOSED', 'REJECTED', 'INFO_NEEDED'];
+  labelNew: string;
+  labelProgress: string;
+  labelFixed: string;
+  labelClosed: string;
+  labelRejected: string;
+  labelInfo: string;
+
+
+  public doughnutChartLabels: string[] = [];
   public doughnutChartData: number[] = [];
   public doughnutChartType: string = 'doughnut';
 
-  constructor(private bugService: BugListService) {
+  constructor(private bugService: BugListService, private translate: TranslateService) {
+
   }
 
+  getLabels() {
+    this.translate.get('statistics.new').subscribe((res: string) => this.doughnutChartLabels[0] = res);
+    this.translate.get('statistics.inProgress').subscribe((res: string) => this.doughnutChartLabels[1] = res);
+    this.translate.get('statistics.fixed').subscribe((res: string) => this.doughnutChartLabels[2] = res);
+    this.translate.get('statistics.closed').subscribe((res: string) => this.doughnutChartLabels[3] = res);
+    this.translate.get('statistics.rejected').subscribe((res: string) => this.doughnutChartLabels[4] = res);
+    this.translate.get('statistics.infoNeeded').subscribe((res: string) => this.doughnutChartLabels[5] = res);
+
+    return this.doughnutChartLabels;
+  }
 
   ngOnInit() {
+
+    console.log(this.doughnutChartLabels);
+    this.getLabels();
     this.getStatistic();
   }
 
@@ -60,48 +83,5 @@ export class StatisticOnBugStatusComponent implements OnInit {
     console.log(e);
   }
 
-  // protected updateBidDistributionStat()
-  // {
-  //   this.doughnutChartLabels.length = 0;
-  //   this.doughnutChartData.length   = 0;
-  //   this.doughtnutBackgroundColor.length = 0;
-  //
-  //   var chartObject = {};
-  //
-  //   // Build Chart Object Labels/Data.
-  //   this.auction.getBids().forEach(function(bidObject)
-  //   {
-  //     if(typeof chartObject[bidObject.getTeam().getAbbreviation()] === 'undefined')
-  //     {
-  //       chartObject[bidObject.getTeam().getAbbreviation()]       = {};
-  //       chartObject[bidObject.getTeam().getAbbreviation()].value = 0;
-  //       chartObject[bidObject.getTeam().getAbbreviation()].color = bidObject.getTeam().getPrimaryColor();
-  //     }
-  //
-  //     chartObject[bidObject.getTeam().getAbbreviation()].value++;
-  //   });
-  //
-  //   this.bidDistributionStatLabels = Object.keys(chartObject);
-  //
-  //   // Init colors
-  //   var colorObject = {
-  //     backgroundColor: []
-  //   };
-  //
-  //   for (var team in chartObject)
-  //   {
-  //     this.bidDistributionStatData.push(chartObject[team].value);
-  //     colorObject.backgroundColor.push(chartObject[team].color);
-  //   }
-  //
-  //   this.bidDistributionStatColors.push(colorObject);
-  // }
-  //
-  // chartClicked(e: any): void
-  // {
-  //   console.log('chart clicked!');
-  //
-  //   this.updateBidDistributionStat();
-  // }
 
 }

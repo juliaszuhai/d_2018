@@ -32,8 +32,14 @@ public class NotificationManagementService {
                 .collect(Collectors.toList());
     }
 
-
-    //TODO comentariu javadoc
+	/**
+	 * Creates a Notification to be added to user's Notification List
+	 *
+	 * @param typeNotification
+	 * @param newData          new User or Bug data which was created or updated
+	 * @param oldData          data before update; can be null in case of creation
+	 * @param sendTo           list of users to receive the notification
+	 */
     public void sendNotification(TypeNotification typeNotification, Object newData, Object oldData, List<User> sendTo) {
         NotificationDTO notificationDTO = new NotificationDTO();
         notificationDTO.setRead(false);
