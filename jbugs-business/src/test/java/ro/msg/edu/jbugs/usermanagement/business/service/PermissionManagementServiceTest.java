@@ -75,7 +75,7 @@ public class PermissionManagementServiceTest {
         when(permissionPersistenceManager.getRoleByType("ADM")).thenReturn(Optional.of(role));
         when(userPersistenceManager.getUserByUsername(user.getUsername())).thenReturn(Optional.of(user));
        try {
-           permissionManagementController.addRoleToUser("ADM", user.getUsername());
+		   permissionManagementController.addRoleToUser("ADM", user.getUsername(), user.getUsername());
        }catch (BusinessException e){
            fail("Not exist the username");
        }
@@ -104,7 +104,7 @@ public class PermissionManagementServiceTest {
         when(permissionPersistenceManager.getRoleByType("ADM")).thenReturn(Optional.of(role));
         when(userPersistenceManager.getUserByUsername(user.getUsername())).thenReturn(Optional.empty());
         try {
-            permissionManagementController.addRoleToUser("ADM", user.getUsername());
+			permissionManagementController.addRoleToUser("ADM", user.getUsername(), user.getUsername());
             fail("Not exist the username");
         }catch (BusinessException e){
             assertEquals(ExceptionCode.USERNAME_NOT_VALID,e.getExceptionCode());
@@ -139,9 +139,9 @@ public class PermissionManagementServiceTest {
         when(permissionPersistenceManager.getRoleByType("ADM")).thenReturn(Optional.of(role));
         when(userPersistenceManager.getUserByUsername(user.getUsername())).thenReturn(Optional.of(user));
        try {
-           permissionManagementController.addRoleToUser("ADM", user.getUsername());
+		   permissionManagementController.addRoleToUser("ADM", user.getUsername(), user.getUsername());
            when(permissionPersistenceManager.getRoleByType("ADM")).thenReturn(Optional.of(role));
-           permissionManagementController.revokeRoleFromUser(role.getType(),user.getUsername());
+		   permissionManagementController.revokeRoleFromUser(role.getType(), user.getUsername(), user.getUsername());
            assertEquals(new ArrayList<>(), user.getRoles());
        }catch (BusinessException e){
            fail(" the user or role type not exist");
@@ -175,9 +175,9 @@ public class PermissionManagementServiceTest {
         when(permissionPersistenceManager.getRoleByType("ADM")).thenReturn(Optional.of(role));
         when(userPersistenceManager.getUserByUsername(user.getUsername())).thenReturn(Optional.empty());
         try {
-            permissionManagementController.addRoleToUser("ADM", user.getUsername());
+			permissionManagementController.addRoleToUser("ADM", user.getUsername(), user.getUsername());
             when(permissionPersistenceManager.getRoleByType("ADM")).thenReturn(Optional.empty());
-            permissionManagementController.revokeRoleFromUser(role.getType(),null);
+			permissionManagementController.revokeRoleFromUser(role.getType(), null, user.getUsername());
            fail("The user does not exist");
         }catch (BusinessException e){
             assertEquals(ExceptionCode.USERNAME_NOT_VALID,e.getExceptionCode());

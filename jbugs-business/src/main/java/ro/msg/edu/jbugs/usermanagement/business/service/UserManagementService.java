@@ -1,14 +1,11 @@
 package ro.msg.edu.jbugs.usermanagement.business.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagementService;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
-import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManager;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
@@ -34,7 +31,7 @@ public class UserManagementService {
 	public static final int MIN_USERNAME_LENGTH = 6;
 	private static final int MIN_LAST_NAME_LENGTH = 5;
 	private static final int MAX_FAILED_LOGN_ATTEMPTS = 5;
-	static Logger log = LogManager.getLogger(AuthenticationManager.class.getName());
+
 	@EJB
 	private UserPersistenceManager userPersistenceManager;
 	@EJB
@@ -151,8 +148,6 @@ public class UserManagementService {
 
 		notificationManagementService.sendNotification(TypeNotification.USER_DEACTIVATED, user, null, getAllUsersWithRole(permissionPersistenceManager.getRoleByType("ADM").get()));
 	}
-
-
 
 
 	private void checkForOpenBugs(String username) throws BusinessException {
@@ -362,7 +357,6 @@ public class UserManagementService {
 			User userRequester = userRequesterOptional.get();
 
 
-
 			if (usernameShouldChange(userBefore, userDTO)) {
 				userDTO.setUsername(generateUsername(userDTO.getFirstName(), userDTO.getLastName()));
 			}
@@ -377,18 +371,6 @@ public class UserManagementService {
 			notificationManagementService.sendNotification(TypeNotification.USER_UPDATED, userAfter, userBefore, receivers);
 
 
-
-			/*NotificationDTO notificationDTO = new NotificationDTO();
-			notificationDTO.setTypeNotification(TypeNotification.USER_UPDATED);
-			notificationDTO.setOldData((new Gson().toJson(userBefore)));
-			notificationDTO.setNewData((new Gson().toJson(userAfter)));
-
-			try {
-				userRequester.getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
-				userAfter.getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
-			} catch (ParseException | NullPointerException e) {
-				log.catching(e);
-			}*/
 			return userDTO;
 		} else {
 			throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);
