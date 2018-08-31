@@ -147,6 +147,7 @@ public class BugManagementService implements BugManagement {
 	@Override
 	public BugDTO updateBug(BugDTO bugDTO) throws BusinessException {
 
+		boolean justStatus = false;
 		Optional<Bug> bugBeforeOpt = bugPersistenceManager.getBugById(bugDTO.getId());
 		if (bugBeforeOpt.isPresent()) {
 			Bug bugBefore = bugBeforeOpt.get();
@@ -168,6 +169,7 @@ public class BugManagementService implements BugManagement {
 				bugAfter.setStatus(Status.valueOf(bugDTO.getStatusString()));
 				this.isBugValid(bugAfter);
 				bugPersistenceManager.updateBug(bugAfter);
+
 
 			} else {
 				throw new BusinessException(ExceptionCode.STATUS_INCORRECT_EXCEPTION);

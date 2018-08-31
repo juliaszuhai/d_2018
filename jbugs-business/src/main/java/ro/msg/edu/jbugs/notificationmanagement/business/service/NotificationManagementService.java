@@ -1,9 +1,15 @@
 package ro.msg.edu.jbugs.notificationmanagement.business.service;
 
+import com.google.gson.Gson;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTO;
 import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTOHelper;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.dao.NotificationPersistenceManager;
+import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
+import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManager;
+import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.service.UserManagementService;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
@@ -16,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 public class NotificationManagementService {
+	static Logger log = LogManager.getLogger(AuthenticationManager.class.getName());
 
     @EJB
     private NotificationPersistenceManager notificationPersistenceManager;
@@ -52,5 +59,21 @@ public class NotificationManagementService {
 
     }
 
+	public void sendNotification(TypeNotification typeNotification, Object newData, Object oldData, List<User> sendTo) {
+		NotificationDTO notificationDTO = new NotificationDTO();
+		notificationDTO.setTypeNotification(typeNotification);
+		notificationDTO.setNewData((new Gson().toJson(newData)));
+		if (oldData != null)
+			notificationDTO.setOldData((new Gson().toJson(oldData)));
+
+		sendTo.forEach(user -> {
+			try {
+				user.getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
+			} catch (ParseException | NullPointerException e) {
+				log.catching(e);
+			}
+		});
+
+	}
 
 }

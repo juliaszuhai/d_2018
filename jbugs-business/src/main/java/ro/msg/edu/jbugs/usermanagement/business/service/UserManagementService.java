@@ -1,14 +1,11 @@
 package ro.msg.edu.jbugs.usermanagement.business.service;
 
-import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
-import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTO;
-import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTOHelper;
 import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagementService;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
 import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManager;
@@ -25,7 +22,7 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
-import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -56,6 +53,7 @@ public class UserManagementService {
 	 * @throws BusinessException
 	 */
 	public UserDTO createUser(UserDTO userDTO) throws BusinessException {
+		List<User> receivers = new ArrayList<>();
 		normalizeUserDTO(userDTO);
 		validateUserForCreation(userDTO);
 		User user = UserDTOHelper.toEntity(userDTO);
@@ -63,17 +61,11 @@ public class UserManagementService {
 		user.setActive(true);
 		user.setPassword(Encryptor.encrypt(userDTO.getPassword()));
 
-		NotificationDTO notificationDTO = new NotificationDTO();
-		notificationDTO.setTypeNotification(TypeNotification.WELCOME_NEW_USER);
-		notificationDTO.setNewData((new Gson().toJson(user)));
+
 		userPersistenceManager.createUser(user);
 
-		try {
-			user.getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
-		} catch (ParseException | NullPointerException e) {
-			log.catching(e);
-		}
-
+		receivers.add(user);
+		notificationManagementService.sendNotification(TypeNotification.WELCOME_NEW_USER, user, null, receivers);
 
 		return UserDTOHelper.fromEntity(user);
 	}
@@ -151,31 +143,16 @@ public class UserManagementService {
 		user.setActive(false);
 
 
-		NotificationDTO notificationDTO = new NotificationDTO();
+		/*NotificationDTO notificationDTO = new NotificationDTO();
 		notificationDTO.setTypeNotification(TypeNotification.USER_DEACTIVATED);
-		notificationDTO.setNewData((new Gson().toJson(user)));
+		notificationDTO.setNewData((new Gson().toJson(user)));*/
 		userPersistenceManager.updateUser(user);
-		notifyAllUsersWithRole(notificationDTO, "ADM");
+
+
+		notificationManagementService.sendNotification(TypeNotification.USER_DEACTIVATED, user, null, getAllUsersWithRole(permissionPersistenceManager.getRoleByType("ADM").get()));
 	}
 
-	/**
-	 * Notifies all users wirh a specific role
-	 *
-	 * @param notificationDTO
-	 * @param roleType
-	 * @throws BusinessException
-	 */
-	private void notifyAllUsersWithRole(NotificationDTO notificationDTO, String roleType) throws BusinessException {
-		getAllUsersWithRole(permissionPersistenceManager.getRoleByType(roleType).orElseThrow(
-				() -> new BusinessException(ExceptionCode.ROLE_DOESNT_EXIST)
-		)).forEach(admin -> {
-			try {
-				admin.getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
-			} catch (ParseException | NullPointerException e) {
-				log.catching(e);
-			}
-		});
-	}
+
 
 
 	private void checkForOpenBugs(String username) throws BusinessException {
@@ -377,6 +354,7 @@ public class UserManagementService {
 
 		Optional<User> userBeforeOptional = userPersistenceManager.getUserByUsername(userDTO.getUsername());
 		Optional<User> userRequesterOptional = userPersistenceManager.getUserByUsername(requester);
+		List<User> receivers = new ArrayList<>();
 		if (userBeforeOptional.isPresent()) {
 			User userBefore = userBeforeOptional.get();
 			normalizeUserDTO(userDTO);
@@ -393,7 +371,14 @@ public class UserManagementService {
 
 			userPersistenceManager.updateUser(userAfter);
 
-			NotificationDTO notificationDTO = new NotificationDTO();
+
+			receivers.add(userAfter);
+			receivers.add(userRequester);
+			notificationManagementService.sendNotification(TypeNotification.USER_UPDATED, userAfter, userBefore, receivers);
+
+
+
+			/*NotificationDTO notificationDTO = new NotificationDTO();
 			notificationDTO.setTypeNotification(TypeNotification.USER_UPDATED);
 			notificationDTO.setOldData((new Gson().toJson(userBefore)));
 			notificationDTO.setNewData((new Gson().toJson(userAfter)));
@@ -403,7 +388,7 @@ public class UserManagementService {
 				userAfter.getNotifications().add(NotificationDTOHelper.toEntity(notificationDTO));
 			} catch (ParseException | NullPointerException e) {
 				log.catching(e);
-			}
+			}*/
 			return userDTO;
 		} else {
 			throw new BusinessException(ExceptionCode.USERNAME_NOT_VALID);

@@ -167,7 +167,8 @@ public class Bug extends BaseEntity  {
                 Objects.equals(assignedTo, bug.assignedTo);
     }
 
-    @Override
+
+	@Override
     public int hashCode() {
 
         return Objects.hash(super.hashCode(), title, description, version, targetDate, status, fixedVersion, severity, createdByUser, assignedTo);
