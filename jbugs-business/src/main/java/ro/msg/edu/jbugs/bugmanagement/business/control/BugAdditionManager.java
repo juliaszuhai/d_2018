@@ -42,7 +42,7 @@ public class BugAdditionManager {
     }
 
 
-    @POST
+	@POST
     @Path("/add-file")
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     public Response addFile(@FormDataParam("id") Long id,

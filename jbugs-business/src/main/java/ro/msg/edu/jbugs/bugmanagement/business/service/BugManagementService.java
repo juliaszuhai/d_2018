@@ -13,6 +13,8 @@ import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Attachment;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
+import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagementService;
+import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
 import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
@@ -40,6 +42,9 @@ public class BugManagementService implements BugManagement {
 
 	@EJB
 	private UserPersistenceManager userPersistenceManager;
+
+	@EJB
+	private NotificationManagementService notificationManagementService;
 
 	@Override
 	public List<BugDTO> getAllBugs() {
@@ -81,6 +86,7 @@ public class BugManagementService implements BugManagement {
 
 	public Bug createBug(BugDTO bugDTO) throws BusinessException {
 		Bug bug = new Bug();
+		List<User> receivers = new ArrayList<>();
 
 		bug.setTitle(bugDTO.getTitle());
 		bug.setDescription(bugDTO.getDescription());
@@ -93,6 +99,7 @@ public class BugManagementService implements BugManagement {
 		Optional<User> userAssigned = userPersistenceManager.getUserByUsername(bugDTO.getAssignedTo().getUsername());
 		if (userAssigned.isPresent()) {
 			bug.setAssignedTo(userAssigned.get());
+			receivers.add(userAssigned.get());
 		} else {
 			throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
 		}
@@ -100,12 +107,15 @@ public class BugManagementService implements BugManagement {
 		Optional<User> userCreated = userPersistenceManager.getUserByUsername(bugDTO.getCreatedByUser().getUsername());
 		if (userCreated.isPresent()) {
 			bug.setCreatedByUser(userCreated.get());
+			receivers.add(userCreated.get());
 		} else {
 			throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
 		}
 
 		this.isBugValid(bug);
 		bugPersistenceManager.createBug(bug);
+		notificationManagementService.sendNotification(TypeNotification.BUG_CREATED, bug, null, receivers);
+
 		return bug;
 
 	}
