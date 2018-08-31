@@ -56,7 +56,7 @@ public class User extends BaseEntity {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Role> roles;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "UserID")
     private List<Notification> notifications = new ArrayList<>();
 
