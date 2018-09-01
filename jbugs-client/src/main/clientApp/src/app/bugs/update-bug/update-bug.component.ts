@@ -58,7 +58,7 @@ export class UpdateBugComponent implements OnInit {
   }
 
   submitUpdateBug() {
-    console.log(this.data);
+
 
     this.bugmngmt.updateBug(this.data).subscribe(
       data => {

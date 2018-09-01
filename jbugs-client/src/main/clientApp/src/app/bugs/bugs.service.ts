@@ -144,6 +144,7 @@ export class BugListService {
 
 
   updateBug(bugData) {
+    console.log(bugData);
     return this.http.post(this.baseURL + '/list-bugs/update-bug', bugData,
       {
         headers: new HttpHeaders(

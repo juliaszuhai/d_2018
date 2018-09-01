@@ -24,7 +24,6 @@ import java.util.Date;
 
 
 @Path("/authenticate")
-
 public class AuthenticationManager {
 
     @EJB

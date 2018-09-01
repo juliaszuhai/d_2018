@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,16 +26,26 @@ export class PermissionManagementService {
   }
 
   addPermissionToRole(roleType, permissionType) {
-    const params = new HttpParams()
-      .set('roleType', roleType)
-      .set('permissionType', permissionType);
-    return this.http.get(this.baseURL + '/add-permission-to-role', {params});
+    const body = new URLSearchParams();
+    body.set('roleType', roleType);
+    body.set('permissionType', permissionType);
+    return this.http.post(this.baseURL + '/add-permission-to-role', body.toString(),
+      {
+        headers: new HttpHeaders(
+          {'Content-Type': 'application/x-www-form-urlencoded'}
+        )
+      });
   }
 
   removePermissionFromRole(roleType, permissionType) {
-    const params = new HttpParams()
-      .set('roleType', roleType)
-      .set('permissionType', permissionType);
-    return this.http.get(this.baseURL + '/revoke-permission-from-role', {params});
+    const body = new URLSearchParams();
+    body.set('roleType', roleType);
+    body.set('permissionType', permissionType);
+    return this.http.post(this.baseURL + '/revoke-permission-from-role', body.toString(),
+      {
+        headers: new HttpHeaders(
+          {'Content-Type': 'application/x-www-form-urlencoded'}
+        )
+      });
   }
 }
