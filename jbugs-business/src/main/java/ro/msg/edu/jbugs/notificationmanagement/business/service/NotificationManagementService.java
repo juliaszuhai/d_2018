@@ -8,7 +8,7 @@ import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTO;
 import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTOHelper;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.dao.NotificationPersistenceManager;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
-import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManager;
+import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManagementController;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.EJB;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 public class NotificationManagementService {
-    final static Logger log = LogManager.getLogger(AuthenticationManager.class.getName());
+    final static Logger log = LogManager.getLogger(AuthenticationManagementController.class.getName());
 
     @EJB
     private NotificationPersistenceManager notificationPersistenceManager;

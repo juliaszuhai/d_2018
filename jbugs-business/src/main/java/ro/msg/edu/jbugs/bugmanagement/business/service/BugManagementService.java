@@ -15,7 +15,7 @@ import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagementService;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
-import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManager;
+import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManagementController;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @Stateless
 public class BugManagementService implements BugManagement {
 
-    static Logger log = LogManager.getLogger(AuthenticationManager.class.getName());
+    static Logger log = LogManager.getLogger(AuthenticationManagementController.class.getName());
     @EJB
     private BugPersistenceManager bugPersistenceManager;
 

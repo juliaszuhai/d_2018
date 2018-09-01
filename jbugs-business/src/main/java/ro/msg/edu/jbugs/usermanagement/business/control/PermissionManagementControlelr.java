@@ -15,7 +15,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 @Path("/manage-permissions")
-public class PermissionManager {
+public class PermissionManagementControlelr {
 	@EJB
 	private UserManagementService userManagementController;
 

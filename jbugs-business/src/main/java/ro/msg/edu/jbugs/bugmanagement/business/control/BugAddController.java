@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 
 @Path("/bug-management")
-public class BugAdditionManager {
+public class BugAddController {
 
     @EJB
     private BugManagement bugManagement;

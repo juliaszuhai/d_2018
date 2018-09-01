@@ -15,7 +15,7 @@ import javax.ws.rs.core.*;
 import java.util.List;
 
 @Path("/manage-users")
-public class UserManager {
+public class UserManagementController {
 
 	@EJB
 	private UserManagementService userManagementController;

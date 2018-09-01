@@ -24,12 +24,12 @@ import java.util.Date;
 
 
 @Path("/authenticate")
-public class AuthenticationManager {
+public class AuthenticationManagementController {
 
     @EJB
     private UserManagementService userManagement;
 
-    static Logger log = LogManager.getLogger(AuthenticationManager.class.getName());
+    static Logger log = LogManager.getLogger(AuthenticationManagementController.class.getName());
 
     @POST
     @Produces("application/json")
