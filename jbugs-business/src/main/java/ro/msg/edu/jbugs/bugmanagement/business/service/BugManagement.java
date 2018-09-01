@@ -49,12 +49,11 @@ public interface BugManagement {
 
     boolean validateVersion(String version) throws BusinessException;
 
-    BugDTO updateBug(BugDTO bugDTO) throws BusinessException;
+
 
     Bug setUsersFromDTO(BugDTO bugDTO, Bug bug) throws BusinessException;
 
 
-    Bug setUsers(BugDTO bugDTO, Bug bug) throws ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 
 
     /**
@@ -69,10 +68,12 @@ public interface BugManagement {
 
     List<File> getAttachmentForBug(Long bugId) throws BusinessException;
 
-
+    BugDTO updateBug(BugDTO bugDTO, String requester) throws BusinessException;
 
 
     List<Status> getStatusSuccessor(Long id) throws BusinessException;
+
+    void closeBug(Long bugId) throws BusinessException;
 }
 
 

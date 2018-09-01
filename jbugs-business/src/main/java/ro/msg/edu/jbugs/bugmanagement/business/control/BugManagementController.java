@@ -1,5 +1,6 @@
 package ro.msg.edu.jbugs.bugmanagement.business.control;
 
+import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
@@ -12,6 +13,8 @@ import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
@@ -52,19 +55,6 @@ public class BugManagementController {
     }
 
 
-    @POST
-    @Secured("BUG_MANAGEMENT")
-    @Consumes("application/json")
-    @Produces("application/json")
-    @Path("/update-bug")
-    public Response updateBug(BugDTO bugDTO) {
-        try {
-            bugManagement.updateBug(bugDTO);
-            return Response.ok().build();
-        } catch (BusinessException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
-        }
-    }
 
     @GET
     @Secured("BUG_MANAGEMENT")
@@ -111,6 +101,40 @@ public class BugManagementController {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(allBugs);
 
+    }
+
+    @POST
+    @Secured("BUG_MANAGEMENT")
+    @Consumes("application/json")
+    @Produces("application/json")
+    @Path("/update-bug")
+    public Response updateBug(BugDTO bugDTO, @Context HttpHeaders headers) {
+        try {
+            bugManagement.updateBug(bugDTO, getRequester(headers));
+            return Response.ok().build();
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
+        }
+    }
+
+    private String getRequester(@Context HttpHeaders headers) {
+        String authorizationHeader = headers.getRequestHeader("authorization").get(0);
+        String token = authorizationHeader.substring("Bearer".length()).trim();
+        return JWT.decode(token).getClaim("username").asString();
+
+    }
+
+    @POST
+    @Path("/close-bug")
+    @Secured("BUG_CLOSE")
+    @Consumes("application/x-www-form-urlencoded")
+    public Response closeBug(@FormParam("bugId") Long bugId) {
+        try {
+            this.bugManagement.closeBug(bugId);
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getExceptionCode()).build();
+        }
+        return Response.ok().build();
     }
 
 }

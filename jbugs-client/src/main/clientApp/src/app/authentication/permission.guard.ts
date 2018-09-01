@@ -16,7 +16,7 @@ export class PermissionGuard implements CanActivate {
 
 
     if (this.authService.isLoggedIn()) {
-      if (this.authService.userHasPermission("USER_MANAGEMENT")) {
+      if (this.authService.userHasPermission("PERMISSION_MANAGEMENT")) {
 
         return true;
       } else {

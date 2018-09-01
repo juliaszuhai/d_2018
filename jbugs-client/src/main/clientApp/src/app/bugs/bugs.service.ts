@@ -75,7 +75,7 @@ export class BugListService {
     params = params.append('amount', amount);
 
     if (id) {
-      console.log(id);
+
       params = params.append('id', id.toString());
     }
 
@@ -166,6 +166,15 @@ export class BugListService {
     params = params.set('id', id);
     return this.http.get<number>(this.baseURL + '/list-bugs/get-status-successors', {params: params});
 
+  }
+
+  closeBug(id) {
+    let params = new URLSearchParams();
+    params.append("bugId", id);
+    return this.http.post(this.baseURL + '/list-bugs/close-bug', params.toString(),
+      {
+        headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
+      });
   }
 
 }

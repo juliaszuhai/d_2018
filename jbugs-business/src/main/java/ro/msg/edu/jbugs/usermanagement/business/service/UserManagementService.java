@@ -104,6 +104,10 @@ public class UserManagementService {
 	}
 
     private boolean isValidForCreation(UserDTO userDTO) throws BusinessException {
+		//validate if email already exists
+		if (userPersistenceManager.getUserByEmail(userDTO.getEmail()).isPresent()) {
+			throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
+		}
 		return validateFields(userDTO)
 				&& userDTO.getPassword() != null;
 	}
@@ -114,10 +118,7 @@ public class UserManagementService {
 
 		Matcher matcher = validEmailAddressRegex.matcher(email);
 
-        //validate if email already exists
-        if (userPersistenceManager.getUserByEmail(email).isPresent()) {
-            throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
-        }
+
 		return matcher.find();
 	}
 
@@ -250,7 +251,7 @@ public class UserManagementService {
 			username = rebuildIfUsernameExists(firstName, lastName, username.toLowerCase());
 		} else if (firstName.length() >= MIN_LAST_NAME_LENGTH) {
 			username = lastName + firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
-			username = rebuildIfUsernameExists(firstName, lastName, username.toLowerCase());
+			username = rebuildIfUsernameExistsShortLastName(firstName, lastName, username.toLowerCase());
 		} else {
 			username = buildUsernameForShortNames(firstName, lastName);
 		}
@@ -288,6 +289,25 @@ public class UserManagementService {
 					firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
 			exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
 			stringCutter++;
+		}
+		return username;
+	}
+
+	private String rebuildIfUsernameExistsShortLastName(@NotNull String firstName, @NotNull String lastName, String username) {
+		Optional<User> exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
+
+
+		while (exists.isPresent()) {
+			lastName = lastName.substring(0, lastName.length() - 1);
+			int length = lastName.length();
+			int length1 = firstName.length();
+			if (firstName.length() > MIN_LAST_NAME_LENGTH - lastName.length() + 1) {
+				username = lastName +
+						firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
+			} else {
+				username = buildUsernameForShortNames(firstName, lastName);
+			}
+			exists = userPersistenceManager.getUserByUsername(username.toLowerCase());
 		}
 		return username;
 	}
@@ -372,7 +392,7 @@ public class UserManagementService {
 	}
 
 	private boolean usernameShouldChange(User user, UserDTO userDTO) {
-		return (user.getFirstName().equals(userDTO.getFirstName()) &&
+		return !(user.getFirstName().equals(userDTO.getFirstName()) &&
 				user.getLastName().equals(userDTO.getLastName()));
 
 	}

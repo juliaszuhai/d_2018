@@ -31,6 +31,7 @@
     <div class="bug-prop export">
       <button color="primary"
               mat-raised-button
+              *ngIf="authService.userHasPermission('BUG_EXPORT_PDF')"
               (click)="downloadPdf(data.id)"
               title="Export bug in pdf"
               layout-align="center-end"
@@ -43,6 +44,7 @@
     <div>
       <button color="primary"
               mat-raised-button
+              *ngIf="data.fileName!=null"
               (click)="downloadAttachment(data.id,data.fileName)"
               title="Export bug in pdf"
               layout-align="center-end"

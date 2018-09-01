@@ -1,18 +1,19 @@
-.update-bug-form {
+.update-form {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
+  justify-content: space-between;
 
 }
 
-mat-form-field {
-  max-width: 250px;
+.title-description .mat-form-field {
+  width: 100%;
 }
 
-.update-bug-form .update-form {
-  width: 70%;
+textarea {
+  min-height: 150px;
 }
 
-.update-bug-form .form-info {
-  width: 25%;
+.submit-btn {
+  width: 100%;
+  margin: 20px 0;
 }

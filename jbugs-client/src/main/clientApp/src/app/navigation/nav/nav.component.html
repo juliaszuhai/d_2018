@@ -6,21 +6,22 @@
     {{'header.bugs'| translate}}
 
   </button>
-  <button mat-button [matMenuTriggerFor]="menuManage" *ngIf="isLoggedIn()&&hasPermission('USER_MANAGEMENT')">
+  <button mat-button [matMenuTriggerFor]="menuManage"
+          *ngIf="isLoggedIn()&&(hasPermission('USER_MANAGEMENT')||hasPermission('PERMISSION_MANAGEMENT'))">
 
     {{'header.manage'| translate}}
   </button>
   <mat-menu #menuManage="matMenu">
     <button
       mat-menu-item
-      *ngIf="isLoggedIn()"
+      *ngIf="isLoggedIn()&&hasPermission('USER_MANAGEMENT')"
       routerLinkActive="active"
       routerLink="manage-users">
       {{'header.users'| translate}}
     </button>
     <button
       mat-menu-item
-      *ngIf="isLoggedIn()"
+      *ngIf="isLoggedIn()&&hasPermission('PERMISSION_MANAGEMENT')"
       routerLinkActive="active"
       routerLink="roles-and-permissions">
       {{'header.roles_and_permissions' | translate}}

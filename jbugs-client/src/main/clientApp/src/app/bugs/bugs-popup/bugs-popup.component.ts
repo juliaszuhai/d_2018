@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TranslateService} from "@ngx-translate/core";
 import {BugsPopupService} from "./bugs-popup.service";
+import {AuthenticationService} from "../../authentication/authentication.service";
 
 @Component({
   selector: 'app-bugs-popup',
@@ -17,7 +18,8 @@ description: string;
     private bugPopupService: BugsPopupService,
     private translate: TranslateService,
     public dialogRef: MatDialogRef<BugsPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data) {
+    @Inject(MAT_DIALOG_DATA) public data,
+    public authService: AuthenticationService) {
   }
 
   downloadPdf(id){

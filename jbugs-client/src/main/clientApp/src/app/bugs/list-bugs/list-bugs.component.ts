@@ -79,12 +79,12 @@ export class ListBugsComponent implements OnInit {
 
 
   displayedColumns: string[] = [
-    'number',
+    // 'number',
     'title',
-    'version',
+    // 'version',
     'targetDate',
     'status',
-    'fixedVersion',
+    // 'fixedVersion',
     'severity',
     'createdBy',
     'assignedTo',
@@ -93,7 +93,6 @@ export class ListBugsComponent implements OnInit {
   ];
 
   openDialog(bug: BugData): void {
-
     const dialogRef = this.dialog.open(BugsPopupComponent, {
       width: '75%',
       data: {
@@ -145,7 +144,7 @@ export class ListBugsComponent implements OnInit {
 
   openUpdateDialog(bug): void {
     const dialogRef = this.dialog.open(UpdateBugComponent, {
-      width: '60%',
+      width: '70%',
       data: {
         id: bug.id,
         title: bug.title,
@@ -219,7 +218,7 @@ export class ListBugsComponent implements OnInit {
 
   openAddBug() {
     const dialogRef2 = this.dialog.open(AddBugComponent, {
-      width: '700px',
+      width: '70%',
       data: {bugService: this.bugService}
     });
   }
