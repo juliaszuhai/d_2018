@@ -20,3 +20,8 @@
   margin:10px 0;
 }
 
+.jbugs-recaptcha {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}

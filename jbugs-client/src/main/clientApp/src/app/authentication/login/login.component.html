@@ -40,8 +40,11 @@
 
       </fieldset>
       <div nbRecaptcha key="6LfwXmsUAAAAAA5Q7ULe0bxp2rC0ss0qSW21CS0N" ngForm="captcha"></div>
+
+      <re-captcha class="jbugs-recaptcha" (resolved)="resolved($event)"
+                  siteKey="6LfwXmsUAAAAADH6VJOgClWyLEviG-OdBMwUBFie"></re-captcha>
       <button type="submit"
-              [disabled]="!validatePassword()||!validateUsername()"
+              [disabled]="!validatePassword()||!validateUsername()||!captchaValid()"
               color="primary"
               style="margin-left: 40%;"
               mat-stroked-button="login">{{'loginWindow.submit'| translate}}!
