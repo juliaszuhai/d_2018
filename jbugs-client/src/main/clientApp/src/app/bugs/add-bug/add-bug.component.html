@@ -1,110 +1,230 @@
-<div class="row addBug-component">
-  <div class="errorMessage server-error" *ngIf="displayError()">
-    {{getMessage()}}
-  </div>
-  <form (ngSubmit)="addBugForm()">
-    <fieldset>
-      <div class="form-group">
-        <div class="form-group">
-          <label for="titleInput">{{'addBug.title' | translate}} </label>
-          <input type="text"
-                 #titleElement
-                 #titleControl="ngModel"
-                 placeholder="{{'addBug.inputTitle' | translate}}"
-                 name="title"
-                 id="titleInput"
-                 class="form-control"
-                 [(ngModel)]="bugData.title"
-                 required>
-        </div>
-        <div class="form-group">
-          <label for="descriptionInput">{{'addBug.description' | translate}} </label>
-          <input type="text"
-                 #descriptionElement
-                 #descriptionControl="ngModel"
-                 placeholder="{{'addBug.inputDescription' | translate}} "
-                 name="description"
-                 id="descriptionInput"
-                 class="form-control"
-                 [(ngModel)]="bugData.description"
-                 [ngClass]="{form_invalid: !validateDescription(), form_valid:validateDescription()}"
-                 required>
-        </div>
-        <div class="form-group">
-          <label for="versionInput">{{'addBug.version' | translate}} </label>
-          <input type="text"
-                 #versionElement
-                 #versionControl="ngModel"
-                 placeholder="{{'addBug.inputVersion' | translate}}"
-                 name="version"
-                 id="versionInput"
-                 class="form-control"
-                 [(ngModel)]="bugData.version"
-                 [ngClass]="{form_invalid: !validateVersion(), form_valid:validateVersion()}"
-                 required>
-        </div>
-        <div class="form-group">
-          <label for="fixedVersionInput">{{'addBug.fixedVersion' | translate}}</label>
-          <input type="text"
-                 #versionElement
-                 #versionControl="ngModel"
-                 placeholder="{{'addBug.fixedVersion' | translate}}"
-                 name="fixedVersion"
-                 id="fixedVersionInput"
-                 class="form-control"
-                 [(ngModel)]="bugData.fixedVersion"
-                 [ngClass]="{form_invalid: !validateVersion(), form_valid:validateVersion()}"
-                 required>
-        </div>
+<h3>{{'addBug.buttonAddBug'| translate}}</h3>
+<div class="add-form">
 
-        <div class="form-group">
-          <label for="targetDateInput">{{'addBug.targetDate' | translate}} </label>
-          <input
-            name="targetDate"
-            id="targetDateInput"
-            [(ngModel)]="bugData.targetDate"
-            [matDatepicker]="targetDate">
-          <mat-datepicker-toggle [for]="targetDate"></mat-datepicker-toggle>
-          <mat-datepicker #targetDate></mat-datepicker>
+  <form
 
-        </div>
-        <div class="form-group">
-          <label>{{'addBug.severity' | translate}} </label>
-          <mat-form-field>
-            <mat-select [(value)]="bugData.severity" placeholder="{{'addBug.severity' | translate}}">
-              <mat-option *ngFor="let severity of severities" [value]="severity">
-                {{severity}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+    #addForm="ngForm"
+    #formElement
+    class="add-bug-form"
+    (submit)="addBugForm()"
+  >
 
-        <div class="form-group">
-          <label for="assignedToInput">{{'addBug.assignedTo' | translate}}</label>
-          <input type="text"
-                 #assignedToElement
-                 #assignedToControl="ngModel"
-                 placeholder="{{'addBug.inputAssignedTo' | translate}}"
-                 name="assignedTo"
-                 id="assignedToInput"
-                 class="form-control"
-                 [(ngModel)]="bugData.assignedTo.username"
-                 required>
-        </div>
+    <div class="title-description">
+      <mat-form-field>
+        <input
+          matInput
+          #titleControl="ngModel"
+          #titlelement
+          name="title"
+          [(ngModel)]="bugData.title"
+          placeholder="{{'bugTable.title'| translate}}">
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+      <textarea matInput=""
+                #descriptionElement
+                name="description"
+                [formControl]="descriptionFormControl"
+                [(ngModel)]="bugData.description"
+                [errorStateMatcher]="matcher"
+                placeholder="{{'bugTable.description'| translate}}">
 
-        <div class="form-group">
-          <label for="attachmentInput">{{'addBug.attachment' | translate}}</label>
-          <input #attachmentInput type="file" id="attachmentInput" name="file" required
-                 (change)="parseFile($event)" accept=".png,.jpg,.pdf,.doc,.odf,.xls,.txt">
-        </div>
+      <mat-error *ngIf="descriptionFormControl.hasError('descriptionInvalid')">{{getDescriptionErrorMessage()}}
+      </mat-error>
+      </textarea>
+      </mat-form-field>
+      <div class="form-info">
 
+        {{'bugUpdateErrorMessage.constraints'| translate}}
+        <ul>
+          <li>{{'bugUpdateErrorMessage.description'| translate}}.</li>
+          <li>{{'bugUpdateErrorMessage.version'| translate}}.</li>
+          <li>{{'bugUpdateErrorMessage.date'| translate}}.</li>
+        </ul>
       </div>
-    </fieldset>
-    <button color="primary"
-            mat-raised-button
-            style="margin:30px 0">
-      {{'addBug.buttonAddBug' | translate}}
+    </div>
+    <div class="bug-prop-changes">
+      <mat-form-field>
+        <input
+          #fixedVersionElement
+          name="fixedVersion"
+          matInput
+          [formControl]="fixedVersionFormControl"
+          [errorStateMatcher]="matcher"
+          [(ngModel)]="bugData.fixedVersion"
+          placeholder="{{'bugTable.fixedVersion'| translate}}">
+        <mat-error *ngIf="fixedVersionFormControl.hasError('versionInvalid')">{{getFixedVersionErrorMessage()}}
+        </mat-error>
 
-    </button>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input
+          #versionElement
+          name="version"
+          matInput
+          [(ngModel)]="bugData.version"
+          [formControl]="versionFormControl"
+          [errorStateMatcher]="matcher"
+          placeholder="{{'bugTable.version'| translate}}">
+        <mat-error *ngIf="versionFormControl.hasError('versionInvalid')">{{getVersionErrorMessage()}}</mat-error>
+
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input
+          #targetDateElement
+          name="targetDate"
+          matInput
+          required
+          [errorStateMatcher]="matcher"
+          [(ngModel)]="bugData.targetDate"
+          placeholder="{{'bugTable.targetDate'| translate}}"
+          [matDatepicker]="targetDate">
+
+      </mat-form-field>
+      <mat-datepicker-toggle [for]="targetDate"></mat-datepicker-toggle>
+      <mat-datepicker #targetDate></mat-datepicker>
+
+      <br>
+
+      <mat-form-field>
+        <input
+          #severityControl="ngModel"
+          #severityElement
+          name="severity"
+          matInput
+          [(ngModel)]="bugData.severity"
+          placeholder="{{'bugTable.severity'| translate}}">
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input
+          #assignedToStringControl="ngModel"
+          #assignedToStringElement
+          name="assignedToString"
+          matInput
+          [(ngModel)]="bugData.assignedTo.username"
+          placeholder="{{'bugTable.assignedTo'| translate}}">
+      </mat-form-field>
+      <input #attachmentInput type="file" id="attachmentInput" name="file" required
+             (change)="parseFile($event)" accept=".png,.jpg,.pdf,.doc,.odf,.xls,.txt">
+
+    </div>
+    <button type="submit" class="submit-btn" mat-button>{{'bugTable.buttonSubmit'| translate}}</button>
+
   </form>
+
 </div>
+
+
+<!--<div class="row addBug-component">-->
+<!--<div class="errorMessage server-error" *ngIf="displayError()">-->
+<!--{{getMessage()}}-->
+<!--</div>-->
+<!--<form (ngSubmit)="addBugForm()">-->
+<!--<fieldset>-->
+<!--<div class="form-group">-->
+<!--<div class="form-group">-->
+<!--<label for="titleInput">{{'addBug.title' | translate}} </label>-->
+<!--<input type="text"-->
+<!--#titleElement-->
+<!--#titleControl="ngModel"-->
+<!--placeholder="{{'addBug.inputTitle' | translate}}"-->
+<!--name="title"-->
+<!--id="titleInput"-->
+<!--class="form-control"-->
+<!--[(ngModel)]="bugData.title"-->
+<!--required>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="descriptionInput">{{'addBug.description' | translate}} </label>-->
+<!--<input type="text"-->
+<!--#descriptionElement-->
+<!--#descriptionControl="ngModel"-->
+<!--placeholder="{{'addBug.inputDescription' | translate}} "-->
+<!--name="description"-->
+<!--id="descriptionInput"-->
+<!--class="form-control"-->
+<!--[(ngModel)]="bugData.description"-->
+<!--[ngClass]="{form_invalid: !validateDescription(), form_valid:validateDescription()}"-->
+<!--required>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="versionInput">{{'addBug.version' | translate}} </label>-->
+<!--<input type="text"-->
+<!--#versionElement-->
+<!--#versionControl="ngModel"-->
+<!--placeholder="{{'addBug.inputVersion' | translate}}"-->
+<!--name="version"-->
+<!--id="versionInput"-->
+<!--class="form-control"-->
+<!--[(ngModel)]="bugData.version"-->
+<!--[ngClass]="{form_invalid: !validateVersion(), form_valid:validateVersion()}"-->
+<!--required>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="fixedVersionInput">{{'addBug.fixedVersion' | translate}}</label>-->
+<!--<input type="text"-->
+<!--#versionElement-->
+<!--#versionControl="ngModel"-->
+<!--placeholder="{{'addBug.fixedVersion' | translate}}"-->
+<!--name="fixedVersion"-->
+<!--id="fixedVersionInput"-->
+<!--class="form-control"-->
+<!--[(ngModel)]="bugData.fixedVersion"-->
+<!--[ngClass]="{form_invalid: !validateVersion(), form_valid:validateVersion()}"-->
+<!--required>-->
+<!--</div>-->
+
+<!--<div class="form-group">-->
+<!--<label for="targetDateInput">{{'addBug.targetDate' | translate}} </label>-->
+<!--<input-->
+<!--name="targetDate"-->
+<!--id="targetDateInput"-->
+<!--[(ngModel)]="bugData.targetDate"-->
+<!--[matDatepicker]="targetDate">-->
+<!--<mat-datepicker-toggle [for]="targetDate"></mat-datepicker-toggle>-->
+<!--<mat-datepicker #targetDate></mat-datepicker>-->
+
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label>{{'addBug.severity' | translate}} </label>-->
+<!--<mat-form-field>-->
+<!--<mat-select [(value)]="bugData.severity" placeholder="{{'addBug.severity' | translate}}">-->
+<!--<mat-option *ngFor="let severity of severities" [value]="severity">-->
+<!--{{severity}}-->
+<!--</mat-option>-->
+<!--</mat-select>-->
+<!--</mat-form-field>-->
+<!--</div>-->
+
+<!--<div class="form-group">-->
+<!--<label for="assignedToInput">{{'addBug.assignedTo' | translate}}</label>-->
+<!--<input type="text"-->
+<!--#assignedToElement-->
+<!--#assignedToControl="ngModel"-->
+<!--placeholder="{{'addBug.inputAssignedTo' | translate}}"-->
+<!--name="assignedTo"-->
+<!--id="assignedToInput"-->
+<!--class="form-control"-->
+<!--[(ngModel)]="bugData.assignedTo.username"-->
+<!--required>-->
+<!--</div>-->
+
+<!--<div class="form-group">-->
+<!--<label for="attachmentInput">{{'addBug.attachment' | translate}}</label>-->
+<!--<input #attachmentInput type="file" id="attachmentInput" name="file" required-->
+<!--(change)="parseFile($event)" accept=".png,.jpg,.pdf,.doc,.odf,.xls,.txt">-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</fieldset>-->
+<!--<button color="primary"-->
+<!--mat-raised-button-->
+<!--style="margin:30px 0">-->
+<!--{{'addBug.buttonAddBug' | translate}}-->
+
+<!--</button>-->
+<!--</form>-->
+<!--</div>-->

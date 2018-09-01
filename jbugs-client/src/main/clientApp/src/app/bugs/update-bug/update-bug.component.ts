@@ -4,6 +4,7 @@ import {BugListService} from "../bugs.service";
 import {ListBugsComponent} from "../list-bugs/list-bugs.component";
 import {TranslateService} from "@ngx-translate/core";
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {AuthenticationService} from "../../authentication/authentication.service";
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -29,11 +30,15 @@ export class UpdateBugComponent implements OnInit {
   fixedVersionErrorMessage: string;
   versionErrorMessage: string;
   matcher = new MyErrorStateMatcher();
-  successorsList;
+  successorsList = [];
 
+  constructor(private translate: TranslateService,
+              public dialogRef: MatDialogRef<ListBugsComponent>,
+              @Inject(MAT_DIALOG_DATA) public data,
+              public bugmngmt: BugListService,
+              public authService: AuthenticationService
+  ) {
 
-  ngOnInit() {
-    this.getStatusSuccessor();
   }
 
   descriptionFormControl = new FormControl('', [
@@ -49,12 +54,17 @@ export class UpdateBugComponent implements OnInit {
     this.validateVersion
   ]);
 
-  constructor(private translate: TranslateService,
-              public dialogRef: MatDialogRef<ListBugsComponent>,
-              @Inject(MAT_DIALOG_DATA) public data,
-              public bugmngmt: BugListService
-  ) {
+  ngOnInit() {
+    this.getStatusSuccessor();
+    this.data.statusBefore = this.data.statusString;
+  }
 
+  canCloseBug() {
+
+    if (this.data.statusBefore === "REJECTED" || this.data.statusBefore === "FIXED") {
+      return true;
+    }
+    return false;
   }
 
   submitUpdateBug() {
@@ -74,6 +84,7 @@ export class UpdateBugComponent implements OnInit {
     this.bugmngmt.getStatusSuccessors(this.data.id).subscribe(
       value => {
         this.successorsList = value;
+        console.log(this.successorsList);
         if (this.successorsList.indexOf("CLOSED") > -1) {
           this.successorsList.splice(this.successorsList.indexOf("CLOSED"), 1);
         }
@@ -82,11 +93,7 @@ export class UpdateBugComponent implements OnInit {
   }
 
   validateDescription(control: FormControl) {
-    if (control.value === null ||
-      control.value === undefined ||
-      control.value === '') {
-      return null;
-    }
+
 
     if (control.value.toString().length >= 250) {
       return null;
@@ -98,25 +105,6 @@ export class UpdateBugComponent implements OnInit {
     }
   }
 
-  // validateDate(control: FormControl) {
-  //   const regex = new RegExp('([0-9]+)/([0-9]+)/([0-9]+)');
-  //
-  //   if (control.value === null ||
-  //     control.value === undefined ||
-  //     control.value === '') {
-  //     return null;
-  //   }
-  //
-  //   if (regex.test(control.value)) {
-  //     return null;
-  //   }
-  //   return {
-  //     dateInvalid: {
-  //       date: control.value
-  //     }
-  //   }
-  //
-  // }
 
   validateVersion(control: FormControl) {
     const regex = new RegExp('([a-zA-Z0-9]+).([a-zA-Z0-9]+).([a-zA-Z0-9]+)');
@@ -133,6 +121,15 @@ export class UpdateBugComponent implements OnInit {
         version: control.value
       }
     }
+  }
+
+  closeBug(id) {
+    this.bugmngmt.closeBug(id).subscribe(
+      value => {
+        console.log("bug closed");
+        this.dialogRef.close()
+      }
+    )
   }
 
   onNoClick(): void {

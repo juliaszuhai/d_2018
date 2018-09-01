@@ -7,6 +7,7 @@ import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.service.BugManagement;
 import ro.msg.edu.jbugs.bugmanagement.business.service.PdfExportService;
+import ro.msg.edu.jbugs.usermanagement.business.utils.Secured;
 
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
@@ -37,8 +38,7 @@ public class PdfGeneratorController {
      * @return Response with a pdf
      */
     @GET
-//    @Secured("BUG_EXPORT_PDF")
-//    @Path("{id}")
+    @Secured("BUG_EXPORT_PDF")
     @Produces("application/pdf")
     public Response getFile(@QueryParam("id") Long id) {
         File file = null;

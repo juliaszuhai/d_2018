@@ -24,7 +24,7 @@ public class PermissionManager {
 
 
 	@POST
-	@Secured("USER_MANAGEMENT")
+    @Secured("PERMISSION_MANAGEMENT")
 	@Produces("application/json")
 	@Path("/add-permission-to-role")
 	public Response addPermissionToRole(@FormParam("permissionType") String permissionType,
@@ -34,7 +34,7 @@ public class PermissionManager {
 	}
 
 	@POST
-	@Secured("USER_MANAGEMENT")
+    @Secured("PERMISSION_MANAGEMENT")
 	@Produces("application/json")
 	@Path("/revoke-permission-from-role")
 	public Response revokePermissionFromRole(@FormParam("permissionType") String permissionType,
@@ -54,7 +54,7 @@ public class PermissionManager {
 	}
 
 	@POST
-	@Secured("USER_MANAGEMENT")
+    @Secured("PERMISSION_MANAGEMENT")
 	@Consumes("application/x-www-form-urlencoded")
 	@Path("/add-role-to-user")
 	public Response addRoleToUser(@FormParam("username") String username,
@@ -69,7 +69,7 @@ public class PermissionManager {
 	}
 
 	@POST
-	@Secured("USER_MANAGEMENT")
+    @Secured("PERMISSION_MANAGEMENT")
 	@Produces("application/json")
 	@Path("/revoke-role-from-user")
 	public Response revokeRoleFromUser(@FormParam("username") String username,
@@ -85,7 +85,7 @@ public class PermissionManager {
 
 
 	@GET
-	@Secured("USER_MANAGEMENT")
+    @Secured("PERMISSION_MANAGEMENT")
 	@Path("/get-all-permissions")
 	@Produces("application/json")
 	public Response getAllPermissions() {
@@ -96,7 +96,7 @@ public class PermissionManager {
 
 
 	@GET
-	@Secured("USER_MANAGEMENT")
+    @Secured("PERMISSION_MANAGEMENT")
 	@Path("/get-all-roles")
 	@Produces("application/json")
 	public Response getAllRoles() {
@@ -106,7 +106,7 @@ public class PermissionManager {
 	}
 
 	@GET
-	@Secured("USER_MANAGEMENT")
+    @Secured("PERMISSION_MANAGEMENT")
 	@Path("/get-permissions-for-role")
 	@Produces("application/json")
 	@Consumes("application/json")

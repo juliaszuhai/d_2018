@@ -3,12 +3,12 @@
 
 
   <form
-    (ngSubmit)="submitUpdateBug()"
+
     #updateForm="ngForm"
     #formElement
     class="update-form"
   >
-
+    <div class="title-description">
     <mat-form-field>
       <input
         matInput
@@ -32,7 +32,18 @@
       </mat-error>
       </textarea>
     </mat-form-field>
-    <br>
+      <div class="form-info">
+
+        {{'bugUpdateErrorMessage.constraints'| translate}}
+        <ul>
+          <li>{{'bugUpdateErrorMessage.description'| translate}}.</li>
+          <li>{{'bugUpdateErrorMessage.version'| translate}}.</li>
+          <li>{{'bugUpdateErrorMessage.date'| translate}}.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bug-prop-changes">
     <mat-form-field>
       <input
         #fixedVersionElement
@@ -76,23 +87,8 @@
     <mat-datepicker #targetDate></mat-datepicker>
 
     <br>
-    <mat-form-field>
-      <!--<input-->
-      <!--#statusControl="ngModel"-->
-      <!--#statusElement-->
-      <!--name="status"-->
-      <!--matInput-->
-      <!--[(ngModel)]="data.statusString"-->
-      <!--placeholder="{{'bugTable.status'| translate}}">-->
-      <mat-select [(value)]="data.statusString" placeholder="{{data.statusString}}"
-                  [disabled]="successorsList.length<1">
-        <mat-option *ngFor="let status of successorsList" [value]="status">
-          {{status}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <br>
-    <mat-form-field>
+
+      <mat-form-field>
       <input
         #severityControl="ngModel"
         #severityElement
@@ -122,18 +118,31 @@
         placeholder="{{'bugTable.createdBy'| translate}}">
     </mat-form-field>
     <br>
-    <button type="submit" mat-button>{{'bugTable.buttonSubmit'| translate}}</button>
+      <mat-form-field>
+
+        <mat-select [(value)]="data.statusString" placeholder="{{data.statusString}}"
+                    [disabled]="successorsList.length<1">
+          <mat-option *ngFor="let status of successorsList" [value]="status">
+            {{status}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <button
+        mat-raised-button
+        color="warn"
+        *ngIf="canCloseBug()"
+        (click)="closeBug(data.id)"
+      >Close bug
+      </button>
+      <br>
+    </div>
+    <button (click)="submitUpdateBug()" type="submit" class="submit-btn" mat-button>{{'bugTable.buttonSubmit'|
+      translate}}
+    </button>
   </form>
 
-  <div class="form-info">
 
-    {{'bugUpdateErrorMessage.constraints'| translate}}
-    <ul>
-      <li>{{'bugUpdateErrorMessage.description'| translate}}.</li>
-      <li>{{'bugUpdateErrorMessage.version'| translate}}.</li>
-      <li>{{'bugUpdateErrorMessage.date'| translate}}.</li>
-    </ul>
-  </div>
 
 </div>
 

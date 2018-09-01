@@ -1,11 +1,19 @@
-.errorMessage{
-  background: rgba(255, 155, 158, 0.54);
-  padding:10px 10px;
-  border-radius:10px;
-  margin:10px 0;
+.add-bug-form {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+
 }
 
-.example-full-width {
-  width: 80%;
-  margin-left: 10%;
+.title-description .mat-form-field {
+  width: 100%;
+}
+
+textarea {
+  min-height: 150px;
+}
+
+.submit-btn {
+  width: 100%;
+  margin: 20px 0;
 }
