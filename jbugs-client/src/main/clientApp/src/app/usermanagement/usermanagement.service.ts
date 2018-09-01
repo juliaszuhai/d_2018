@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {UserData} from "./register-user/register-user.component";
-import {TranslateService} from "@ngx-translate/core";
 
 
 @Injectable({
@@ -13,21 +12,30 @@ export class UsermanagementService {
 
   baseURL = 'http://localhost:8080/jbugs/rest';
   getAllUsers(){
-
     return this.http.get(this.baseURL + '/manage-users/get-all-users');
   }
 
   activateUser(username){
-    const params = new HttpParams()
-      .set('username', username);
-    return this.http.get(this.baseURL + '/manage-users/activate-user', {params});
+    const body = new URLSearchParams();
+    body.set('username', username);
+    return this.http.post(this.baseURL + '/manage-users/activate-user', body.toString(),
+      {
+        headers: new HttpHeaders(
+          {'Content-Type': 'application/x-www-form-urlencoded'}
+        )
+      });
 
   }
 
   deactivateUser(username){
-    const params = new HttpParams()
-      .set('username', username);
-    return this.http.get(this.baseURL + '/manage-users/deactivate-user', {params});
+    const body = new URLSearchParams();
+    body.set('username', username);
+    return this.http.post(this.baseURL + '/manage-users/deactivate-user', body.toString(),
+      {
+        headers: new HttpHeaders(
+          {'Content-Type': 'application/x-www-form-urlencoded'}
+        )
+      });
   }
 
   registerUser(userData: UserData) {
@@ -57,17 +65,28 @@ export class UsermanagementService {
   }
 
   addRoleToUser(username: string, roleType: string) {
-    const params = new HttpParams()
-      .set('username', username)
-      .set('roleType', roleType);
-    return this.http.get(this.baseURL + '/manage-permissions/add-role-to-user', {params});
+    let body = new URLSearchParams();
+    body.set('username', username);
+    body.set('roleType', roleType);
+    return this.http.post(this.baseURL + '/manage-permissions/add-role-to-user',
+      body.toString(),
+      {
+        headers: new HttpHeaders(
+          {'Content-Type': 'application/x-www-form-urlencoded'}
+        )
+      });
   }
 
   revokeRoleFromUser(username: string, roleType: string) {
-    const params = new HttpParams()
-      .set('username', username)
-      .set('roleType', roleType);
-    return this.http.get(this.baseURL + '/manage-permissions/revoke-role-from-user', {params});
+    const body = new URLSearchParams();
+    body.set('username', username);
+    body.set('roleType', roleType);
+    return this.http.post(this.baseURL + '/manage-permissions/revoke-role-from-user', body.toString(),
+      {
+        headers: new HttpHeaders(
+          {'Content-Type': 'application/x-www-form-urlencoded'}
+        )
+      });
   }
 }
 

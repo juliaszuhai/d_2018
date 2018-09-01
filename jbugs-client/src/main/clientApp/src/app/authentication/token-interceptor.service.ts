@@ -43,9 +43,9 @@ export class TokenInterceptorService implements HttpInterceptor {
   }
 
   private handleError(err: HttpErrorResponse) {
-    console.log('snackbar: ' + err.error);
+    console.log(err);
 
-    this.openSnackBar(err.error);
+    this.openSnackBar(err.error.value);
 
   }
 

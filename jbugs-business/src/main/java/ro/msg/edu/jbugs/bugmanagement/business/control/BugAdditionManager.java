@@ -38,7 +38,6 @@ public class BugAdditionManager {
         } catch (ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getExceptionCode()).build();
         }
-
     }
 
 
@@ -54,7 +53,6 @@ public class BugAdditionManager {
         } catch (BusinessException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getExceptionCode()).build();
         }
-
 
     }
 

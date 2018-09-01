@@ -33,30 +33,30 @@ public class UserManager {
 		}
 	}
 
-	@GET
+	@POST
 	@Produces("application/json")
 	@Path("/activate-user")
-	public Response activateUser(@QueryParam("username") String username) {
+	public Response activateUser(@FormParam("username") String username) {
 		try {
 			userManagementController.activateUser(username);
 			return Response.ok().build();
 		} catch (BusinessException e) {
-			return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.getExceptionCode().getMessage()).build();
+			return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.getExceptionCode()).build();
 		}
 	}
 
-	@GET
+	@POST
 	@Produces("application/json")
 	@Path("/deactivate-user")
-	public Response deactivateUser(@QueryParam("username") String username) {
+	public Response deactivateUser(@FormParam("username") String username) {
 		try {
 			userManagementController.deactivateUser(username);
 			return Response.ok().build();
 		} catch (BusinessException e) {
 			if (e.getExceptionCode() == ExceptionCode.USER_HAS_ASSIGNED_BUGS) {
-				return Response.status(Response.Status.FOUND).entity(e.getExceptionCode().getMessage()).build();
+				return Response.status(Response.Status.FOUND).entity(e.getExceptionCode()).build();
 			}
-			return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode().getMessage()).build();
+			return Response.status(Response.Status.UNAUTHORIZED).entity(e.getExceptionCode()).build();
 		}
 	}
 
@@ -70,7 +70,7 @@ public class UserManager {
 			userManagementController.updateUser(userDTO, getRequester(headers));
 			return Response.ok().build();
 		} catch (BusinessException e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
 		}
 	}
 
@@ -94,7 +94,7 @@ public class UserManager {
 
 			return Response.status(Response.Status.CREATED).build();
 		} catch (BusinessException e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
 		}
 	}
 
@@ -112,7 +112,7 @@ public class UserManager {
 					)
 					.build();
 		} catch (BusinessException e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
 		}
 	}
 
@@ -130,7 +130,7 @@ public class UserManager {
 					)
 					.build();
 		} catch (BusinessException e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode().getMessage()).build();
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
 		}
 	}
 }

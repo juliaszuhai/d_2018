@@ -79,10 +79,7 @@ public class UserManagementService {
 			throw new BusinessException(ExceptionCode.USER_VALIDATION_EXCEPTION);
 		}
 
-		//validate if email already exists
-		if (userPersistenceManager.getUserByEmail(userDTO.getEmail()).isPresent()) {
-			throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
-		}
+
 
 	}
 
@@ -98,7 +95,7 @@ public class UserManagementService {
 	}
 
 
-	private boolean validateFields(UserDTO userDTO) {
+    private boolean validateFields(UserDTO userDTO) throws BusinessException {
 		return userDTO.getFirstName() != null
 				&& userDTO.getLastName() != null
 				&& userDTO.getEmail() != null
@@ -106,16 +103,21 @@ public class UserManagementService {
 				&& isValidPhoneNumber(userDTO.getPhoneNumber());
 	}
 
-	private boolean isValidForCreation(UserDTO userDTO) {
+    private boolean isValidForCreation(UserDTO userDTO) throws BusinessException {
 		return validateFields(userDTO)
 				&& userDTO.getPassword() != null;
 	}
 
-	private boolean isValidEmail(String email) {
+    private boolean isValidEmail(String email) throws BusinessException {
 		final Pattern validEmailAddressRegex =
 				Pattern.compile("^[A-Z0-9._%+-]+@msggroup.com$", Pattern.CASE_INSENSITIVE);
 
 		Matcher matcher = validEmailAddressRegex.matcher(email);
+
+        //validate if email already exists
+        if (userPersistenceManager.getUserByEmail(email).isPresent()) {
+            throw new BusinessException(ExceptionCode.EMAIL_EXISTS_ALREADY);
+        }
 		return matcher.find();
 	}
 

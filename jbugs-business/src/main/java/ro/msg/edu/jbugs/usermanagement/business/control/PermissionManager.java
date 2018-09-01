@@ -22,27 +22,23 @@ public class PermissionManager {
 	@EJB
 	private PermissionManagementService permissionManagementController;
 
-	//TODO : fix request types.
 
-	@GET
+	@POST
 	@Secured("USER_MANAGEMENT")
 	@Produces("application/json")
 	@Path("/add-permission-to-role")
-	public Response addPermissionToRole(@QueryParam("permissionType") String permissionType,
-										@QueryParam("roleType") String roleType) {
-
+	public Response addPermissionToRole(@FormParam("permissionType") String permissionType,
+										@FormParam("roleType") String roleType) {
 		permissionManagementController.addPermissionToRole(permissionType, roleType);
 		return Response.ok().build();
-
-
 	}
 
-	@GET
+	@POST
 	@Secured("USER_MANAGEMENT")
 	@Produces("application/json")
 	@Path("/revoke-permission-from-role")
-	public Response revokePermissionFromRole(@QueryParam("permissionType") String permissionType,
-											 @QueryParam("roleType") String roleType) {
+	public Response revokePermissionFromRole(@FormParam("permissionType") String permissionType,
+											 @FormParam("roleType") String roleType) {
 
 		permissionManagementController.revokePermissionFromRole(roleType, permissionType);
 		return Response.ok().build();
@@ -53,16 +49,16 @@ public class PermissionManager {
 	private String getRequester(@Context HttpHeaders headers) {
 		String authorizationHeader = headers.getRequestHeader("authorization").get(0);
 		String token = authorizationHeader.substring("Bearer".length()).trim();
-		String requesterUsername = JWT.decode(token).getClaim("username").asString();
-		return requesterUsername;
+		return JWT.decode(token).getClaim("username").asString();
+
 	}
 
-	@GET
+	@POST
 	@Secured("USER_MANAGEMENT")
-	@Produces("application/json")
+	@Consumes("application/x-www-form-urlencoded")
 	@Path("/add-role-to-user")
-	public Response addRoleToUser(@QueryParam("username") String username,
-								  @QueryParam("roleType") String roleType,
+	public Response addRoleToUser(@FormParam("username") String username,
+								  @FormParam("roleType") String roleType,
 								  @Context HttpHeaders headers) {
 		try {
 			permissionManagementController.addRoleToUser(roleType, username, getRequester(headers));
@@ -72,12 +68,12 @@ public class PermissionManager {
 		}
 	}
 
-	@GET
+	@POST
 	@Secured("USER_MANAGEMENT")
 	@Produces("application/json")
 	@Path("/revoke-role-from-user")
-	public Response revokeRoleFromUser(@QueryParam("username") String username,
-									   @QueryParam("roleType") String roleType,
+	public Response revokeRoleFromUser(@FormParam("username") String username,
+									   @FormParam("roleType") String roleType,
 									   @Context HttpHeaders headers) {
 		try {
 			permissionManagementController.revokeRoleFromUser(roleType, username, getRequester(headers));
@@ -124,6 +120,4 @@ public class PermissionManager {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
 		}
 	}
-
-
 }

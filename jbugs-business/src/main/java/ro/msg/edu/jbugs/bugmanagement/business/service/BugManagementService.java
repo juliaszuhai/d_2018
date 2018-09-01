@@ -165,13 +165,10 @@ public class BugManagementService implements BugManagement {
 			bugAfter = setUsersFromDTO(bugDTO, bugBefore);
 
 			List<Integer> succesors = bugBefore.getStatus().getSuccesors();
-			System.out.println("vai" + succesors);
-
 
 			Integer val = Status.valueOf(bugDTO.getStatusString()).getValue();
-			System.out.println("caca" + val);
-
-
+			Integer statusBefore = bugBefore.getStatus().getValue();
+			succesors.add(statusBefore);
 			if (succesors.contains(val)) {
 				bugAfter.setStatus(Status.valueOf(bugDTO.getStatusString()));
 				this.isBugValid(bugAfter);
@@ -181,13 +178,10 @@ public class BugManagementService implements BugManagement {
 				notificationManagementService.sendNotification(TypeNotification.BUG_UPDATED, BugDTOHelper.fromEntity(bugAfter), BugDTOHelper.fromEntity(bugBefore), receivers);
 
 
-
 			} else {
 				throw new BusinessException(ExceptionCode.STATUS_INCORRECT_EXCEPTION);
 			}
 
-//            this.isBugValid(bugAfter);
-//            bugPersistenceManager.updateBug(bugAfter);
 			return bugDTO;
 		} else {
 			throw new BusinessException(ExceptionCode.BUG_VALIDATION_EXCEPTION);
