@@ -14,8 +14,17 @@ export class LoginComponent implements OnInit {
   userData: UserData;
   error: boolean;
   errorMessage: string;
+  captchaError = false;
 
+  resolved(captchaResponse: string) {
+    if (captchaResponse) {
+      this.captchaError = true;
+    }
+  }
 
+  captchaValid() {
+    return this.captchaError;
+  }
 
   constructor(private authenticationService: AuthenticationService, private router: Router,
               private translate: TranslateService) {

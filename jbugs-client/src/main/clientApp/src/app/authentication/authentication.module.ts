@@ -4,12 +4,13 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
-import {AuthenticationService} from './authentication.service';
 import {TokenInterceptorService} from './token-interceptor.service';
 import {MatButtonModule} from '@angular/material';
 import {UserModule} from '../user/user.module';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../app.module";
+import {RecaptchaFormsModule} from "ng-recaptcha/forms";
+import {RecaptchaModule} from "ng-recaptcha";
 
 const loginRoutes: Routes = [
   {path: 'login', component: LoginComponent, },
@@ -34,7 +35,9 @@ const loginRoutes: Routes = [
     FormsModule,
     RouterModule.forChild(loginRoutes),
     MatButtonModule,
-    UserModule
+    UserModule,
+    RecaptchaFormsModule,
+    RecaptchaModule.forRoot()
   ],
   declarations: [LoginComponent],
   exports: [LoginComponent, RouterModule, MatButtonModule
