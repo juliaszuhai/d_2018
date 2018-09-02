@@ -19,7 +19,7 @@
     "bugUpdate": "Bug Updated",
     "bugCreated": "Bug Created",
     "bugStatusUpdate": "Bug Status Updated",
-    "userDeactivate": "User Deactivate",
+    "userDeactivate": "User Deactivated",
     "urlBug": "URL bug",
     "message": "Show your message",
     "date": "Send date",
@@ -76,9 +76,25 @@
     "buttonAddBug": "Add Bug",
     "attachment": "Add attachments"
   },
+  "status": {
+    "NEW": "NEW",
+    "IN_PROGRESS": "IN PROGRESS",
+    "CLOSED": "CLOSED",
+    "FIXED": "FIXED",
+    "INFO_NEEDED": "INFO NEEDED",
+    "REJECTED": "REJECTED"
+  },
+  "severity": {
+    "CRITICAL": "CRITICAL",
+    "HIGH": "HIGH",
+    "MEDIUM": "MEDIUM",
+    "LOW": "LOW"
+  },
   "bugPopup": {
     "description": "Description",
-    "exportPdf": "Export to Pdf"
+    "exportPdf": "Export to Pdf",
+    "fixedIn": "Fixed In Version",
+    "deadline": "Deadline"
   },
   "bugTable": {
     "number": "#",
@@ -89,7 +105,7 @@
     "status": "Status",
     "fixedVersion": "Fixed Version",
     "severity": "Severity",
-    "createdBy": "Created By User",
+    "createdBy": "Created By",
     "assignedTo": "Assigned To",
     "exportExcel": "Export Excel",
     "buttonSubmit": "Submit",

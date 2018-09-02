@@ -65,7 +65,7 @@
 
       <!--</ng-container>-->
       <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef> Title</th>
+        <th mat-header-cell *matHeaderCellDef> {{'bugTable.title'|translate}}</th>
         <td mat-cell *matCellDef="let element">
           <button mat-button color="primary" (click)="openDialog(element)">
             {{element.title}}
@@ -81,14 +81,14 @@
       <!--</ng-container>-->
 
       <ng-container matColumnDef="targetDate">
-        <th mat-header-cell *matHeaderCellDef> Target Date</th>
+        <th mat-header-cell *matHeaderCellDef> {{'bugTable.targetDate'|translate}}</th>
         <td mat-cell *matCellDef="let element"> {{getDate(element.targetDate).toDateString()}}</td>
       </ng-container>
 
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
-        <td mat-cell *matCellDef="let element"> {{element.status}}</td>
+        <th mat-header-cell *matHeaderCellDef>{{'bugTable.status'|translate}}</th>
+        <td mat-cell *matCellDef="let element"> {{getStatusTranslation(element.status)|translate}}</td>
       </ng-container>
 
       <!--<ng-container matColumnDef="fixedVersion">-->
@@ -97,17 +97,17 @@
       <!--</ng-container>-->
 
       <ng-container matColumnDef="severity">
-        <th mat-header-cell *matHeaderCellDef>Severity</th>
-        <td mat-cell *matCellDef="let element"> {{element.severity}}</td>
+        <th mat-header-cell *matHeaderCellDef>{{'bugTable.severity'|translate}}</th>
+        <td mat-cell *matCellDef="let element"> {{getSeverityTranslation(element.severity)|translate}}</td>
       </ng-container>
 
       <ng-container matColumnDef="createdBy">
-        <th mat-header-cell *matHeaderCellDef>Created By</th>
+        <th mat-header-cell *matHeaderCellDef>{{'bugTable.createdBy'|translate}}</th>
         <td mat-cell *matCellDef="let element"> {{element.createdByUser.username}}</td>
       </ng-container>
 
       <ng-container matColumnDef="assignedTo">
-        <th mat-header-cell *matHeaderCellDef>Assigned To</th>
+        <th mat-header-cell *matHeaderCellDef>{{'bugTable.assignedTo'|translate}}</th>
         <td mat-cell *matCellDef="let element"> {{element.assignedTo.username}}</td>
       </ng-container>
 

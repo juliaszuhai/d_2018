@@ -154,6 +154,11 @@ export class UpdateBugComponent implements OnInit {
     return this.fixedVersionErrorMessage;
   }
 
+  getStatusTranslation(status: string) {
+    var message = 'status.';
+    return message + status;
+  }
+
   // getDateErrorMessage(){
   //   this.dateFormControl.hasError('required') ? (this.translate.get('textFieldValidation.required').subscribe((res: string) => this.dateErrorMessage = res)) :
   //     this.dateFormControl.hasError('dateInvalid') ? (this.translate.get('textFieldValidation.invalidDate').subscribe((res: string) => this.dateErrorMessage = res)) :

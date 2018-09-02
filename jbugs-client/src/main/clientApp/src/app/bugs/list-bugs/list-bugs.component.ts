@@ -215,6 +215,17 @@ export class ListBugsComponent implements OnInit {
   }
 
 
+  getStatusTranslation(status: string) {
+    var message = 'status.';
+    return message + status;
+
+  }
+
+  getSeverityTranslation(severity: string) {
+    var message = 'severity.';
+    return message + severity;
+
+  }
   openAddBug() {
     const dialogRef2 = this.dialog.open(AddBugComponent, {
       width: '70%',
