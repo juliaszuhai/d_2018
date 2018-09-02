@@ -1,8 +1,6 @@
 package ro.msg.edu.jbugs.bugmanagement.business.service;
 
 import javafx.util.Pair;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
 import ro.msg.edu.jbugs.bugmanagement.business.dto.FilterDTO;
@@ -15,7 +13,6 @@ import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagementService;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
-import ro.msg.edu.jbugs.usermanagement.business.control.AuthenticationManagementController;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
