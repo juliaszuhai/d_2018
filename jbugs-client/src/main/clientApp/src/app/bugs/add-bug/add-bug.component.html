@@ -6,7 +6,7 @@
     #addForm="ngForm"
     #formElement
     class="add-bug-form"
-    (submit)="addBugForm()"
+
   >
 
     <div class="title-description">
@@ -116,7 +116,7 @@
              (change)="parseFile($event)" accept=".png,.jpg,.pdf,.doc,.odf,.xls,.txt">
 
     </div>
-    <button type="submit" class="submit-btn" mat-button>{{'bugTable.buttonSubmit'| translate}}</button>
+    <button (click)="addBugForm()" class="submit-btn" mat-button>{{'bugTable.buttonSubmit'| translate}}</button>
 
   </form>
 

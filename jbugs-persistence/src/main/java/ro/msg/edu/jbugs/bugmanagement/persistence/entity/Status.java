@@ -28,7 +28,7 @@ public enum Status {
 
 
     public List<Integer> getSuccesors() {
-        return succesors;
+        return new ArrayList<>(succesors);
     }
 
 

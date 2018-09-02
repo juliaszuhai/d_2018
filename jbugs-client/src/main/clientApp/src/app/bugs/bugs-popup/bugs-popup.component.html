@@ -5,28 +5,28 @@
 
     <div class="bug-users">
       <div class="bug-prop created-by">
-        <span class="bug-prop-label">Created By: </span> <span>{{data.createdBy}}</span>
+        <span class="bug-prop-label">{{'bugTable.createdBy'|translate}}: </span> <span>{{data.createdBy}}</span>
       </div>
       <div class="bug-prop assigned-to">
-        <span class="bug-prop-label">Assigned To: </span> <span>{{data.assignedTo}}</span>
+        <span class="bug-prop-label">{{'bugTable.assignedTo'|translate}}: </span> <span>{{data.assignedTo}}</span>
       </div>
     </div>
   </div>
   <div class="right-side">
     <div class="bug-prop version">
-      <span class="bug-prop-label">Version: </span> <span> {{data.version}}</span>
+      <span class="bug-prop-label">{{'bugTable.version'|translate}}: </span> <span> {{data.version}}</span>
     </div>
     <div class="bug-prop fixed-version">
-      <span class="bug-prop-label">Fixed In Version: </span> <span> {{data.fixedVersion}}</span>
+      <span class="bug-prop-label">{{'bugPopup.fixedIn'|translate}}: </span> <span> {{data.fixedVersion}}</span>
     </div>
     <div class="bug-prop status">
-      <span class="bug-prop-label">Status: </span> <span> {{data.status}}</span>
+      <span class="bug-prop-label">{{'bugTable.status'|translate}}: </span> <span> {{data.status}}</span>
     </div>
     <div class="bug-prop severity">
-      <span class="bug-prop-label">Severity: </span> <span> {{data.severity}}</span>
+      <span class="bug-prop-label">{{'bugTable.severity'|translate}}: </span> <span> {{data.severity}}</span>
     </div>
     <div class="bug-prop target-date">
-      <span class="bug-prop-label">Deadline: </span> <span> {{data.targetDate}}</span>
+      <span class="bug-prop-label">{{'bugPopup.deadline'|translate}}: </span> <span> {{data.targetDate}}</span>
     </div>
     <div class="bug-prop export">
       <button color="primary"
@@ -38,7 +38,7 @@
       >
         <i class="material-icons">
           picture_as_pdf
-        </i> <span>Export To PDF</span>
+        </i> <span>{{'bugPopup.exportPdf'|translate}}</span>
       </button>
     </div>
     <div>
@@ -53,6 +53,6 @@
           attach_file
         </i> <span>Download attachemnt</span>
       </button>
-  </div>
+    </div>
 
-</div>
+  </div>

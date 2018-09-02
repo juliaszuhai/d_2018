@@ -57,9 +57,25 @@
     "buttonAddBug": "Adaugare Bug",
     "attachment": "Adauga atasamente"
   },
+  "status": {
+    "NEW": "NOU",
+    "IN_PROGRESS": "IN DESFASURARE",
+    "CLOSED": "INCHIS",
+    "FIXED": "REZOLVAT",
+    "INFO_NEEDED": "NECESITA INFO",
+    "REJECTED": "RESPINS"
+  },
+  "severity": {
+    "CRITICAL": "CRITICA",
+    "HIGH": "RIDICATA",
+    "MEDIUM": "MEDIE",
+    "LOW": "MICA"
+  },
   "bugPopup": {
     "description": "Descriere",
-    "exportPdf": "Exportare Pdf"
+    "exportPdf": "Exportare Pdf",
+    "fixedIn": "Rezolvat in Versiunea",
+    "deadline": "Data limita"
   },
   "bugTable": {
     "number": "#",

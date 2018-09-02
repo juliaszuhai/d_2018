@@ -123,12 +123,12 @@
         placeholder="{{'bugTable.createdBy'| translate}}">
     </mat-form-field>
     <br>
-      <mat-form-field>
+      <mat-form-field *ngIf="data.statusString!=null">
 
         <mat-select [(value)]="data.statusString" placeholder="{{'bugTable.status'| translate}}"
                     [disabled]="successorsList.length<1|| data.statusString ==='CLOSED'">
           <mat-option *ngFor="let status of successorsList" [value]="status">
-            {{status}}
+            {{getStatusTranslation(status)|translate}}
           </mat-option>
         </mat-select>
       </mat-form-field>

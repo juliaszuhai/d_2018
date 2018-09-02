@@ -25,7 +25,18 @@ export class ListBugsComponent implements OnInit {
   relatedUser: RelatedUser;
   bugList: MatTableDataSource<BugData[]>;
 
-
+  statuses = [
+    'NEW',
+    'FIXED',
+    'REJECTED',
+    'CLOSED'
+  ];
+  severities = [
+    'LOW',
+    'MEDIUM',
+    'CRITICAL',
+    'HIGH'
+  ];
   listId: number[] = [];
   forExcel: number[] = [];
   sorted: Object[] = [];
@@ -40,7 +51,6 @@ export class ListBugsComponent implements OnInit {
   length = 14;
   pageIndex = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-
 
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {
@@ -160,10 +170,20 @@ export class ListBugsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+
       this.filter(this.bugData.title, this.bugData.description, this.bugData.status, this.bugData.severity, this.pageIndex, this.pageSize, this.id);
     });
   }
 
+  getStatusTranslation(status: string) {
+    var message = 'status.';
+    return message + status;
+  }
+
+  getSeverityTranslation(severity: string) {
+    var message = 'severity.';
+    return message + severity;
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -172,6 +192,10 @@ export class ListBugsComponent implements OnInit {
 
   filter(title: string, description: string, status: string, severity: string, pageIndex = 0, pageSize = this.pageSize, id: number) {
     this.pageIndex = pageIndex;
+    this.bugData.title = title;
+    this.bugData.description = description;
+    this.bugData.status = status;
+    this.bugData.severity = severity;
     this.bugService.filter(title, description, status, severity, pageIndex, pageSize, id).subscribe(
       {
         next: (value: any[]) => {
@@ -183,8 +207,6 @@ export class ListBugsComponent implements OnInit {
       }
     );
   }
-
-
 
 
   onChangeCheck(bug: BugData, checked: boolean) {

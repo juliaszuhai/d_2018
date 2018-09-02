@@ -82,6 +82,10 @@ export class UpdateBugComponent implements OnInit {
 
   }
 
+  getStatusTranslation(status: string) {
+    var message = 'status.';
+    return message + status;
+  }
   getStatusSuccessor() {
     this.bugmngmt.getStatusSuccessors(this.data.id).subscribe(
       value => {

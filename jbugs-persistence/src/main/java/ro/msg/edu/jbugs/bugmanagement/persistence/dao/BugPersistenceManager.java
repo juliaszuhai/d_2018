@@ -34,35 +34,33 @@ public class BugPersistenceManager {
 
     /**
      * Get a list of all bugs stored in the database.
+     *
      * @return : List of Bugs, empty if there are no bugs in the database.
      */
     public List<Bug> getAllBugs() {
-        TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_ALL_BUGS,Bug.class);
+        TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_ALL_BUGS, Bug.class);
         return q.getResultList();
     }
 
-    public List<Attachment> getAllAttachments()
-    {
-        TypedQuery<Attachment> q= em.createNamedQuery(Attachment.GET_ALL_ATTACHMENTS,Attachment.class);
+    public List<Attachment> getAllAttachments() {
+        TypedQuery<Attachment> q = em.createNamedQuery(Attachment.GET_ALL_ATTACHMENTS, Attachment.class);
         return q.getResultList();
     }
 
 
-    public List<Attachment> getAttachmentsForBug(@NotNull Long id)
-    {
+    public List<Attachment> getAttachmentsForBug(@NotNull Long id) {
         TypedQuery<Attachment> q = em.createNamedQuery(Attachment.GET_ATTACHMENTS_FOR_BUG, Attachment.class).setParameter("bugId", id);
         return q.getResultList();
     }
 
 
     /**
-     *
      * @param id
-     * @return:  Optional, containing a bug entity.
+     * @return: Optional, containing a bug entity.
      */
-    public Optional<Bug> getBugById(@NotNull Long id){
-        TypedQuery<Bug> q=em.createNamedQuery(Bug.GET_BUG_BY_ID,Bug.class)
-                .setParameter("id",id);
+    public Optional<Bug> getBugById(@NotNull Long id) {
+        TypedQuery<Bug> q = em.createNamedQuery(Bug.GET_BUG_BY_ID, Bug.class)
+                .setParameter("id", id);
         try {
             return Optional.of(q.getSingleResult());
         } catch (NoResultException ex) {
@@ -99,15 +97,16 @@ public class BugPersistenceManager {
         Root<Bug> root = criteriaQuery.from(entityType);
 
         buildFilterCriteria(title, description, status, severity, id, builder, criteriaQuery, root);
+        buildFilterCriteria(title, description, status, severity, id, builder, countCriteria, root);
 
         TypedQuery<Bug> query = em.createQuery(criteriaQuery);
-        countCriteria.select(builder.count(criteriaQuery.from(Bug.class)));
+        countCriteria.select(builder.count(root));
         TypedQuery<Long> countQuery = em.createQuery(countCriteria);
         query.setFirstResult(index);
         query.setMaxResults(amount);
 
 
-        return new Pair<>(countQuery.getSingleResult(), query.getResultList());
+        return new Pair<>(new Long(query.getResultList().size()), query.getResultList());
     }
 
     private void buildFilterCriteria(String title, String description, Status status, Severity severity, Long id, CriteriaBuilder builder, CriteriaQuery criteriaQuery, Root<Bug> root) {
@@ -118,7 +117,7 @@ public class BugPersistenceManager {
         }
 
         if (title != null) {
-            result.add(builder.equal(root.get("title"), title));
+            result.add(builder.like(root.get("title"), "%" + title + "%"));
         }
 
         if (status != null) {
@@ -131,7 +130,7 @@ public class BugPersistenceManager {
 
         }
 
-        if(id != null){
+        if (id != null) {
             result.add(builder.equal(root.get("id"), id));
         }
         if (!result.isEmpty()) {
@@ -141,7 +140,8 @@ public class BugPersistenceManager {
 
     /**
      * Updates a bug from the database.
-      * @param bug: bug entity to be updated, should not be null
+     *
+     * @param bug: bug entity to be updated, should not be null
      */
     public void updateBug(@NotNull Bug bug) {
         em.merge(bug);
