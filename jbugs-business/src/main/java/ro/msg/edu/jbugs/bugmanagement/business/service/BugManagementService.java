@@ -80,16 +80,6 @@ public class BugManagementService implements BugManagement {
         return filtered;
     }
 
-    private User getUserByUserNameForBug(String username) throws BusinessException {
-        Optional<User> userAssigned = userPersistenceManager.getUserByUsername(username);
-        if (userAssigned.isPresent()) {
-           return userAssigned.get();
-        } else {
-            throw new BusinessException(ExceptionCode.COULD_NOT_CREATE_BUG);
-        }
-    }
-
-
     /**
      * Create and save a new bug.
      * @param bugDTO - Bug to validate and save
