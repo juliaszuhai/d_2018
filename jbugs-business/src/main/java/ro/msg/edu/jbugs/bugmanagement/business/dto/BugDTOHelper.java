@@ -38,7 +38,8 @@ public class BugDTOHelper {
         assignedTo.setId(bug.getAssignedTo().getId());
         assignedTo.setUsername(bug.getAssignedTo().getUsername());
         bugDTO.setAssignedTo(assignedTo);
-        if (bug.getAttachments().size() > 0) {
+
+        if (!bug.getAttachments().isEmpty()) {
             bugDTO.setFileName(bug.getAttachments().get(0).getName());
         }
 

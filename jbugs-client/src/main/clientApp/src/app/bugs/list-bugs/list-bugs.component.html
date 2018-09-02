@@ -123,7 +123,8 @@
 
       <ng-container matColumnDef="exportExcel">
         <th mat-header-cell *matHeaderCellDef>
-          <button mat-raised-button color="primary" (click)="downloadExcel()"><i class="material-icons">
+          <button mat-raised-button ng-disabled="this.forExcel.length===0" color="primary" (click)="downloadExcel()"><i
+            class="material-icons">
             file_download
           </i>Export Excel
           </button>

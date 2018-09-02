@@ -276,6 +276,8 @@ public class UserManagementServiceTest {
         user.setUsername("doreld");
         when(userPersistenceManager.getUserByUsername(any(String.class)))
                 .thenReturn(Optional.of(user));
+        when(permissionPersistenceManager.getRoleByType("ADM"))
+                .thenReturn(Optional.of(new Role()));
         doNothing().when(userPersistenceManager).updateUser(user);
         try {
             userManagementController.activateUser("doreld");

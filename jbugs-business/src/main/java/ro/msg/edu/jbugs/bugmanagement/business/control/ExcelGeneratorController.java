@@ -15,7 +15,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ import java.util.TreeMap;
 
 @Path("/view-bugs")
 public class ExcelGeneratorController {
-    private static final String FILE_PATH = "T:/Try.xlsx";
+
 
     @EJB
     private BugManagement bugManagement;
@@ -50,10 +49,9 @@ public class ExcelGeneratorController {
         return empinfo;
     }
 
+
     /**
      * The method generates the Excel file and lets you download it.
-     *  TODO : O clasa de service, sau in controller existent o metoda care va fi apelata aici
-     *  TODO : De scurtat clasa, abstractizat parti, etc. Daca are mai mult de 15
      * @param titles - list of selected titles
      * @return - response
      */
@@ -61,12 +59,13 @@ public class ExcelGeneratorController {
     @Secured("BUG_MANAGEMENT")
     @Produces("application/vnd.ms-excel")
     public Response generate(@QueryParam("titles") List<Long> titles) {
-        try {
-            File file = new File(FILE_PATH);
-            FileInputStream fis = null;
-            fis = new FileInputStream(FILE_PATH);
-            XSSFWorkbook workbook = new XSSFWorkbook(fis);
-            XSSFSheet spreadsheet = workbook.getSheetAt(0);
+        String path = System.getProperty("user.dir") + File.separator + "BugExport.xlsx";
+        File templateFile = new File(path);
+        try (FileOutputStream fos = new FileOutputStream(path)) {
+
+
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet();
             Row row;
             Map< String, Object[] > empinfo=this.putInMap(titles);
 
@@ -82,13 +81,12 @@ public class ExcelGeneratorController {
                 }
             }
             //Write the workbook in file system
-            FileOutputStream fos = new FileOutputStream(FILE_PATH);
             workbook.write(fos);
-            fos.close();
-            Response.ResponseBuilder response = Response.ok(file);
+
+            Response.ResponseBuilder response = Response.ok(templateFile);
             response.header("Content-Disposition",
-                    "attachment; filename=new-excel-file.xlsx");
-            file.deleteOnExit();
+                    "attachment; filename=Test.xlsx");
+            templateFile.deleteOnExit();
             return response.build();
 
         } catch(Exception e){

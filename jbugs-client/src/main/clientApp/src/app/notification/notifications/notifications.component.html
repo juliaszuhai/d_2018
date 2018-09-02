@@ -1,5 +1,6 @@
 <mat-accordion *ngFor="let notification of notifications" class="example-headers-align">
-  <mat-expansion-panel>
+  <mat-expansion-panel
+  <mat-expansion-panel (opened)="getMessage(notification)">>
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{getTypeOfNotification(notification.typeNotification)}}
@@ -9,7 +10,19 @@
       </mat-panel-description>
 
     </mat-expansion-panel-header>
-    <p> {{getMessage(notification)}}</p>
+    <p class="titleMessage">
+      {{getTitle(notification)}}</p>
+    <p>{{getContentMessage(notification)}}</p>
+    <ng-container *ngIf="!(getContent(notification).newUser===null)">
+      <p *ngIf="!(getContent(notification).newUser.username==='')"><span class="profile-label">{{'profileWindow.username'| translate}}:</span>
+        {{getContent(notification).newUser.username}}</p>
+      <p *ngIf="!(getContent(notification).newUser.lastName==='')"><span class="profile-label">{{'profileWindow.lastName'| translate}}:</span>
+        {{getContent(notification).newUser.lastName}}</p>
+      <p *ngIf="!(getContent(notification).newUser.email==='')"><span class="profile-label">{{'profileWindow.email'| translate}}:</span>
+        {{getContent(notification).newUser.email}}</p>
+      <p *ngIf="!(getContent(notification).newUser.phoneNumber==='')"><span class="profile-label">{{'profileWindow.phone'| translate}}:</span>
+        {{getContent(notification).newUser.phoneNumber}}</p>
+    </ng-container>
 
   </mat-expansion-panel>
 

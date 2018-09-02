@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 public class PdfExportService {
 
 
-    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+    private final static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
 
     /**

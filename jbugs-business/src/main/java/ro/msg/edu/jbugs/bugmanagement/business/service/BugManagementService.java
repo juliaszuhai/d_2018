@@ -24,6 +24,7 @@ import javax.ejb.Stateless;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -276,6 +277,11 @@ public class BugManagementService implements BugManagement {
             throw new BusinessException(ExceptionCode.STATUS_INCORRECT_EXCEPTION);
         }
         bug.setStatus(Status.CLOSED);
+        notificationManagementService.sendNotification(
+                TypeNotification.BUG_CLOSED,
+                BugDTOHelper.fromEntity(bug),
+                null,
+                Arrays.asList(bug.getCreatedByUser(), bug.getAssignedTo()));
     }
 
     private void setBugStatus(BugDTO bugDTO, Bug bugBefore, Bug bugAfter, TypeNotification typeNotification) throws BusinessException {

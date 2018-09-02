@@ -8,6 +8,7 @@ import {
   MatCardModule,
   MatExpansionModule,
   MatFormFieldModule,
+  MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
@@ -59,7 +60,8 @@ const notificationRoutes: Routes = [
     MatListModule,
     MatSelectModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatGridListModule,
   ],
   declarations: [NotificationsComponent,
 

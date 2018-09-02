@@ -128,7 +128,7 @@ export class ListBugsComponent implements OnInit {
   sortDataSource() {
 
     this.sorted.forEach(arg => {
-      this.bugList = this.bugList.data.sort(function (bug1: BugData, bug2: BugData) {
+      this.bugList = this.bugList.data.sort(function (bug1, bug2) {
 
         if (bug1[arg.argument].toLowerCase() > bug2[arg.argument].toLowerCase()) {
           return arg.order == "asc" ? 1 : -1;
@@ -203,6 +203,8 @@ export class ListBugsComponent implements OnInit {
   }
 
   downloadExcel() {
+    console.log(this.selectedTitles);
+    console.log(this.forExcel);
     this.bugService.excel(this.forExcel);
   }
 

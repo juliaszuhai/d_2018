@@ -99,6 +99,7 @@ public class BugPersistenceManager {
         Root<Bug> root = criteriaQuery.from(entityType);
 
         buildFilterCriteria(title, description, status, severity, id, builder, criteriaQuery, root);
+        //buildFilterCriteria(title, description, status, severity, id, builder, countCriteria, root);
 
         TypedQuery<Bug> query = em.createQuery(criteriaQuery);
         countCriteria.select(builder.count(criteriaQuery.from(Bug.class)));
@@ -110,7 +111,7 @@ public class BugPersistenceManager {
         return new Pair<Long, List<Bug>>(countQuery.getSingleResult(), query.getResultList());
     }
 
-    private void buildFilterCriteria(String title, String description, Status status, Severity severity, Long id, CriteriaBuilder builder, CriteriaQuery<Bug> criteriaQuery, Root<Bug> root) {
+    private void buildFilterCriteria(String title, String description, Status status, Severity severity, Long id, CriteriaBuilder builder, CriteriaQuery criteriaQuery, Root<Bug> root) {
         List<Predicate> result = new ArrayList<>();
 
         if (description != null) {

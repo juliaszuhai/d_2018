@@ -8,3 +8,12 @@
   align-items: center;
 }
 
+.titleMessage {
+  font-weight: bold;
+  text-align: left;
+}
+
+.profile-label {
+  font-weight: bold;
+  color: #4286f4;
+}

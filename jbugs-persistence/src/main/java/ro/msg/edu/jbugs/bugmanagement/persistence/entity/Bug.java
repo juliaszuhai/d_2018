@@ -4,6 +4,7 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.BaseEntity;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -67,7 +68,7 @@ public class Bug extends BaseEntity  {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "bugID")
-    private List<Attachment> attachments;
+    private List<Attachment> attachments = new ArrayList<>();
 
     public String getTitle() {
         return title;
