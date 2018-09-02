@@ -21,7 +21,10 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,10 +51,7 @@ public class BugManagementService implements BugManagement {
     public List<BugDTO> getAllBugs() {
         return bugPersistenceManager.getAllBugs()
                 .stream()
-                .map(bug -> {
-                    BugDTO bugDTO = BugDTOHelper.fromEntity(bug);
-                    return bugDTO;
-                })
+                .map(BugDTOHelper::fromEntity)
                 .collect(Collectors.toList());
 
     }
@@ -220,27 +220,23 @@ public class BugManagementService implements BugManagement {
 
     @Override
     public List<File> getAttachmentForBug(Long bugId) throws BusinessException {
-        // attachments=bugPersistenceManager.getAttachmentsForBug(bugId);
-        Optional<Bug> bug = bugPersistenceManager.getBugById(bugId);
-        bug.orElseThrow(() -> new BusinessException(ExceptionCode.BUG_NOT_EXIST));
-        List<Attachment> attachments = bug.get().getAttachments();
-        List<File> files = new ArrayList<File>();
+        Optional<Bug> bugOptional = bugPersistenceManager.getBugById(bugId);
+        Bug bug = bugOptional.orElseThrow(() -> new BusinessException(ExceptionCode.BUG_NOT_EXIST));
+        List<Attachment> attachments = bug.getAttachments();
+        List<File> files = new ArrayList<>();
         for (int i = 0; i < attachments.size(); i++) {
-            try {
-                File f = new File(attachments.get(i).getName());
-                byte[] blob = attachments.get(i).getAttachmentFile();
-                ByteArrayInputStream bis = new ByteArrayInputStream(blob);
-                OutputStream out = new FileOutputStream(f);
+            File f = new File(attachments.get(i).getName());
+            byte[] blob = attachments.get(i).getAttachmentFile();
+
+            try (OutputStream out = new FileOutputStream(f)) {
+
                 out.write(blob);
-                out.close();
                 files.add(f);
-            } catch (FileNotFoundException e) {
-                throw new BusinessException(ExceptionCode.COULD_NOT_EXPORT_ATTACHMENT);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new BusinessException(ExceptionCode.COULD_NOT_EXPORT_ATTACHMENT);
             }
         }
-        if (files.size() < 1) {
+        if (!files.isEmpty()) {
             throw new BusinessException(ExceptionCode.ATTACHMENT_DOES_NOT_EXIST);
         }
 
@@ -298,8 +294,8 @@ public class BugManagementService implements BugManagement {
     @Override
     public List<Status> getStatusSuccessor(Long id) throws BusinessException {
         Optional<Bug> bugOptional = bugPersistenceManager.getBugById(id);
-        bugOptional.orElseThrow(() -> new BusinessException(ExceptionCode.BUG_NOT_EXIST));
-        return convertStatus(bugOptional.get().getStatus().getSuccesors());
+        Bug bug = bugOptional.orElseThrow(() -> new BusinessException(ExceptionCode.BUG_NOT_EXIST));
+        return convertStatus(bug.getStatus().getSuccesors());
     }
 
     private List<Status> convertStatus(List<Integer> values) {

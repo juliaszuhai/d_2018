@@ -95,7 +95,7 @@ public class UserManagementService {
 	}
 
 
-    private boolean validateFields(UserDTO userDTO) throws BusinessException {
+	private boolean validateFields(UserDTO userDTO) {
 		return userDTO.getFirstName() != null
 				&& userDTO.getLastName() != null
 				&& userDTO.getEmail() != null
@@ -112,7 +112,7 @@ public class UserManagementService {
 				&& userDTO.getPassword() != null;
 	}
 
-    private boolean isValidEmail(String email) throws BusinessException {
+	private boolean isValidEmail(String email) {
 		final Pattern validEmailAddressRegex =
 				Pattern.compile("^[A-Z0-9._%+-]+@msggroup.com$", Pattern.CASE_INSENSITIVE);
 
@@ -141,7 +141,12 @@ public class UserManagementService {
 		User user = userOptional.orElseThrow(() -> new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
 		user.setActive(false);
 		userPersistenceManager.updateUser(user);
-		notificationManagementService.sendNotification(TypeNotification.USER_DEACTIVATED, UserDTOHelper.fromEntity(user), null, getAllUsersWithRole(permissionPersistenceManager.getRoleByType("ADM").get()));
+		Role role = permissionPersistenceManager.getRoleByType("ADM").orElseThrow(() -> new BusinessException(ExceptionCode.ROLE_DOESNT_EXIST));
+		notificationManagementService.sendNotification(
+				TypeNotification.USER_DEACTIVATED,
+				UserDTOHelper.fromEntity(user),
+				null,
+				getAllUsersWithRole(role));
 	}
 
 
@@ -305,8 +310,6 @@ public class UserManagementService {
 
 		while (exists.isPresent()) {
 			lastName = lastName.substring(0, lastName.length() - 1);
-			int length = lastName.length();
-			int length1 = firstName.length();
 			if (firstName.length() > MIN_LAST_NAME_LENGTH - lastName.length() + 1) {
 				username = lastName +
 						firstName.substring(0, MIN_LAST_NAME_LENGTH - lastName.length() + 1);
@@ -374,7 +377,7 @@ public class UserManagementService {
 			User userBefore = userBeforeOptional.get();
 			normalizeUserDTO(userDTO);
 			validateUserForUpdate(userDTO);
-			User userRequester = userRequesterOptional.get();
+			User userRequester = userRequesterOptional.orElseThrow(() -> new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
 
 
 			if (usernameShouldChange(userBefore, userDTO)) {

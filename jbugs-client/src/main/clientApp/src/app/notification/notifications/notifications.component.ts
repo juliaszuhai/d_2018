@@ -148,7 +148,7 @@ export class NotificationsComponent implements OnInit {
     content.newUser = JSON.parse(notificationData.newData);
     content.oldUser = JSON.parse(notificationData.oldData);
 
-    if (!(content.newUser === null) && !(content.oldUser === null){
+    if (!(content.newUser === null) && !(content.oldUser === null)) {
 
 
       if (content.newUser.username === content.oldUser.username) {

@@ -64,7 +64,7 @@ public class PermissionManagementService {
 				List<Role> rolesAfter = user.getRoles();
 
 				receivers.add(userOptional.get());
-				receivers.add(userRequesterOptional.get());
+				receivers.add(userRequesterOptional.orElseThrow(() -> new BusinessException(ExceptionCode.USERNAME_NOT_VALID)));
 				notificationManagementService.sendNotification(TypeNotification.USER_UPDATED, rolesAfter, rolesBefore, receivers);
 
 			}
@@ -115,7 +115,7 @@ public class PermissionManagementService {
 				List<Role> rolesAfter = user.getRoles();
 
 				receivers.add(user);
-				receivers.add(userRequesterOptional.get());
+				receivers.add(userRequesterOptional.orElseThrow(() -> new BusinessException(ExceptionCode.USERNAME_NOT_VALID)));
 				notificationManagementService.sendNotification(TypeNotification.USER_UPDATED, rolesAfter, rolesBefore, receivers);
 
 			}

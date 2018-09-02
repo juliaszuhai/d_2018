@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 public class NotificationManagementService {
-    final static Logger log = LogManager.getLogger(AuthenticationManagementController.class.getName());
+    private static final Logger log = LogManager.getLogger(AuthenticationManagementController.class.getName());
 
     @EJB
     private NotificationPersistenceManager notificationPersistenceManager;

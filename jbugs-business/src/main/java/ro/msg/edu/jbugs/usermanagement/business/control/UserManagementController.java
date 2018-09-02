@@ -18,14 +18,14 @@ import java.util.List;
 public class UserManagementController {
 
 	@EJB
-	private UserManagementService userManagementController;
+	private UserManagementService userManagementService;
 
 	@GET
 	@Secured("USER_MANAGEMENT")
 	@Path("/get-all-users")
 	public Response getAllUsers(@Context SecurityContext securityContext) {
 		try {
-			List<UserDTO> allUsers = userManagementController.getAllUsers();
+			List<UserDTO> allUsers = userManagementService.getAllUsers();
 			String allUsersJson = new Gson().toJson(allUsers);
 			return Response.ok(allUsersJson).build();
 		} catch (Exception e) {
@@ -38,7 +38,7 @@ public class UserManagementController {
 	@Path("/activate-user")
 	public Response activateUser(@FormParam("username") String username) {
 		try {
-			userManagementController.activateUser(username);
+			userManagementService.activateUser(username);
 			return Response.ok().build();
 		} catch (BusinessException e) {
 			return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.getExceptionCode()).build();
@@ -50,7 +50,7 @@ public class UserManagementController {
 	@Path("/deactivate-user")
 	public Response deactivateUser(@FormParam("username") String username) {
 		try {
-			userManagementController.deactivateUser(username);
+			userManagementService.deactivateUser(username);
 			return Response.ok().build();
 		} catch (BusinessException e) {
 			if (e.getExceptionCode() == ExceptionCode.USER_HAS_ASSIGNED_BUGS) {
@@ -67,7 +67,7 @@ public class UserManagementController {
 	public Response updateUser(UserDTO userDTO, @Context HttpHeaders headers) {
 		try {
 
-			userManagementController.updateUser(userDTO, getRequester(headers));
+			userManagementService.updateUser(userDTO, getRequester(headers));
 			return Response.ok().build();
 		} catch (BusinessException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getExceptionCode()).build();
@@ -77,8 +77,8 @@ public class UserManagementController {
 	private String getRequester(@Context HttpHeaders headers) {
 		String authorizationHeader = headers.getRequestHeader("authorization").get(0);
 		String token = authorizationHeader.substring("Bearer".length()).trim();
-		String requesterUsername = JWT.decode(token).getClaim("username").asString();
-		return requesterUsername;
+		return JWT.decode(token).getClaim("username").asString();
+
 	}
 
 
@@ -90,7 +90,7 @@ public class UserManagementController {
 
 		try {
 
-			userManagementController.createUser(userDTO);
+			userManagementService.createUser(userDTO);
 
 			return Response.status(Response.Status.CREATED).build();
 		} catch (BusinessException e) {
@@ -106,7 +106,7 @@ public class UserManagementController {
 		try {
 			return Response
 					.ok(
-							new Gson().toJson(userManagementController
+							new Gson().toJson(userManagementService
 									.getUserForUsername(username)
 									.getRoles())
 					)
@@ -124,7 +124,7 @@ public class UserManagementController {
 		try {
 			return Response
 					.ok(
-							new Gson().toJson(userManagementController
+							new Gson().toJson(userManagementService
 									.getUserForUsername(username)
 									.getNotifications())
 					)
