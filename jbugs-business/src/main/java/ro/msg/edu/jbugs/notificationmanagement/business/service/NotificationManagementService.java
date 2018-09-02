@@ -4,6 +4,7 @@ package ro.msg.edu.jbugs.notificationmanagement.business.service;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
 import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTO;
 import ro.msg.edu.jbugs.notificationmanagement.business.dto.NotificationDTOHelper;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.dao.NotificationPersistenceManager;
@@ -48,6 +49,12 @@ public class NotificationManagementService {
         notificationDTO.setNewData((new Gson().toJson(newData)));
         if (oldData != null)
             notificationDTO.setOldData((new Gson().toJson(oldData)));
+        if (typeNotification.equals(TypeNotification.BUG_CLOSED) | typeNotification.equals(TypeNotification.BUG_CREATED)
+                | typeNotification.equals(TypeNotification.BUG_STATUS_UPDATED) | typeNotification.equals(TypeNotification.BUG_UPDATED)) {
+            BugDTO bugDto = (BugDTO) newData;
+
+            notificationDTO.setUrlBug(bugDto.getId());
+        }
 
         sendTo.forEach(user -> {
             try {

@@ -289,7 +289,7 @@ public class BugManagementService implements BugManagement {
         receivers.add(bugAfter.getAssignedTo());
         receivers.add(bugAfter.getCreatedByUser());
         bugPersistenceManager.updateBug(bugAfter);
-        notificationManagementService.sendNotification(typeNotification, BugDTOHelper.fromEntity(bugAfter), BugDTOHelper.fromEntity(bugBefore), receivers);
+        notificationManagementService.sendNotification(typeNotification.BUG_STATUS_UPDATED, BugDTOHelper.fromEntity(bugAfter), BugDTOHelper.fromEntity(bugBefore), receivers);
     }
 
 

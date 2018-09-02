@@ -51,7 +51,6 @@ public class BugManagementController {
         ObjectMapper mapper = new ObjectMapper();
 
         return mapper.writeValueAsString(allBugs);
-
     }
 
 

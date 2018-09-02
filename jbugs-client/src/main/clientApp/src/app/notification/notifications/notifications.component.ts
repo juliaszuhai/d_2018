@@ -11,16 +11,10 @@ import {TranslateService} from "@ngx-translate/core";
   styleUrls: ['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit {
-
+  statusUpdated: boolean;
   username: string;
   notifications: NotificationData[];
-  usersUpdated: UpdatedUser[];
   messageNotification: MessageNotification;
-  displayedColumns: string[] = [
-    'updatedData',
-    'oldUser',
-    'newUser'
-  ];
   updatedUser: UpdatedUser[] = [];
 
   constructor(private notificationService: NotificationService,
@@ -40,7 +34,7 @@ export class NotificationsComponent implements OnInit {
   ngOnInit() {
     this.username = localStorage['username'];
     this.getNotifications(this.username);
-
+    this.statusUpdated = false;
   }
 
   getNotifications(username) {
@@ -61,8 +55,8 @@ export class NotificationsComponent implements OnInit {
       this.translate.get('notification.userUpdate').subscribe((res: string) => notification = res);
     } else if (notificationType == 'BUG_CREATED') {
       this.translate.get('notification.bugUpdate').subscribe((res: string) => notification = res);
-    } else if (notificationType == 'BUG_CREATED') {
-      this.translate.get('notification.bugCreated').subscribe((res: string) => notification = res);
+    } else if (notificationType == 'BUG_UPDATED') {
+      this.translate.get('notification.bugUpdate').subscribe((res: string) => notification = res);
     } else if (notificationType == 'BUG_CLOSED') {
       this.translate.get('notification.bugClosed').subscribe((res: string) => notification = res);
     } else if (notificationType == 'BUG_STATUS_UPDATED') {
@@ -75,75 +69,75 @@ export class NotificationsComponent implements OnInit {
 
   getTitle(notificationData: NotificationData) {
     let notificationTitle = '';
-    let newUserData = JSON.parse(notificationData.newData);
-
+    let newData = JSON.parse(notificationData.newData);
+    let titleBug = '';
+    let titleBugStatus = '';
     if (notificationData.typeNotification == 'WELCOME_NEW_USER') {
       this.translate.get('notification.welcomeMessage').subscribe((res: string) => notificationTitle = res);
-      if (!(newUserData === null)) {
-        notificationTitle = notificationTitle + newUserData.firstName;
-        console.log(newUserData.firstName);
+      if (!(newData === null)) {
+        notificationTitle = notificationTitle + newData.firstName;
+        console.log(newData.firstName);
       }
     } else if (notificationData.typeNotification == 'USER_UPDATED') {
-      if (newUserData.username === this.username) {
+      if (newData.username === this.username) {
         this.translate.get('notification.userUpdatedByMe').subscribe((res: string) => notificationTitle = res);
       } else {
         this.translate.get('notification.userUpdatedBySomeone').subscribe((res: string) => notificationTitle = res);
       }
     } else if (notificationData.typeNotification == 'BUG_CREATED') {
-      this.translate.get('notification.bugUpdate').subscribe((res: string) => notificationTitle = res);
-    } else if (notificationData.typeNotification == 'BUG_CREATED') {
-      this.translate.get('notification.bugCreated').subscribe((res: string) => notificationTitle = res);
+      this.translate.get('notification.bugTitleCreated').subscribe((res: string) => notificationTitle = res);
+
+    } else if (notificationData.typeNotification == 'BUG_UPDATED') {
+      this.translate.get('notification.bugTitleUpdated').subscribe((res: string) => notificationTitle = res);
+
     } else if (notificationData.typeNotification == 'BUG_CLOSED') {
-      this.translate.get('notification.bugClosed').subscribe((res: string) => notificationTitle = res);
+      this.translate.get('notification.bug').subscribe((res: string) => notificationTitle = res);
+      notificationTitle = notificationTitle + newData.title;
+      this.translate.get('notification.titleBugClosed').subscribe((res: string) => titleBug = res);
+      notificationTitle = notificationTitle + titleBug;
     } else if (notificationData.typeNotification == 'BUG_STATUS_UPDATED') {
-      this.translate.get('notification.bugStatusUpdate').subscribe((res: string) => notificationTitle = res);
+      this.translate.get('notification.status').subscribe((res: string) => notificationTitle = res);
+      notificationTitle = notificationTitle + newData.title;
+      this.translate.get('notification.titleStatus').subscribe((res: string) => titleBugStatus = res);
+      notificationTitle = notificationTitle + titleBugStatus;
     } else if (notificationData.typeNotification == 'USER_DEACTIVATED') {
-      this.translate.get('notification.userDeactivate').subscribe((res: string) => notificationTitle = res);
+      this.translate.get('notification.user').subscribe((res: string) => notificationTitle = res);
+      notificationTitle = notificationTitle + newData.firstName;
+      let messageTitle = '';
+      this.translate.get('notification.titleUserDeactivate').subscribe((res: string) => messageTitle = res);
+      notificationTitle = notificationTitle + messageTitle;
     }
     return notificationTitle;
   }
 
   getContentMessage(notificationData: NotificationData) {
     let contentMessage = '';
-
     if (notificationData.typeNotification == 'WELCOME_NEW_USER') {
       this.translate.get('notification.contentMessage').subscribe((res: string) => contentMessage = res);
     } else if (notificationData.typeNotification == 'USER_UPDATED') {
       this.translate.get('notification.userUpdateContent').subscribe((res: string) => contentMessage = res);
     } else if (notificationData.typeNotification == 'BUG_CREATED') {
-      this.translate.get('notification.bugUpdate').subscribe((res: string) => contentMessage = res);
-    } else if (notificationData.typeNotification == 'BUG_CREATED') {
-      this.translate.get('notification.bugCreated').subscribe((res: string) => contentMessage = res);
+      this.translate.get('notification.bugContentMessage').subscribe((res: string) => contentMessage = res);
+    } else if (notificationData.typeNotification == 'BUG_UPDATED') {
+      this.translate.get('notification.bugContentMessage').subscribe((res: string) => contentMessage = res);
     } else if (notificationData.typeNotification == 'BUG_CLOSED') {
-      this.translate.get('notification.bugClosed').subscribe((res: string) => contentMessage = res);
+      this.translate.get('notification.bugContentMessage').subscribe((res: string) => contentMessage = res);
     } else if (notificationData.typeNotification == 'BUG_STATUS_UPDATED') {
-      this.translate.get('notification.bugStatusUpdate').subscribe((res: string) => contentMessage = res);
+      this.translate.get('notification.bugContentMessage').subscribe((res: string) => contentMessage = res);
     } else if (notificationData.typeNotification == 'USER_DEACTIVATED') {
-      this.translate.get('notification.userDeactivate').subscribe((res: string) => contentMessage = res);
+      this.translate.get('notification.userDeactivateContent').subscribe((res: string) => contentMessage = res);
     }
     return contentMessage;
   }
 
-  // getMessageWelcome(notification: NotificationData) {
-  //   this.messageNotification = {
-  //     subtitleMessage: '',
-  //     oldUser: null,
-  //     newUser: null,
-  //     content: ''
-  //   }
-  //   this.translate.get('notification.welcomeMessage').subscribe((res: string) => this.messageNotification.subtitleMessage = res);
-  //   if (!(this.messageNotification.newUser === null)) {
-  //     this.messageNotification.subtitleMessage = this.messageNotification.subtitleMessage + this.messageNotification.newUser.firstName;
-  //     this.translate.get('notification.contentMessage').subscribe((res: string) => this.messageNotification.content = res);
-  //   }
-  //   this.messageNotification.newUser = JSON.parse(notification.newData);
-  //   this.messageNotification.oldUser = JSON.parse(notification.oldData);
-  //   return this.messageNotification;
-  // }
+
   createUpdateContent(notificationData: NotificationData) {
     let content = {
       oldUser: null,
       newUser: null,
+      newBug: null,
+      oldBug: null,
+      urlBug: ''
     };
     let userContent = {
       oldData: {
@@ -165,7 +159,7 @@ export class NotificationsComponent implements OnInit {
     content.newUser = JSON.parse(notificationData.newData);
     content.oldUser = JSON.parse(notificationData.oldData);
 
-    if (!(content.newUser === null) && !(content.oldUser === null){
+    if (!(content.newUser === null) && !(content.oldUser === null)) {
 
 
       if (content.newUser.username === content.oldUser.username) {
@@ -213,88 +207,92 @@ export class NotificationsComponent implements OnInit {
 
   getContent(notificationData: NotificationData) {
     let content = {
-
+      newBug: {
+        title: '',
+        description: '',
+        version: '',
+        targetDate: null,
+        status: '',
+        fixedVersion: '',
+        severity: '',
+        createdByUser: {
+          username: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          phoneNumber: ''
+        },
+        assignedTo: {
+          username: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          phoneNumber: ''
+        },
+        fileName: '',
+      },
       oldUser: null,
       newUser: null,
+      oldBug: {
+        title: '',
+        description: '',
+        version: '',
+        targetDate: null,
+        status: '',
+        fixedVersion: '',
+        severity: '',
+        createdByUser: {
+          username: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          phoneNumber: ''
+        },
+        assignedTo: {
+          username: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          phoneNumber: ''
+        },
+        fileName: '',
+      },
+      urlBug: ''
 
     };
     if (notificationData.typeNotification == 'WELCOME_NEW_USER') {
       content.newUser = JSON.parse(notificationData.newData);
     } else if (notificationData.typeNotification == 'USER_UPDATED') {
-
       content = this.createUpdateContent(notificationData);
 
-
     } else if (notificationData.typeNotification == 'BUG_CREATED') {
-
-    } else if (notificationData.typeNotification == 'BUG_CREATED') {
-
+      content.newBug = JSON.parse(notificationData.newData);
+      if (!(notificationData.urlBug === undefined)) {
+        content.urlBug = JSON.parse(notificationData.urlBug);
+      }
+    } else if (notificationData.typeNotification == 'BUG_UPDATED') {
+      content.newBug = JSON.parse(notificationData.newData);
+      if (!(notificationData.urlBug === undefined)) {
+        content.urlBug = JSON.parse(notificationData.urlBug);
+      }
     } else if (notificationData.typeNotification == 'BUG_CLOSED') {
-
+      content.newBug = JSON.parse(notificationData.newData);
+      if (!(notificationData.urlBug === undefined)) {
+        content.urlBug = JSON.parse(notificationData.urlBug);
+      }
     } else if (notificationData.typeNotification == 'BUG_STATUS_UPDATED') {
+      content.newBug = JSON.parse(notificationData.newData);
+      content.oldBug = JSON.parse(notificationData.oldData);
+      if (!(notificationData.urlBug === undefined)) {
+        content.urlBug = JSON.parse(notificationData.urlBug);
+      }
 
+      this.statusUpdated = true;
     } else if (notificationData.typeNotification == 'USER_DEACTIVATED') {
-
+      content.newUser = JSON.parse(notificationData.newData);
     }
     return content;
   }
-
-  // getSubtitleMessage(notification: NotificationData) {
-  //   if (notification.typeNotification == 'WELCOME_NEW_USER') {
-  //     this.translate.get('notification.welcomeMessage').subscribe((res: string) => this.messageNotification.subtitleMessage = res);
-  //     if (!(this.messageNotification.newUser === null)) {
-  //       this.messageNotification.subtitleMessage = this.messageNotification.subtitleMessage + this.messageNotification.newUser.firstName;
-  //       // this.translate.get('notification.contentMessage').subscribe((res: string) => this.messageNotification.content = res);
-  //     }
-  //   } else if (notification.typeNotification == 'USER_UPDATED') {
-  //     if (this.messageNotification.newUser.username === this.username) {
-  //       this.translate.get('notification.userUpdatedByMe').subscribe((res: string) => this.messageNotification.subtitleMessage = res);
-  //     } else {
-  //       this.translate.get('notification.userUpdatedBySomeone').subscribe((res: string) => this.messageNotification.subtitleMessage = res);
-  //     }
-  //   } else if (notification.typeNotification == 'BUG_CREATED') {
-  //     this.translate.get('notification.bugUpdate').subscribe((res: string) => notification = res);
-  //   } else if (notification.typeNotification == 'BUG_CREATED') {
-  //     this.translate.get('notification.bugCreated').subscribe((res: string) => notification = res);
-  //   } else if (notification.typeNotification == 'BUG_CLOSED') {
-  //     this.translate.get('notification.bugClosed').subscribe((res: string) => notification = res);
-  //   } else if (notification.typeNotification == 'BUG_STATUS_UPDATED') {
-  //     this.translate.get('notification.bugStatusUpdate').subscribe((res: string) => notification = res);
-  //   } else if (notification.typeNotification == 'USER_DEACTIVATED') {
-  //     this.translate.get('notification.userDeactivate').subscribe((res: string) => notification = res);
-  //   }
-  //   return this.messageNotification.subtitleMessage;
-  // }
-
-  // getMessageForANotification(notification: NotificationData) {
-  //
-  //   if (notification.typeNotification == 'WELCOME_NEW_USER') {
-  //     return this.getMessageWelcome(notification);
-  //   } else if (notification.typeNotification == 'USER_UPDATED') {
-  //     return this.getMessageUpdateUser(notification);
-  //   } else if (notification.typeNotification == 'BUG_CREATED') {
-  //     this.translate.get('notification.bugUpdate').subscribe((res: string) => notification = res);
-  //   } else if (notification.typeNotification == 'BUG_CREATED') {
-  //     this.translate.get('notification.bugCreated').subscribe((res: string) => notification = res);
-  //   } else if (notification.typeNotification == 'BUG_CLOSED') {
-  //     this.translate.get('notification.bugClosed').subscribe((res: string) => notification = res);
-  //   } else if (notification.typeNotification == 'BUG_STATUS_UPDATED') {
-  //     this.translate.get('notification.bugStatusUpdate').subscribe((res: string) => notification = res);
-  //   } else if (notification.typeNotification == 'USER_DEACTIVATED') {
-  //     this.translate.get('notification.userDeactivate').subscribe((res: string) => notification = res);
-  //   }
-  // }
-
-  createDataForMessageUpdate(notification: NotificationData) {
-    this.messageNotification.newUser = JSON.parse(notification.newData);
-    this.messageNotification.oldUser = JSON.parse(notification.oldData);
-    let numberColumn = 0;
-    let numberrow = 0;
-
-    this.usersUpdated.push({color: 'lightblue', cols: 1, text: 'ana', rows: 1})
-
-  }
-
 
   getMessageUpdateUser(notification: NotificationData) {
     this.messageNotification = {
@@ -341,14 +339,5 @@ export class NotificationsComponent implements OnInit {
     this.router.navigate(['/filterBugById', id]);
   }
 
-  // viewMessage(element): void {
-  //   const dialogRef = this.dialog.open(NotificationMessageComponent, {
-  //     width: '60%',
-  //     data: {
-  //       message: element.message,
-  //     }
-  //   });
-  //
-  // }
 
 }
