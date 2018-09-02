@@ -17,7 +17,7 @@
 		<payara.versio>4.1.1.171</payara.versio>
 		<jackson.jaxrs.json.version>2.9.4</jackson.jaxrs.json.version>
 		<jackson.jaxrs.json.glassfish.version>2.27</jackson.jaxrs.json.glassfish.version>
-		<sonar.coverage.exclusions>/**/control/*,**/dto/*,**/filter/*,**/boundary/*,**/entity/*,**/dao/*</sonar.coverage.exclusions>
+		<sonar.coverage.exclusions>/**/control/*,**/dto/*,**/filter/*,**/boundary/*,**/entity/*,**/dao/*,**/exceptions/*</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencyManagement>
