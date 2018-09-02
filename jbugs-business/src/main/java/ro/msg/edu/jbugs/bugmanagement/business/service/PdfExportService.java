@@ -36,7 +36,7 @@ public class PdfExportService {
     private void createTable(Document document, BugDTO bugDTO)
             throws BusinessException {
         PdfPTable table = new PdfPTable(new float[]{25, 45});
-        table.setWidthPercentage(60);
+        table.setWidthPercentage(100);
 
         DateFormat formatterDate = new SimpleDateFormat("yyyy-MM-dd");
         String targetDate = formatterDate.format(bugDTO.getTargetDate());
@@ -82,8 +82,7 @@ public class PdfExportService {
     }
 
     public PdfPCell getCell(String text, int alignment, BaseColor color) {
-        PdfPCell cell = new PdfPCell(new Phrase(text));
-        cell.setFixedHeight(26f);
+        PdfPCell cell = new PdfPCell(new Paragraph(text));
         cell.setPaddingBottom(11f);
         cell.setBackgroundColor(color);
         cell.setHorizontalAlignment(alignment);

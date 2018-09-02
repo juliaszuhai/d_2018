@@ -57,7 +57,7 @@
         {{getContent(notification).newBug.description}}</p>
       <p *ngIf="!(getContent(notification).newBug.version==='')"><span class="profile-label">{{'addBug.version'| translate}}:</span>
         {{getContent(notification).newBug.version}}</p>
-      <p *ngIf="!(getContent(notification).newBug.status==='') && this.statusUpdated===false"><span
+      <p *ngIf="!(this.statusUpdated===true && getContent(notification).newBug.status==='')"><span
         class="profile-label">Status:</span>
         {{getContent(notification).newBug.status}}</p>
       <p *ngIf="!(getContent(notification).newBug.severity==='')"><span class="profile-label">{{'addBug.severity'| translate}}:</span>
@@ -77,6 +77,7 @@
           {{getContent(notification).newBug.status}}</p>
       </div>
       <button color="primary"
+              *ngIf="!(getContent(notification).urlBug==='')"
               mat-raised-button
               (click)="goToBug(getContent(notification).urlBug)"
       >Go to bug

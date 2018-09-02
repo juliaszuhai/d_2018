@@ -281,13 +281,14 @@ export class NotificationsComponent implements OnInit {
         content.urlBug = JSON.parse(notificationData.urlBug);
       }
     } else if (notificationData.typeNotification == 'BUG_STATUS_UPDATED') {
+      this.statusUpdated = true;
       content.newBug = JSON.parse(notificationData.newData);
       content.oldBug = JSON.parse(notificationData.oldData);
       if (!(notificationData.urlBug === undefined)) {
         content.urlBug = JSON.parse(notificationData.urlBug);
       }
 
-      this.statusUpdated = true;
+
     } else if (notificationData.typeNotification == 'USER_DEACTIVATED') {
       content.newUser = JSON.parse(notificationData.newData);
     }
