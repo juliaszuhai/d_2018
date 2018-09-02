@@ -99,7 +99,6 @@ public class BugPersistenceManager {
         Root<Bug> root = criteriaQuery.from(entityType);
 
         buildFilterCriteria(title, description, status, severity, id, builder, criteriaQuery, root);
-        //buildFilterCriteria(title, description, status, severity, id, builder, countCriteria, root);
 
         TypedQuery<Bug> query = em.createQuery(criteriaQuery);
         countCriteria.select(builder.count(criteriaQuery.from(Bug.class)));
@@ -108,7 +107,7 @@ public class BugPersistenceManager {
         query.setMaxResults(amount);
 
 
-        return new Pair<Long, List<Bug>>(countQuery.getSingleResult(), query.getResultList());
+        return new Pair<>(countQuery.getSingleResult(), query.getResultList());
     }
 
     private void buildFilterCriteria(String title, String description, Status status, Severity severity, Long id, CriteriaBuilder builder, CriteriaQuery criteriaQuery, Root<Bug> root) {
@@ -181,7 +180,7 @@ public class BugPersistenceManager {
     }
 
     public void createBugWithAttachment(Bug bug, Attachment attachment) {
-        List<Attachment> attachments = new ArrayList<Attachment>();
+        List<Attachment> attachments = new ArrayList<>();
         attachments.add(attachment);
         bug.setAttachments(attachments);
         em.persist(bug);

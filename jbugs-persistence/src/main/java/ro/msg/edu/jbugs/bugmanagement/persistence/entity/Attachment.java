@@ -4,6 +4,9 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.BaseEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
+
 @Entity
 @Table(name = "attachments")
 @NamedQueries(
@@ -53,5 +56,24 @@ public class Attachment extends BaseEntity implements Serializable {
 
     public void setExtension(String extension) {
         this.extension = extension;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Attachment that = (Attachment) o;
+        return Arrays.equals(attachmentFile, that.attachmentFile) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(extension, that.extension);
+    }
+
+    @Override
+    public int hashCode() {
+
+        int result = Objects.hash(super.hashCode(), name, extension);
+        result = 31 * result + Arrays.hashCode(attachmentFile);
+        return result;
     }
 }

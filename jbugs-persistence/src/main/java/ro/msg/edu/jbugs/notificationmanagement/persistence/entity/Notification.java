@@ -66,8 +66,8 @@ public class Notification extends BaseEntity {
 		return urlBug;
 	}
 
-	public void setUrlBug(Long URLBug) {
-		this.urlBug = URLBug;
+	public void setUrlBug(Long urlBug) {
+		this.urlBug = urlBug;
 	}
 
 	public String getOldData() {
