@@ -1,5 +1,5 @@
 <mat-accordion *ngFor="let notification of notifications" class="example-headers-align">
-  <mat-expansion-panel (opened)="getMessage(notification) && getMessageForANotification(notification)">
+  <mat-expansion-panel (opened)="getMessage(notification)">
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{getTypeOfNotification(notification.typeNotification)}}
@@ -24,40 +24,54 @@
     </ng-container>
 
     <ng-container *ngIf="!(getContent(notification).newUser===null) && !(getContent(notification).oldUser===null)">
-      <p *ngIf="!(getContent(notification).newUser.username==='')"><span class="profile-label">{{'profileWindow.username'| translate}}:</span>
-        {{getContent(notification).newUser.username}}</p>
-      <p *ngIf="!(getContent(notification).newUser.lastName==='')"><span class="profile-label">{{'profileWindow.lastName'| translate}}:</span>
-        {{getContent(notification).newUser.lastName}}</p>
-      <p *ngIf="!(getContent(notification).newUser.email==='')"><span class="profile-label">{{'profileWindow.email'| translate}}:</span>
-        {{getContent(notification).newUser.email}}</p>
-      <p *ngIf="!(getContent(notification).newUser.phoneNumber==='')"><span class="profile-label">{{'profileWindow.phone'| translate}}:</span>
-        {{getContent(notification).newUser.phoneNumber}}</p>
+      <div>
+        <p>{{'notification.oldData'| translate}}</p>
+        <p *ngIf="!(getContent(notification).newUser.username==='')"><span class="profile-label">{{'profileWindow.username'| translate}}:</span>
+          {{getContent(notification).newUser.username}}</p>
+        <p *ngIf="!(getContent(notification).newUser.lastName==='')"><span class="profile-label">{{'profileWindow.lastName'| translate}}:</span>
+          {{getContent(notification).newUser.lastName}}</p>
+        <p *ngIf="!(getContent(notification).newUser.email==='')"><span class="profile-label">{{'profileWindow.email'| translate}}:</span>
+          {{getContent(notification).newUser.email}}</p>
+        <p *ngIf="!(getContent(notification).newUser.phoneNumber==='')"><span class="profile-label">{{'profileWindow.phone'| translate}}:</span>
+          {{getContent(notification).newUser.phoneNumber}}</p>
+      </div>
+
+      <div>
+        <p>{{'notification.newData'| translate}}</p>
+        <p *ngIf="!(getContent(notification).oldUser.username==='')"><span class="profile-label">{{'profileWindow.username'| translate}}:</span>
+          {{getContent(notification).oldUser.username}}</p>
+        <p *ngIf="!(getContent(notification).oldUser.lastName==='')"><span class="profile-label">{{'profileWindow.lastName'| translate}}:</span>
+          {{getContent(notification).oldUser.lastName}}</p>
+        <p *ngIf="!(getContent(notification).oldUser.email==='')"><span class="profile-label">{{'profileWindow.email'| translate}}:</span>
+          {{getContent(notification).oldUser.email}}</p>
+        <p *ngIf="!(getContent(notification).oldUser.phoneNumber==='')"><span class="profile-label">{{'profileWindow.phone'| translate}}:</span>
+          {{getContent(notification).oldUser.phoneNumber}}</p>
+      </div>
+
     </ng-container>
-    <!--<div >-->
+
     <!--<table mat-table [dataSource]="updatedUser" class="mat-elevation-z8">-->
 
-
-    <!--&lt;!&ndash;</ng-container>&ndash;&gt;-->
-    <!--<ng-container matColumnDef="">-->
-    <!--<th mat-header-cell *matHeaderCellDef></th>-->
+    <!--<ng-container matColumnDef="updatedData">-->
+    <!--<th mat-header-cell *matHeaderCellDef>Updated Data</th>-->
     <!--<td mat-cell >-->
-    <!--{{'userManagement.username'| translate}}-->
+    <!---->
     <!--</td>-->
 
 
     <!--</ng-container>-->
 
-    <!--<ng-container matColumnDef="Old Data">-->
+    <!--<ng-container matColumnDef="oldUser">-->
     <!--<th mat-header-cell *matHeaderCellDef>Old Data</th>-->
-    <!--<td mat-cell *matCellDef="let element">{{element.oldUser.username}}-->
+    <!--<td mat-cell *matCellDef="let element">{{element.oldData.username}}-->
 
     <!--</td>-->
 
 
     <!--</ng-container>-->
-    <!--<ng-container matColumnDef="New Data">-->
+    <!--<ng-container matColumnDef="newUser">-->
     <!--<th mat-header-cell *matHeaderCellDef>New Data</th>-->
-    <!--<td mat-cell *matCellDef="let element">{{element.newUser.username}}-->
+    <!--<td mat-cell *matCellDef="let element">{{element.newData.username}}-->
 
     <!--</td>-->
 
@@ -69,7 +83,8 @@
     <!--</tr>-->
     <!--</table>-->
 
-    <!--</div>-->
+
+    <!--</ng-container>-->
 
 
     <!--<mat-grid-list cols="3" rowHeight="20px" *ngIf="!(getContent(notification).newUser===null) && !(getContent(notification).oldUser===null)">-->

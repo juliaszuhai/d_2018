@@ -89,13 +89,18 @@
     <br>
 
       <mat-form-field>
-      <input
-        #severityControl="ngModel"
-        #severityElement
-        name="severity"
-        matInput
-        [(ngModel)]="data.severityString"
-        placeholder="{{'bugTable.severity'| translate}}">
+        <!--<input-->
+        <!--#severityControl="ngModel"-->
+        <!--#severityElement-->
+        <!--name="severity"-->
+        <!--matInput-->
+        <!--[(ngModel)]="data.severityString"-->
+        <!--placeholder="{{'bugTable.severity'| translate}}">-->
+        <mat-select [(value)]="data.severityString" placeholder="{{'bugTable.severity'| translate}}">
+          <mat-option *ngFor="let severity of severities" [value]="severity">
+            {{severity}}
+          </mat-option>
+        </mat-select>
     </mat-form-field>
     <br>
     <mat-form-field>
@@ -120,8 +125,8 @@
     <br>
       <mat-form-field>
 
-        <mat-select [(value)]="data.statusString" placeholder="{{data.statusString}}"
-                    [disabled]="successorsList.length<1">
+        <mat-select [(value)]="data.statusString" placeholder="{{'bugTable.status'| translate}}"
+                    [disabled]="successorsList.length<1|| data.statusString ==='CLOSED'">
           <mat-option *ngFor="let status of successorsList" [value]="status">
             {{status}}
           </mat-option>

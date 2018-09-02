@@ -19,10 +19,8 @@ export interface MessageNotification {
 }
 
 export interface UpdatedUser {
-  color: string,
-  cols: number,
-  rows: number,
-  text: string
+  newData,
+  oldData
 }
 @Injectable({
   providedIn: 'root'

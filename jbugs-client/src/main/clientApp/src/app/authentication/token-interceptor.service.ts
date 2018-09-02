@@ -5,6 +5,7 @@ import {catchError} from 'rxjs/operators';
 import {AuthenticationService} from './authentication.service';
 import {Router} from '@angular/router';
 import {MatSnackBar} from "@angular/material";
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,10 @@ import {MatSnackBar} from "@angular/material";
 export class TokenInterceptorService implements HttpInterceptor {
 
   tokenField = 'token';
+  errorString: string;
+  errorMsg: string;
 
-  constructor(public auth: AuthenticationService, private router: Router, public snackBar: MatSnackBar) {
+  constructor(public auth: AuthenticationService, private router: Router, public snackBar: MatSnackBar, public translate: TranslateService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -43,9 +46,10 @@ export class TokenInterceptorService implements HttpInterceptor {
   }
 
   private handleError(err: HttpErrorResponse) {
+    this.errorString = 'exceptionCodes.' + err.error.value;
     console.log(err);
-
-    this.openSnackBar(err.error.value);
+    this.translate.get(this.errorString).subscribe((res: string) => this.errorMsg = res);
+    this.openSnackBar(this.errorMsg);
 
   }
 

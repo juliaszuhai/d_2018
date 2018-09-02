@@ -30,8 +30,10 @@ export class UpdateBugComponent implements OnInit {
   fixedVersionErrorMessage: string;
   versionErrorMessage: string;
   matcher = new MyErrorStateMatcher();
-  successorsList = [];
-
+  successorsList: any[];
+  severities: string[] = [
+    "CRITICAL", "HIGH", "MEDIUM", "LOW"
+  ];
   constructor(private translate: TranslateService,
               public dialogRef: MatDialogRef<ListBugsComponent>,
               @Inject(MAT_DIALOG_DATA) public data,

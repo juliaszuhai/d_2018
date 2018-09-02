@@ -181,7 +181,6 @@ export class AddBugComponent implements OnInit {
     let eventTarget = <HTMLInputElement>event.target;
     this.attachment = eventTarget.files[0];
     this.bugData.fileName = this.attachment.name;
-    //alert(this.attachment.name);
 
   }
 }

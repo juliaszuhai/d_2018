@@ -98,6 +98,76 @@ public class BugManagementTest {
         }
     }
 
+
+    @Test
+    public void testGetStatus_Fail() {
+        Bug bug = new Bug();
+        bug.setId(100L);
+        bug.setStatus(Status.NEW);
+        when(bugPersistenceManager.getBugById(any(Long.class)))
+                .thenReturn(Optional.of(bug));
+        try {
+            bugManagementController.getStatusSuccessor(bug.getId());
+        } catch (BusinessException e) {
+            assertEquals(ExceptionCode.BUG_NOT_EXIST, e.getExceptionCode());
+        }
+    }
+
+    @Test
+    public void closeBug_ExpectedOK() throws BusinessException {
+
+        Bug bug = new Bug();
+        bug.setStatus(Status.REJECTED);
+        bug.setAssignedTo(new User());
+        bug.setCreatedByUser(new User());
+        when(bugPersistenceManager.getBugById(any(Long.class)))
+                .thenReturn(Optional.of(bug));
+        doNothing().when(notificationManagementService).sendNotification(
+                any(TypeNotification.class),
+                any(Object.class),
+                any(Object.class),
+                any(List.class));
+
+        bugManagementController.closeBug(bug.getId());
+        assertEquals(Status.CLOSED, bug.getStatus());
+    }
+
+    @Test
+    public void closeBug_Fail() {
+
+        Bug bug = new Bug();
+        bug.setStatus(Status.NEW);
+        bug.setAssignedTo(new User());
+        bug.setCreatedByUser(new User());
+        when(bugPersistenceManager.getBugById(any(Long.class)))
+                .thenReturn(Optional.of(bug));
+        doNothing().when(notificationManagementService).sendNotification(
+                any(TypeNotification.class),
+                any(Object.class),
+                any(Object.class),
+                any(List.class));
+
+        try {
+            bugManagementController.closeBug(bug.getId());
+        } catch (BusinessException e) {
+            assertEquals(ExceptionCode.STATUS_INCORRECT_EXCEPTION, e.getExceptionCode());
+        }
+    }
+
+    @Test
+    public void testGetStatus_ExpectedOK() {
+        Bug bug = new Bug();
+        bug.setStatus(Status.NEW);
+        when(bugPersistenceManager.getBugById(any(Long.class)))
+                .thenReturn(Optional.of(bug));
+        try {
+            assertEquals(2, bugManagementController.getStatusSuccessor(bug.getId()).size());
+        } catch (BusinessException e) {
+            fail("should noot reach this point");
+        }
+    }
+
+
     @Test
     public void getAllBugs_ExpectedOK() {
         User userUsed = new User();

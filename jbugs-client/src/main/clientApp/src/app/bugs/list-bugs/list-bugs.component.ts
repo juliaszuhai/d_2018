@@ -223,6 +223,9 @@ export class ListBugsComponent implements OnInit {
       width: '70%',
       data: {bugService: this.bugService}
     });
+    dialogRef2.afterClosed().subscribe(result => {
+      this.filter(this.bugData.title, this.bugData.description, this.bugData.status, this.bugData.severity, this.pageIndex, this.pageSize, this.id);
+    });
   }
 
   ngOnInit() {

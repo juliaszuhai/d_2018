@@ -164,7 +164,7 @@ export class BugListService {
   getStatusSuccessors(id) {
     let params = new HttpParams();
     params = params.set('id', id);
-    return this.http.get<number>(this.baseURL + '/list-bugs/get-status-successors', {params: params});
+    return this.http.get(this.baseURL + '/list-bugs/get-status-successors', {params: params});
 
   }
 

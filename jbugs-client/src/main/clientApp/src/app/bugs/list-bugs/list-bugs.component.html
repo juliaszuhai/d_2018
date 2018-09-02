@@ -6,7 +6,7 @@
   <div class="bugs-controls">
 
     <div class="filters">
-      <h3>Filter</h3>
+      <h3>{{'bugFilter.filter'|translate}}</h3>
       <form
         #filterForm
         onsubmit="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)">
@@ -14,7 +14,7 @@
           <input
             matInput
             #titleElement
-            placeholder="Filter by Title"
+            placeholder="{{'bugFilter.title'|translate}}"
             (change)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)"
           >
         </mat-form-field>
@@ -23,34 +23,36 @@
             matInput
             #descriptionElement
             (change)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)"
-            placeholder="Filter by Description">
+            placeholder="{{'bugFilter.description'|translate}}">
         </mat-form-field>
         <mat-form-field>
           <input
             matInput
             #statusElement
             (change)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)"
-            placeholder="Filter by Status">
+            placeholder="{{'bugFilter.status'|translate}}">
         </mat-form-field>
         <mat-form-field>
           <input
             matInput
             #severityElement
             (change)="filter(titleElement.value,descriptionElement.value,statusElement.value,severityElement.value)"
-            placeholder="Filter by Severity">
+            placeholder="{{'bugFilter.severity'|translate}}">
         </mat-form-field>
       </form>
     </div>
     <div class="bug-sorts">
-      <h3>Sort by</h3>
-      <mat-checkbox #sortElementTitle (change)="toggleSort('title', sortElementTitle.checked)">Title</mat-checkbox>
+      <h3>{{'bugFilter.sort'|translate}}</h3>
+      <mat-checkbox #sortElementTitle (change)="toggleSort('title', sortElementTitle.checked)">
+        {{'bugFilter.titleSort'|translate}}
+      </mat-checkbox>
 
 
     </div>
     <button mat-stroked-button color="primary"
             routerLinkActive="active"
             routerLink="statistic-bug">
-      Statistic
+      {{'statistics.statistics'|translate}}
     </button>
   </div>
   <div class="bug-table">
@@ -123,8 +125,7 @@
 
       <ng-container matColumnDef="exportExcel">
         <th mat-header-cell *matHeaderCellDef>
-          <button mat-raised-button ng-disabled="this.forExcel.length===0" color="primary" (click)="downloadExcel()"><i
-            class="material-icons">
+          <button mat-raised-button color="primary" (click)="downloadExcel()"><i class="material-icons">
             file_download
           </i>Export Excel
           </button>
