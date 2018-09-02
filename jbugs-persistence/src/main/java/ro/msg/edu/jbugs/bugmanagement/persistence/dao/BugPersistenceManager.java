@@ -102,11 +102,12 @@ public class BugPersistenceManager {
         TypedQuery<Bug> query = em.createQuery(criteriaQuery);
         countCriteria.select(builder.count(root));
         TypedQuery<Long> countQuery = em.createQuery(countCriteria);
+        Long amountOfResults = new Long(query.getResultList().size());
         query.setFirstResult(index);
         query.setMaxResults(amount);
 
 
-        return new Pair<>(new Long(query.getResultList().size()), query.getResultList());
+        return new Pair<>(amountOfResults, query.getResultList());
     }
 
     private void buildFilterCriteria(String title, String description, Status status, Severity severity, Long id, CriteriaBuilder builder, CriteriaQuery criteriaQuery, Root<Bug> root) {
