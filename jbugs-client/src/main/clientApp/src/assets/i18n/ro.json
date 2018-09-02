@@ -79,12 +79,13 @@
     "updateBug": "Editare Bug"
   },
   "bugFilter": {
-    "title": "Titlu",
-    "description": "Descriere",
-    "status": "Stadiu",
-    "severity": "Severitate",
-    "version": "Versiune",
-    "sort": "Sortare",
+    "title": "Filtreaza dupa Titlu",
+    "description": "Filtreaza dupa Descriere",
+    "status": "Filtreaza dupa Stadiu",
+    "severity": "Filtreaza dupa Severitate",
+    "version": "Filtreaza dupa Versiune",
+    "sort": "Sortare dupa",
+    "titleSort": "Titlu",
     "filter": "Filtrare"
   },
   "statistics": {
@@ -128,10 +129,10 @@
     "userHasTasks": "Acest utilizator inca este responsabil de bugg-uri"
   },
   "bugUpdateErrorMessage": {
-    "constraints": "Urmatoarele constrangeri sunt necesare: ",
-    "description": "Descrierea trebuie sa contina cel putin 250 de caractere",
-    "version": "Versiunea trebuie data conform urmatorului sablon :'cifre.cifre.cifre'",
-    "date": "Data trebuie selectata din selectorul aflat mai jos"
+    "constraints": "Urmatoarele sunt necesare: ",
+    "description": "Descrierea trebuie sa fie de cel putin 250 de caractere lungime",
+    "version": "Versiunea trebuie data corespunda urmatorului sablon :'cifra.cifra.cifra'",
+    "date": "Data poate fi aleasa din calendarul alaturat"
   },
   "textFieldValidation": {
     "required": "Acest camp este obligatoriu",

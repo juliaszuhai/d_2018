@@ -98,12 +98,13 @@
     "updateBug": "Update Bug"
   },
   "bugFilter": {
-    "title": "Title",
-    "description": "Description",
-    "status": "Status",
-    "severity": "Severity",
-    "version": "Version",
-    "sort": "Sort",
+    "title": "Filter by Title",
+    "description": "Filter by Description",
+    "status": "Filter by Status",
+    "severity": "Filter by Severity",
+    "version": "Filter by Version",
+    "sort": "Sort by",
+    "titleSort": "Title",
     "filter": "Filter"
   },
   "statistics": {
@@ -149,8 +150,8 @@
   "bugUpdateErrorMessage": {
     "constraints": "The following are required: ",
     "description": "Description must contain at least 250 characters",
-    "version": "The versions must be fixed like the following pattern :'digit.digit.digit'",
-    "date": "You must select the target date from the date picker bellow"
+    "version": "The versions must correspond to the following pattern :'digit.digit.digit'",
+    "date": "The target date can be chosen from the Calendar tool to the right"
   },
   "textFieldValidation": {
     "required": "This field is required",
