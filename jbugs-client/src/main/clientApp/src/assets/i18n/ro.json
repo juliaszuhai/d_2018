@@ -150,6 +150,8 @@
     "welcome": "Bine ai venit utilizator nou",
     "welcomeMessage": "Bun venit pe JBUG, ",
     "userUpdate": "User updatat",
+    "oldData": "Date vechi:",
+    "newData": "Date noi:",
     "bugUpdate": "Bug updatat",
     "bugCreated": "Bug creat",
     "bugClosed": "Bug inchis",

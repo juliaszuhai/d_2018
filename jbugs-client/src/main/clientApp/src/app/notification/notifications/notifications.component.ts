@@ -14,14 +14,15 @@ export class NotificationsComponent implements OnInit {
 
   username: string;
   notifications: NotificationData[];
-  usersUpdated: UpdatedUser[] = [];
+  usersUpdated: UpdatedUser[];
   messageNotification: MessageNotification;
   displayedColumns: string[] = [
     'updatedData',
-    'oldData',
-    'newData'
+    'oldUser',
+    'newUser'
   ];
-  updatedUser: NotificationData;
+  updatedUser: UpdatedUser[] = [];
+
   constructor(private notificationService: NotificationService,
               public dialog: MatDialog, private route: ActivatedRoute,
               private router: Router,
@@ -144,6 +145,22 @@ export class NotificationsComponent implements OnInit {
       oldUser: null,
       newUser: null,
     };
+    let userContent = {
+      oldData: {
+        username: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: ''
+      },
+      newData: {
+        username: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: ''
+      }
+    };
 
     content.newUser = JSON.parse(notificationData.newData);
     content.oldUser = JSON.parse(notificationData.oldData);
@@ -154,21 +171,41 @@ export class NotificationsComponent implements OnInit {
       if (content.newUser.username === content.oldUser.username) {
         content.newUser.username = '';
         content.oldUser.username = '';
+      } else {
+        userContent.oldData.username = content.oldUser.username;
+        userContent.newData.username = content.newUser.username;
       }
       if (content.newUser.firstName === content.oldUser.firstName) {
         content.newUser.firstName = '';
         content.oldUser.firstName = '';
+      } else {
+        userContent.oldData.firstName = content.oldUser.firstName;
+        userContent.newData.firstName = content.newUser.firstName;
+      }
+      if (content.newUser.lastName === content.oldUser.lastName) {
+        content.newUser.lastName = '';
+        content.oldUser.lastName = '';
+      } else {
+        userContent.oldData.lastName = content.oldUser.lastName;
+        userContent.newData.lastName = content.newUser.lastName;
       }
       if (content.newUser.email === content.oldUser.email) {
         content.newUser.email = '';
         content.oldUser.email = '';
+      } else {
+        userContent.oldData.email = content.oldUser.email;
+        userContent.newData.email = content.newUser.email;
       }
       if (content.newUser.phoneNumber === content.oldUser.phoneNumber) {
         content.newUser.phoneNumber = '';
         content.oldUser.phoneNumber = '';
+      } else {
+        userContent.oldData.phoneNumber = content.oldUser.phoneNumber;
+        userContent.newData.phoneNumber = content.newUser.phoneNumber;
       }
 
     }
+    this.updatedUser.push(userContent);
     return content;
 
   }
@@ -184,8 +221,9 @@ export class NotificationsComponent implements OnInit {
     if (notificationData.typeNotification == 'WELCOME_NEW_USER') {
       content.newUser = JSON.parse(notificationData.newData);
     } else if (notificationData.typeNotification == 'USER_UPDATED') {
-      content.newUser = this.createUpdateContent(notificationData).newUser;
-      content.oldUser = this.createUpdateContent(notificationData).oldUser;
+
+      content = this.createUpdateContent(notificationData);
+
 
     } else if (notificationData.typeNotification == 'BUG_CREATED') {
 

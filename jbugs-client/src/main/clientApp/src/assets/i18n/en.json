@@ -13,6 +13,8 @@
     "userUpdatedBySomeone": "The user data created by you has been updated",
     "contentMessage": "Your data are:",
     "userUpdate": "User Update",
+    "oldData": "Old Data:",
+    "newData": "New Data:",
     "userUpdateContent": "The updated data are",
     "bugUpdate": "Bug Updated",
     "bugCreated": "Bug Created",
