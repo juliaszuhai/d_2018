@@ -141,7 +141,6 @@ export class ListBugsComponent implements OnInit {
     console.log(this.sorted);
   }
 
-
   openUpdateDialog(bug): void {
     const dialogRef = this.dialog.open(UpdateBugComponent, {
       width: '70%',

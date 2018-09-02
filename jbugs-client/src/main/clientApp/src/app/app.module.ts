@@ -27,7 +27,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {NotificationModule} from "./notification/notification.module";
 import {PermissionGuard} from "./authentication/permission.guard";
 import {BugsGuard} from "./authentication/bugs.guard";
-import {ErrorViewComponent} from './error-view/error-view.component';
+//import {ErrorViewComponent} from './error-view/error-view.component';
 
 
 const appRoutes: Routes = [
@@ -47,7 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     RecaptchaDirective,
-    ErrorViewComponent,
+//    ErrorViewComponent,
 
   ],
   imports: [

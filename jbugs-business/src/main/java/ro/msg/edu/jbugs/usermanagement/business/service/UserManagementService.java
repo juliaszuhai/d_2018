@@ -166,6 +166,8 @@ public class UserManagementService {
 		User user = userOptional.orElseThrow(() -> new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
 		user.setActive(true);
 		userPersistenceManager.updateUser(user);
+		notificationManagementService.sendNotification(TypeNotification.USER_ACTIVATED, UserDTOHelper.fromEntity(user), null, getAllUsersWithRole(permissionPersistenceManager.getRoleByType("ADM").get()));
+
 	}
 
 	/**

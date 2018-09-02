@@ -272,10 +272,14 @@ public class BugManagementService implements BugManagement {
     public void closeBug(Long bugId) throws BusinessException {
         Optional<Bug> bugOptional = bugPersistenceManager.getBugById(bugId);
         Bug bug = bugOptional.orElseThrow(() -> new BusinessException(ExceptionCode.BUG_NOT_EXIST));
+		List<User> receivers = new ArrayList<>();
         if (bug.getStatus() != Status.REJECTED && bug.getStatus() != Status.FIXED) {
             throw new BusinessException(ExceptionCode.STATUS_INCORRECT_EXCEPTION);
         }
         bug.setStatus(Status.CLOSED);
+		receivers.add(bug.getCreatedByUser());
+		receivers.add(bug.getAssignedTo());
+		notificationManagementService.sendNotification(TypeNotification.BUG_CLOSED, BugDTOHelper.fromEntity(bug), null, receivers);
     }
 
     private void setBugStatus(BugDTO bugDTO, Bug bugBefore, Bug bugAfter, TypeNotification typeNotification) throws BusinessException {

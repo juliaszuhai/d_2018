@@ -24,11 +24,11 @@ import {DeactivationPopupComponent} from "./deactivation-popup/deactivation-popu
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../app.module";
 import {HttpClient} from "@angular/common/http";
-import {UserManagementGuard} from "../authentication/user-management.guard";
+//import {UserManagementGuard} from "../authentication/user-management.guard";
 
 
 const userManagementRoutes: Routes = [
-  {path: 'manage-users', component: UserManagementComponent, canActivate: [LoginguardGuard, UserManagementGuard]},
+  {path: 'manage-users', component: UserManagementComponent, canActivate: [LoginguardGuard]}//, UserManagementGuard]},
 ];
 
 @NgModule({
