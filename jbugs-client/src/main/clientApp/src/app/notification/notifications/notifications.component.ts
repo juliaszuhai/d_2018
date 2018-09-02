@@ -14,12 +14,14 @@ export class NotificationsComponent implements OnInit {
 
   username: string;
   notifications: NotificationData[];
-  usersUpdated: UpdatedUser[];
+  usersUpdated: UpdatedUser[] = [];
   messageNotification: MessageNotification;
-
-
-
-
+  displayedColumns: string[] = [
+    'updatedData',
+    'oldData',
+    'newData'
+  ];
+  updatedUser: NotificationData;
   constructor(private notificationService: NotificationService,
               public dialog: MatDialog, private route: ActivatedRoute,
               private router: Router,
@@ -137,17 +139,53 @@ export class NotificationsComponent implements OnInit {
   //   this.messageNotification.oldUser = JSON.parse(notification.oldData);
   //   return this.messageNotification;
   // }
+  createUpdateContent(notificationData: NotificationData) {
+    let content = {
+      oldUser: null,
+      newUser: null,
+    };
+
+    content.newUser = JSON.parse(notificationData.newData);
+    content.oldUser = JSON.parse(notificationData.oldData);
+
+    if (!(content.newUser === null) && !(content.oldUser === null){
+
+
+      if (content.newUser.username === content.oldUser.username) {
+        content.newUser.username = '';
+        content.oldUser.username = '';
+      }
+      if (content.newUser.firstName === content.oldUser.firstName) {
+        content.newUser.firstName = '';
+        content.oldUser.firstName = '';
+      }
+      if (content.newUser.email === content.oldUser.email) {
+        content.newUser.email = '';
+        content.oldUser.email = '';
+      }
+      if (content.newUser.phoneNumber === content.oldUser.phoneNumber) {
+        content.newUser.phoneNumber = '';
+        content.oldUser.phoneNumber = '';
+      }
+
+    }
+    return content;
+
+  }
+
 
   getContent(notificationData: NotificationData) {
     let content = {
-      subtitleMessage: '',
+
       oldUser: null,
       newUser: null,
-      content: ''
+
     };
     if (notificationData.typeNotification == 'WELCOME_NEW_USER') {
       content.newUser = JSON.parse(notificationData.newData);
     } else if (notificationData.typeNotification == 'USER_UPDATED') {
+      content.newUser = this.createUpdateContent(notificationData).newUser;
+      content.oldUser = this.createUpdateContent(notificationData).oldUser;
 
     } else if (notificationData.typeNotification == 'BUG_CREATED') {
 
@@ -209,19 +247,15 @@ export class NotificationsComponent implements OnInit {
   //   }
   // }
 
-  // createDataForMessageUpdate(notification: NotificationData) {
-  //   this.messageNotification.newUser = JSON.parse(notification.newData);
-  //   this.messageNotification.oldUser = JSON.parse(notification.oldData);
-  //   let numberColumn = 0;
-  //   let numberrow = 0;
-  //   if (!(this.messageNotification.newUser === this.messageNotification.newUser)) {
-  //     this.usersUpdated.push({color: 'lightblue', cols: 1, text: 'ana', rows: 1})
-  //   }
-  //
-  //   if (!(this.messageNotification.newUser.username === this.messageNotification.newUser.username)) {
-  //
-  //   }
-  // }
+  createDataForMessageUpdate(notification: NotificationData) {
+    this.messageNotification.newUser = JSON.parse(notification.newData);
+    this.messageNotification.oldUser = JSON.parse(notification.oldData);
+    let numberColumn = 0;
+    let numberrow = 0;
+
+    this.usersUpdated.push({color: 'lightblue', cols: 1, text: 'ana', rows: 1})
+
+  }
 
 
   getMessageUpdateUser(notification: NotificationData) {
