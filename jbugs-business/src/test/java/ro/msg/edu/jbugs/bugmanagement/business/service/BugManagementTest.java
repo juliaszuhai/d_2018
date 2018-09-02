@@ -1,26 +1,30 @@
 package ro.msg.edu.jbugs.bugmanagement.business.service;
 
+import javafx.util.Pair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTO;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.BugDTOHelper;
+import ro.msg.edu.jbugs.bugmanagement.business.dto.NameIdDTO;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.bugmanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.bugmanagement.persistence.dao.BugPersistenceManager;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Bug;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Severity;
 import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
+import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagementService;
+import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
 import ro.msg.edu.jbugs.usermanagement.persistence.dao.UserPersistenceManager;
 import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -33,11 +37,14 @@ public class BugManagementTest {
     @Mock
     private BugPersistenceManager bugPersistenceManager;
 
+    @Mock
+    private NotificationManagementService notificationManagementService;
+
     @InjectMocks
     private BugManagementService bugManagementController;
 
 
-    /*@Test
+    @Test
     public void createBug_ExpectedOK() {
         User userUsed = new User();
         userUsed.setId(1L);
@@ -65,13 +72,31 @@ public class BugManagementTest {
         bug2DTO.setAssignedTo(user);
         when(bugPersistenceManager.createBug(any(Bug.class)))
                 .thenReturn(new Bug());
-//        try {
-//            //assertEquals(bugDTO, bugManagementController.createBug(bugDTO));
-//           // assertEquals(bug2DTO, bugManagementController.createBug(bug2DTO));
-//        } catch (BusinessException e) {
-//            fail("Should not reach this point");
-//        }
-    }*/
+        doNothing().when(notificationManagementService).sendNotification(
+                any(TypeNotification.class),
+                any(Object.class),
+                any(Object.class),
+                any(List.class));
+
+        Bug bug = BugDTOHelper.toEntity(bugDTO);
+
+        bug.setVersion("1aa.2bb.3cc");
+        bug.setStatus(Status.NEW);
+        bug.setAssignedTo(userUsed);
+        bug.setCreatedByUser(userUsed);
+
+        Bug bug2 = BugDTOHelper.toEntity(bug2DTO);
+        bug2.setVersion("1aa.2bb.3cc");
+        bug2.setStatus(Status.NEW);
+        bug2.setAssignedTo(userUsed);
+        bug2.setCreatedByUser(userUsed);
+        try {
+            assertEquals(bug, bugManagementController.createBug(bugDTO));
+            assertEquals(bug2, bugManagementController.createBug(bug2DTO));
+        } catch (BusinessException e) {
+            fail("Should not reach this point");
+        }
+    }
 
     @Test
     public void getAllBugs_ExpectedOK() {
@@ -142,10 +167,25 @@ public class BugManagementTest {
         bug.setAssignedTo(userUsed);
         bug.setCreatedByUser(userUsed);
         bug.setId(1L);
-        //TODO : repara (dan)
-//        when(bugPersistenceManager.filter(any(String.class), any(String.class), any(Status.class), any(Severity.class), any(Long.class), 1, 10)).thenReturn(new Pair<Long, List<Bug>>(1L, new ArrayList<Bug>()));
-        //  BugDTO bugDTO=BugDTOHelper.fromEntity(bug);
-        // assertEquals(1, bugManagementController.filter("ceva", "A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha", Status.IN_PROGRESS, Severity.HIGH, 0, 25, 1L).getFilteredList().size());
+        when(bugPersistenceManager.filter(
+                any(String.class),
+                any(String.class),
+                any(Status.class),
+                any(Severity.class),
+                any(Long.class),
+                any(Integer.class),
+                any(Integer.class)))
+                .thenReturn(new Pair<>(1L, Arrays.asList(bug)));
+
+        assertEquals(1, bugManagementController.filter(
+                "ceva",
+                "A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so ha",
+                Status.IN_PROGRESS,
+                Severity.HIGH,
+                0,
+                25,
+                1L)
+                .getFilteredList().size());
 
     }
 
