@@ -9,7 +9,11 @@
   "notification": {
     "welcome": "Welcome New user",
     "welcomeMessage": "Welcome on JBUG, ",
+    "userUpdatedByMe": "Your data was updated successfully",
+    "userUpdatedBySomeone": "The user data created by you has been updated",
+    "contentMessage": "Your data are:",
     "userUpdate": "User Update",
+    "userUpdateContent": "The updated data are",
     "bugUpdate": "Bug Updated",
     "bugCreated": "Bug Created",
     "bugStatusUpdate": "Bug Status Updated",
@@ -43,6 +47,7 @@
   "profileWindow": {
     "welcome": "Welcome",
     "personalInfo": "Personal Information",
+    "username": "Username",
     "firstName": "First Name",
     "lastName": "Last Name",
     "email": "E-mail",
@@ -156,14 +161,5 @@
     "editRole": "Edit Role",
     "buttonAddPermission": "Add Permission",
     "buttonRemovePermission": "Remove Permission"
-  },
-  "notifications": {
-    "welcomeNewUser": "Welcome, ",
-    "userUpdated": "The following User details have been modified",
-    "userDeleted": "The following User account has been deactivated",
-    "bugNew": "The following Bug is NEW",
-    "bugUpdated": "The following Bug details have been changed",
-    "bugClosed": "This Bug has been CLOSED",
-    "bugStatusUpdate": "This Bug Status has been changed"
   }
 }

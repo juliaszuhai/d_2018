@@ -10,8 +10,12 @@
   "notification": {
     "welcome": "Bine ai venit utilizator nou",
     "welcomeMessage": "Bun venit pe JBUG, ",
-    "userUpdate": "User updatat",
-    "bugUpdate": "Bug updatat",
+    "contentMessage": "Datele tale sunt:",
+    "userUpdate": "User Modificat",
+    "userUpdatedByMe": "Datele tale au fost modificate cu succes",
+    "userUpdatedBySomeone": "Datele utilizatorului creat de tine au fost modificate",
+    "userUpdateContent": "Datele modificate sunt:",
+    "bugUpdate": "Bug modificatt",
     "bugCreated": "Bug creat",
     "bugClosed": "Bug inchis",
     "bugStatusUpdate": "Statusul bug-ului a fost updatat",
@@ -49,6 +53,7 @@
   "profileWindow": {
     "welcome": "Bun venit",
     "personalInfo": "Date Personale",
+    "username": "Nume Utilizator",
     "firstName": "Prenume",
     "lastName": "Nume",
     "email": "Email",

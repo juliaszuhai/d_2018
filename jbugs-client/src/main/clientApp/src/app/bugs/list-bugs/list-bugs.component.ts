@@ -127,18 +127,18 @@ export class ListBugsComponent implements OnInit {
 
   sortDataSource() {
 
-    this.sorted.forEach(arg => {
-      this.bugList = this.bugList.data.sort(function (bug1: BugData, bug2: BugData) {
-
-        if (bug1[arg.argument].toLowerCase() > bug2[arg.argument].toLowerCase()) {
-          return arg.order == "asc" ? 1 : -1;
-        } else if (bug1[arg.argument].toLowerCase() < bug2[arg.argument].toLowerCase()) {
-          return arg.order == "asc" ? -1 : 1;
-        }
-        else return 0;
-      });
-    });
-    console.log(this.sorted);
+    // this.sorted.forEach(arg => {
+    //   this.bugList = this.bugList.data.sort(function (bug1: BugData, bug2: BugData) {
+    //
+    //     if (bug1[arg.argument].toLowerCase() > bug2[arg.argument].toLowerCase()) {
+    //       return arg.order == "asc" ? 1 : -1;
+    //     } else if (bug1[arg.argument].toLowerCase() < bug2[arg.argument].toLowerCase()) {
+    //       return arg.order == "asc" ? -1 : 1;
+    //     }
+    //     else return 0;
+    //   });
+    // });
+    // console.log(this.sorted);
   }
 
   openUpdateDialog(bug): void {
