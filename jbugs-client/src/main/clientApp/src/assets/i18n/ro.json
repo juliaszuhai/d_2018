@@ -3,29 +3,9 @@
     "submit": "Confirma",
     "username": "Nume utilizator",
     "password": "Parola",
-    "inputUsername":"Inserati numele de utilizator aici...",
+    "inputUsername": "Inserati numele de utilizator aici...",
     "inputPassword": "Inserati parola aici..."
   },
-
-  "notification": {
-    "welcome": "Bine ai venit utilizator nou",
-    "welcomeMessage": "Bun venit pe JBUG, ",
-    "contentMessage": "Datele tale sunt:",
-    "userUpdate": "User Modificat",
-    "userUpdatedByMe": "Datele tale au fost modificate cu succes",
-    "userUpdatedBySomeone": "Datele utilizatorului creat de tine au fost modificate",
-    "userUpdateContent": "Datele modificate sunt:",
-    "bugUpdate": "Bug modificatt",
-    "bugCreated": "Bug creat",
-    "bugClosed": "Bug inchis",
-    "bugStatusUpdate": "Statusul bug-ului a fost updatat",
-    "userDeactivate": "User dezactivat",
-    "urlBug": "URL bug",
-    "message": "Vizualizeaza mesajul",
-    "date": "Data trimiterii",
-    "typeNotification": "Tipul notificarii"
-  },
-
   "loginErrors": {
     "usernameErrorLength": "Numele de utilizator trebuie sa fie de minim 6 caractere lungime",
     "passwordErrorIntro": "Parola trebuie sa contina:",
@@ -34,14 +14,12 @@
     "passwordErrorDigit": "Cel putin o cifra,",
     "passwordErrorSpecial": "Cel putin un caracter special,",
     "passwordErrorLength": "Cel putin 6 caractere"
-
   },
-
   "header": {
-    "login":"Autentificare",
-    "content":"Continut",
-    "title":"JBugs",
-    "language":"Limba",
+    "login": "Autentificare",
+    "content": "Continut",
+    "title": "JBugs",
+    "language": "Limba",
     "bugs": "Bug-uri",
     "users": "Utilizatori",
     "logout": "Delogare",
@@ -49,7 +27,6 @@
     "manage": "Administrator",
     "roles_and_permissions": "Roluri si Permisiuni"
   },
-
   "profileWindow": {
     "welcome": "Bun venit",
     "personalInfo": "Date Personale",
@@ -59,7 +36,6 @@
     "email": "Email",
     "phone": "Numar telefon"
   },
-
   "addBug": {
     "title": "Titlu",
     "inputTitle": "Inserati titlul aici...",
@@ -75,17 +51,16 @@
     "HIGH": "RIDICATA",
     "MEDIUM": "MEDIE",
     "LOW": "MICA",
+    "CLOSED": "INCHIS",
     "assignedTo": "Responsabil",
     "inputAssignedTo": "Inserati numele aici...",
     "buttonAddBug": "Adaugare Bug",
     "attachment": "Adauga atasamente"
   },
-
   "bugPopup": {
     "description": "Descriere",
     "exportPdf": "Exportare Pdf"
   },
-
   "bugTable": {
     "number": "#",
     "title": "Titlu",
@@ -101,9 +76,8 @@
     "buttonSubmit": "Confirma",
     "edit": "Editare",
     "buttonEdit": "Editare Bug",
-    "updateBug" : "Editare Bug"
+    "updateBug": "Editare Bug"
   },
-
   "bugFilter": {
     "title": "Titlu",
     "description": "Descriere",
@@ -120,7 +94,7 @@
     "fixed": "Rezolvat",
     "closed": "Inchis",
     "rejected": "Refuzat",
-    "infoNeeded": "Trebuie detalii"
+    "infoNeeded": "Necesita detalii"
   },
   "userManagement": {
     "buttonAddUser": "Adauga Utilizator",
@@ -142,9 +116,7 @@
     "tabUpdateRoles": "Actualizare Roluri Utilizator",
     "buttonAddRole": "Adauga Rol",
     "buttonRemoveRole": "Sterge Rol"
-
   },
-
   "userManagementErrorMsg": {
     "updateUserNoChange": "Daca nu doriti schimbarea parolei, lasati campul liber",
     "passwordRequirements": "Parola trebuie sa contina",
@@ -173,7 +145,43 @@
     "editRole": "Editeaza Rol",
     "buttonAddPermission": "Adauga Permisiune",
     "buttonRemovePermission": "Sterge Permisiune"
+  },
+  "notification": {
+    "welcome": "Bine ai venit utilizator nou",
+    "welcomeMessage": "Bun venit pe JBUG, ",
+    "userUpdate": "User updatat",
+    "bugUpdate": "Bug updatat",
+    "bugCreated": "Bug creat",
+    "bugClosed": "Bug inchis",
+    "bugStatusUpdate": "Statusul bug-ului a fost updatat",
+    "userDeactivate": "User dezactivat",
+    "urlBug": "URL bug",
+    "message": "Vizualizeaza mesajul",
+    "date": "Data trimiterii",
+    "typeNotification": "Tipul notificarii"
+  },
+  "exceptionCodes": {
+    "UNKNOWN_EXCEPTION": "Exceptie necunoscuta",
+    "USER_VALIDATION_EXCEPTION": "Utilizator invalid",
+    "EMAIL_EXISTS_ALREADY": "Acest e-mail deja exista",
+    "PASSWORD_NOT_VALID": "Parola invalida",
+    "USERNAME_NOT_VALID": "Nume utilizator invalid",
+    "USER_DEACTIVATED": "Acest utilizator este dezactivat",
+    "TOKEN_EXPIRED": "Token curent expirat",
+    "USER_PERMISSION_VALIDATION": "Utilizatorul nu are permisiunea necesara",
+    "ROLE_DOESNT_EXIST": "Rol inexistent",
+    "USER_HAS_ASSIGNED_BUGS": "Utilizatorul este inca responsabil de un bug",
+    "USER_NOT_EXIST": "Utilizator inexistent",
+    "BUG_NOT_EXPORTED": "Bug-ul nu a fost exportat",
+    "BUG_NOT_EXIST": "Bug inexistent",
+    "DESCRIPTION_TOO_SHORT": "Descriere prea scurta",
+    "VERSION_NOT_VALID": "Versiune invalida",
+    "COULD_NOT_CREATE_BUG": "Nu s-a putut crea bug-ul",
+    "BUG_VALIDATION_EXCEPTION": "Bug invalid",
+    "SOMETHING_WRONG_WITH_ATTACHMENT": "Ceva in neregula cu atasamentul",
+    "STATUS_INCORRECT_EXCEPTION": "Status incorect",
+    "STATUS_INVALID": "Status invalid",
+    "COULD_NOT_EXPORT_ATTACHMENT": "Nu s-a putut exporta atasamentul",
+    "ATTACHMENT_DOES_NOT_EXIST": "Atasament inexistent"
   }
-
-
 }

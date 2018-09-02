@@ -68,6 +68,7 @@
     "HIGH": "HIGH",
     "MEDIUM": "MEDIUM",
     "LOW": "LOW",
+    "CLOSED": "CLOSED",
     "assignedTo": "Assigned",
     "inputAssignedTo": "Input the name here...",
     "buttonAddBug": "Add Bug",
@@ -161,5 +162,38 @@
     "editRole": "Edit Role",
     "buttonAddPermission": "Add Permission",
     "buttonRemovePermission": "Remove Permission"
+  },
+  "notifications": {
+    "welcomeNewUser": "Welcome, ",
+    "userUpdated": "The following User details have been modified",
+    "userDeleted": "The following User account has been deactivated",
+    "bugNew": "The following Bug is NEW",
+    "bugUpdated": "The following Bug details have been changed",
+    "bugClosed": "This Bug has been CLOSED",
+    "bugStatusUpdate": "This Bug Status has been changed"
+  },
+  "exceptionCodes": {
+    "UNKNOWN_EXCEPTION": "Unknown exception",
+    "USER_VALIDATION_EXCEPTION": "User not valid",
+    "EMAIL_EXISTS_ALREADY": "This e-mail already exists",
+    "PASSWORD_NOT_VALID": "Not a valid password",
+    "USERNAME_NOT_VALID": "Not a valid username",
+    "USER_DEACTIVATED": "This user is deactivated",
+    "TOKEN_EXPIRED": "Current token is expired",
+    "USER_PERMISSION_VALIDATION": "User does not have permission",
+    "ROLE_DOESNT_EXIST": "Role does not exist",
+    "USER_HAS_ASSIGNED_BUGS": "User still has bugs assigned",
+    "USER_NOT_EXIST": "User does not exist",
+    "BUG_NOT_EXPORTED": "Bug not exported",
+    "BUG_NOT_EXIST": "Bug doesn't exist",
+    "DESCRIPTION_TOO_SHORT": "Description too short",
+    "VERSION_NOT_VALID": "Version is not valid",
+    "COULD_NOT_CREATE_BUG": "Could not create Bug",
+    "BUG_VALIDATION_EXCEPTION": "Bug not valid",
+    "SOMETHING_WRONG_WITH_ATTACHMENT": "Something wrong with attachment",
+    "STATUS_INCORRECT_EXCEPTION": "Status incorrect",
+    "STATUS_INVALID": "Status is not valid",
+    "COULD_NOT_EXPORT_ATTACHMENT": "Could not export attachment",
+    "ATTACHMENT_DOES_NOT_EXIST": "Attachment does not exist"
   }
 }
