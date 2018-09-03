@@ -236,7 +236,7 @@ public class BugManagementService implements BugManagement {
 
         successors.add(statusBefore);
         if (successors.contains(val)) {
-            setBugStatus(bugDTO, bugBefore, bugAfter, TypeNotification.BUG_UPDATED);
+            setBugStatus(bugDTO, statusBefore, bugBefore, bugAfter, TypeNotification.BUG_UPDATED);
         } else {
             throw new BusinessException(ExceptionCode.STATUS_INCORRECT_EXCEPTION);
         }
@@ -258,7 +258,7 @@ public class BugManagementService implements BugManagement {
                 Arrays.asList(bug.getCreatedByUser(), bug.getAssignedTo()));
     }
 
-    private void setBugStatus(BugDTO bugDTO, Bug bugBefore, Bug bugAfter, TypeNotification typeNotification) throws BusinessException {
+    private void setBugStatus(BugDTO bugDTO, Integer statusBefore, Bug bugBefore, Bug bugAfter, TypeNotification typeNotification) throws BusinessException {
         List<User> receivers = new ArrayList<>();
         bugAfter.setStatus(Status.valueOf(bugDTO.getStatusString()));
         this.isBugValid(bugAfter);
@@ -266,6 +266,9 @@ public class BugManagementService implements BugManagement {
         receivers.add(bugAfter.getCreatedByUser());
         bugPersistenceManager.updateBug(bugAfter);
         notificationManagementService.sendNotification(typeNotification, BugDTOHelper.fromEntity(bugAfter), BugDTOHelper.fromEntity(bugBefore), receivers);
+        if (!statusBefore.equals(bugAfter.getStatus().getValue())) {
+            notificationManagementService.sendNotification(TypeNotification.BUG_STATUS_UPDATED, BugDTOHelper.fromEntity(bugAfter), BugDTOHelper.fromEntity(bugBefore), receivers);
+        }
     }
 
 

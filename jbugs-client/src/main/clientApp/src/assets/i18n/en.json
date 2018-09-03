@@ -12,12 +12,12 @@
     "userUpdatedByMe": "Your data was updated successfully",
     "userUpdatedBySomeone": "The user data created by you has been updated",
     "contentMessage": "Your data are:",
-    "userUpdate": "User Update",
+    "userUpdate": "User Updated",
     "userUpdateContent": "The updated data are",
     "bugUpdate": "Bug Updated",
     "bugCreated": "Bug Created",
     "bugStatusUpdate": "Bug Status Updated",
-    "userDeactivate": "User Deactivate",
+    "userDeactivate": "User Deactivated",
     "urlBug": "URL bug",
     "message": "Show your message",
     "date": "Send date",
@@ -72,7 +72,8 @@
     "assignedTo": "Assigned",
     "inputAssignedTo": "Input the name here...",
     "buttonAddBug": "Add Bug",
-    "attachment": "Add attachments"
+    "attachment": "Add attachments",
+    "createdByUser": "Created By"
   },
   "bugPopup": {
     "description": "Description",
@@ -118,6 +119,7 @@
   },
   "userManagement": {
     "buttonAddUser": "Add User",
+    "createdBy": "Created By",
     "firstName": "First Name",
     "lastName": "Last Name",
     "username": "Username",
@@ -186,7 +188,7 @@
     "userUpdatedByMe": "You have successfully updated your data",
     "userUpdatedBySomeone": "Your data has been updated",
     "contentMessage": "Your data is:",
-    "userUpdate": "User Update",
+    "userUpdate": "User Updated",
     "oldData": "Old Data:",
     "newData": "New Data:",
     "userUpdateContent": "The updated data is:",
@@ -198,7 +200,20 @@
     "urlBug": "URL bug",
     "message": "See your message",
     "date": "Date",
-    "typeNotification": "Notification type"
+    "typeNotification": "Notification type",
+    "user": "User ",
+    "bug": "Bug ",
+    "titleBugClosed": " has been closed.",
+    "titleUserDeactivate": " has been disabled.",
+    "userDeactivateContent": "Disabled user data is:",
+    "status": "The bug status ",
+    "titleStatus": " has been updated.",
+    "oldStatus": "Old Status",
+    "newStatus": "New Status",
+    "bugTitleCreated": "The bug is now added",
+    "bugTitleUpdated": "The bug has been updated",
+    "bugContentMessage": "The bug data is:"
+
   },
   "exceptionCodes": {
     "UNKNOWN_EXCEPTION": "Unknown exception",

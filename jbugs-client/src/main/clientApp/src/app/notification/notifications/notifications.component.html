@@ -25,7 +25,7 @@
 
     <ng-container *ngIf="!(getContent(notification).newUser===null) && !(getContent(notification).oldUser===null)">
       <div>
-        <p>{{'notification.oldData'| translate}}</p>
+        <p>{{'notifications.oldData'| translate}}</p>
         <p *ngIf="!(getContent(notification).newUser.username==='')"><span class="profile-label">{{'profileWindow.username'| translate}}:</span>
           {{getContent(notification).newUser.username}}</p>
         <p *ngIf="!(getContent(notification).newUser.lastName==='')"><span class="profile-label">{{'profileWindow.lastName'| translate}}:</span>
@@ -37,7 +37,7 @@
       </div>
 
       <div>
-        <p>{{'notification.newData'| translate}}</p>
+        <p>{{'notifications.newData'| translate}}</p>
         <p *ngIf="!(getContent(notification).oldUser.username==='')"><span class="profile-label">{{'profileWindow.username'| translate}}:</span>
           {{getContent(notification).oldUser.username}}</p>
         <p *ngIf="!(getContent(notification).oldUser.lastName==='')"><span class="profile-label">{{'profileWindow.lastName'| translate}}:</span>
@@ -50,49 +50,44 @@
 
     </ng-container>
 
-    <!--<table mat-table [dataSource]="updatedUser" class="mat-elevation-z8">-->
+    <ng-container *ngIf="!(getContent(notification).newBug===null)">
+      <p *ngIf="!(getContent(notification).newBug.title==='')"><span class="profile-label">{{'addBug.title'| translate}}:</span>
+        {{getContent(notification).newBug.title}}</p>
+      <p *ngIf="!(getContent(notification).newBug.description==='')"><span class="profile-label">{{'addBug.description'| translate}}:</span>
+        {{getContent(notification).newBug.description}}</p>
+      <p *ngIf="!(getContent(notification).newBug.version==='')"><span class="profile-label">{{'addBug.version'| translate}}:</span>
+        {{getContent(notification).newBug.version}}</p>
+      <p *ngIf="!(getContent(notification).newBug.status==='') && this.statusUpdated===false"><span
+        class="profile-label">Status:</span>
+        {{getContent(notification).newBug.status}}</p>
+      <p *ngIf="!(getContent(notification).newBug.severity==='')"><span class="profile-label">{{'addBug.severity'| translate}}:</span>
+        {{getContent(notification).newBug.severity}}</p>
+      <p *ngIf="!(getContent(notification).newBug.targetDate==='')"><span class="profile-label">{{'addBug.targetDate'| translate}}:</span>
+        {{getContent(notification).newBug.targetDate}}</p>
+      <p *ngIf="!(getContent(notification).newBug.fixedVersion==='')"><span class="profile-label">{{'addBug.fixedVersion'| translate}}:</span>
+        {{getContent(notification).newBug.fixedVersion}}</p>
+      <p *ngIf="!(getContent(notification).newBug.assignedTo.username==='')"><span class="profile-label">{{'addBug.assignedTo'| translate}}:</span>
+        {{getContent(notification).newBug.assignedTo.username}}</p>
+      <p *ngIf="!(getContent(notification).newBug.createdByUser.username==='')"><span class="profile-label">{{'addBug.createdByUser'| translate}}:</span>
+        {{getContent(notification).newBug.createdByUser.username}}</p>
+      <div *ngIf="!(getContent(notification).newBug.status==='')&& this.statusUpdated===true">
+        <p><span class="profile-label">{{'notifications.oldStatus'| translate}}:</span>
+          {{getContent(notification).oldBug.status}}</p>
+        <p><span class="profile-label">{{'notifications.newStatus'| translate}}:</span>
+          {{getContent(notification).newBug.status}}</p>
+      </div>
+      <button color="primary"
+              mat-raised-button
+              *ngIf="!(getContent(notification).urlBug==='')"
+              (click)="goToBug(getContent(notification).urlBug)"
+      >Go to bug
 
-    <!--<ng-container matColumnDef="updatedData">-->
-    <!--<th mat-header-cell *matHeaderCellDef>Updated Data</th>-->
-    <!--<td mat-cell >-->
-    <!---->
-    <!--</td>-->
-
-
-    <!--</ng-container>-->
-
-    <!--<ng-container matColumnDef="oldUser">-->
-    <!--<th mat-header-cell *matHeaderCellDef>Old Data</th>-->
-    <!--<td mat-cell *matCellDef="let element">{{element.oldData.username}}-->
-
-    <!--</td>-->
-
-
-    <!--</ng-container>-->
-    <!--<ng-container matColumnDef="newUser">-->
-    <!--<th mat-header-cell *matHeaderCellDef>New Data</th>-->
-    <!--<td mat-cell *matCellDef="let element">{{element.newData.username}}-->
-
-    <!--</td>-->
-
-
-    <!--</ng-container>-->
-    <!--<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
-    <!--<tr mat-row *matRowDef="let row; columns: displayedColumns;">-->
-
-    <!--</tr>-->
-    <!--</table>-->
-
-
-    <!--</ng-container>-->
+      </button>
 
 
-    <!--<mat-grid-list cols="3" rowHeight="20px" *ngIf="!(getContent(notification).newUser===null) && !(getContent(notification).oldUser===null)">-->
-    <!--<mat-grid-tile *ngFor="let user of usersUpdated" [colspan]="user.cols" [rowspan]="user.rows"-->
-    <!--[style.background]="user.color">-->
-    <!--{{user.text}}-->
-    <!--</mat-grid-tile>-->
-    <!--</mat-grid-list>-->
+    </ng-container>
+
+
 
 
   </mat-expansion-panel>

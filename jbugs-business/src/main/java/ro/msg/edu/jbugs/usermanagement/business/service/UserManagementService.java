@@ -375,6 +375,7 @@ public class UserManagementService {
 		List<User> receivers = new ArrayList<>();
 		if (userBeforeOptional.isPresent()) {
 			User userBefore = userBeforeOptional.get();
+			UserDTO userBeforeDto = UserDTOHelper.fromEntity(userBefore);
 			normalizeUserDTO(userDTO);
 			validateUserForUpdate(userDTO);
 			User userRequester = userRequesterOptional.orElseThrow(() -> new BusinessException(ExceptionCode.USERNAME_NOT_VALID));
@@ -391,7 +392,7 @@ public class UserManagementService {
 
 			receivers.add(userAfter);
 			receivers.add(userRequester);
-			notificationManagementService.sendNotification(TypeNotification.USER_UPDATED, UserDTOHelper.fromEntity(userAfter), UserDTOHelper.fromEntity(userBefore), receivers);
+			notificationManagementService.sendNotification(TypeNotification.USER_UPDATED, UserDTOHelper.fromEntity(userAfter), userBeforeDto, receivers);
 
 
 			return userDTO;
