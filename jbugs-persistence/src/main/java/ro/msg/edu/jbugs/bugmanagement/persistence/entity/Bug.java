@@ -51,7 +51,7 @@ public class Bug extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Column(name = "fixedVersion", length = MAX_STRING_LENGTH, nullable = false)
+    @Column(name = "fixedVersion", length = MAX_STRING_LENGTH)
     private String fixedVersion;
 
     @Column(name = "severity", nullable = false)

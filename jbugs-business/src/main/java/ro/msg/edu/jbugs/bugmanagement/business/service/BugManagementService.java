@@ -104,7 +104,7 @@ public class BugManagementService implements BugManagement {
         try {
             this.validateDescription(bug.getDescription());
             this.validateVersion(bug.getVersion());
-            this.validateVersion(bug.getFixedVersion());
+
             return true;
         } catch (BusinessException e) {
             throw new BusinessException(e.getExceptionCode());

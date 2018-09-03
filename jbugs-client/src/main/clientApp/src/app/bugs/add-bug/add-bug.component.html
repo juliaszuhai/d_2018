@@ -50,11 +50,9 @@
           name="fixedVersion"
           matInput
           [formControl]="fixedVersionFormControl"
-          [errorStateMatcher]="matcher"
           [(ngModel)]="bugData.fixedVersion"
           placeholder="{{'bugTable.fixedVersion'| translate}}">
-        <mat-error *ngIf="fixedVersionFormControl.hasError('versionInvalid')">{{getFixedVersionErrorMessage()}}
-        </mat-error>
+
 
       </mat-form-field>
       <br>

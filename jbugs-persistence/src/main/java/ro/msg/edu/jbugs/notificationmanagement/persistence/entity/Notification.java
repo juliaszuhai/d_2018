@@ -10,8 +10,8 @@ import java.util.Objects;
 @Table(name = "notification")
 @NamedQueries(
 		{
-				@NamedQuery(name = Notification.GET_ALL_NOTIFICATIONS, query = "SELECT n FROM Notification n"),
-				@NamedQuery(name = Notification.GET_NOTIFICATION_BY_TYPE, query = "SELECT n FROM Notification n WHERE n.typeNotification=:type"),
+				@NamedQuery(name = Notification.GET_ALL_NOTIFICATIONS, query = "SELECT n FROM Notification n order by n.dateSent DESC"),
+				@NamedQuery(name = Notification.GET_NOTIFICATION_BY_TYPE, query = "SELECT n FROM Notification n WHERE n.typeNotification=:type order by n.dateSent DESC"),
 				@NamedQuery(name = Notification.GET_NOTIFICATION_BY_ID, query = "SELECT n FROM Notification n WHERE n.id=:id"),
 				@NamedQuery(name = Notification.DELETE_NOTIFICATION_BY_ID, query = "DELETE FROM Notification n WHERE n.id=:id"),
 				@NamedQuery(name = Notification.DELETE_EXPIRED_NOTIFICATIONS, query = "DELETE FROM Notification n WHERE n.dateSent<:dateExpires")

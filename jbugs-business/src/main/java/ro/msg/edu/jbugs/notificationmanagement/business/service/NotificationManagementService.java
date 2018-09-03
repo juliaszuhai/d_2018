@@ -15,6 +15,8 @@ import ro.msg.edu.jbugs.usermanagement.persistence.entity.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.text.ParseException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,10 +29,13 @@ public class NotificationManagementService {
 
 
     public List<NotificationDTO> getAllNotifications() {
-        return notificationPersistenceManager.getAllNotifications()
+        List<NotificationDTO> notifList = notificationPersistenceManager.getAllNotifications()
                 .stream()
                 .map(NotificationDTOHelper::fromEntity)
                 .collect(Collectors.toList());
+        notifList.sort(Comparator.comparing(NotificationDTO::getDateSent));
+        Collections.reverse(notifList);
+        return notifList;
     }
 
 	/**

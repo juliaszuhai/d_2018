@@ -11,6 +11,7 @@ import ro.msg.edu.jbugs.bugmanagement.persistence.entity.Status;
 import ro.msg.edu.jbugs.notificationmanagement.business.service.NotificationManagementService;
 import ro.msg.edu.jbugs.notificationmanagement.persistence.entity.TypeNotification;
 import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTO;
+import ro.msg.edu.jbugs.usermanagement.business.dto.UserDTOHelper;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.BusinessException;
 import ro.msg.edu.jbugs.usermanagement.business.exceptions.ExceptionCode;
 import ro.msg.edu.jbugs.usermanagement.business.utils.Encryptor;
@@ -158,6 +159,36 @@ public class UserManagementServiceTest {
         } catch (BusinessException e) {
             fail("Should not reach this point");
         }
+    }
+
+    @Test
+    public void testUpdateUser_ExpectedOk() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName("Cristi");
+        userDTO.setLastName("Borcea");
+        userDTO.setEmail("dinamo@msggroup.com");
+        userDTO.setPhoneNumber("0747046000");
+        userDTO.setPassword("IloveSteaua");
+
+        UserDTO userDTOAfter = new UserDTO();
+        userDTOAfter.setFirstName("Cristinel");
+        userDTOAfter.setLastName("Servus");
+        userDTOAfter.setEmail("dinamo@msggroup.com");
+        userDTOAfter.setPhoneNumber("0747046000");
+        userDTOAfter.setPassword("IloveSteaua");
+
+
+        when(userPersistenceManager.getUserByUsername(any(String.class)))
+                .thenReturn(Optional.of(UserDTOHelper.toEntity(userDTO)));
+        when(userPersistenceManager.getUserByUsername("servuc"))
+                .thenReturn(Optional.empty());
+        try {
+            assertEquals("servuc",
+                    userManagementController.updateUser(userDTOAfter, "nimeni").getUsername());
+        } catch (BusinessException e) {
+            fail("should not reach this point");
+        }
+
     }
 
     @Test
