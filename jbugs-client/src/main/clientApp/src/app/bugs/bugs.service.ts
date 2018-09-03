@@ -85,11 +85,11 @@ export class BugListService {
   addFile(value, fileName: string, attachment: File) {
     const body = new FormData();
     body.append("attachment", attachment);
-    console.log(body.get("attachment"));
+
     body.append("id", value);
-    console.log(body.get("id"));
+
     body.append("fileName", fileName);
-    console.log(body.get("fileName"));
+
     return this.http.post(this.baseURL + '/bug-management/add-file',
       body,
       {
@@ -144,7 +144,7 @@ export class BugListService {
 
 
   updateBug(bugData) {
-    console.log(bugData);
+
     return this.http.post(this.baseURL + '/list-bugs/update-bug', bugData,
       {
         headers: new HttpHeaders(
@@ -157,7 +157,7 @@ export class BugListService {
 
     const params = new HttpParams()
       .set('status', status);
-    console.log(status);
+
     return this.http.get<number>(this.baseURL + '/list-bugs/countBugByStatus', {params: params});
   }
 

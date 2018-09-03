@@ -75,22 +75,24 @@ export class UpdateBugComponent implements OnInit {
     this.bugmngmt.updateBug(this.data).subscribe(
       data => {
         this.dialogRef.close();
-      }, error => {
-        console.log("Update error:" + error)
       }
     );
 
   }
 
+
+  f;
+
   getStatusTranslation(status: string) {
     var message = 'status.';
     return message + status;
   }
+
   getStatusSuccessor() {
     this.bugmngmt.getStatusSuccessors(this.data.id).subscribe(
       value => {
         this.successorsList = value;
-        console.log(this.successorsList);
+
         if (this.successorsList.indexOf("CLOSED") > -1) {
           this.successorsList.splice(this.successorsList.indexOf("CLOSED"), 1);
         }
@@ -132,7 +134,7 @@ export class UpdateBugComponent implements OnInit {
   closeBug(id) {
     this.bugmngmt.closeBug(id).subscribe(
       value => {
-        console.log("bug closed");
+
         this.dialogRef.close()
       }
     )

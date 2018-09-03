@@ -24,7 +24,6 @@ export class EditRoleComponent implements OnInit {
   selectedPermission;
 
   syncPermissionsForRole() {
-    console.log(this.data.type);
     this.permissionmanagement.getPermissionsForRole(this.data.type)
       .subscribe(perm => {
         this.ownedPermissions = perm;

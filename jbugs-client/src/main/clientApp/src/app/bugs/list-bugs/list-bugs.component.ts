@@ -199,7 +199,6 @@ export class ListBugsComponent implements OnInit {
     this.bugService.filter(title, description, status, severity, pageIndex, pageSize, id).subscribe(
       {
         next: (value: any[]) => {
-          console.log(value);
           this.bugList = new MatTableDataSource<BugData[]>(value['filteredList']);
           this.length = value['actualListSize'];
           this.sortDataSource();
@@ -225,8 +224,6 @@ export class ListBugsComponent implements OnInit {
   }
 
   downloadExcel() {
-    console.log(this.selectedTitles);
-    console.log(this.forExcel);
     this.bugService.excel(this.forExcel);
   }
 

@@ -26,8 +26,14 @@ public class BugManagementController {
     @EJB
     private BugManagement bugManagement;
 
+    /**
+     * Returns a list of bugs in Json Format
+     *
+     * @return
+     * @throws JsonProcessingException
+     */
     @GET
-    //@Secured("BUG_MANAGEMENT")
+    @Secured("BUG_MANAGEMENT")
     @Produces("application/json")
     @Consumes("application/x-www-form-urlencoded")
     public String getAllBugs() throws JsonProcessingException {
@@ -36,8 +42,22 @@ public class BugManagementController {
         return mapper.writeValueAsString(allBugs);
     }
 
+
+    /**
+     * Returns a list of bugs  using the filters given.
+     * @param title
+     * @param description
+     * @param status
+     * @param severity
+     * @param index
+     * @param amount
+     * @param id
+     * @return
+     * @throws JsonProcessingException
+     * @throws BusinessException
+     */
     @GET
-    //@Secured("BUG_MANAGEMENT")
+    @Secured("BUG_MANAGEMENT")
     @Path("/getByFilter")
     @Produces("application/json")
     public String filter(@QueryParam("title") String title,
@@ -55,7 +75,11 @@ public class BugManagementController {
     }
 
 
-
+    /**
+     * Returns a list of bugs with the given status.
+     * @param status
+     * @return
+     */
     @GET
     @Secured("BUG_MANAGEMENT")
     @Path("/countBugByStatus")
@@ -69,6 +93,11 @@ public class BugManagementController {
         }
     }
 
+    /**
+     * Returns the attachment list of a bug.
+     * @param bugId
+     * @return
+     */
     @GET
     @Path("/get-attachment")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
@@ -88,9 +117,13 @@ public class BugManagementController {
     }
 
 
-
-
-
+    /**
+     * Returns a list of the successors of a status using the diagram in the docs.
+     * @param id
+     * @return
+     * @throws BusinessException
+     * @throws JsonProcessingException
+     */
     @GET
     @Secured("BUG_MANAGEMENT")
     @Path("/get-status-successors")
@@ -103,6 +136,12 @@ public class BugManagementController {
 
     }
 
+    /**
+     * Updates a bug with the Json in the parameter.
+     * @param bugDTO
+     * @param headers
+     * @return
+     */
     @POST
     @Secured("BUG_MANAGEMENT")
     @Consumes("application/json")
@@ -124,6 +163,11 @@ public class BugManagementController {
 
     }
 
+    /**
+     * Closes a bug.
+     * @param bugId
+     * @return
+     */
     @POST
     @Path("/close-bug")
     @Secured("BUG_CLOSE")

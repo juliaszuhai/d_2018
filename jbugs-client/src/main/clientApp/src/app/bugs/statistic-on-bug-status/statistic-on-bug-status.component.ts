@@ -41,7 +41,6 @@ export class StatisticOnBugStatusComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.doughnutChartLabels);
     this.getLabels();
     this.getStatistic();
   }
@@ -76,11 +75,11 @@ export class StatisticOnBugStatusComponent implements OnInit {
 
   // events
   public chartClicked(e: any): void {
-    console.log(e);
+
   }
 
   public chartHovered(e: any): void {
-    console.log(e);
+
   }
 
 

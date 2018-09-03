@@ -23,7 +23,6 @@ description: string;
   }
 
   downloadPdf(id){
-    console.log(id);
     this.bugPopupService.getPdf(id);
 
 
@@ -38,7 +37,6 @@ description: string;
 
   downloadAttachment(id: number | any, fileName: string) {
     this.bugPopupService.getFile(id, fileName);
-    console.log(fileName);
 
 
   }

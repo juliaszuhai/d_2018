@@ -71,12 +71,9 @@ export class UpdateUserComponent implements OnInit {
       this.data.password === '') {
       delete this.data.password;
     }
-    console.log(this.data);
     this.usermgmt.updateUser(this.data).subscribe(
       data => {
         this.dialogRef.close();
-      }, error => {
-        console.log("Update error:" + error)
       }
     );
 
@@ -123,7 +120,7 @@ export class UpdateUserComponent implements OnInit {
     this.permissionmngmt.getAllRoles()
       .subscribe(roles => {
         this.allRoles = roles;
-        console.log(roles);
+
       });
   }
 

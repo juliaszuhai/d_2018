@@ -31,15 +31,23 @@ public class AuthenticationManagementController {
 
     static Logger log = LogManager.getLogger(AuthenticationManagementController.class.getName());
 
+    /**
+     * Authenticates a user and creates a JWT token for him and returns it.
+     *
+     * @param username
+     * @param password
+     * @param securityContext
+     * @return
+     */
     @POST
     @Produces("application/json")
     @Consumes("application/x-www-form-urlencoded")
     public Response authenticateUser(@FormParam("username") String username,
-                                     @FormParam("password") String password,@Context SecurityContext securityContext) {
+                                     @FormParam("password") String password, @Context SecurityContext securityContext) {
         try {
 
-           userManagement.login(username, password);
-           User user = userManagement.getUserForUsername(username);
+            userManagement.login(username, password);
+            User user = userManagement.getUserForUsername(username);
             String token = issueToken(user);
             return Response.ok("{\"token\": \""+token+"\"}").build();
         } catch(BusinessException e){

@@ -27,6 +27,12 @@ public class BugAddController {
     @EJB
     private UserManagementService userManagement;
 
+    /**
+     * Receives a Json corresponding to bug data and creates a bug using it.
+     *
+     * @param bugDTO
+     * @return
+     */
     @POST
     @Path("/add-bug")
     @Consumes("application/json")
@@ -41,6 +47,13 @@ public class BugAddController {
     }
 
 
+    /**
+     * Adds an attachment to the bug with the given id
+     * @param id
+     * @param fileName
+     * @param attachment
+     * @return
+     */
     @POST
     @Path("/add-file")
     @Consumes({MediaType.MULTIPART_FORM_DATA})

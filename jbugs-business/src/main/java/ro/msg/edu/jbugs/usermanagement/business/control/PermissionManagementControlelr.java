@@ -23,8 +23,15 @@ public class PermissionManagementControlelr {
 	private PermissionManagementService permissionManagementController;
 
 
+	/**
+	 * Adds permission to role.
+	 *
+	 * @param permissionType
+	 * @param roleType
+	 * @return
+	 */
 	@POST
-    @Secured("PERMISSION_MANAGEMENT")
+	@Secured("PERMISSION_MANAGEMENT")
 	@Produces("application/json")
 	@Path("/add-permission-to-role")
 	public Response addPermissionToRole(@FormParam("permissionType") String permissionType,
@@ -33,8 +40,14 @@ public class PermissionManagementControlelr {
 		return Response.ok().build();
 	}
 
+	/**
+	 * Revokes a permission from a role.
+	 * @param permissionType
+	 * @param roleType
+	 * @return
+	 */
 	@POST
-    @Secured("PERMISSION_MANAGEMENT")
+	@Secured("PERMISSION_MANAGEMENT")
 	@Produces("application/json")
 	@Path("/revoke-permission-from-role")
 	public Response revokePermissionFromRole(@FormParam("permissionType") String permissionType,
@@ -53,8 +66,15 @@ public class PermissionManagementControlelr {
 
 	}
 
+	/**
+	 * Adds a role to a user.
+	 * @param username
+	 * @param roleType
+	 * @param headers
+	 * @return
+	 */
 	@POST
-    @Secured("PERMISSION_MANAGEMENT")
+	@Secured("PERMISSION_MANAGEMENT")
 	@Consumes("application/x-www-form-urlencoded")
 	@Path("/add-role-to-user")
 	public Response addRoleToUser(@FormParam("username") String username,
@@ -68,8 +88,15 @@ public class PermissionManagementControlelr {
 		}
 	}
 
+	/**
+	 * Revokes a role from a user.
+	 * @param username
+	 * @param roleType
+	 * @param headers
+	 * @return
+	 */
 	@POST
-    @Secured("PERMISSION_MANAGEMENT")
+	@Secured("PERMISSION_MANAGEMENT")
 	@Produces("application/json")
 	@Path("/revoke-role-from-user")
 	public Response revokeRoleFromUser(@FormParam("username") String username,
@@ -84,8 +111,12 @@ public class PermissionManagementControlelr {
 	}
 
 
+	/**
+	 * Returns all permissions.
+	 * @return
+	 */
 	@GET
-    @Secured("PERMISSION_MANAGEMENT")
+	@Secured("PERMISSION_MANAGEMENT")
 	@Path("/get-all-permissions")
 	@Produces("application/json")
 	public Response getAllPermissions() {
@@ -95,8 +126,12 @@ public class PermissionManagementControlelr {
 	}
 
 
+	/**
+	 * Returns all roles.
+	 * @return
+	 */
 	@GET
-    @Secured("PERMISSION_MANAGEMENT")
+	@Secured("PERMISSION_MANAGEMENT")
 	@Path("/get-all-roles")
 	@Produces("application/json")
 	public Response getAllRoles() {
@@ -105,8 +140,13 @@ public class PermissionManagementControlelr {
 				.build();
 	}
 
+	/**
+	 * Returns a permission for a role.
+	 * @param roleType
+	 * @return
+	 */
 	@GET
-    @Secured("PERMISSION_MANAGEMENT")
+	@Secured("PERMISSION_MANAGEMENT")
 	@Path("/get-permissions-for-role")
 	@Produces("application/json")
 	@Consumes("application/json")

@@ -77,7 +77,6 @@ export class UserManagementComponent implements OnInit {
       .subscribe(
         data => {
           this.dataSource = data;
-          console.log(this.dataSource);
         }
       )
   }

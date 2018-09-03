@@ -42,7 +42,7 @@ export class NotificationsComponent implements OnInit {
       .subscribe(
         data => {
           this.notifications = data;
-          console.log(this.notifications);
+
         }
       )
   }
@@ -76,7 +76,7 @@ export class NotificationsComponent implements OnInit {
       this.translate.get('notifications.welcomeMessage').subscribe((res: string) => notificationTitle = res);
       if (!(newData === null)) {
         notificationTitle = notificationTitle + newData.firstName;
-        console.log(newData.firstName);
+
       }
     } else if (notificationData.typeNotification == 'USER_UPDATED') {
       if (newData.username === this.username) {

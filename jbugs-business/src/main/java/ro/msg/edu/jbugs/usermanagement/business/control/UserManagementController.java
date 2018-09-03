@@ -20,6 +20,12 @@ public class UserManagementController {
 	@EJB
 	private UserManagementService userManagementService;
 
+	/**
+	 * Returns all users.
+	 *
+	 * @param securityContext
+	 * @return
+	 */
 	@GET
 	@Secured("USER_MANAGEMENT")
 	@Path("/get-all-users")
@@ -33,6 +39,11 @@ public class UserManagementController {
 		}
 	}
 
+	/**
+	 * Activates a user.
+	 * @param username
+	 * @return
+	 */
 	@POST
 	@Produces("application/json")
 	@Path("/activate-user")
@@ -45,6 +56,11 @@ public class UserManagementController {
 		}
 	}
 
+	/**
+	 * Deactivates a User
+	 * @param username
+	 * @return
+	 */
 	@POST
 	@Produces("application/json")
 	@Path("/deactivate-user")
@@ -60,6 +76,12 @@ public class UserManagementController {
 		}
 	}
 
+	/**
+	 * Updates a user.
+	 * @param userDTO
+	 * @param headers
+	 * @return
+	 */
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -82,6 +104,11 @@ public class UserManagementController {
 	}
 
 
+	/**
+	 * Registers a user with the given JSON
+	 * @param userDTO
+	 * @return
+	 */
 	@POST
 	@Path("/register-user")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -98,6 +125,11 @@ public class UserManagementController {
 		}
 	}
 
+	/**
+	 * Returns the roles of a user.
+	 * @param username
+	 * @return
+	 */
 	@GET
 	@Path("/get-roles-of-user")
 	@Produces("application/json")
@@ -116,6 +148,11 @@ public class UserManagementController {
 		}
 	}
 
+	/**
+	 * Returns the notifications of a single user.
+	 * @param username
+	 * @return
+	 */
 	@GET
 	@Path("/get-notification-of-user")
 	@Produces("application/json")

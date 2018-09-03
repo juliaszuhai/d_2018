@@ -83,10 +83,10 @@ export class RegisterUserComponent implements OnInit {
   submitRegister() {
     this.usermgmt.registerUser(this.data).subscribe(
       data => {
-        console.log("Register works");
+
         this.dialogRef.close();
       }, error => {
-        console.log("Register error:" + error)
+
       }
     );
 
@@ -104,7 +104,7 @@ export class RegisterUserComponent implements OnInit {
   }
 
   getEmailErrorMessages(){
-    console.log(this.emailFormControl);
+
     this.emailFormControl.hasError('required') ? (this.translate.get('textFieldValidation.required').subscribe((res: string) => this.emailErrorMessage = res)) :
       this.emailFormControl.hasError('email') ? (this.translate.get('textFieldValidation.invalidEmail').subscribe((res: string) => this.emailErrorMessage = res)) :
         this.emailFormControl.hasError('emaildomainerror') ? (this.translate.get('textFieldValidation.invalidDomain').subscribe((res: string) => this.emailErrorMessage = res)) :
